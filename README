@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+07-22-2011:
+USB: gadget: android: mass_storage: Use spin_lock_irqsave/spin_unlock_irqrestore (Arve Hjønnevåg: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=3274abc33ec2c170acd6fd2732c271ad9dd0b17f).
+
 07-21-2011:
 USB: gadget: f_mass_storage: Flush writes after every 4 MB. (Mike Lockwood: http://android.git.kernel.org/?p=kernel/common.git;a=commitdiff;h=5cf1b82507ed24e0ee9f4f2f3ce6dbcb82b86fa0).
 
