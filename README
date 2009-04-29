@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-27-2011:
+binder: Move debugging information from procfs to debugfs (Arve Hjønnevåg: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=194b82978b022c0b789fcabf7acad49622c7d126).
 binder: Use seq_file for debug interface (Arve Hjønnevåg: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0d03f6594a5b06d1ff4c307a294e5ec079c0167d).
 Bluetooth: Update sec_level/auth_type for already existing connections (Ville Tervo: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=045309820afe047920a50de25634dab46a1e851d).
 ARM: SAMSUNGy: fix broken timer irq base (Marek Szyprowski: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=1131379b48228afb32fa626fb27586a02246acf9).
