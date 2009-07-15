@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+08-11-2011:
+Bluetooth: Fix rejected connection not disconnecting ACL link (Luiz Augusto von Dentz: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=9e726b17422bade75fba94e625cd35fd1353e682).
+
 08-10-2011:
 Bluetooth: Create per controller workqueue (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=f48fd9c8cd746fdb055a97249a209c77dca0f710).
 Bluetooth: Make hci_send_sco() void (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0d861d8b8edd139a9b291cb262d08dec8dc3922d).
