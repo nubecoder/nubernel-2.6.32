@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-10-2011:
+Bluetooth: Implement RejActioned flag (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=4ec10d9720ef78cd81d8bcc30a3238665744569f).
 Bluetooth: Fix sending ReqSeq on I-frames (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=9f121a5a80b4417c6db5a35e26d2e79c29c3fc0d).
 Bluetooth: Fix unset of SrejActioned flag (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=889a3ca466018ab68363c3168993793bc2d984f1).
 Bluetooth: Initialize variables and timers for both channel's sides (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0565c1c24af94130b891f989fa608faddfadc52c).
