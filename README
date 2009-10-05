@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-10-2011:
+Bluetooth: Add L2CAP option for max transmit value (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=5fbcd3d1a07e234583e17830e8aef47282c22141).
 Bluetooth: Fix 'SendRRorRNR' to send the ReqSeq value (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=2ab25cdd7b54473dd42dcffc9872737de2517466).
 Bluetooth: Implement RejActioned flag (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=4ec10d9720ef78cd81d8bcc30a3238665744569f).
 Bluetooth: Fix sending ReqSeq on I-frames (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=9f121a5a80b4417c6db5a35e26d2e79c29c3fc0d).
