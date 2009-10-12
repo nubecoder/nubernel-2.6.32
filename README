@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-11-2011:
+net: Generalize socket rx gap / receive queue overflow cmsg (Neil Horman: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=3b885787ea4112eaa80945999ea0901bf742707f).
 Bluetooth: Fix rejected connection not disconnecting ACL link (Luiz Augusto von Dentz: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=9e726b17422bade75fba94e625cd35fd1353e682).
 
 08-10-2011:
