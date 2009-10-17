@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-26-2011:
+ASoC: Move dereference after NULL test (Julia Lawall: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=4f066173fe8deb8874f41917e5d26ea2e0c46e3b).
 ASoC: Add jack_status_check callback function for GPIO jacks (Joonyoung Shim: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=c871a05315d1a76034ea06feeda92081e1d608bf).
 ARM: 6318/1: ftrace: fix and update dynamic ftrace (Rabin Vincent: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=3b6c223b1b97ad60bbb0f4efda57d649414ac2a2).
 ARM: 6314/1: ftrace: allow build without frame pointers on ARM (Rabin Vincent: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=09bfafac3e237415cc4b6adde49f9f28b3a42659).
