@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 05-07-2011:
+Added "Tiny RCU", The Bloatwatch Edition (Paul E. McKenney: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=9b1d82fa1611706fa7ee1505f290160a18caf95d).
 Fix Thumb-2 kernel builds when UACCESS_WITH_MEMCPY is enabled (Catalin Marinas: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=e814d826dc1821dbce3aa1ddb7f2f739f420ffd8).
 Prevent multiple syscall restarts (Russell King: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=b2b163bb82b12bae2504a5b31399c37d099ad3cc).
 Fix really nasty sigreturn bug (Al Viro: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=653d48b22166db2d8b1515ebe6f9f0f7c95dfc86).
