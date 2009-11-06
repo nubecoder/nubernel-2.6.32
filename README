@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-10-2011:
+net: pass kern to net_proto_family create function (Eric Paris: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=3f378b684453f2a028eda463ce383370545d9cc9).
 net: mark net_proto_ops as const (Stephen Hemminger: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=ec1b4cf74c81bfd0fbe5bf62bafc86c45917e72f).
 Branched to 'feature-patches-bluetooth'.
 

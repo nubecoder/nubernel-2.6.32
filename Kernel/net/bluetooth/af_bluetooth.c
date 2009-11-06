@@ -157,7 +157,8 @@ static inline int current_has_bt(void)
 }
 #endif
 
-static int bt_sock_create(struct net *net, struct socket *sock, int proto)
+static int bt_sock_create(struct net *net, struct socket *sock, int proto,
+			  int kern)
 {
 	int err;
 
@@ -182,7 +183,7 @@ static int bt_sock_create(struct net *net, struct socket *sock, int proto)
 	read_lock(&bt_proto_lock);
 
 	if (bt_proto[proto] && try_module_get(bt_proto[proto]->owner)) {
-		err = bt_proto[proto]->create(net, sock, proto);
+		err = bt_proto[proto]->create(net, sock, proto, kern);
 		bt_sock_reclassify_lock(sock, proto);
 		module_put(bt_proto[proto]->owner);
 	}
