@@ -176,7 +176,7 @@ lookup_protocol:
 	}
 
 	err = -EPERM;
-	if (answer->capability > 0 && !capable(answer->capability))
+	if (answer->capability > 0 && !kern && !capable(answer->capability))
 		goto out_rcu_unlock;
 
 	sock->ops = answer->ops;
