@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-10-2011:
+Bluetooth: Turn hci_recv_frame into an exported function (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=76bca88012e1d27de794f32cc551d6314d38b6d9).
 Bluetooth: Introduce L2CAP_LM_FLUSHABLE to allow flushing of ACL packets. (Nick Pelly: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=e9a65a490d2018d7e069af43f40951a4920e9227).
 Bluetooth: Check L2CAP pending status before sending connect request (Andrei Emeltchenko: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=e501d0553a7580fcc6654d7f58a5f061d31d00af).
 net: Remove unnecessary returns from void function()s (Joe Perches: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=3fa21e07e6acefa31f974d57fba2b6920a7ebd1a).
