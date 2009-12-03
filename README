@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-11-2011:
+Bluetooth: Fix handling of BNEP setup connection requests (Vikram Kandukuri: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=cde9f807f003676862178a6f28b52c7d431511ed).
 Bluetooth: Return ENETDOWN when interface is down (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=7e21addcd0ad87696c17409399e56e874931da57).
 Bluetooth: Implement raw output support for HIDP layer (Jiri Kosina: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=2da31939a42f7a676a0bc5155d6a0a39ed8451f2).
 net: Generalize socket rx gap / receive queue overflow cmsg (Neil Horman: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=3b885787ea4112eaa80945999ea0901bf742707f).
