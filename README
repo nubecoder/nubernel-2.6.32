@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-11-2011:
+Bluetooth: Fix PTR_ERR return of wrong pointer in hidp_setup_hid() (Roel Kluin: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=971beb83aeb2a309175682cf5683d64fd4591841).
 tree-wide: fix some typos and punctuation in comments (Thadeu Lima de Souza Cascardo: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=94e2bd688820aed72b4f8092f88c2ccf64e003de).
 Bluetooth: Add RFCOMM option to use L2CAP ERTM mode (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=eae38eede2e5f70d65f09327297bd698b0d3ea7e).
 Bluetooth: Fix handling of BNEP setup connection requests (Vikram Kandukuri: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=cde9f807f003676862178a6f28b52c7d431511ed).
