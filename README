@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-11-2011:
+Bluetooth: Use non-flushable pb flag by default for ACL data on capable chipsets. (Nick Pelly: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=04a41930f122968dc2b5ec4b94670e88e7abd6e9).
 Revert "Bluetooth: Introduce L2CAP_LM_FLUSHABLE to allow flushing of ACL packets." (Nick Pelly: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=047941a817402e06f2bdd3e854355c1dab625e68).
 Revert "Bluetooth: Fix rejected connection not disconnecting ACL link" (Nick Pelly: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=331c453fc49dd01c9d2bea9efa5f0cc9a7f0e124).
 Paranoid network. (Robert Love: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=528f6d17876cc6aaa0a38e120921dc7e7564d090).
