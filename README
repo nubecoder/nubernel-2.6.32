@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-10-2011:
+Bluetooth: Remove double free of SKB pointer in L2CAP (Andrei Emeltchenko: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=fcafde2e6d81aa7901f9b10e6a097592f0637b79).
 Bluetooth: Fix L2CAP locking scheme regression (Andrei Emeltchenko: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=b13f5860447a98daf0358a51fbff66154ac0663a).
 Bluetooth: Ack L2CAP I-frames before retransmit missing packet (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=186ee8cf0130993dea8ab8867ff1af8a148f9ae6).
 Bluetooth: Fix unset of RemoteBusy flag for L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=186de9a33803c7ee20d9af75c9049b50e68a3a08).
