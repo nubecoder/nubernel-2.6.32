@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-11-2011:
+Bluetooth: Fallback eSCO to SCO on error 0x1a (Unsupported Remote Feature) (Nick Pelly: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=1038a00b458997661bcd0e780a24dc280a8841fc).
 HID: make raw reports possible for both feature and output reports (Jiri Kosina: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=d4bfa033ed84e0ae446eff445d107ffd5ee78df3).
 Bluetooth: Use the control channel for raw HID reports (Bastien Nocera: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=6bf8268f9a91f1065c99503161ebd061492bebe3).
 proc_fops: convert drivers/isdn/ to seq_file (Alexey Dobriyan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=9a58a80a701bdb2d220cdab4914218df5b48d781).
