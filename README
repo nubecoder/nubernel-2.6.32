@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-11-2011:
+Bluetooth: Keep a copy of each HID device's report descriptor (Michael Poole: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=15c697ce1c5b408c5e20dcdc6aea2968d1125b75).
 Bluetooth: Do not call rfcomm_session_put() for RFCOMM UA on closed socket (Nick Pelly: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=6c2718da59613d76013b501bf0f8bcf9d7794b2d).
 Bluetooth: Fix sleeping function in RFCOMM within invalid context (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=485f1eff73a7b932fd3abb0dfcf804e1a1f59025).
 Bluetooth: Fallback eSCO to SCO on error 0x1a (Unsupported Remote Feature) (Nick Pelly: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=1038a00b458997661bcd0e780a24dc280a8841fc).
