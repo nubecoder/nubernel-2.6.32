@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-11-2011:
+Bluetooth: Add SCO fallback for unsupported feature error (Stephen Coe: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=705e5711b61e9622b2d88850f38c219014aa0780).
 Bluetooth: Convert inquiry cache to use debugfs instead of sysfs (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=ca325f698996c1a0770a67f41e7dc97a007d8bc2).
 Bluetooth: Keep a copy of each HID device's report descriptor (Michael Poole: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=15c697ce1c5b408c5e20dcdc6aea2968d1125b75).
 Bluetooth: Do not call rfcomm_session_put() for RFCOMM UA on closed socket (Nick Pelly: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=6c2718da59613d76013b501bf0f8bcf9d7794b2d).
