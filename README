@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-26-2011:
+ARM: 5939/1: ARM: Add option CMDLINE_FORCE to force usage of the in-kernel cmdline (Alexander Holler: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=92d2040d78f662f634efce7a5106bbed70b8708b).
 [HZ] if S5P_HIGH_RES_TIMER options is enable, use 256 HZ (Choi Jong-hwan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=6eced90427618b7f62f076d1407fa95633f7d43f).
 ASoC: Allow reporting of NULL jacks (Mark Brown: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=3a278a0c65c924950c4744ba451a110998998044).
 ASoC: Add a notifier for jack status changes (Mark Brown: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=d5021ec9fc32edc6f512c2375923d757e9825f6a).
