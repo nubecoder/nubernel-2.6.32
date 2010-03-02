@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-11-2011:
+Bluetooth: Use single_open() for inquiry cache within debugfs (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=d4612cb86ed8db8956b6b19435f8a30de6c67ffe).
 Bluetooth: Fix out of scope variable access in hci_sock_cmsg() (Johann Felix Soden: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=f6e623a65cb301088bd04794043e82bfc996c512).
 Bluetooth: Add SCO fallback for unsupported feature error (Stephen Coe: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=705e5711b61e9622b2d88850f38c219014aa0780).
 Bluetooth: Convert inquiry cache to use debugfs instead of sysfs (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=ca325f698996c1a0770a67f41e7dc97a007d8bc2).
