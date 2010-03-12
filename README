@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+07-21-2011:
+USB: gadget: f_mass_storage: Flush writes after every 4 MB. (Mike Lockwood: http://android.git.kernel.org/?p=kernel/common.git;a=commitdiff;h=5cf1b82507ed24e0ee9f4f2f3ce6dbcb82b86fa0).
+
 07-14-2011:
 Applied necessary defconfig changes for new keyboard patch.
 Applied new Column delay sysfs keyboard patch (mkasick: http://forum.xda-developers.com/showthread.php?t=975611).

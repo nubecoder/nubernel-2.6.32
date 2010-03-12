@@ -88,9 +88,9 @@
 #define TYPE_CDROM	0x05
 
 
-/* TODO: flush after every 4 meg of writes to avoid excessive block level caching */
+/* flush after every 4 meg of writes to avoid excessive block level caching */
 #define MAX_UNFLUSHED_BYTES (4 * 1024 * 1024)
-#undef MAX_UNFLUSHED_BYTES 
+
 /*-------------------------------------------------------------------------*/
 
 #define DRIVER_NAME		"usb_mass_storage"
@@ -288,9 +288,6 @@ struct bulk_cs_wrap {
 
 /*-------------------------------------------------------------------------*/
 
-
-
-
 struct lun {
 	struct file	*filp;
 	loff_t		file_length;
@@ -400,9 +397,9 @@ struct fsg_dev {
 	unsigned int		disable_raised : 1;
 
 	unsigned long		atomic_bitflags;
-#define REGISTERED			0
+#define REGISTERED		0
 #define CLEAR_BULK_HALTS	1
-#define SUSPENDED			2
+#define SUSPENDED		2
 
 	struct usb_ep		*bulk_in;
 	struct usb_ep		*bulk_out;
@@ -740,9 +737,7 @@ static int fsg_function_setup(struct usb_function *f,
 					const struct usb_ctrlrequest *ctrl)
 {
 	struct fsg_dev	*fsg = func_to_dev(f);
-	
 	struct usb_composite_dev *cdev = f->config->cdev;
-
 	struct usb_request	*req = cdev->req;
 	int			value = -EOPNOTSUPP;
 	u16			w_index = le16_to_cpu(ctrl->wIndex);
