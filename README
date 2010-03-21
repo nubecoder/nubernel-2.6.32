@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-10-2011:
+Bluetooth: Convert debug files to actually use debugfs instead of sysfs (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=aef7d97cc604309b66f6f45cce02cd734934cd4e).
 Bluetooth: Fix potential bad memory access with sysfs files (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=101545f6fef4a0a3ea8daf0b5b880df2c6a92a69).
 driver-core: Add attribute argument to class_attribute show/store (Andi Kleen: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=28812fe11a21826ba4c97c6c7971a619987cd912).
 Bluetooth: Fix memory leak in L2CAP (Andrei Emeltchenko: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=e420aba331f44de0eed6871441293a6124d566d1).

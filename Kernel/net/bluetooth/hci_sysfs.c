@@ -6,8 +6,7 @@
 #include <net/bluetooth/bluetooth.h>
 #include <net/bluetooth/hci_core.h>
 
-struct class *bt_class = NULL;
-EXPORT_SYMBOL_GPL(bt_class);
+static struct class *bt_class;
 
 static struct workqueue_struct *bt_workq;
 
