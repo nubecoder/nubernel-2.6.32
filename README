@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-26-2011:
+ASoC: Allow reporting of NULL jacks (Mark Brown: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=3a278a0c65c924950c4744ba451a110998998044).
 ASoC: Add a notifier for jack status changes (Mark Brown: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=d5021ec9fc32edc6f512c2375923d757e9825f6a).
 ASoC: Move dereference after NULL test (Julia Lawall: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=4f066173fe8deb8874f41917e5d26ea2e0c46e3b).
 ASoC: Add jack_status_check callback function for GPIO jacks (Joonyoung Shim: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=c871a05315d1a76034ea06feeda92081e1d608bf).
