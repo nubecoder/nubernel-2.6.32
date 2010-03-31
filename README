@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-10-2011:
+net: check the length of the socket address passed to connect(2) (Changli Gao: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=6503d96168f891ffa3b70ae6c9698a1a722025a0).
 Bluetooth: Fix kernel crash on L2CAP stress tests (Andrei Emeltchenko: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=c2c77ec83bdad17fb688557b5b3fdc36661dd1c6).
 Bluetooth: Convert debug files to actually use debugfs instead of sysfs (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=aef7d97cc604309b66f6f45cce02cd734934cd4e).
 Bluetooth: Fix potential bad memory access with sysfs files (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=101545f6fef4a0a3ea8daf0b5b880df2c6a92a69).
