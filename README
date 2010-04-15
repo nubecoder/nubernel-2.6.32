@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+07-23-2011:
+USB: gadget: f_mass_storage: Defer handling interface changes until it is safe. (Mike Lockwood: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=0fc7f96b5be344f7a5499e29b30f245fb857f4a2).
+
 07-22-2011:
 USB: gadget: android: mass_storage: Use spin_lock_irqsave/spin_unlock_irqrestore (Arve Hjønnevåg: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=3274abc33ec2c170acd6fd2732c271ad9dd0b17f).
 
