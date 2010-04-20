@@ -157,7 +157,7 @@ static unsigned int rds_poll(struct file *file, struct socket *sock,
 	unsigned int mask = 0;
 	unsigned long flags;
 
-	poll_wait(file, sk->sk_sleep, wait);
+	poll_wait(file, sk_sleep(sk), wait);
 
 	poll_wait(file, &rds_poll_waitq, wait);
 
