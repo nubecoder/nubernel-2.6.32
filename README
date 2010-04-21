@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-27-2011:
+android-common: include linux/slab.h (Arve Hjønnevåg: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=eaa7ea1e2bbe79f6af8bb282288ea33ec3149535).
 android-common: Fix slab.h includes for 2.6.34-rc4 (Colin Cross: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0981b8f4d278b6d1dcf2dee7185e79c4f1e427d5).
 binder: Move debugging information from procfs to debugfs (Arve Hjønnevåg: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=194b82978b022c0b789fcabf7acad49622c7d126).
 binder: Use seq_file for debug interface (Arve Hjønnevåg: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0d03f6594a5b06d1ff4c307a294e5ec079c0167d).
