@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-10-2011:
+Bluetooth: Fix SDU reassembly under SREJ (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=afefdbc4cf3b9d409d07e1e5264e7ff88bc48711).
 Bluetooth: Check if mode is supported on getsockopt (João Paulo Rechi Vita: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0041ecfa3025d7612fdaab12b2f07c9c3c09f42f).
 Bluetooth: Add SOCK_STREAM support to L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=bd3c9e255e76ae232d417e3914ca5d80ca3e9485).
 Bluetooth: Add Kconfig option for L2CAP Extended Features (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=84fb0a6334af0ccad3544f6972c055d90fbb9fbe).
