@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-10-2011:
+Bluetooth: Add Kconfig option for L2CAP Extended Features (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=84fb0a6334af0ccad3544f6972c055d90fbb9fbe).
 Bluetooth: Optimize SREJ_QUEUE append (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=3b1a9f3fa6ad842991538da2c3b2e29e047b131f).
 Fixing Bluetooth: Fix sending ReqSeq on I-frames (seems I missed a bit of this patch).
 Bluetooth: Fix drop of acked packets on ERTM (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=812e737e29a1d559e7bfbea675fdcfcbad9f5e1f).
