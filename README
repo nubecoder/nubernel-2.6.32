@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-10-2011:
+Bluetooth: Add sockopt configuration for txWindow on L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=14b5aa71ec506f4e38ca6a1dc02ecd668ecfd902).
 Bluetooth: Send Ack after clear the SREJ list (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=855666cccc939d392316de17512e17a08b2fa05a).
 Bluetooth: Check the SDU size against the MTU value (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=052897ca5019d9157ae09e5e84eee2a9ef5dccc6).
 Bluetooth: Add le16 macro to Retransmission and Monitor Timeouts values (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=10467e9e9b89272b25b56688bb276d0830e9ab9a).
