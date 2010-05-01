@@ -3566,7 +3566,8 @@ expected:
 		if (pi->conn_state & L2CAP_CONN_REJ_ACT)
 			pi->conn_state &= ~L2CAP_CONN_REJ_ACT;
 		else {
-			sk->sk_send_head = TX_QUEUE(sk)->next;
+			if (!skb_queue_empty(TX_QUEUE(sk)))
+				sk->sk_send_head = TX_QUEUE(sk)->next;
 			pi->next_tx_seq = pi->expected_ack_seq;
 			l2cap_ertm_send(sk);
 		}
@@ -3613,7 +3614,8 @@ static inline void l2cap_data_channel_rrframe(struct sock *sk, u16 rx_control)
 		if (pi->conn_state & L2CAP_CONN_REJ_ACT)
 			pi->conn_state &= ~L2CAP_CONN_REJ_ACT;
 		else {
-			sk->sk_send_head = TX_QUEUE(sk)->next;
+			if (!skb_queue_empty(TX_QUEUE(sk)))
+				sk->sk_send_head = TX_QUEUE(sk)->next;
 			pi->next_tx_seq = pi->expected_ack_seq;
 			l2cap_ertm_send(sk);
 		}
@@ -3645,12 +3647,14 @@ static inline void l2cap_data_channel_rejframe(struct sock *sk, u16 rx_control)
 		if (pi->conn_state & L2CAP_CONN_REJ_ACT)
 			pi->conn_state &= ~L2CAP_CONN_REJ_ACT;
 		else {
-			sk->sk_send_head = TX_QUEUE(sk)->next;
+			if (!skb_queue_empty(TX_QUEUE(sk)))
+				sk->sk_send_head = TX_QUEUE(sk)->next;
 			pi->next_tx_seq = pi->expected_ack_seq;
 			l2cap_ertm_send(sk);
 		}
 	} else {
-		sk->sk_send_head = TX_QUEUE(sk)->next;
+		if (!skb_queue_empty(TX_QUEUE(sk)))
+			sk->sk_send_head = TX_QUEUE(sk)->next;
 		pi->next_tx_seq = pi->expected_ack_seq;
 		l2cap_ertm_send(sk);
 
