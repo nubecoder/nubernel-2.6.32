@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-10-2011:
+Bluetooth: Completes the I-frame tx_seq check logic on RECV (João Paulo Rechi Vita: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=9b53350d3cf5b330c3261d89b5e62a2dc25c5653).
 Bluetooth: Implement missing parts of the Invalid Frame Detection (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=18778a63ddc83bc89bda3b119fb02eb121512a66).
 Bluetooth: Refactor l2cap_retransmit_frame() (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=f11d676da4059c7888efca810ab300b931736a26).
 Bluetooth: Make hci_send_acl() void (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=9a9c6a34416b3743c09c00f3d6708d9df3c21629).
