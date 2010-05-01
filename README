@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-10-2011:
+Bluetooth: Add timer to Acknowledge I-frames (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=c1b4f43be01c2a363be021485dd18cca33cfab8a).
 Bluetooth: Finish implementation for Rec RR (P=1) on ERTM (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=05fbd89dd4153341717b33d9e8ae8bd29db6c1c8).
 Bluetooth: Remove duplicate use of __get_reqseq() macro on L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=8abb52ee00c4b3f857269eb6b7145991bab869bf).
 Bluetooth: Group the ack of I-frames into l2cap_data_channel_rrframe() (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=6e3a59819fac19006fe4255b87928e5a12c54532).
