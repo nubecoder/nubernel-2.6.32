@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-10-2011:
+Bluetooth: Enable option to configure Max Transmission value via sockopt (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=68d7f0ce911e41e463c45911be031cdf6a096fe8).
 Bluetooth: Add module parameter for txWindow size on L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=369ba30264826f38eefc61b93688100be8adbd4d).
 Bluetooth: Change acknowledgement to use the value of txWindow (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=803020c6fa63aa738cfda3329c9675b42023e9d2).
 Bluetooth: Add sockopt configuration for txWindow on L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=14b5aa71ec506f4e38ca6a1dc02ecd668ecfd902).
