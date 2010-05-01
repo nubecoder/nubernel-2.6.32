@@ -3513,6 +3513,7 @@ static inline int l2cap_data_channel_iframe(struct sock *sk, u16 rx_control, str
 			if (list_empty(SREJ_LIST(sk))) {
 				pi->buffer_seq = pi->buffer_seq_srej;
 				pi->conn_state &= ~L2CAP_CONN_SREJ_SENT;
+				l2cap_send_ack(pi);
 			}
 		} else {
 			struct srej_list *l;
@@ -3568,7 +3569,6 @@ expected:
 	__mod_ack_timer();
 
 	pi->num_to_ack = (pi->num_to_ack + 1) % L2CAP_DEFAULT_NUM_TO_ACK;
-
 	if (pi->num_to_ack == L2CAP_DEFAULT_NUM_TO_ACK - 1)
 		l2cap_send_ack(pi);
 
