@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-10-2011:
+Bluetooth: Implement SendAck() Action on ERTM (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=9e917af13d59182f95bbb5483dc0c4254dfb7944).
 Bluetooth: Check if SDU size is greater than MTU on L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=36f2fd585f43199f006a3b5ff84e95815102cd31).
 Bluetooth: Check the minimum {I,S}-frame size into L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=277ffbe362823d18a17792fbd8e507010e666299).
 Bluetooth: Support case with F bit set under WAIT_F state (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=1d8f5d16913d74e428950ee02fe9ff7e6391c120).
