@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-10-2011:
+Bluetooth: Move specific Basic Mode code to the right place (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=c69163e9ed5048407cc84f439cbfecc53f6f7131).
 bluetooth: handle l2cap_create_connless_pdu() errors (Dan Carpenter: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=477fffb082920476cc26f238d65538ccb8d601e1).
 net: sk_sleep() helper (Eric Dumazet: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=aa395145165cb06a0d0885221bbe0ce4a564391d).
 net: check the length of the socket address passed to connect(2) (Changli Gao: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=6503d96168f891ffa3b70ae6c9698a1a722025a0).
