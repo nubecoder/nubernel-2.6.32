@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-10-2011:
+Bluetooth: Make hci_send_sco() void (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0d861d8b8edd139a9b291cb262d08dec8dc3922d).
 Bluetooth: Add controller types for BR/EDR and 802.11 AMP (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=943da25d95c7e8fd8c39dbf09e030f5da46f5d85).
 Bluetooth: Convert controller hdev->type to hdev->bus (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=c13854cef4751000b968d4e8ac95796562d5b96f).
 Bluetooth: Unobfuscate tasklet_schedule usage (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=c78ae283145d3a8799b2fb01650166a66af3bff8).
