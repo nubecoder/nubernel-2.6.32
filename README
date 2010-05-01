@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-10-2011:
+Bluetooth: Don't set control bits to zero first (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=44651b85cc3a076147af5d181fc4833ef8debc59).
 Bluetooth: Close L2CAP channel on invalid ReqSeq (João Paulo Rechi Vita: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=01760bdde9a92413b7fff928d08e19352bf09d82).
 Bluetooth: Fix SDU reassembly under SREJ (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=afefdbc4cf3b9d409d07e1e5264e7ff88bc48711).
 Bluetooth: Check if mode is supported on getsockopt (João Paulo Rechi Vita: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0041ecfa3025d7612fdaab12b2f07c9c3c09f42f).
