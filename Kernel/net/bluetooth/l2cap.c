@@ -3546,6 +3546,7 @@ static inline int l2cap_data_channel_sframe(struct sock *sk, u16 rx_control, str
 		break;
 	}
 
+	kfree_skb(skb);
 	return 0;
 }
 
