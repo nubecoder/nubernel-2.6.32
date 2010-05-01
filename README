@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-10-2011:
+Bluetooth: Fix crash when monitor timeout expires (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0ee0d20855ae9271de3f6695f4cafc08ab2533bb).
 Bluetooth: Fix bug when retransmitting I-frames (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=f6e6b16823de0aff31cb8ee8c098383e3aceec58).
 Bluetooth: Enable option to configure Max Transmission value via sockopt (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=68d7f0ce911e41e463c45911be031cdf6a096fe8).
 Bluetooth: Add module parameter for txWindow size on L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=369ba30264826f38eefc61b93688100be8adbd4d).
