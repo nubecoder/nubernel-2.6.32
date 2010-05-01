@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-10-2011:
+Bluetooth: Remove duplicate use of __get_reqseq() macro on L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=8abb52ee00c4b3f857269eb6b7145991bab869bf).
 Bluetooth: Group the ack of I-frames into l2cap_data_channel_rrframe() (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=6e3a59819fac19006fe4255b87928e5a12c54532).
 Bluetooth: Handle all cases of receipt of RNR-frames into L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=99b0d4b7b09edeacf4542bced5c01239375b51a9).
 Bluetooth: Split l2cap_data_channel_sframe() (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=e072745f4adb01b909bd08a0cfc8f79348f4d2c6).
