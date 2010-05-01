@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-27-2011:
+Bluetooth: Make hci_send_sco() void (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0d861d8b8edd139a9b291cb262d08dec8dc3922d).
 Bluetooth: Fix ACL MTU issue (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=d1daa091e8612f3aab14d28b5836375fafe155e1).
 Update plat-samsung clock code to mainline kernel (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/41da27b00ad7b38f1c7298b7f31146bc01549a9c).
 Quiet warning in samsung_mipi driver config (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/05a923aaad791c21e2425da19578352efd3d01d1).
