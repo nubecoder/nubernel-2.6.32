@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-10-2011:
+Bluetooth: Add Recv RR (P=0)(F=0) for SREJ_SENT state on ERTM (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=73edaa9933219e25d6733b78d1e2c881025705e2).
 Bluetooth: Move set of P-bit to l2cap_send_sframe() (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=f0946ccfc7da403a46b7ff7cb2e3deffac108742).
 Bluetooth: Implement SendAck() Action on ERTM (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=9e917af13d59182f95bbb5483dc0c4254dfb7944).
 Bluetooth: Check if SDU size is greater than MTU on L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=36f2fd585f43199f006a3b5ff84e95815102cd31).
