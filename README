@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-10-2011:
+Bluetooth: Make hci_send_acl() void (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=9a9c6a34416b3743c09c00f3d6708d9df3c21629).
 Bluetooth: Fix lockdep annotation on ERTM (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=ff12fd643334071084b6145cad3793bb6c956638).
 Bluetooth: Check if we really are in WAIT_F when F bit comes (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=9b16dc6551cbde65d0ac525af3c46efab53a2c46).
 Bluetooth: Remove unneeded control vars (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=a2e12a2a312f816d5970b0c809d43b399fbfe90c).
