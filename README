@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-10-2011:
+Bluetooth: Check the SDU size against the MTU value (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=052897ca5019d9157ae09e5e84eee2a9ef5dccc6).
 Bluetooth: Add le16 macro to Retransmission and Monitor Timeouts values (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=10467e9e9b89272b25b56688bb276d0830e9ab9a).
 Bluetooth: Fix configuration of the MPS value (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=1c7621596d11b9c3e19eb88a818758dee4901c95).
 Bluetooth: Read RFC conf option on a successful Conf RSP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=7b1c0049be3aabc18831ada339dbcf41ba8c81fd).
