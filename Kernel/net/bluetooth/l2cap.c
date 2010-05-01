@@ -3647,14 +3647,19 @@ static inline int l2cap_data_channel(struct l2cap_conn *conn, u16 cid, struct sk
 		if (l2cap_check_fcs(pi, skb))
 			goto drop;
 
-		if (__is_iframe(control))
-			err = l2cap_data_channel_iframe(sk, control, skb);
-		else
-			err = l2cap_data_channel_sframe(sk, control, skb);
+		if (__is_iframe(control)) {
+			if (len < 4)
+				goto drop;
 
-		if (!err)
-			goto done;
-		break;
+			l2cap_data_channel_iframe(sk, control, skb);
+		} else {
+			if (len != 0)
+				goto drop;
+
+			l2cap_data_channel_sframe(sk, control, skb);
+		}
+
+		goto done;
 
 	case L2CAP_MODE_STREAMING:
 		control = get_unaligned_le16(skb->data);
@@ -3667,7 +3672,8 @@ static inline int l2cap_data_channel(struct l2cap_conn *conn, u16 cid, struct sk
 		if (pi->fcs == L2CAP_FCS_CRC16)
 			len -= 2;
 
-		if (len > L2CAP_DEFAULT_MAX_PDU_SIZE || __is_sframe(control))
+		if (len > L2CAP_DEFAULT_MAX_PDU_SIZE || len < 4
+				|| __is_sframe(control))
 			goto drop;
 
 		if (l2cap_check_fcs(pi, skb))

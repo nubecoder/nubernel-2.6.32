@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-10-2011:
+Bluetooth: Check the minimum {I,S}-frame size into L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=277ffbe362823d18a17792fbd8e507010e666299).
 Bluetooth: Support case with F bit set under WAIT_F state (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=1d8f5d16913d74e428950ee02fe9ff7e6391c120).
 Bluetooth: Implement 'Send IorRRorRNR' event (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=d5392c8f1e9faef089bb7cb66c3314da8bddd1fe).
 Bluetooth: Use a l2cap_pinfo struct instead l2cap_pi() macro (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=e8235c6bdd1c7ffbaa7eb8dcdbb46c51f1e5d72e).
