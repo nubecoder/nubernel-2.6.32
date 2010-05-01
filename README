@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-10-2011:
+Bluetooth: Prevents buffer overflow on l2cap_ertm_reassembly_sdu() (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=4178ba462a3e8ab5094e69606f01d9e95f2d5ea6).
 Bluetooth: Fix race condition on l2cap_ertm_send() (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=dfc909befbfe967bd7f46ef33b6969c1b7f3cf42).
 Bluetooth: Add wait_queue to wait ack of all sent packets (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=6161c0382bbab883a634d284f7367a88bbe88534).
 Bluetooth: Implement Local Busy Condition handling (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=1890d36bb556a27684ad29654a9898ab9a5f57ee).
