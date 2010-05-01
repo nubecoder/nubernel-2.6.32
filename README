@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-10-2011:
+Bluetooth: Read RFC conf option on a successful Conf RSP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=7b1c0049be3aabc18831ada339dbcf41ba8c81fd).
 Bluetooth: Ignore Tx Window value with Streaming mode (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=2fb862e215e53630066c677e06d7551fa38bf235).
 Bluetooth: Add timer to Acknowledge I-frames (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=c1b4f43be01c2a363be021485dd18cca33cfab8a).
 Bluetooth: Finish implementation for Rec RR (P=1) on ERTM (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=05fbd89dd4153341717b33d9e8ae8bd29db6c1c8).
