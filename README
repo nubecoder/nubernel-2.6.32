@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-10-2011:
+Bluetooth: Remove set of SrejSaveReqSeq under receipt of REJ frame (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0301ef04b5f49a95681694fc0d75af9441faa919).
 Bluetooth: Fix errors reported by checkpatch.pl (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=59203a21a56c53afeb6f45e059299e6f1437f30f).
 Bluetooth: Don't set control bits to zero first (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=44651b85cc3a076147af5d181fc4833ef8debc59).
 Bluetooth: Close L2CAP channel on invalid ReqSeq (João Paulo Rechi Vita: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=01760bdde9a92413b7fff928d08e19352bf09d82).
