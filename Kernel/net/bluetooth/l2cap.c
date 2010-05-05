@@ -1248,7 +1248,6 @@ static int l2cap_sock_getname(struct socket *sock, struct sockaddr *addr, int *l
 static void l2cap_monitor_timeout(unsigned long arg)
 {
 	struct sock *sk = (void *) arg;
-	u16 control;
 
 	bh_lock_sock(sk);
 	if (l2cap_pi(sk)->retry_count >= l2cap_pi(sk)->remote_max_tx) {
@@ -1260,15 +1259,13 @@ static void l2cap_monitor_timeout(unsigned long arg)
 	l2cap_pi(sk)->retry_count++;
 	__mod_monitor_timer();
 
-	control = L2CAP_CTRL_POLL;
-	l2cap_send_rr_or_rnr(l2cap_pi(sk), control);
+	l2cap_send_rr_or_rnr(l2cap_pi(sk), L2CAP_CTRL_POLL);
 	bh_unlock_sock(sk);
 }
 
 static void l2cap_retrans_timeout(unsigned long arg)
 {
 	struct sock *sk = (void *) arg;
-	u16 control;
 
 	bh_lock_sock(sk);
 	l2cap_pi(sk)->retry_count = 1;
@@ -1276,8 +1273,7 @@ static void l2cap_retrans_timeout(unsigned long arg)
 
 	l2cap_pi(sk)->conn_state |= L2CAP_CONN_WAIT_F;
 
-	control = L2CAP_CTRL_POLL;
-	l2cap_send_rr_or_rnr(l2cap_pi(sk), control);
+	l2cap_send_rr_or_rnr(l2cap_pi(sk), L2CAP_CTRL_POLL);
 	bh_unlock_sock(sk);
 }
 
@@ -3736,10 +3732,8 @@ static inline void l2cap_data_channel_rnrframe(struct sock *sk, u16 rx_control)
 
 	if (!(pi->conn_state & L2CAP_CONN_SREJ_SENT)) {
 		del_timer(&pi->retrans_timer);
-		if (rx_control & L2CAP_CTRL_POLL) {
-			u16 control = L2CAP_CTRL_FINAL;
-			l2cap_send_rr_or_rnr(pi, control);
-		}
+		if (rx_control & L2CAP_CTRL_POLL)
+			l2cap_send_rr_or_rnr(pi, L2CAP_CTRL_FINAL);
 		return;
 	}
 
