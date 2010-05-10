@@ -1257,7 +1257,7 @@ static int __l2cap_wait_ack(struct sock *sk)
 	int err = 0;
 	int timeo = HZ/5;
 
-	add_wait_queue(sk->sk_sleep, &wait);
+	add_wait_queue(sk_sleep(sk), &wait);
 	while ((l2cap_pi(sk)->unacked_frames > 0 && l2cap_pi(sk)->conn)) {
 		set_current_state(TASK_INTERRUPTIBLE);
 
@@ -1278,7 +1278,7 @@ static int __l2cap_wait_ack(struct sock *sk)
 			break;
 	}
 	set_current_state(TASK_RUNNING);
-	remove_wait_queue(sk->sk_sleep, &wait);
+	remove_wait_queue(sk_sleep(sk), &wait);
 	return err;
 }
 
@@ -3563,7 +3563,7 @@ static void l2cap_busy_work(struct work_struct *work)
 
 	lock_sock(sk);
 
-	add_wait_queue(sk->sk_sleep, &wait);
+	add_wait_queue(sk_sleep(sk), &wait);
 	while ((skb = skb_peek(BUSY_QUEUE(sk)))) {
 		set_current_state(TASK_INTERRUPTIBLE);
 
@@ -3622,7 +3622,7 @@ done:
 	pi->conn_state &= ~L2CAP_CONN_RNR_SENT;
 
 	set_current_state(TASK_RUNNING);
-	remove_wait_queue(sk->sk_sleep, &wait);
+	remove_wait_queue(sk_sleep(sk), &wait);
 
 	release_sock(sk);
 }

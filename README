@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-10-2011:
+Bluetooth: Fix issues where sk_sleep() helper is needed now (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=2b0b05ddc04b6d45e71cd36405df512075786f1e).
 Bluetooth: Fix spec error in the RemoteBusy Logic (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=844c0972427ee5f661158160aaca10b22b3dda60).
 Bluetooth: Prevents buffer overflow on l2cap_ertm_reassembly_sdu() (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=4178ba462a3e8ab5094e69606f01d9e95f2d5ea6).
 Bluetooth: Fix race condition on l2cap_ertm_send() (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=dfc909befbfe967bd7f46ef33b6969c1b7f3cf42).
