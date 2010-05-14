@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-27-2011:
+ARM: SAMSUNGy: fix broken timer irq base (Marek Szyprowski: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=1131379b48228afb32fa626fb27586a02246acf9).
 Bluetooth: Make hci_send_sco() void (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0d861d8b8edd139a9b291cb262d08dec8dc3922d).
 Bluetooth: Fix ACL MTU issue (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=d1daa091e8612f3aab14d28b5836375fafe155e1).
 Update plat-samsung clock code to mainline kernel (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/41da27b00ad7b38f1c7298b7f31146bc01549a9c).
