@@ -1274,7 +1274,6 @@ void hci_send_acl(struct hci_conn *conn, struct sk_buff *skb, __u16 flags)
 	}
 
 	hci_sched_tx(hdev);
-	return;
 }
 EXPORT_SYMBOL(hci_send_acl);
 

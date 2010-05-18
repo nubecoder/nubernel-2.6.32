@@ -280,7 +280,6 @@ static inline void sco_recv_frame(struct sco_conn *conn, struct sk_buff *skb)
 
 drop:
 	kfree_skb(skb);
-	return;
 }
 
 /* -------- Socket interface ---------- */
