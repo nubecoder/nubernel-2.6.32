@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-27-2011:
+Bluetooth: Update sec_level/auth_type for already existing connections (Ville Tervo: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=045309820afe047920a50de25634dab46a1e851d).
 ARM: SAMSUNGy: fix broken timer irq base (Marek Szyprowski: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=1131379b48228afb32fa626fb27586a02246acf9).
 Bluetooth: Make hci_send_sco() void (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0d861d8b8edd139a9b291cb262d08dec8dc3922d).
 Bluetooth: Fix ACL MTU issue (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=d1daa091e8612f3aab14d28b5836375fafe155e1).

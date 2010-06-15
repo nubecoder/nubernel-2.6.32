@@ -369,6 +369,11 @@ struct hci_conn *hci_connect(struct hci_dev *hdev, int type,
 		acl->sec_level = sec_level;
 		acl->auth_type = auth_type;
 		hci_acl_connect(acl);
+	} else {
+		if (acl->sec_level < sec_level)
+			acl->sec_level = sec_level;
+		if (acl->auth_type < auth_type)
+			acl->auth_type = auth_type;
 	}
 
 	if (type == ACL_LINK)
