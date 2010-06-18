@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-11-2011:
+Bluetooth: Reset the security level after an authentication failure (Johan Hedberg: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=da213f41cdd445d3df468f8fe7f24fe4f4c48508).
 Bluetooth: Use strict_strtoul instead of simple_strtoul (Tomas Winkler: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=7b767cad296d17cfe071734f71a3b7b479534c8c).
 Bluetooth: Trivial clean ups to SCO (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=b9dbdbc1f4404cba2e64939c30c87d59c9796e4e).
 Bluetooth: Use single_open() for inquiry cache within debugfs (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=d4612cb86ed8db8956b6b19435f8a30de6c67ffe).
