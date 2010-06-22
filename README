@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 05-27-2011:
+Added interactive governor (Mike Chan via CyanogenMod: https://github.com/CyanogenMod/cm-kernel/commit/9e2bf2c7982cbd108461fdccb25d0ae19c46b3c9).
 Branched to 'feature-governors'.
 
 05-26-2011:
