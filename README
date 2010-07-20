@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 05-07-2011:
+Fix memory leak in cpufreq_add_dev (Xiaotian Feng: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=cad70a6ae5aaef4641a3efdfd536c30f13891afe).
 Prevent memory leak in cpufreq_stats on hotplug (Colin Cross: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=fa51e1a77ebb12ca61510370e78e679a314e3dda).
 Fix ASHMEM_SET_PROT_MASK (Arve Hjønnevåg: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=c98a285075f26e2b17a5baa2cb3eb6356a75597e).
 Applied lowmemorykiller patch: Don't wait more than one second for a process to die (Arve Hjønnevåg: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=d72d17229a7b9271560ea053b9e8e8f864658893).
