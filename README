@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-26-2011:
+ARM: 6315/1: ftrace: add ENDPROC annotations (Rabin Vincent: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=72fa62fa5dff0e2e06491dd99c429adb137f299b).
 ARM: 6653/1: bitops: Use BX instead of MOV PC,LR (Dave Martin: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=3ba6e69ad887f8a814267ed36fd4bfbddf8855a9).
 ARM: avoid marking decompressor .stack section as having contents (Russell King: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=b0c4d4ee4e4f13fa3f017c00319a18c1ea31b7d7).
 ARM: improve compiler's ability to optimize page tables (Russell King: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=c0ba10b512eb2e2a3888b6e6cc0e089f5e7a191b).
