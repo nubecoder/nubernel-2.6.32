@@ -1112,7 +1112,7 @@ static int __devinit max8998_pmic_probe(struct i2c_client *client,
 	if (!max8998)
 		return -ENOMEM;
 
-	max8998->rdev = kzalloc(sizeof(struct regulator_dev *) * (pdata->num_regulators + 1), GFP_KERNEL);
+	max8998->rdev = kzalloc(sizeof(struct regulator_dev *) * pdata->num_regulators, GFP_KERNEL);
 	if (!max8998->rdev) {
 		kfree(max8998);
 		return -ENOMEM;
@@ -1167,7 +1167,7 @@ static int __devexit max8998_pmic_remove(struct i2c_client *client)
 	struct regulator_dev **rdev = max8998->rdev;
 	int i;
 
-	for (i = 0; i <= max8998->num_regulators; i++)
+	for (i = 0; i < max8998->num_regulators; i++)
 		if (rdev[i])
 			regulator_unregister(rdev[i]);
 	kfree(max8998->rdev);
