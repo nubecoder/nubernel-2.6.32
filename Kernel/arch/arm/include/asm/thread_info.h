@@ -143,6 +143,7 @@ extern void vfp_sync_state(struct thread_info *thread);
 #define TIF_MEMDIE		18
 #define TIF_FREEZE		19
 #define TIF_RESTORE_SIGMASK	20
+#define TIF_SECCOMP		21
 
 #define _TIF_SIGPENDING		(1 << TIF_SIGPENDING)
 #define _TIF_NEED_RESCHED	(1 << TIF_NEED_RESCHED)
@@ -152,6 +153,7 @@ extern void vfp_sync_state(struct thread_info *thread);
 #define _TIF_USING_IWMMXT	(1 << TIF_USING_IWMMXT)
 #define _TIF_FREEZE		(1 << TIF_FREEZE)
 #define _TIF_RESTORE_SIGMASK	(1 << TIF_RESTORE_SIGMASK)
+#define _TIF_SECCOMP		(1 << TIF_SECCOMP)
 
 /*
  * Change these and you break ASM code in entry-common.S

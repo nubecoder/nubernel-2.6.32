@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 05-07-2011:
+Added SECCOMP support (Nicolas Pitre: http://git390.marist.edu/cgi-bin/gitweb.cgi?p=linux-2.6.git;a=commit;h=70c70d97809c3cdb8ff04f38ee3718c5385a2a4d).
 Added "Tiny RCU", The Bloatwatch Edition (Paul E. McKenney: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=9b1d82fa1611706fa7ee1505f290160a18caf95d).
 Fix Thumb-2 kernel builds when UACCESS_WITH_MEMCPY is enabled (Catalin Marinas: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=e814d826dc1821dbce3aa1ddb7f2f739f420ffd8).
 Prevent multiple syscall restarts (Russell King: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=b2b163bb82b12bae2504a5b31399c37d099ad3cc).
