@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 05-07-2011:
+Fix really nasty sigreturn bug (Al Viro: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=653d48b22166db2d8b1515ebe6f9f0f7c95dfc86).
 Fix build error in arch/arm/kernel/process.c (Russell King: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=4260415f6a3b92c5c986398d96c314df37a4ccbf).
 Fix memory allocation size for max8998->rdev (Axel Lin: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=11fa0d1d20c7cc432c77369bc8bbfbc21030e457).
 Fix memory leak in cpufreq_add_dev (Xiaotian Feng: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=cad70a6ae5aaef4641a3efdfd536c30f13891afe).
