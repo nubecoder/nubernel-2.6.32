@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-27-2011:
+ARM: S5P: Bug fix on errors of build with CONFIG_PREEMPT_NONE (SeungChull Suh: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=4341f9b38fe33aab51439ae59593e149a6f61d9f).
 ARM: SAMSUNG: Fix build warnings because of unused codes (Kukjin Kim: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=1a95036465e6abdcb639f0d7bb1ec612663caf5b).
 
 07-26-2011:
