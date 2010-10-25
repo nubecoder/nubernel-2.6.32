@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 06-04-2011:
+Add wakeup from sleep configurable parameter to smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/f7ef2f6aa83c6321100f21f6dfbd1a286161cee4).
 Changes to smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/eac5ee69928d03dc5c42ff6a46495de3c0895652).
 Added smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/41b7d84d73ae96e07f9e3be62eb09eef4b998ace).
 
