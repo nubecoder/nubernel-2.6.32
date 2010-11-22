@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 06-04-2011:
+Convert tabs to spaces in smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/9763a3b2014790f7e180f9b7a1b3dd751927f449).
 Add awake_min_freq to smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/d8ddd9d1e2254a0ec8c462e386f1d306b636c2c2).
 Add wakeup from sleep configurable parameter to smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/f7ef2f6aa83c6321100f21f6dfbd1a286161cee4).
 Changes to smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/eac5ee69928d03dc5c42ff6a46495de3c0895652).
