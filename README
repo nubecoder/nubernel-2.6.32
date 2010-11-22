@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-26-2011:
+ARM: avoid marking decompressor .stack section as having contents (Russell King: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=b0c4d4ee4e4f13fa3f017c00319a18c1ea31b7d7).
 ARM: improve compiler's ability to optimize page tables (Russell King: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=c0ba10b512eb2e2a3888b6e6cc0e089f5e7a191b).
 ARM: 6490/1: MM: bugfix: initialize spinlock for init_mm.context (MyungJoo Ham: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=28c22d7dc99486ef4186dde41d5260e75b3076f7).
 ARM: Fix csum_partial_copy_from_user() (Russell King: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=4609a179c97ae60fef173547a9bbb214359808ce).
