@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-26-2011:
+ARM: 6490/1: MM: bugfix: initialize spinlock for init_mm.context (MyungJoo Ham: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=28c22d7dc99486ef4186dde41d5260e75b3076f7).
 ARM: Fix csum_partial_copy_from_user() (Russell King: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=4609a179c97ae60fef173547a9bbb214359808ce).
 ARM: 6519/1: kuser: Fix incorrect cmpxchg syscall in kuser helpers (Dave Martin: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=55afd264cdd5d5848753e90884ed596e11bce0ff).
 ARM: 6468/1: backtrace: fix calculation of thread stack base (Will Deacon: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=d33aadbf8e9ba0b844c2a4a03723969c913ab03a).
