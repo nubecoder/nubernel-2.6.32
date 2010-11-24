@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 05-07-2011:
+Applied lowmemorykiller patch: Don't wait more than one second for a process to die (Arve Hjønnevåg: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=d72d17229a7b9271560ea053b9e8e8f864658893).
 Applied patch series for Ext4 (tytso via Bonsai: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/e1e481169cc6dbdfa358914e8e473bdb2a088030).
 Applied lowmemorykiller patch: don't unregister notifier from atomic context (Rabin Vincent: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=5545554aac04918ece318270d63cbfcb015577a9).
 Fix compile error for idle timer (tanimn: https://github.com/tanimn/Twilight_Zone_Kernel/commit/b615fff7d3ff365e50481f3015900c2457301aa0).
