@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+07-24-2011:
+ipv6: Prepare the tree for un-inlined jhash (Jozsef Kadlecsik: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=82a39eb6b3829a02e235656feddb4542517fcabc).
+
 07-23-2011:
 ARM: only allow 26-bit user mode on CPUs that support it (Dima Zavin: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=049a7464f34e2d8c73646d2571f1935f19ac694c).
 USB: android gadget: mass storage: Fix format issue for Vista Host (Velempati Chiranjeevi: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=fd515513a38b53d2b961cbbc9c4fdaeedec74d44).
