@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-24-2011:
+The new jhash implementation (Jozsef Kadlecsik: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=60d509c823cca21e77d537bd356785f7cfe8f0d1).
 ipv6: Prepare the tree for un-inlined jhash (Jozsef Kadlecsik: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=82a39eb6b3829a02e235656feddb4542517fcabc).
 
 07-23-2011:
