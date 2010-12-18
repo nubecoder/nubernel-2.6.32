@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+06-05-2011:
+Selective changes to smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/6d62c169faa4d03205a4cc00767ec069473dfe82).
+
 06-04-2011:
 Major tweaking and bug squasing to the smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/beb6b4d71c7883800c3b5cc17631cd4ddb11ce66).
 Logic rewrite / cleanup of smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/d701a9ea0629a218ce8860d3f8481273680e68a8).
