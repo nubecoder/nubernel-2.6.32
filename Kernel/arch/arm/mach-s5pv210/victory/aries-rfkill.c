@@ -99,7 +99,7 @@ static int bluetooth_set_power(void *data, enum rfkill_user_states state)
 			printk( "[BT] GPIO_WLAN_BT_EN = %d\n", gpio_get_value(GPIO_WLAN_BT_EN));
 			/*FIXME sleep should be enabled disabled since the device is not booting
 			 * 			if its enabled*/
-			msleep(150);  // 100msec, delay  between reg_on & rst. (bcm4329 powerup sequence)
+			msleep(200);  // 100msec, delay  between reg_on & rst. (bcm4329 powerup sequence)
 
 			/* Set GPIO_BT_nRST high */
 			s3c_gpio_setpull(GPIO_BT_nRST, S3C_GPIO_PULL_NONE);

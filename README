@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-27-2011:
+ARM: herring: Increase delay to 200 ms in wlan power on (Dmitry Shmidt: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=9e3aca5aed77290075be4ce59ff1a0feabfa2ab3).
 shmem: reduce pagefault lock contention (Shaohua Li: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=ff36b801624d02a876bb7deded6ab860ea3503f2).
 android-common: include linux/slab.h (Arve Hjønnevåg: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=eaa7ea1e2bbe79f6af8bb282288ea33ec3149535).
 android-common: Fix slab.h includes for 2.6.34-rc4 (Colin Cross: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0981b8f4d278b6d1dcf2dee7185e79c4f1e427d5).
