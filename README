@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 05-06-2011:
+Set 4k read ahead in mtd_blkdevs.c (Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/98e056fb95419865a28138281b710c68989283e6).
 Changed swappiness from 60 to 10 (Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/ccc8837e761f8ee2774ac4a5a78eca9da08824f9).
 Commented out "BUG_ON(!gps_dev)" in mach-aries-gps.c (Dameon87 via nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/422fbcf9aaa86833cb0f34e8dc244769664a752d).
 Expose sysfs file for scaling_available_frequencies (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/5da806c6fafff535a31b6d4863ad1ecdf6a113d1).
