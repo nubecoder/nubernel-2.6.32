@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 05-06-2011:
+Fix tv20 compile error (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/73113db76b1e85e8d1816097ff180737a3238df5).
 Branched to 'feature-misc_patches'.
 
 05-06-2011:
