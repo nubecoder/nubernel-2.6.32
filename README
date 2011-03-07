@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+05-07-2011:
+Added idle timer from 2.6.34 (nullghost via tanimn: https://github.com/tanimn/Twilight_Zone_Kernel/commit/ee501b7ceef1e4d85fe3dbefe466143200a7a2ca).
+
 05-06-2011:
 Loglevel set in defconfig for modular logging (gzub: https://github.com/gzub/EC05-Zub/commit/9411ec0ec97bbedeccaf1e86d365101f6c2c0fa1).
 Compile host OS tools with 03 (gzub: https://github.com/gzub/EC05-Zub/commit/2ffe0408f656f47fadab08c3d4d8c8bff3e45f0c).
