@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+07-28-2011:
+net: wireless: bcm4329: Disable wake irq at driver stop (Dmitry Shmidt: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=6ce9cbeef4cb7074beffbd5652b0943c8aec1246).
+
 07-27-2011:
 ASOC: update CDMA specific clock settings (Thomas Ryu via Bonsai: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/b2938ff3ea380a43fc4c26953f29b1bf39e86846).
 staging: binder: Fix use of uninitialized variable (Nick Kralevich: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=4ef78fa8848b4a6fc60268431492d1502454fb5e).
