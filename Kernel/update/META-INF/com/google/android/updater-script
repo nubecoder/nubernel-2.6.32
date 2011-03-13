@@ -1,0 +1,10 @@
+# ---- Flash the kernel ----
+ui_print("Copying kernel...");
+show_progress(0.100000, 60);
+package_extract_dir("kernel", "/tmp");
+
+show_progress(0.100000, 10);
+set_perm(0, 0, 0755, "/tmp/redbend_ua");
+ui_print("Flashing kernel. Your screen will flash...");
+run_program("/tmp/redbend_ua", "restore", "/tmp/zImage", "/dev/block/bml7");
+show_progress(1.000000, 0);

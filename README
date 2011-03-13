@@ -7,6 +7,9 @@ http://www.nubecoder.com/
 
 Changelog:
 
+4-25-2011:
+Change cross_compile and add ability to generate update.zip (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/2ba3958f27faa3920b0b8c68f85ea2f179169a45).
+
 4-24-2011:
 Some changes to nullghost's build script.
 Added nullghost's build_kernel.sh (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/9739fd6e3e40b18beeb79a64a6cbcb0191ec922a).
