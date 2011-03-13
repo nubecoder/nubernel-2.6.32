@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-04-2011:
+Makefile fix for non-gnueabi toolchains (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/2c979fb53092957a657ff9787cb6c061ddb3e62d).
 Changes to ncBuildHelper.sh for inclusion of wiredFlashHelper.sh.
 Added wiredFlashHelper.sh (for when Wifi isn't an option).
 Changes to wifiFlashHelper.sh.
