@@ -1,0 +1,4 @@
+modver=SPH-D700_nubernel-kernel_v0.0.0
+post-build=google/passion/passion/mahimahi:2.2.1/FRG83/60505:user/release-keys
+post-timestamp=0
+pre-device=epic

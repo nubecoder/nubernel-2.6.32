@@ -40,21 +40,22 @@ ui_print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 ui_print("@             nubernel-kernel v0.0.0           @");
 ui_print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 ui_print("");
-ui_print("Your screen will flash while updating.");
 sleep(2);
 
 ui_print("");
 ui_print("Flashing kernel image.");
 ui_print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-assert(delete("/sbin/reboot"),
-	package_extract_file("redbend_ua", "/tmp/redbend_ua"),
-	package_extract_file("zImage", "/tmp/zImage"));
-set_perm(0, 0, 0755, "/tmp/redbend_ua");
-assert(run_program("/tmp/redbend_ua", "restore", "/tmp/zImage", "/dev/block/bml7"));
+assert(
+	package_extract_file("bmlwrite", "/tmp/bmlwrite"),
+	package_extract_file("zImage", "/tmp/zImage")
+	);
+set_perm(0, 0, 0755, "/tmp/bmlwrite");
+assert(
+	run_program("/tmp/bmlwrite", "/tmp/zImage", "/dev/block/bml7")
+	);
 sleep(0.5);
 ui_print("");
 ui_print("Finished.");
 ui_print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 sleep(3);
 ui_print("");
-
