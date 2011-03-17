@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-28-2011:
+ARM: S5PC11X: reduce waiting time of CDMA modem power-off (Thomas Ryu: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=fba9fb35d8b6cc8789ab020983457988c04d2593).
 net: wireless: bcm4329: Disable wake irq at driver stop (Dmitry Shmidt: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=6ce9cbeef4cb7074beffbd5652b0943c8aec1246).
 
 07-27-2011:
