@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 05-07-2011:
+Voodoo sound: driver v5 (supercurio: https://github.com/project-voodoo/linux_sph-d700/commit/6ef87ad029eb21f0cae62fa2ac6a4c51ab489b1b).
 Branched to 'feature-Voodoo_Sound'.
 
 05-06-2011:
