@@ -9,7 +9,7 @@ MKZIP='7z -mx9 -mmt=1 a "$OUTFILE" .'
 PRODUCE_TAR=n
 PRODUCE_ZIP=n
 TARGET="nubernel_kernel"
-THREADS=2
+THREADS=$(expr 1 + $(grep processor /proc/cpuinfo | wc -l))
 VERSION=$(date +%m%d%Y)
 
 SHOW_HELP()
@@ -20,7 +20,7 @@ SHOW_HELP()
 	echo "-d : Use specified config."
 	echo "     For example, use -d myconfig to 'make myconfig_defconfig'."
 	echo "-h : Print this help."
-	echo "-j : Use a specified number of threads to build."
+	echo "-j : Use a specified number of threads to build (auto detected by default)."
 	echo "     For example, use -j4 to make with 4 threads."
 	echo "-t : Produce tar file suitable for flashing with Odin."
 	echo "-z : Produce zip file suitable for flashing via Recovery."

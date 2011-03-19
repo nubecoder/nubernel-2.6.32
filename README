@@ -8,6 +8,7 @@ http://www.nubecoder.com/
 Changelog:
 
 4-25-2011:
+Changed build script to auto detect number of cpu cores (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/f9e96145b4fe56bbc7d61552ea9a123fccd4e4f7).
 Switch to bmlwrite in the update.zip (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/9aea535827d71a0ec7f2c3da04f83e42d6a9394f).
 Update.zip related changes.
 Change cross_compile and add ability to generate update.zip (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/2ba3958f27faa3920b0b8c68f85ea2f179169a45).
