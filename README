@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-30-2011:
+Updated BFQ to v2 (thalamus via netarchy: https://github.com/netarchy/nexus-s/commit/bd88709fedb771506b72b4c0c524a53651dd5d3b).
 Branched to 'feature-patches'.
 
 07-29-2011:
