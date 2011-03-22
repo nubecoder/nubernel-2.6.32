@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 05-07-2011:
+Fix compile error for idle timer (tanimn: https://github.com/tanimn/Twilight_Zone_Kernel/commit/b615fff7d3ff365e50481f3015900c2457301aa0).
 Added idle timer from 2.6.34 (nullghost via tanimn: https://github.com/tanimn/Twilight_Zone_Kernel/commit/ee501b7ceef1e4d85fe3dbefe466143200a7a2ca).
 
 05-06-2011:
