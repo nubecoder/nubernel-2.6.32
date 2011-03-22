@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-30-2011:
+Updated BFQ-v2 to BFQ-v2-r1 (Paolo Valente via netarchy: https://github.com/netarchy/nexus-s/commit/2286f36fa687b3ef7c8e354d9385d16e75c00e15).
 Updated BFQ to v2 (thalamus via netarchy: https://github.com/netarchy/nexus-s/commit/bd88709fedb771506b72b4c0c524a53651dd5d3b).
 Branched to 'feature-patches'.
 
