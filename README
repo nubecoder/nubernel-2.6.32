@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 05-06-2011:
+Optimized config flags (gzub: https://github.com/gzub/EC05-Zub/commit/68e3d8f7070a17d82db768170aef97d0dbfebd59).
 Applied keyboard delay sysfs patch (mkasick via Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/7f1de5d146bae58ee3a8d71765ed6495922a58c6).
 Set 4k read ahead in mtd_blkdevs.c (Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/98e056fb95419865a28138281b710c68989283e6).
 Changed swappiness from 60 to 10 (Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/ccc8837e761f8ee2774ac4a5a78eca9da08824f9).
