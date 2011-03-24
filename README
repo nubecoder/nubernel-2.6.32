@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-28-2011:
+ASOC: delay after turning on codec (sh21.won: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=44aec062d82fe3ca2ab8bdf1ee0c5bbd8a85e4b2).
 S5PC11X: USB: Remove unnecessary code for USB Tethering (sb223.kang: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=cffd6dc859595618113470a1cf2dbb574813f10e).
 ARM: S5PC11X: reduce waiting time of CDMA modem power-off (Thomas Ryu: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=fba9fb35d8b6cc8789ab020983457988c04d2593).
 net: wireless: bcm4329: Disable wake irq at driver stop (Dmitry Shmidt: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=6ce9cbeef4cb7074beffbd5652b0943c8aec1246).
