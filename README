@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-14-2011:
+Fixing up 1120MHz frequency (gzub: https://github.com/gzub/EC05-Zub/commit/a94a9f9c7392f7418872cd11ec3fa218613bba05).
 Fixing up the 100MHz frequency (gzub: https://github.com/gzub/EC05-Zub/commit/f96e403e1fc38d7a9c61d94af19b40037f824d66).
 Branched to 'feature-dvfs'.
 
