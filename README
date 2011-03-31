@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 05-06-2011:
+Compile host OS tools with 03 (gzub: https://github.com/gzub/EC05-Zub/commit/2ffe0408f656f47fadab08c3d4d8c8bff3e45f0c).
 Optimized config flags (gzub: https://github.com/gzub/EC05-Zub/commit/68e3d8f7070a17d82db768170aef97d0dbfebd59).
 Applied keyboard delay sysfs patch (mkasick via Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/7f1de5d146bae58ee3a8d71765ed6495922a58c6).
 Set 4k read ahead in mtd_blkdevs.c (Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/98e056fb95419865a28138281b710c68989283e6).
