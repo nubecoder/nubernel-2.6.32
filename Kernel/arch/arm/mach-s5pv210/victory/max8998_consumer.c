@@ -57,7 +57,7 @@
 #endif
 
 #ifndef CONFIG_CPU_FREQ
-unsigned int S5PC11X_FREQ_TAB = 1;
+unsigned int S5PC11X_FREQ_TAB = 0;
 #endif
 
 #define RAMP_RATE 10 // 10mv/usec
@@ -83,7 +83,7 @@ enum PMIC_VOLTAGE {
 };
 
 /* frequency voltage matching table */
-static const unsigned int frequency_match_1GHZ[][4] = {
+static const unsigned int frequency_match_1GHZ[NUM_FREQ][4] = {
 /* frequency, Mathced VDD ARM voltage , Matched VDD INT*/
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
 	{1400000, 1375, 1125, 0}, //WARNING: out of spec voltage for VDD_ARM
@@ -108,7 +108,7 @@ static const unsigned int frequency_match_1GHZ[][4] = {
 #endif // end CONFIG_MACH_S5PC110_ARIES_OC
 };
 
-unsigned int frequency_voltage_tab[][3] = {
+unsigned int frequency_voltage_tab[NUM_FREQ][3] = {
 /* frequency, Mathced VDD ARM voltage , Matched VDD INT*/
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
 	{1400000, 1375, 1125}, //WARNING: out of spec voltage for VDD_ARM
@@ -132,30 +132,11 @@ unsigned int frequency_voltage_tab[][3] = {
 	{100000, 950, 1000},
 #endif // end CONFIG_MACH_S5PC110_ARIES_OC
 };
-
-static const unsigned int frequency_match_800MHZ[][4] = {
-/* frequency, Mathced VDD ARM voltage , Matched VDD INT*/
-	{800000, 1200, 1100, 0},
-	{400000, 1050, 1100, 1},
-	{200000, 950, 1000, 2},
-	{100000, 950, 1000, 3},
-};
-const unsigned int (*frequency_match[2])[4] = {
+const unsigned int (*frequency_match[1])[4] = {
         frequency_match_1GHZ,
-        frequency_match_800MHZ,
 };
-
-#if 0
-/*  voltage table */
-static const unsigned int voltage_table[33] = {
-	700, 725, 750, 775, 800, 825, 850, 875, 900, 925, 950, 975, 1000,
-	1025, 1050, 1075, 1100, 1125, 1150, 1175, 1200, 1225, 1250, 1275,
-	1300, 1325, 1350, 1375, 1400, 1425, 1450, 1475, 1500
-};
-#endif
 
 extern unsigned int S5PC11X_FREQ_TAB;
-//extern const unsigned int (*frequency_match[2])[4];
 
 extern u32 ControllerControlRegister0;
 extern u32 ControllerControlRegister1;
@@ -180,15 +161,7 @@ static struct regulator *Reg_Arm = NULL, *Reg_Int = NULL;
 static unsigned int s_arm_voltage=0, s_int_voltage=0;
 
 #ifndef DECREASE_DVFS_DELAY
-/*only 4 Arm voltages and 2 internal voltages possible*/
-static const unsigned int dvs_volt_table_800MHZ[][3] = {
-	{0, DVSARM2, DVSINT1},  //800
-	{1, DVSARM3, DVSINT1},  //400
-	{2, DVSARM4, DVSINT2},  //200
-	{3, DVSARM4, DVSINT2},  //100
-};
-
-static const unsigned int dvs_volt_table_1GHZ[][3] = {
+static const unsigned int dvs_volt_table_1GHZ[NUM_FREQ][3] = {
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
 	{0, DVSARM1, DVSINT1},  //1400
 	{1, DVSARM1, DVSINT1},  //1300
@@ -212,12 +185,12 @@ static const unsigned int dvs_volt_table_1GHZ[][3] = {
 #endif // end CONFIG_MACH_S5PC110_ARIES_OC
 };
 
-const unsigned int (*dvs_volt_table[2])[3] = {
+const unsigned int (*dvs_volt_table[1])[3] = {
 	dvs_volt_table_1GHZ,
-	dvs_volt_table_800MHZ,
 };
 
-static const unsigned int dvs_arm_voltage_set[][2] = {
+/*only 4 Arm voltages and 2 internal voltages possible*/
+static const unsigned int dvs_arm_voltage_set[6][2] = {
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
 	{DVSARM1, 1375},
 	{DVSARM2, 1200},
@@ -236,11 +209,8 @@ static const unsigned int dvs_arm_voltage_set[][2] = {
 };
 #endif
 
-#ifdef CONFIG_MACH_S5PC110_ARIES_OC
-extern unsigned int exp_UV_mV[11];
-#else // no OC
-extern unsigned int exp_UV_mV[7];
-#endif // end CONFIG_MACH_S5PC110_ARIES_OC
+extern unsigned int exp_UV_mV[NUM_FREQ];
+
 //Controller Control Register (ConControl, R/W, Address = 0xF000_0000, 0xF140_0000)
 u32 readControllerControlRegister0(int param) {
 	return __raw_readl(S5P_VA_DMC0);
@@ -435,7 +405,6 @@ static int set_max8998(unsigned int pwr, enum perf_level p_lv)
 	//DBG("%s : p_lv = %d : pwr = %d \n", __FUNCTION__, p_lv,pwr);
 
 	if(pwr == PMIC_ARM) {
-		//voltage = frequency_match_tab[p_lv][pwr + 1];
 		voltage = frequency_match_tab[p_lv][pwr + 1] - (exp_UV_mV[p_lv]);
 
 		if(frequency_voltage_tab[p_lv][2] != voltage)
@@ -487,7 +456,6 @@ static int set_max8998(unsigned int pwr, enum perf_level p_lv)
 		pmic_val = voltage * 1000;
 
 		//DBG("regulator_set_voltage =%d\n",voltage);
-		//printk(KERN_NOTICE "regulator_set_voltage =%dmA @ %dMHz-%d UV=%d\n",voltage,frequency_match_tab[p_lv][pwr]/1000,p_lv,exp_UV_mV[p_lv]);
 		//DBG("regulator_set_voltage =%dmA @ %dMHz-%d UV=%d\n",voltage,frequency_match_tab[p_lv][pwr]/1000,p_lv,exp_UV_mV[p_lv]);
 		/*set Arm voltage*/
 		ret = regulator_set_voltage(Reg_Arm,pmic_val,pmic_val);

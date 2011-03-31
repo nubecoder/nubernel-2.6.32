@@ -28,37 +28,36 @@
 #include <linux/cpu.h>
 #include <linux/completion.h>
 #include <linux/mutex.h>
+#include <mach/cpu-freq-v210.h>
 
 #define dprintk(msg...) cpufreq_debug_printk(CPUFREQ_DEBUG_CORE, \
 						"cpufreq-core", msg)
 
-#ifdef CONFIG_MACH_S5PC110_ARIES_OC
 // default undervolts
-unsigned int exp_UV_mV[11] = {
+unsigned int exp_UV_mV[NUM_FREQ] = {
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
 	0,0,0,0,	// 1400,1300,1200,1120,
 	0,0,0,0,	// 1000,900,800,600,
 	0,0,0			// 400,200,100
-};
-// default enabled states
-int active_states[11] = {
-	0,0,1,1,	//1400,1300,1200,1120,
-	1,1,1,1,	//1000,900,800,600,
-	1,1,1			//400,200,100
-};
 #else // no OC
-// default undervolts
-unsigned int exp_UV_mV[7] = {
-	0,0,0,0,	//1000,900,800,600,
-	0,0,0			//400,200,100
+	0,0,0,0,	// 1000,900,800,600,
+	0,0,0			// 400,200,100
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
 };
 // default enabled states
-int active_states[7] = {
-	1,1,1,1,	//1000,900,800,600,
-	1,1,1			//400,200,100
-};
+int active_states[NUM_FREQ] = {
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+	0,0,1,1,	// 1400,1300,1200,1120,
+	1,1,1,1,	// 1000,900,800,600,
+	1,1,1			// 400,200,100
+#else // no OC
+	1,1,1,1,	// 1000,900,800,600,
+	1,1,1			// 400,200,100
 #endif // end CONFIG_MACH_S5PC110_ARIES_OC
-extern unsigned int s5pc110_thres_table_1GHZ[][2];
-extern unsigned int frequency_voltage_tab[][3];
+};
+
+extern unsigned int s5pc110_thres_table_1GHZ[NUM_FREQ][2];
+extern unsigned int frequency_voltage_tab[NUM_FREQ][3];
 
 int exp_update_states = 1;
 

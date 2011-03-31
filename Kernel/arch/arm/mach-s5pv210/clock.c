@@ -32,6 +32,7 @@
 #include <plat/clock-clksrc.h>
 #include <plat/s5pv210.h>
 #include <mach/regs-audss.h>
+#include <mach/cpu-freq-v210.h>
 
 #define DBG(fmt...) 
 //#define DBG(fmt...) printk(fmt)
@@ -72,7 +73,7 @@ struct S5PC110_clk_info {
 	PCLK_MSYS = HCLK_MSYS / (PCLK_MSYS_RATIO + 1)
 */
 
-struct S5PC110_clk_info clk_info[] = {
+struct S5PC110_clk_info clk_info[NUM_FREQ] = {
 #if CONFIG_MACH_S5PC110_ARIES_OC
 	{
 	// APLL:1400,ARMCLK:1400,HCLK_MSYS:200,MPLL:667,HCLK_DSYS:166,HCLK_PSYS:133,PCLK_MSYS:100,PCLK_DSYS:83,PCLK_PSYS:66
