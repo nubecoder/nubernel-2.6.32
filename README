@@ -8,6 +8,7 @@ http://www.nubecoder.com/
 Changelog:
 
 4-23-2011:
+Added .gitignore file (gzub: https://github.com/gzub/EC05-Zub/commit/ac3e7e09558cb71c15818f451f75101b0ff4c377).
 Configured toolchain in build_kernel.sh.
 Some file clean up (make distclean).
 
