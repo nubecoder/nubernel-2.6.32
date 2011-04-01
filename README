@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+06-14-2011:
+New CPU frequencies and sysfs undervolting support (multiple via Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/f47551598e22409cf32f96bf1decf65b0e8d1ce9).
+
 06-13-2011:
 Branched to 'feature-clock_rates'.
 
