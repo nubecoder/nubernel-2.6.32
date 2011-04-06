@@ -905,9 +905,10 @@ static int onedram_get_semaphore(const char *func)
 	}
 
 	unreceived_semaphore++;
-	printk(KERN_ERR "[OneDRAM](%s) Failed to get a Semaphore. sem:%d, PHONE_ACTIVE:%s, fail_cnt:%d\n", 
+	if (unreceived_semaphore > 1){
+		printk(KERN_ERR "[OneDRAM](%s) Failed to get a Semaphore. sem:%d, PHONE_ACTIVE:%s, fail_cnt:%d\n",
 			func, *onedram_sem,	gpio_get_value(GPIO_PHONE_ACTIVE)?"HIGH":"LOW ", unreceived_semaphore);
-
+	}
 #ifdef _ENABLE_ERROR_DEVICE
 	if(unreceived_semaphore > 10)
 		request_phone_reset();
@@ -1957,7 +1958,7 @@ static int dpram_tty_open(struct tty_struct *tty, struct file *file)
 	}
 
 	tty->driver_data = (void *)device;
-	tty->low_latency = 1;
+	//tty->low_latency = 1;
 	return 0;
 }
 
@@ -2906,7 +2907,7 @@ static int vs_open(struct tty_struct *tty, struct file *filp)
 	}
 
 	tty->driver_data = (void *)dev;
-	tty->low_latency = 1;
+	//tty->low_latency = 1;
 	dev->vs_dev.tty = tty;
 	dev->vs_dev.refcount++;
 	printk(KERN_ERR "[%s] %s, refcount: %d \n", __func__, tty->driver->name, dev->vs_dev.refcount);

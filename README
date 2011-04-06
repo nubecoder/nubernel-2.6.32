@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-27-2011:
+Fix tty low latency causing an interrupt during a spinlock (gzub via Bonsai: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/f964f1e655fb496d78ffcf0f3ffd731d4c4070b8).
 ARM: SAMSUNG: Add a workaround for get_clock() for serial driver (Marek Szyprowski: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=7cf4b482f06df0b590a9bc1561a5a81d67e0fe4c).
 ARM: S5P: Bug fix on errors of build with CONFIG_PREEMPT_NONE (SeungChull Suh: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=4341f9b38fe33aab51439ae59593e149a6f61d9f).
 ARM: SAMSUNG: Fix build warnings because of unused codes (Kukjin Kim: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=1a95036465e6abdcb639f0d7bb1ec612663caf5b).
