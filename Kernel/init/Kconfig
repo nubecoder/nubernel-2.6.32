@@ -649,6 +649,8 @@ config RELAY
 
 	  If unsure, say N.
 
+source "kernel/nubernel/Kconfig"
+
 config NAMESPACES
 	bool "Namespaces support" if EMBEDDED
 	default !EMBEDDED

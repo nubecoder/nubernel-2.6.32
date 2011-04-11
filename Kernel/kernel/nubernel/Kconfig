@@ -1,0 +1,12 @@
+# kernel/nubernel/Kconfig
+#
+# nubecoder 2011
+#
+# Licensed under GPLv2
+
+config NUBERNEL_SYSFS
+	bool "Nubernel parent Kset"
+	depends on SYSFS
+	default y
+	help
+		Adds a sysfs folder "/sys/nubernel"
