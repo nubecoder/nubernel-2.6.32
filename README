@@ -7,6 +7,9 @@ http://www.nubecoder.com/
 
 Changelog:
 
+4-24-2011:
+A bit more file cleanup (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/4145246ce46ab57b4d2c1952cdb0341d26233f03).
+
 4-23-2011:
 A bit of initramfs script clean up.
 More clean up and modifications to build_kernel.sh.
