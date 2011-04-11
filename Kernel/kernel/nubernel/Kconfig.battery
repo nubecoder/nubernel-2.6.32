@@ -1,0 +1,30 @@
+# kernel/nubernel/Kconfig.battery
+#
+# nubecoder 2011
+#
+# Licensed under GPLv2
+
+if NUBERNEL_SYSFS
+
+config NUBERNEL_CHARGE_CONTROL_SYSFS
+	bool "Battery full charge control via sysfs"
+	depends on NUBERNEL_SYSFS && SYSFS
+	default y
+	help
+		Adds a sysfs folder "/sys/nubernel/chargecontrol"
+
+config NUBERNEL_FUEL_GAUGE_SYSFS
+	bool "Battery percentage control via sysfs"
+	depends on NUBERNEL_SYSFS && SYSFS
+	default y
+	help
+		Adds a sysfs folder "/sys/nubernel/fuelgauge"
+
+config NUBERNEL_CHARGE_RATE_SYSFS
+	bool "Battery charge rate control via sysfs"
+	depends on NUBERNEL_SYSFS && SYSFS
+	default y
+	help
+		Adds a sysfs folder "/sys/nubernel/chargerate"
+
+endif

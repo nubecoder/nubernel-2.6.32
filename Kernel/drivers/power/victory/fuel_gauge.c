@@ -1,6 +1,12 @@
 #include <linux/delay.h>
 #include <linux/i2c.h>
 
+#ifdef CONFIG_NUBERNEL_SYSFS
+#include <linux/nubernel/nc_kset.h>
+#else
+#define FG_ADJ_VALUE_DEFAULT		950
+#endif
+
 /* Slave address */
 #define MAX17040_SLAVE_ADDR	0x6D
 
@@ -17,6 +23,21 @@
 #define CMD1_REG			0xFF
 
 #define __ADVANCED_SOC_VALUE__	// hanapark
+
+#ifdef CONFIG_NUBERNEL_FUEL_GAUGE_SYSFS
+
+#ifdef __ADVANCED_SOC_VALUE__
+#define FG_ADJ_VALUE		fg_adj_value
+unsigned long fg_adj_value =		FG_ADJ_VALUE_DEFAULT;
+#endif /* __ADVANCED_SOC_VALUE__ */
+
+#else
+
+#ifdef __ADVANCED_SOC_VALUE__
+#define FG_ADJ_VALUE		FG_ADJ_VALUE_DEFAULT
+#endif	/* __ADVANCED_SOC_VALUE__ */
+
+#endif /* CONFIG_NUBERNEL_FUEL_GAUGE_SYSFS */
 
 static struct i2c_driver fg_i2c_driver;
 static struct i2c_client *fg_i2c_client = NULL;
@@ -154,7 +175,7 @@ unsigned int fg_read_soc(void)
 #else
 		if (data[0])
 		{
-			adj_soc = (((data[0]*10) - 15) * 100) / (950 - 15);	// hanapark_Atlas
+			adj_soc = (((data[0]*10) - 15) * 100) / (FG_ADJ_VALUE - 15);// (950 - 15); // hanapark_Atlas
 			if (adj_soc > 100)
 				adj_soc = 100;
 			else if (adj_soc < 0)
@@ -252,19 +273,92 @@ static struct i2c_driver fg_i2c_driver = {
 	.id_table	= fg_device_id,
 };
 
+#ifdef CONFIG_NUBERNEL_FUEL_GAUGE_SYSFS
+
+#ifdef __ADVANCED_SOC_VALUE__
+static ssize_t fg_adj_value_show(struct nubernel_obj *nubernel_obj, struct nubernel_attribute *attr, char *buf)
+{
+	unsigned long var;
+	var = fg_adj_value;
+	return snprintf(buf, PAGE_SIZE, "%lu\n", var);
+}
+static ssize_t fg_adj_value_store(struct nubernel_obj *nubernel_obj, struct nubernel_attribute *attr, const char *buf, size_t count)
+{
+	unsigned long var;
+	int res;
+
+	if ((res = strict_strtoul(buf, 10, &var)) < 0)
+		return res;
+
+	if (var < FG_ADJ_VALUE_DEFAULT || var > FG_ADJ_VALUE_MAX)
+		return -EINVAL;
+
+	fg_adj_value = var;
+	return count;
+}
+static struct nubernel_attribute fg_adj_value_attribute =
+	__ATTR(fg_adj_value, 0666, fg_adj_value_show, fg_adj_value_store);
+#endif /* __ADVANCED_SOC_VALUE__ */
+
+static struct attribute * fuel_gauge_attrs[] = {
+#ifdef __ADVANCED_SOC_VALUE__
+	&fg_adj_value_attribute.attr,
+#endif /* __ADVANCED_SOC_VALUE__ */
+	NULL // null terminated
+};
+static struct attribute_group fuel_gauge_group = {
+	.attrs = fuel_gauge_attrs,
+};
+struct nubernel_obj *fuel_gauge_obj;
+#endif /* CONFIG_NUBERNEL_FUEL_GAUGE_SYSFS */
+
 int fg_init(void)
 {
 	int ret;
 
+#ifdef CONFIG_NUBERNEL_FUEL_GAUGE_SYSFS
+	int error;
+#endif /* CONFIG_NUBERNEL_FUEL_GAUGE_SYSFS */
+
 	ret = i2c_add_driver(&fg_i2c_driver);
 	if (ret)
 		pr_err("%s: Can't add fg i2c drv\n", __func__);
+
+#ifdef CONFIG_NUBERNEL_FUEL_GAUGE_SYSFS
+	error = nc_kset_init();
+	if (error)
+	{
+		return error;
+	}
+	fuel_gauge_obj = create_nubernel_obj("fuelgauge");
+	if (!fuel_gauge_obj)
+	{
+		return -ENOMEM;
+	}
+#ifdef __ADVANCED_SOC_VALUE__
+	error = nubernel_sysfs_create_file(fuel_gauge_obj, &fg_adj_value_attribute);
+	if (error)
+	{
+		destroy_nubernel_obj(fuel_gauge_obj);
+		return error;
+	}
+#endif /* __ADVANCED_SOC_VALUE__ */
+#endif /* CONFIG_NUBERNEL_FUEL_GAUGE_SYSFS */
 
 	return ret;
 }
 
 void fg_exit(void)
 {
+
+#ifdef CONFIG_NUBERNEL_FUEL_GAUGE_SYSFS
+#ifdef __ADVANCED_SOC_VALUE__
+	nubernel_sysfs_remove_file(fuel_gauge_obj, &fg_adj_value_attribute);
+#endif /* __ADVANCED_SOC_VALUE__ */
+	destroy_nubernel_obj(fuel_gauge_obj);
+	nc_kset_exit();
+#endif /* CONFIG_NUBERNEL_FUEL_GAUGE_SYSFS */
+
 	i2c_del_driver(&fg_i2c_driver);
 }
 

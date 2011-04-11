@@ -10,3 +10,5 @@ config NUBERNEL_SYSFS
 	default y
 	help
 		Adds a sysfs folder "/sys/nubernel"
+
+source "kernel/nubernel/Kconfig.battery"
