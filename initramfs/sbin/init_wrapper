@@ -73,6 +73,12 @@ if [ ! -f "/system/etc/resolv.conf" ]; then
 	echo "nameserver 8.8.4.4" >> /system/etc/resolv.conf
 fi
 
+# keyboard patch sysfs
+if [ ! -f "/data/local/timer_delay" ]; then
+  echo 5 > /data/local/timer_delay
+fi
+cat /data/local/timer_delay > /sys/devices/platform/s3c-keypad/timer_delay
+
 sync
 
 mount -o remount,ro / /
