@@ -28,6 +28,7 @@ Some changes to nullghost's build script.
 Added nullghost's build_kernel.sh (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/9739fd6e3e40b18beeb79a64a6cbcb0191ec922a).
 Fixing up README.
 A bit more file cleanup (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/4145246ce46ab57b4d2c1952cdb0341d26233f03).
+More changes to initramfs for recovery (koush: https://github.com/koush/Twilight_Zone_Kernel/commit/f057d85ec8d79fe2385f9cf124e4d12802c53ed9).
 Changes to initramfs for recovery (koush: https://github.com/koush/Twilight_Zone_Kernel/commit/3739b0c1588687a05af186dc57075738e76f45e5).
 A bit of initramfs script clean up.
 
