@@ -8,6 +8,7 @@ http://www.nubecoder.com/
 Changelog:
 
 4-23-2011:
+Exclude .git and .svn from gen_initramfs_list.sh (Bonsai: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/090c19f74706fb578dc2c479e5c6fe451393afa2).
 Added wifi_kernel_flasher.sh.
 Add toolchains folder to .gitignore.
 Disabled iqmsd service in initramfs.
