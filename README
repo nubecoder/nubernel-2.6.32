@@ -1,0 +1,15 @@
+nubernel-kernel
+
+Samsung SPH-D700 (Epic 4G) kernel by nubecoder
+
+http://www.nubecoder.com/
+
+
+Changelog:
+
+4-22-2011:
+Added stock EC05 initramfs files.
+Added stock EC05 kernel source files.
+Added this README.
+Configured git line endings (http://help.github.com/dealing-with-lineendings/).
+
