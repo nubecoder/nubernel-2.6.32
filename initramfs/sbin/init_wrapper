@@ -20,7 +20,8 @@ ln -s /sbin/busybox /system/xbin/busybox
 rm -rf /res
 sync
 
-# Fixing ownership
+# Fixing permissions and ownership
+chmod 755 /sbin/*
 for blip in conf default.prop fota.rc init init.goldfish.rc init.rc init.smdkc110.rc lib lpm.rc modules recovery.rc res sbin
 do
 	chown root.system /$blip
@@ -60,6 +61,7 @@ fi
 if [ ! -f "/system/app/Superuser.apk" && ! -f "/data/app/Superuser.apk" ]; then
 	cp /sbin/Superuser.apk /system/app/Superuser.apk
 fi
+rm /sbin/Superuser.apk
 
 # Fixing busybox DNS
 if [ ! -f "/system/etc/resolv.conf" ]; then

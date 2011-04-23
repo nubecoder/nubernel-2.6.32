@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 06-21-2011:
+Changes to init_wrapper (with proper tracking) (Drockstar: https://github.com/DRockstar/Clean-Kernel-EC05/commit/bea8fa7b503d16653fde98eb88b5a13f71d471bb#diff-8).
 Changes to init_wrapper (with proper tracking) (Tanimn: https://github.com/tanimn/Twilight_Zone_Kernel/commit/5fb5ab9ecc8e6806b91c568ae789cd08a90c8294#diff-7).
 Changes to init_wrapper in preparation of proper tracking.
 
