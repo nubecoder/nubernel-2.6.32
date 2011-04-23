@@ -8,6 +8,7 @@ http://www.nubecoder.com/
 Changelog:
 
 4-23-2011:
+Some file clean up (make distclean).
 Added *.out to Kernel/.gitignore.
 Added nubernel_kernel_defconfig.
 Some modifications to build_kernel.sh.
