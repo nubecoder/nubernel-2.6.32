@@ -623,11 +623,11 @@ service killmediaserver /system/bin/killmediaserver
     oneshot
 #to prevent lockup issue during poweron/off test
 
-#service bootanim /system/bin/bootanimation
-#    user graphics
-#    group graphics
-#    disabled
-#    oneshot
+service bootanim /system/bin/bootanimation
+    user graphics
+    group graphics
+    disabled
+    oneshot
 	
 # to enable wifi
 service wpa_supplicant /system/bin/wpa_supplicant -Dwext -ieth0 -c/data/wifi/bcm_supp.conf
