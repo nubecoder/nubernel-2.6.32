@@ -1,3 +1,4 @@
+toolchains/
 initramfs/lib/modules/Si4709_driver.ko
 initramfs/lib/modules/bthid.ko
 initramfs/lib/modules/cifs.ko
