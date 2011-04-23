@@ -8,6 +8,7 @@ http://www.nubecoder.com/
 Changelog:
 
 4-23-2011:
+Configured toolchain in build_kernel.sh.
 Some file clean up (make distclean).
 
 4-22-2011:
