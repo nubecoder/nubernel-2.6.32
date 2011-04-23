@@ -8,6 +8,7 @@ http://www.nubecoder.com/
 Changelog:
 
 4-23-2011:
+Disabled iqmsd service in initramfs.
 Added boot animation support to initramfs.
 Added init.d support to initramfs.
 Added ext4 support to initramfs.
