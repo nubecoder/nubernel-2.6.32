@@ -48,6 +48,7 @@ fi
 TARGET_LOCALE="vzw"
 
 export KBUILD_BUILD_VERSION="nubernel_kernel_EC05_0.0.0"
+DEFCONFIG_STRING=nubernel_kernel_defconfig
 
 TOOLCHAIN=`pwd`/toolchains/android-toolchain-4.4.3/bin
 TOOLCHAIN_PREFIX=arm-linux-androideabi-
@@ -88,7 +89,7 @@ BUILD_KERNEL()
 	echo
 	pushd $KERNEL_BUILD_DIR
 		export KDIR=`pwd`
-		make ARCH=arm victory_03_defconfig
+		make ARCH=arm $DEFCONFIG_STRING
 #		make -j$CPU_JOB_NUM ARCH=arm CROSS_COMPILE=$TOOLCHAIN/$TOOLCHAIN_PREFIX
 		make V=1 -j$CPU_JOB_NUM ARCH=arm CROSS_COMPILE=$TOOLCHAIN/$TOOLCHAIN_PREFIX 2>&1 | tee make.out
 	popd
