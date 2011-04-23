@@ -8,6 +8,7 @@ http://www.nubecoder.com/
 Changelog:
 
 4-23-2011:
+Added wifi_kernel_flasher.sh.
 Add toolchains folder to .gitignore.
 Disabled iqmsd service in initramfs.
 Added boot animation support to initramfs.
