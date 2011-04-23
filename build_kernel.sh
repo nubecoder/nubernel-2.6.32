@@ -1,13 +1,12 @@
-#/bin/bash
+#!/bin/bash
 
 echo "$1 $2 $3"
 
 case "$1" in
 	Clean)
-		echo "********************************************************************************"
-		echo "* Clean Kernel                                                                 *"
-		echo "********************************************************************************"
-
+		echo "************************************************************"
+		echo "* Clean Kernel                                             *"
+		echo "************************************************************"
 		pushd Kernel
 		make clean
 		popd
@@ -39,7 +38,7 @@ export HW_BOARD_REV
 export LD_LIBRARY_PATH=.:${TOOLCHAIN}/../lib
 
 echo "************************************************************"
-echo "* EXPORT VARIABLE		                            	 *"
+echo "* EXPORT VARIABLE		                            	         *"
 echo "************************************************************"
 echo "PRJROOT=$PRJROOT"
 echo "PROJECT_NAME=$PROJECT_NAME"
@@ -49,10 +48,9 @@ echo "************************************************************"
 BUILD_MODULE()
 {
 	echo "************************************************************"
-	echo "* BUILD_MODULE	                                       	 *"
+	echo "* BUILD_MODULE	                                       	   *"
 	echo "************************************************************"
 	echo
-
 	pushd Kernel
 		make ARCH=arm modules
 	popd
@@ -61,24 +59,14 @@ BUILD_MODULE()
 BUILD_KERNEL()
 {
 	echo "************************************************************"
-	echo "*        BUILD_KERNEL                                      *"
+	echo "* BUILD_KERNEL                                             *"
 	echo "************************************************************"
 	echo
-
-
 	pushd $KERNEL_BUILD_DIR
-
-	export KDIR=`pwd`
-
-	make ARCH=arm victory_03_defconfig
-
-	# make kernel
-
-	make -j$CPU_JOB_NUM ARCH=arm CROSS_COMPILE=$TOOLCHAIN/$TOOLCHAIN_PREFIX
-
-
+		export KDIR=`pwd`
+		make ARCH=arm victory_03_defconfig
+		make -j$CPU_JOB_NUM ARCH=arm CROSS_COMPILE=$TOOLCHAIN/$TOOLCHAIN_PREFIX
 	popd
-	
 }
 
 # print title
@@ -94,7 +82,7 @@ PRINT_TITLE()
 {
 	echo
 	echo "************************************************************"
-	echo "*                     MAKE PACKAGES"
+	echo "* MAKE PACKAGES                                            *"
 	echo "************************************************************"
 	echo "* 1. kernel : zImage"
 	echo "* 2. modules"
@@ -107,14 +95,13 @@ PRINT_TITLE()
 if [ $# -gt 3 ]
 then
 	echo
-	echo "**************************************************************"
-	echo "*  Option Error                                              *"
+	echo "************************************************************"
+	echo "* Option Error                                             *"
 	PRINT_USAGE
 	exit 1
 fi
 
 START_TIME=`date +%s`
-
 PRINT_TITLE
 
 BUILD_KERNEL
