@@ -8,9 +8,31 @@ case "$1" in
 		echo "* Clean Kernel                                             *"
 		echo "************************************************************"
 		pushd Kernel
-		make clean
+			make clean V=1 ARCH=arm CROSS_COMPILE=$TOOLCHAIN/$TOOLCHAIN_PREFIX 2>&1 | tee make.clean.out
 		popd
-		echo " It's done... "
+		echo " Clean is done... "
+		exit
+		;;
+	mrproper)
+		echo "************************************************************"
+		echo "* mrproper Kernel                                          *"
+		echo "************************************************************"
+		pushd Kernel
+			make clean V=1 ARCH=arm CROSS_COMPILE=$TOOLCHAIN/$TOOLCHAIN_PREFIX 2>&1 | tee make.clean.out
+			make mrproper 2>&1 | tee make.mrproper.out
+		popd
+		echo " mrproper is done... "
+		exit
+		;;
+	distclean)
+		echo "************************************************************"
+		echo "* distclean Kernel                                         *"
+		echo "************************************************************"
+		pushd Kernel
+			make clean V=1 ARCH=arm CROSS_COMPILE=$TOOLCHAIN/$TOOLCHAIN_PREFIX 2>&1 | tee make.clean.out
+			make distclean 2>&1 | tee make.distclean.out
+		popd
+		echo " distclean is done... "
 		exit
 		;;
 	*)
@@ -24,6 +46,8 @@ if [ "$CPU_JOB_NUM" = "" ] ; then
 fi
 
 TARGET_LOCALE="vzw"
+
+export KBUILD_BUILD_VERSION="nubernel_kernel_EC05_0.0.0"
 
 TOOLCHAIN=`pwd`/toolchains/android-toolchain-4.4.3/bin
 TOOLCHAIN_PREFIX=arm-linux-androideabi-
@@ -65,7 +89,8 @@ BUILD_KERNEL()
 	pushd $KERNEL_BUILD_DIR
 		export KDIR=`pwd`
 		make ARCH=arm victory_03_defconfig
-		make -j$CPU_JOB_NUM ARCH=arm CROSS_COMPILE=$TOOLCHAIN/$TOOLCHAIN_PREFIX
+#		make -j$CPU_JOB_NUM ARCH=arm CROSS_COMPILE=$TOOLCHAIN/$TOOLCHAIN_PREFIX
+		make V=1 -j$CPU_JOB_NUM ARCH=arm CROSS_COMPILE=$TOOLCHAIN/$TOOLCHAIN_PREFIX 2>&1 | tee make.out
 	popd
 }
 
@@ -103,7 +128,7 @@ fi
 
 START_TIME=`date +%s`
 PRINT_TITLE
-
+#BUILD_MODULE
 BUILD_KERNEL
 END_TIME=`date +%s`
 let "ELAPSED_TIME=$END_TIME-$START_TIME"

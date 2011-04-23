@@ -8,6 +8,7 @@ http://www.nubecoder.com/
 Changelog:
 
 4-23-2011:
+Some modifications to build_kernel.sh.
 Clean up build_kernel.sh.
 Added *.out to Kernel/.gitignore.
 Added Kernel/.gitignore file (gzub: https://github.com/gzub/EC05-Zub/commit/db2c694c57f4954df5b1345308f247ea1608d385).
