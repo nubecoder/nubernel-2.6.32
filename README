@@ -8,6 +8,7 @@ http://www.nubecoder.com/
 Changelog:
 
 4-23-2011:
+Added init.d support to initramfs.
 Added ext4 support to initramfs.
 Some file clean up (make distclean).
 Added *.out to Kernel/.gitignore.
