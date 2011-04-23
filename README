@@ -7,6 +7,9 @@ http://www.nubecoder.com/
 
 Changelog:
 
+4-23-2011:
+Configured toolchain in build_kernel.sh.
+
 4-22-2011:
 Added stock EC05 initramfs files.
 Added stock EC05 kernel source files.
