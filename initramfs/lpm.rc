@@ -1,7 +1,6 @@
 on init
 
 	export PATH /sbin:/system/bin
-
 	export ANDROID_ROOT /system
 
 	mkdir /system
@@ -12,11 +11,10 @@ on init
 	insmod /lib/modules/fsr_stl.ko
 	insmod /lib/modules/rfs_glue.ko
 	insmod /lib/modules/rfs_fat.ko
- 
-	insmod /lib/modules/param.ko 
+	insmod /lib/modules/param.ko
 	insmod /lib/modules/vibrator.ko
- 
-  	mount rfs /dev/block/stl9 /system check=no
+
+	mount rfs /dev/block/stl9 /system check=no
 	mount rfs /dev/block/mmcblk0p2 /data nosuid nodev check=no
 
 	mkdir /data/log 0777
@@ -24,7 +22,7 @@ on init
 
 	chmod 0666 /dev/log/radio
 	chmod 0666 /dev/log/main
-	chmod 0666 /dev/log/event    
+	chmod 0666 /dev/log/event
 
 on boot
 #	write /sys/class/sec/switch/usb_sel PDA
@@ -32,7 +30,6 @@ on boot
 	ifup lo
 	hostname localhost
 	domainname localdomain
-
 	class_start default
 
 service debuggerd /system/bin/debuggerd
@@ -42,10 +39,11 @@ service console /system/bin/sh
 	console
 
 service playlpm /system/bin/playlpm
-    	user root
+	user root
 
-service immvibed /system/bin/immvibed 
+service immvibed /system/bin/immvibed
 	oneshot
 
 service lpmkey /system/bin/charging_mode
-    	user root
+	user root
+
