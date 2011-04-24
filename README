@@ -7,6 +7,9 @@ http://www.nubecoder.com/
 
 Changelog:
 
+4-27-2011:
+More select changes to initramfs (Bonsai: https://github.com/Bonsai-Project/bonsai_android_initramfs/commit/572a40da29d01f10d4756493db2ebb1f86e7ccb7).
+
 4-26-2011:
 Restore redbend_ua to initramfs for the time being.
 Added verbose option to ncMultiBuild.sh.

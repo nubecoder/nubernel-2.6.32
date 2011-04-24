@@ -16,4 +16,3 @@ if [ -f /init.smdkc110.rc ]; then
 fi
 
 exit 1
-

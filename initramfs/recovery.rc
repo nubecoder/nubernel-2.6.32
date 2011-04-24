@@ -1,6 +1,5 @@
 on init
-
-	#GyuTae FIX : we should not use system partition!!!!!
+#GyuTae FIX : we should not use system partition!!!!!
 #	export PATH /sbin:/bin
 	export PATH /sbin:/system/bin
 	export ANDROID_ROOT /system
@@ -32,21 +31,24 @@ on init
 
 # /system
 	mkdir /system 0775 system system
-	mount ext4 /dev/block/stl9 /system noatime check=n nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
+	#mount ext4 /dev/block/stl9 /system noatime nodiratime check=no errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
+	mount ext4 /dev/block/stl9 /system noatime nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
 	mount rfs /dev/block/stl9 /system nosuid nodev check=no
 	chown root system /system
 	chmod 0775 /system
 
 # /data
 	mkdir /data 0771 system system
-	mount ext4 /dev/block/stl10 /data nosuid nodev noatime check=n nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
+	#mount ext4 /dev/block/stl10 /data nosuid nodev noatime nodiratime check=no errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
+	mount ext4 /dev/block/stl10 /data nosuid nodev noatime nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
 	mount rfs /dev/block/stl10 /data nosuid nodev check=no
 	chown system system /data
 	chmod 0771 /data
 
 # /cache
 	mkdir /cache 0770 system cache
-	mount ext4 /dev/block/stl11 /cache nosuid nodev noatime nodiratime check=n errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
+	#mount ext4 /dev/block/stl11 /cache nosuid nodev noatime nodiratime check=no errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
+	mount ext4 /dev/block/stl11 /cache nosuid nodev noatime nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
 	mount rfs /dev/block/stl11 /cache nosuid nodev check=no
 	chown system cache /cache
 	chmod 0770 /cache
@@ -91,7 +93,6 @@ on property:persist.service.adb.enable=1
 on property:persist.service.adb.enable=0
 	stop adbd
 
-#service recovery /sbin/recovery
-service recovery /res/sbin/recovery_wrapper
+service recovery /sbin/recovery
 
 service adbd /sbin/adbd recovery

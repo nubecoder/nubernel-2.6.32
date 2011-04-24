@@ -1,6 +1,5 @@
 on init
-
-	#GyuTae FIX : we should not use system partition!!!!!
+#GyuTae FIX : we should not use system partition!!!!!
 #	export PATH /sbin:/bin
 	export PATH /sbin:/system/bin
 	export ANDROID_ROOT /system
@@ -42,13 +41,13 @@ on init
 	chown system cache /cache
 	chmod 0770 /cache
 
-	mount ext4 /dev/block/stl11 /cache nosuid nodev noatime nodiratime check=n errors=continue nobh discard data=writeback barrier=0 noauto_da_alloc
+	mount ext4 /dev/block/stl11 /cache nosuid nodev noatime nodiratime check=no errors=continue nobh discard data=writeback barrier=0 noauto_da_alloc
 	mount rfs /dev/block/stl11 /cache nosuid nodev check=no
 
-	#mount ext4 /dev/block/stl10 /data nosuid nodev noatime nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
+	#mount ext4 /dev/block/stl10 /data nosuid nodev noatime nodiratime check=no errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
 	#mount rfs /dev/block/stl10 /data nosuid nodev check=no
 
-	#mount ext4 /dev/block/stl9 /system noatime nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
+	#mount ext4 /dev/block/stl9 /system noatime nodiratime check=no errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
 	#mount rfs /dev/block/stl9 /system check=no
 
 	chown system system /cache/recovery
@@ -82,8 +81,6 @@ on property:persist.service.adb.enable=1
 on property:persist.service.adb.enable=0
 	stop adbd
 
-service recovery /res/sbin/recovery_wrapper
-#service recovery /sbin/recovery
+service recovery /sbin/recovery
 
 service adbd /sbin/adbd recovery
-

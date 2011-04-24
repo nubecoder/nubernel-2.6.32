@@ -2,7 +2,7 @@ on init
 
 sysclktz 0
 
-loglevel 3
+loglevel 1
 
 # setup the global environment
 	export PATH /sbin:/system/sbin:/system/bin:/system/xbin
@@ -107,19 +107,22 @@ loglevel 3
 # mount mtd partitions begin
 
 # /system
-	mount ext4 /dev/block/stl9 /system rw noatime check=n nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
+	#mount ext4 /dev/block/stl9 /system rw noatime check=no nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
+	mount ext4 /dev/block/stl9 /system rw noatime nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
 	mount rfs /dev/block/stl9 /system ro check=no
 	chown root system /system
 	chmod 0775 /system
 
 # /data
-	mount ext4 /dev/block/stl10 /data rw nosuid nodev noatime check=n nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
+	#mount ext4 /dev/block/stl10 /data rw nosuid nodev noatime check=no nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
+	mount ext4 /dev/block/stl10 /data rw nosuid nodev noatime nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
 	mount rfs /dev/block/stl10 /data nosuid nodev check=no
 	chown system system /data
 	chmod 0771 /data
 
 # /cache
-	mount ext4 /dev/block/stl11 /cache rw nosuid nodev noatime check=n nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
+	#mount ext4 /dev/block/stl11 /cache rw nosuid nodev noatime check=no nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
+	mount ext4 /dev/block/stl11 /cache rw nosuid nodev noatime nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
 	mount rfs /dev/block/stl11 /cache nosuid nodev check=no
 	chown system cache /cache
 	chmod 0770 /cache
@@ -545,12 +548,12 @@ service media /system/bin/mediaserver
 	#group audio
 	#oneshot
 
-# to prevent lockup issue during poweron/off test
+## start prevent lockup issue during poweron/off test
 service killmediaserver /system/bin/killmediaserver
 	user media
 	group system
 	oneshot
-# to prevent lockup issue during poweron/off test
+## end prevent lockup issue during poweron/off test
 
 service bootanim /system/bin/bootanimation
 	user graphics
