@@ -14,6 +14,7 @@ on init
 	insmod /lib/modules/param.ko
 	insmod /lib/modules/vibrator.ko
 
+	mount ext4 /dev/block/stl9 /system check=n errors=continue
 	mount rfs /dev/block/stl9 /system check=no
 	mount rfs /dev/block/mmcblk0p2 /data nosuid nodev check=no
 
@@ -30,11 +31,11 @@ on boot
 	ifup lo
 	hostname localhost
 	domainname localdomain
+
 	class_start default
 
 service debuggerd /system/bin/debuggerd
 
-#service console /bin/sh
 service console /system/bin/sh
 	console
 
@@ -46,4 +47,3 @@ service immvibed /system/bin/immvibed
 
 service lpmkey /system/bin/charging_mode
 	user root
-

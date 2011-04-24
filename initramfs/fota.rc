@@ -39,12 +39,17 @@ on init
 	chmod 0771 /data
 
 	mkdir /cache 0770 system cache
-
-# /cache
-	mount ext4 /dev/block/stl11 /cache nosuid nodev noatime nodiratime check=n errors=continue nobh discard data=writeback barrier=0 noauto_da_alloc
-	mount rfs /dev/block/stl11 /cache nosuid nodev check=no
 	chown system cache /cache
 	chmod 0770 /cache
+
+	mount ext4 /dev/block/stl11 /cache nosuid nodev noatime nodiratime check=n errors=continue nobh discard data=writeback barrier=0 noauto_da_alloc
+	mount rfs /dev/block/stl11 /cache nosuid nodev check=no
+
+	#mount ext4 /dev/block/stl10 /data nosuid nodev noatime nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
+	#mount rfs /dev/block/stl10 /data nosuid nodev check=no
+
+	#mount ext4 /dev/block/stl9 /system noatime nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
+	#mount rfs /dev/block/stl9 /system check=no
 
 	chown system system /cache/recovery
 	chmod 0770 /cache/recovery
@@ -53,14 +58,6 @@ on init
 	#mkdir /cache/recovery_fota_mode
 	#chmod 0770 /cache/recovery_fota_mode
 
-	#mount ext4 /dev/block/stl10 /data nosuid nodev noatime nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
-	#mount rfs /dev/block/stl10 /data nosuid nodev check=no
-	#chown system system /data
-	#chmod 0771 /data
-
-	#mount ext4 /dev/block/stl9 /system noatime nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
-	#mount rfs /dev/block/stl9 /system check=no
-
 on boot
 	#write /sys/class/sec/switch/uart_sel PDA
 	#write /sys/class/sec/switch/usb_sel PDA
@@ -68,11 +65,10 @@ on boot
 	ifup lo
 	hostname localhost
 	domainname localdomain
-
 	class_start default
 
-## Daemon processes to be run by init.
-##
+## Daemon processes to be run by init
+
 #service console /system/bin/sh
 #	console
 
@@ -87,6 +83,7 @@ on property:persist.service.adb.enable=0
 	stop adbd
 
 service recovery /res/sbin/recovery_wrapper
+#service recovery /sbin/recovery
 
 service adbd /sbin/adbd recovery
 

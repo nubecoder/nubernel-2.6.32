@@ -7,19 +7,13 @@ on init
 	export ANDROID_DATA /data
 	export EXTERNAL_STORAGE /sdcard
 
-	mkdir /sdcard
-	mkdir /system
-	mkdir /data
-	mkdir /cache
-	mkdir /tmp
-	mkdir /mnt 0775 root system
-
 	symlink /res/etc /etc
 
+	mkdir /tmp
+	mkdir /mnt 0775 root system
 	mount tmpfs nodev /tmp
-	mkdir /bin 0771 system system
+	mkdir /sdcard 0000 system system
 
-# Insert all modules here
 	insmod /lib/modules/fsr.ko
 	insmod /lib/modules/fsr_stl.ko
 	insmod /lib/modules/rfs_glue.ko
@@ -28,38 +22,45 @@ on init
 	insmod /lib/modules/dpram_recovery.ko
 	insmod /lib/modules/param.ko
 
+
+###################################################################
+# mount mtd partitions begin
+
+# /.lfs
 	mkdir /mnt/.lfs 0755 root root
 	mount j4fs /dev/block/stl6 /mnt/.lfs
 
-	mkdir /sdcard 0000 system system
-	chown system system /sdcard
-	chmod 0000 /sdcard
+# /system
+	mkdir /system 0775 system system
+	mount ext4 /dev/block/stl9 /system noatime check=n nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
+	mount rfs /dev/block/stl9 /system nosuid nodev check=no
+	chown root system /system
+	chmod 0775 /system
 
+# /data
 	mkdir /data 0771 system system
+	mount ext4 /dev/block/stl10 /data nosuid nodev noatime check=n nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
+	mount rfs /dev/block/stl10 /data nosuid nodev check=no
 	chown system system /data
 	chmod 0771 /data
 
-	# /cache
+# /cache
 	mkdir /cache 0770 system cache
-	mount ext4 /dev/block/stl11 /cache nosuid nodev noatime nodiratime check=n errors=continue nobh discard data=writeback barrier=0 noauto_da_alloc
+	mount ext4 /dev/block/stl11 /cache nosuid nodev noatime nodiratime check=n errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
 	mount rfs /dev/block/stl11 /cache nosuid nodev check=no
 	chown system cache /cache
 	chmod 0770 /cache
-
-	# This may have been created by the recovery system with odd permissions
-	chown system system /cache/recovery
+	chown system cache /cache/recovery
 	chmod 0770 /cache/recovery
 
-	#Garnett
-	#mount rfs /dev/block/mmcblk0p2 /data nosuid nodev check=no
-	#chown system system /data
-	#chmod 0771 /data
+# /efs
+	mkdir /efs 0771
+	mount rfs /dev/block/stl3 /efs nosuid nodev check=no
+	chown radio radio /efs
+	chmod 0771 /efs
 
-	#mount rfs /dev/block/stl10 /data nosuid nodev check=no
-	#chown system system /data
-	#chmod 0771 /data
-
-	#mount rfs /dev/block/stl9 /system check=no
+# mount mtd partitions complete
+###################################################################
 
 	#This recovery_fota_mode
 	#mkdir /cache/recovery_fota_mode
@@ -90,7 +91,7 @@ on property:persist.service.adb.enable=1
 on property:persist.service.adb.enable=0
 	stop adbd
 
+#service recovery /sbin/recovery
 service recovery /res/sbin/recovery_wrapper
 
 service adbd /sbin/adbd recovery
-
