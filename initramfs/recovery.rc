@@ -95,4 +95,6 @@ on property:persist.service.adb.enable=0
 
 service recovery /sbin/recovery
 
+setprop persist.service.adb.enable "1"
+
 service adbd /sbin/adbd recovery
