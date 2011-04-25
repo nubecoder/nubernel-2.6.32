@@ -80,7 +80,7 @@ GTAGS
 \#*#
 
 
-
+/update/zImage
 /arch/arm/boot/Image
 /arch/arm/boot/compressed/vmlinux
 /arch/arm/boot/compressed/vmlinux.lds
