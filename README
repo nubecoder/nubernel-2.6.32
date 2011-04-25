@@ -8,10 +8,11 @@ http://www.nubecoder.com/
 Changelog:
 
 4-24-2011:
+Fixing up README.
 A bit more file cleanup (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/4145246ce46ab57b4d2c1952cdb0341d26233f03).
+A bit of initramfs script clean up.
 
 4-23-2011:
-A bit of initramfs script clean up.
 More clean up and modifications to build_kernel.sh.
 Exclude .git and .svn from gen_initramfs_list.sh (Bonsai: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/090c19f74706fb578dc2c479e5c6fe451393afa2).
 Added wifi_kernel_flasher.sh.
