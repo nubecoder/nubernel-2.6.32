@@ -8,6 +8,7 @@ http://www.nubecoder.com/
 Changelog:
 
 4-25-2011:
+Spoofing newest Nexus S release keys (from: http://new.glbenchmark.com/phonedetails.jsp?benchmark=glpro20&D=Google+Nexus+S&testgroup=system).
 Changed build script to auto detect number of cpu cores (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/f9e96145b4fe56bbc7d61552ea9a123fccd4e4f7).
 Switch to bmlwrite in the update.zip (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/9aea535827d71a0ec7f2c3da04f83e42d6a9394f).
 Update.zip related changes.
