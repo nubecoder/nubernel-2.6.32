@@ -80,10 +80,11 @@ fi
 if [ "$PRODUCE_ZIP" = y ] ; then
 	echo "Generating $TARGET-$VERSION.zip for flashing as update.zip." && echo ""
 	rm -fr "$TARGET-$VERSION.zip"
-	rm -f update/kernel/zImage
-	cp arch/arm/boot/zImage update/kernel
+	rm -f update/zImage
+	cp arch/arm/boot/zImage update
 	OUTFILE="$PWD/$TARGET-$VERSION.zip"
 	pushd update
 	eval "$MKZIP" >/dev/null 2>&1
 	popd
 fi
+
