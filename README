@@ -8,6 +8,7 @@ http://www.nubecoder.com/
 Changelog:
 
 4-24-2011:
+Some changes to nullghost's build script.
 Added nullghost's build_kernel.sh (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/9739fd6e3e40b18beeb79a64a6cbcb0191ec922a).
 Fixing up README.
 A bit more file cleanup (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/4145246ce46ab57b4d2c1952cdb0341d26233f03).
