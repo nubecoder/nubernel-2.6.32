@@ -8,6 +8,7 @@ http://www.nubecoder.com/
 Changelog:
 
 4-26-2011:
+Added verbose option to ncMultiBuild.sh.
 Add ncMultiBuild.sh (heavilly based off nullghost's modified build_kernel.sh: https://github.com/nullghost/phoenix-kernel-epic/commits/master?path[]=build_kernel.sh).
 More script cleanup.
 

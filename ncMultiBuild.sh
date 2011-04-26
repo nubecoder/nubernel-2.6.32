@@ -24,6 +24,7 @@ DEFCONFIG=n
 DISTCLEAN=n
 PRODUCE_TAR=n
 PRODUCE_ZIP=n
+VERBOSE=n
 WIFI_FLASH=n
 
 # define vars
@@ -52,6 +53,7 @@ SHOW_HELP()
 	echo "-j : Number of threads (auto detected by default)."
 	echo "     For example, use -j4 to make with 4 threads."
 	echo "-t : Produce tar file suitable for flashing with Odin."
+	echo "-v : Show verbose output while building zImage (kernel)."
 	echo "-w : Wifi Flash, for use with adb wireless."
 	echo "-z : Produce zip file suitable for flashing via Recovery."
 	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
@@ -68,6 +70,7 @@ SHOW_SETTINGS()
 	echo "use defconfig  == $DEFCONFIG"
 	echo "build target   == $TARGET"
 	echo "make threads   == $THREADS"
+	echo "verbose output == $VERBOSE"
 	echo "build kernel   == $BUILD_KERNEL"
 	echo "create tar     == $PRODUCE_TAR"
 	echo "create zip     == $PRODUCE_ZIP"
@@ -134,7 +137,12 @@ BUILD_ZIMAGE()
 	local T1=$(date +%s)
 	echo "Begin building zImage..." && echo ""
 	pushd Kernel > /dev/null
-		make V=1 -j"$THREADS" ARCH=arm CROSS_COMPILE="$CROSS_COMPILE" 2>&1 | tee make.out
+	if [ "$VERBOSE" = "y" ] ;
+		then
+			make V=1 -j"$THREADS" ARCH=arm CROSS_COMPILE="$CROSS_COMPILE" 2>&1 | tee make.out
+		else
+			make -j"$THREADS" ARCH=arm CROSS_COMPILE="$CROSS_COMPILE" 2>&1 | tee make.out
+	fi
 	popd > /dev/null
 	local T2=$(date +%s)
 	echo "" && echo "building zImage took $(($T2 - $T1)) seconds."
@@ -186,32 +194,45 @@ WIFI_FLASH_SCRIPT()
 }
 
 # main
-while getopts  ":bcCd:hj:twz" flag
+while getopts  ":bcCd:hj:tvwz" flag
 do
 	case "$flag" in
-	(b)
-		BUILD_KERNEL=y;;
-	(c)
-		CLEAN=y;;
-	(C)
-		DISTCLEAN=y;;
-	(d)
-		DEFCONFIG=y;
-		TARGET="$OPTARG";;
-	(h)
-		SHOW_HELP;;
-	(j)
-		THREADS=$OPTARG;;
-	(t)
-		PRODUCE_TAR=y;;
-	(w)
-		WIFI_FLASH=y;;
-	(z)
-		PRODUCE_ZIP=y;;
-	(*)
-		ERROR_MSG="Error:: problem with option '$OPTARG'";
-		SHOW_ERROR;
-		SHOW_HELP;;
+	b)
+		BUILD_KERNEL=y
+		;;
+	c)
+		CLEAN=y
+		;;
+	C)
+		DISTCLEAN=y
+		;;
+	d)
+		DEFCONFIG=y
+		TARGET="$OPTARG"
+		;;
+	h)
+		SHOW_HELP
+		;;
+	j)
+		THREADS=$OPTARG
+		;;
+	t)
+		PRODUCE_TAR=y
+		;;
+	v)
+		VERBOSE=y
+		;;
+	w)
+		WIFI_FLASH=y
+		;;
+	z)
+		PRODUCE_ZIP=y
+		;;
+	*)
+		ERROR_MSG="Error:: problem with option '$OPTARG'"
+		SHOW_ERROR
+		SHOW_HELP
+		;;
 	esac
 done
 
