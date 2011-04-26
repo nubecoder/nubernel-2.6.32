@@ -69,6 +69,7 @@ struct clk {
 	int		    (*set_parent)(struct clk *c, struct clk *parent);
 #endif
 	struct clk_ops		*ops;
+	struct device		*dev;
 
 #if defined(CONFIG_CPU_S5PV210_EVT1)
 	unsigned int powerDomain;
