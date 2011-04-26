@@ -8,6 +8,7 @@ http://www.nubecoder.com/
 Changelog:
 
 4-27-2011:
+Create bml devices so reboot recovery is fully operational (tanimn: https://github.com/tanimn/Twilight_Zone_Kernel/commit/aa05f120728fc15a35eaddb84a4a1249a238a952).
 Trying to get adb to work all the time (tanimn: https://github.com/tanimn/Twilight_Zone_Kernel/commit/3159f395065996b9bd4d420fd574aba7cd417470).
 More select changes to initramfs (Bonsai: https://github.com/Bonsai-Project/bonsai_android_initramfs/commit/572a40da29d01f10d4756493db2ebb1f86e7ccb7).
 
