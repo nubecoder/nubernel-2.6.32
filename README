@@ -7,6 +7,9 @@ http://www.nubecoder.com/
 
 Changelog:
 
+4-26-2011:
+More script cleanup.
+
 4-25-2011:
 Add bmlwrite in place of redbend_ua in initramfs.
 More script cleanup and changes.

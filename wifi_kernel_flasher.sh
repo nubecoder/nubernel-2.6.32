@@ -43,7 +43,7 @@ BMLWRITE_CMD="bmlwrite $ZIMAGE_DEST /dev/block/bml7"
 echo "Killing adb server."
 $ADB_KILL
 echo "Connect to $IP."
-$ADB_CONNECT $IP
+$ADB_CONNECT $IP > /dev/null
 
 # check for device (taken from the OneClickRoot: http://forum.xda-developers.com/showthread.php?t=897612)
 CURSTATE=$($ADB_STATE | tr -d '\r\n[:blank:]')
