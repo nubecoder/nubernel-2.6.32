@@ -8,6 +8,7 @@ http://www.nubecoder.com/
 Changelog:
 
 4-25-2011:
+Add bmlwrite in place of redbend_ua in initramfs.
 More script cleanup and changes.
 Added /update/zImage to .gitignore.
 Spoofing newest Nexus S release keys (from: http://new.glbenchmark.com/phonedetails.jsp?benchmark=glpro20&D=Google+Nexus+S&testgroup=system).
