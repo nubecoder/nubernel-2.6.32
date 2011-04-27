@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-27-2011:
+Fix a couple of compile errors and debug message formating (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/f2f5b3d4f524cb0b4da89250542176826ab0d5c2).
 Quiet compile warning (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/55f8dd06d3edc6f70195227efc89fb5f11cd11cd).
 Fixing a Samsung typo in arch/arm/Kconfig.
 Fix tty low latency causing an interrupt during a spinlock (gzub via Bonsai: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/f964f1e655fb496d78ffcf0f3ffd731d4c4070b8).

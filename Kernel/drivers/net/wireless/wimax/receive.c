@@ -555,7 +555,7 @@ unsigned int processSdioReceiveData(MINIPORT_ADAPTER *Adapter, void *Buffer, u_l
 			// dump packets
 			UINT i;
 			PUCHAR  b = (PUCHAR)Buffer;
-			DumpDebug(TX_CONTROL, "Wrong packet dump [%d] = ",Length);
+			DumpDebug(TX_CONTROL, "Wrong packet dump [%ld] = ",Length);
 
 			printk("<1>\x1b[1;33m[WiMAX]");
 			for (i = 0; i < Length; i++) {
