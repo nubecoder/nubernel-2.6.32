@@ -19,7 +19,10 @@ IP="192.168.1.187"
 ZIMAGE_SRC="$PWD/Kernel/arch/arm/boot/zImage"
 ZIMAGE_DEST="/data/local/tmp/zImage"
 
-BMLWRITE_SRC="$PWD/Kernel/update/bmlwrite"
+REDBEND_SRC="$PWD/initramfs/sbin/bmlwrite"
+REDBEND_DEST="/data/local/tmp/bmlwrite"
+
+BMLWRITE_SRC="$PWD/initramfs/sbin/bmlwrite"
 BMLWRITE_DEST="/data/local/tmp/bmlwrite"
 
 DST_PATH="/data/local/tmp/"
@@ -36,8 +39,8 @@ ADB_STATE="adb get-state"
 ERROR="no"
 
 #redbend_ua cmd line usage
-REDBEND_CMD="redbend_ua restore $ZIMAGE_DEST /dev/block/bml7"
-BMLWRITE_CMD="bmlwrite $ZIMAGE_DEST /dev/block/bml7"
+REDBEND_CMD="redbend_ua restore zImage /dev/block/bml7"
+BMLWRITE_CMD="bmlwrite zImage /dev/block/bml7"
 
 #kill adb, start, and connect to wireless
 echo "Killing adb server."
@@ -63,6 +66,12 @@ then
 	echo "Pushing zImage, this may take a minute."
 	$ADB_PUSH $ZIMAGE_SRC $ZIMAGE_DEST
 
+	#push redbend_ua to phone	and set permissions
+	echo "Pushing redbend_ua, this may take a minute."
+	$ADB_PUSH $REDBEND_SRC $REDBEND_DEST
+	echo "Setting permissions on redbend_ua (0755)."
+	$ADB_SHELL "chmod 0755" $REDBEND_DEST
+
 	#push bmlwrite to phone	and set permissions
 	echo "Pushing bmlwrite, this may take a minute."
 	$ADB_PUSH $BMLWRITE_SRC $BMLWRITE_DEST
@@ -71,9 +80,7 @@ then
 
 	#kick you to the adb shell
 	echo "Kicking you to the adb shell."
-	echo "usage:\n su\n cd $DST_PATH\n $BMLWRITE_CMD"
-
-	#echo -e "usage:\n su\n $REDBEND_CMD"
+	echo -e "usage: \n cd $DST_PATH \n su \n $BMLWRITE_CMD \n or \n $REDBEND_CMD"
 	$ADB_SHELL
 
 	#cleanup adb wireless by disconnecting
