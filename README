@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+06-15-2011:
+Fixing a possible out of bounds related to "active_states" (ssewk2x via nemesis2all: https://github.com/nemesis2all/OTB-Reloaded/commit/136dc15d6bd7ff162135aaf1494b049ddbe08988).
+
 06-14-2011:
 Fixing up transitions states in /arch/arm/mach-s5pv210/victory/cpu-freq.c.
 Enabling 1120MHz and 1200MHz states by default.

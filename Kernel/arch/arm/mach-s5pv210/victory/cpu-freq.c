@@ -345,9 +345,22 @@ unsigned int s5pc11x_target_freq_find_index(unsigned int index_find, int flag)
 	}
 	else {
 		while(true) {
-			if(active_states[index] == 1 || (freq_tab[index].frequency == CPUFREQ_TABLE_END))
+			/*
+				fixed a possible out-of-bounds condition here where active_states doesn't have
+				an index for CPUFREQ_TABLE_END. The || logic will short-circuit that check
+				and stop segfaults.
+			*/
+			if((freq_tab[index].frequency == CPUFREQ_TABLE_END) || active_states[index] == 1)
 				break;
 			index++;
+		}
+		if (freq_tab[index].frequency == CPUFREQ_TABLE_END) {
+			/*
+				we can get here if we are already at our lowest possible freqency
+				and were asked to find the next step lower, but there aren't any
+				lower frequencies enabled. In this case, we should stay put
+			*/
+			index = s5pc11x_cpufreq_index;
 		}
 	}
 	return index;
@@ -439,7 +452,11 @@ int s5pc11x_target_freq_index(unsigned int freq)
 		index++;
 	}
 
-	while(active_states[index] == 0 && (freq_tab[index].frequency != CPUFREQ_TABLE_END)) {
+	/*
+		check freq_tab first to avoid walking off the edge of active_states, which
+		is one entry smaller than freq_tab
+	*/
+	while((freq_tab[index].frequency != CPUFREQ_TABLE_END) && active_states[index] == 0) {
 		index++;
 	}
 
@@ -447,10 +464,6 @@ int s5pc11x_target_freq_index(unsigned int freq)
 		if(freq != freq_tab[index].frequency) {
 			index--;
 		}
-	}
-
-	if(freq_tab[index].frequency == CPUFREQ_TABLE_END) {
-		index--;
 	}
 
 s5pc11x_target_freq_index_end:
