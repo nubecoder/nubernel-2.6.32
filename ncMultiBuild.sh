@@ -13,8 +13,8 @@
 #
 
 # define envvars
-TARGET="nubernel_kernel"
-KBUILD_BUILD_VERSION="nubernel_kernel_EC05_0.0.0"
+TARGET="nubernel"
+KBUILD_BUILD_VERSION="nubernel-EC05_v0.0.0"
 CROSS_COMPILE="$PWD/toolchains/android-toolchain-4.4.3/bin/arm-linux-androideabi-"
 
 # define defaults

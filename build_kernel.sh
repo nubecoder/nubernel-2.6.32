@@ -47,8 +47,8 @@ fi
 
 TARGET_LOCALE="vzw"
 
-export KBUILD_BUILD_VERSION="nubernel_kernel_EC05_0.0.0"
-DEFCONFIG_STRING=nubernel_kernel_defconfig
+export KBUILD_BUILD_VERSION="nubernel-EC05_v0.0.0"
+DEFCONFIG_STRING=nubernel_defconfig
 
 TOOLCHAIN=`pwd`/toolchains/android-toolchain-4.4.3/bin
 TOOLCHAIN_PREFIX=arm-linux-androideabi-

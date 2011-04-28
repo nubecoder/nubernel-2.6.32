@@ -8,7 +8,7 @@ DEFCONFIG=n
 MKZIP='7z -mx9 -mmt=1 a "$OUTFILE" .'
 PRODUCE_TAR=n
 PRODUCE_ZIP=n
-TARGET="nubernel_kernel"
+TARGET="nubernel"
 THREADS=$(expr 1 + $(grep processor /proc/cpuinfo | wc -l))
 VERSION=$(date +%m%d%Y)
 

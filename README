@@ -1,4 +1,4 @@
-nubernel-kernel
+nubernel-EC05_v0.0.0
 
 Samsung SPH-D700 (Epic 4G) kernel by nubecoder
 
@@ -6,6 +6,9 @@ http://www.nubecoder.com/
 
 
 Changelog:
+
+4-28-2011:
+Version re-branding.
 
 4-27-2011:
 Some changes to wifi_kernel_flasher.sh.
