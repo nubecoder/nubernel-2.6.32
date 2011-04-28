@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# wifi_kernel_flasher.sh
+# wifi_flash_helper.sh
 # For use with adb wireless.
 #
 #	Usage:

@@ -1,11 +1,6 @@
 #!/bin/bash
 #
-# wifi_kernel_flasher.sh
-# For use with adb wireless.
-#
-#	Usage:
-#		Change the IP variable below to match the IP given in adb wireless.
-#		Run the script.
+# ncMultiBuild.sh
 #
 #
 # 2011 nubecoder
@@ -43,7 +38,7 @@ export KBUILD_BUILD_VERSION
 SHOW_HELP()
 {
 	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
-	echo "Usage options for build_kernel.sh:"
+	echo "Usage options for $0:"
 	echo "-b : Build zImage (kernel)."
 	echo "-c : Run 'make clean'."
 	echo "-C : Run 'make distclean'."
@@ -80,17 +75,17 @@ SHOW_SETTINGS()
 }
 SHOW_COMPLETED()
 {
-echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
-echo "Script completed."
-echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+	echo "Script completed."
+	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
 exit
 }
 SHOW_ERROR()
 {
-if [ -n "$ERROR_MSG" ] ; then
-	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
-	echo "$ERROR_MSG"
-fi
+	if [ -n "$ERROR_MSG" ] ; then
+		echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+		echo "$ERROR_MSG"
+	fi
 }
 MAKE_CLEAN()
 {
@@ -186,7 +181,7 @@ WIFI_FLASH_SCRIPT()
 	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
 	local T1=$(date +%s)
 	echo "Begin Wifi kernel flash helper script..." && echo ""
-	sh wifi_kernel_flasher.sh
+	sh wifi_flash_helper.sh
 	local T2=$(date +%s)
 	echo "" && echo "Wifi kernel flash took $(($T2 - $T1)) seconds."
 	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
