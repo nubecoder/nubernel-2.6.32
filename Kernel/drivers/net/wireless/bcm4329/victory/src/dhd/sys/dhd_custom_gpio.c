@@ -20,7 +20,7 @@
 * software in any way with any other Broadcom software provided under a license
 * other than the GPL, without Broadcom's express prior written consent.
 *
-* $Id: dhd_custom_gpio.c,v 1.1.4.6 2010/02/19 22:56:49 Exp $
+* $Id: dhd_custom_gpio.c,v 1.1.4.8.4.1 2010/09/02 23:13:16 Exp $
 */
 
 
@@ -43,11 +43,16 @@
 #define POWER_ON	1
 extern void wlan_setup_power(int on, int flag);
 #endif /* CUSTOMER_HW_SAMSUNG */
+#if defined(CUSTOMER_HW)
+extern  void bcm_wlan_power_off(int);
+extern  void bcm_wlan_power_on(int);
+#endif /* CUSTOMER_HW || CUSTOMER_HW_SAMSUNG */
 #ifdef CUSTOMER_HW2
 int wifi_set_carddetect(int on);
 int wifi_set_power(int on, unsigned long msec);
 int wifi_get_irq_number(unsigned long *irq_flags_ptr);
-#endif
+int wifi_get_mac_addr(unsigned char *buf);
+#endif /* CUSTOMER_HW2 */
 
 #if defined(OOB_INTR_ONLY)
 
@@ -57,14 +62,14 @@ extern int sdioh_mmc_irq(int irq);
 
 #ifdef CUSTOMER_HW3
 #include <mach/gpio.h>
-#endif
+#endif /* CUSTOMER_HW3 */
 
 /* Customer specific Host GPIO defintion  */
 #ifdef CUSTOMER_HW_SAMSUNG
 static int dhd_oob_gpio_num = IRQ_EINT3;
 #else
 static int dhd_oob_gpio_num = -1; /* GG 19 */
-#endif
+#endif /* CUSTOMER_HW_SAMSUNG */
 
 module_param(dhd_oob_gpio_num, int, 0644);
 MODULE_PARM_DESC(dhd_oob_gpio_num, "DHD oob gpio number");
@@ -73,12 +78,16 @@ int dhd_customer_oob_irq_map(unsigned long *irq_flags_ptr)
 {
 	int  host_oob_irq = 0;
 
+#ifdef CUSTOMER_HW2
+	host_oob_irq = wifi_get_irq_number(irq_flags_ptr);
+
+#else /* for NOT  CUSTOMER_HW2 */
 #if defined(CUSTOM_OOB_GPIO_NUM)
 	if (dhd_oob_gpio_num < 0) {
 		dhd_oob_gpio_num = CUSTOM_OOB_GPIO_NUM;
 	}
-#endif
-	*irq_flags_ptr = IRQF_TRIGGER_RISING;
+#endif /* CUSTOM_OOB_GPIO_NUM */
+
 	if (dhd_oob_gpio_num < 0) {
 		WL_ERROR(("%s: ERROR customer specific Host GPIO is NOT defined \n",
 			__FUNCTION__));
@@ -88,15 +97,16 @@ int dhd_customer_oob_irq_map(unsigned long *irq_flags_ptr)
 	WL_ERROR(("%s: customer specific Host GPIO number is (%d)\n",
 	         __FUNCTION__, dhd_oob_gpio_num));
 
-#if defined CUSTOMER_HW
+#if defined(CUSTOMER_HW)
 	host_oob_irq = MSM_GPIO_TO_INT(dhd_oob_gpio_num);
-#elif defined CUSTOMER_HW3
+#elif defined(CUSTOMER_HW3)
 	gpio_request(dhd_oob_gpio_num, "oob irq");
 	host_oob_irq = gpio_to_irq(dhd_oob_gpio_num);
 	gpio_direction_input(dhd_oob_gpio_num);
-#elif defined CUSTOMER_HW_SAMSUNG
+#elif defined(CUSTOMER_HW_SAMSUNG)
 	host_oob_irq = dhd_oob_gpio_num;
 #endif
+#endif /* CUSTOMER_HW2 */
 
 	return (host_oob_irq);
 }
@@ -110,10 +120,11 @@ dhd_customer_gpio_wlan_ctrl(int onoff)
 		case WLAN_RESET_OFF:
 			WL_TRACE(("%s: call customer specific GPIO to insert WLAN RESET\n",
 				__FUNCTION__));
-#ifdef CUSTOMER_HW_SAMSUNG
+#if defined (CUSTOMER_HW_SAMSUNG)
 			wlan_setup_power(POWER_OFF, 2);
-#endif /* CUSTOMER_HW */
-#ifdef CUSTOMER_HW2
+#elif defined(CUSTOMER_HW)
+			bcm_wlan_power_off(2);
+#elif defined(CUSTOMER_HW2)
 			wifi_set_power(0, 0);
 #endif
 			WL_ERROR(("=========== WLAN placed in RESET ========\n"));
@@ -122,10 +133,11 @@ dhd_customer_gpio_wlan_ctrl(int onoff)
 		case WLAN_RESET_ON:
 			WL_TRACE(("%s: callc customer specific GPIO to remove WLAN RESET\n",
 				__FUNCTION__));
-#ifdef CUSTOMER_HW_SAMSUNG
+#if defined(CUSTOMER_HW_SAMSUNG)
 			wlan_setup_power(POWER_ON, 2);
-#endif /* CUSTOMER_HW */
-#ifdef CUSTOMER_HW2
+#elif defined(CUSTOMER_HW)
+			bcm_wlan_power_on(2);
+#elif defined(CUSTOMER_HW2)
 			wifi_set_power(1, 0);
 #endif
 			WL_ERROR(("=========== WLAN going back to live  ========\n"));
@@ -134,19 +146,51 @@ dhd_customer_gpio_wlan_ctrl(int onoff)
 		case WLAN_POWER_OFF:
 			WL_TRACE(("%s: call customer specific GPIO to turn off WL_REG_ON\n",
 				__FUNCTION__));
-#ifdef CUSTOMER_HW_SAMSUNG
+#if defined(CUSTOMER_HW_SAMSUNG)
 			wlan_setup_power(POWER_OFF, 1);
-#endif /* CUSTOMER_HW */
+#elif defined(CUSTOMER_HW)
+			bcm_wlan_power_off(1);
+#endif /* CUSTOMER_HW || CUSTOMER_HW_SAMSUNG */
 		break;
 
 		case WLAN_POWER_ON:
 			WL_TRACE(("%s: call customer specific GPIO to turn on WL_REG_ON\n",
 				__FUNCTION__));
-#ifdef CUSTOMER_HW_SAMSUNG
+#if defined(CUSTOMER_HW_SAMSUNG)
 			wlan_setup_power(POWER_ON, 1);
-#endif /* CUSTOMER_HW */
+#elif defined(CUSTOMER_HW)
+			bcm_wlan_power_on(1);
 			/* Lets customer power to get stable */
-			//OSL_DELAY(500);
+			OSL_DELAY(50);
+#endif /* CUSTOMER_HW || CUSTOMER_HW_SAMSUNG */
 		break;
 	}
 }
+
+#ifdef GET_CUSTOM_MAC_ENABLE
+/* Function to get custom MAC address */
+int
+dhd_custom_get_mac_address(unsigned char *buf)
+{
+	int ret = 0;
+
+	WL_TRACE(("%s Enter\n", __FUNCTION__));
+	if (!buf)
+		return -EINVAL;
+
+	/* Customer access to MAC address stored outside of DHD driver */
+#ifdef CUSTOMER_HW2
+	ret = wifi_get_mac_addr(buf);
+#endif
+
+#ifdef EXAMPLE_GET_MAC
+	/* EXAMPLE code */
+	{
+		struct ether_addr ea_example = {{0x00, 0x11, 0x22, 0x33, 0x44, 0xFF}};
+		bcopy((char *)&ea_example, buf, sizeof(struct ether_addr));
+	}
+#endif /* EXAMPLE_GET_MAC */
+
+	return ret;
+}
+#endif /* GET_CUSTOM_MAC_ENABLE */

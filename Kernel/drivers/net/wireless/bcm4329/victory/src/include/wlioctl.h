@@ -24,7 +24,7 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
- * $Id: wlioctl.h,v 1.601.4.15.2.14.2.61 2010/05/04 20:26:25 Exp $
+ * $Id: wlioctl.h,v 1.601.4.15.2.14.2.62.4.1 2010/11/17 03:09:28 Exp $
  */
 
 
@@ -857,6 +857,7 @@ typedef struct wl_ioctl {
 #define PM_MAX	1
 #define PM_FAST 2
 
+#define LISTEN_INTERVAL			20
 
 #define	INTERFERE_NONE	0	
 #define	NON_WLAN	1	
@@ -1317,6 +1318,8 @@ enum {
 
 #define PFN_VERSION			1
 
+#define MAX_PFN_LIST_COUNT	16
+
 
 typedef struct wl_pfn_param {
 	int32 version;			
@@ -1622,25 +1625,6 @@ typedef struct wl_rssi_event {
 } wl_rssi_event_t;
 
 
-typedef struct wl_country {
-   char country_abbrev[WLC_CNTRY_BUF_SZ];
-   
-   int32  rev;
-
-   char ccode[WLC_CNTRY_BUF_SZ];
-
-} wl_country_t;
-
-typedef struct wl_assoc_info {
-	uint32		req_len;
-	uint32		resp_len;
-	uint32		flags;
-	struct dot11_assoc_req req;
-	struct ether_addr reassoc_bssid; /* used in reassoc's */
-	struct dot11_assoc_resp resp;
-} wl_assoc_info_t;
-/* flags */
-#define WLC_ASSOC_REQ_IS_REASSOC 0x01 /* assoc req was actually a reassoc */
 
 #define WLFEATURE_DISABLE_11N		0x00000001
 #define WLFEATURE_DISABLE_11N_STBC_TX	0x00000002
