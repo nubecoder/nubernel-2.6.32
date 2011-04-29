@@ -93,7 +93,7 @@ MAKE_CLEAN()
 	local T1=$(date +%s)
 	echo "Begin make clean..." && echo ""
 	pushd Kernel > /dev/null
-		make V=1 -j"$THREADS" ARCH=arm clean > make.clean.out 2>&1
+		make V=1 -j"$THREADS" ARCH=arm clean 2>&1 >make.clean.out
 	popd > /dev/null
 	local T2=$(date +%s)
 	echo "" && echo "make clean took $(($T2 - $T1)) seconds."
@@ -106,7 +106,7 @@ MAKE_DISTCLEAN()
 	local T1=$(date +%s)
 	echo "Begin make distclean..." && echo ""
 	pushd Kernel > /dev/null
-		make V=1 -j"$THREADS" ARCH=arm distclean > make.distclean.out 2>&1
+		make V=1 -j"$THREADS" ARCH=arm distclean 2>&1 >make.distclean.out
 	popd > /dev/null
 	local T2=$(date +%s)
 	echo "" && echo "make distclean took $(($T2 - $T1)) seconds."
@@ -119,7 +119,7 @@ MAKE_DEFCONFIG()
 	local T1=$(date +%s)
 	echo "Begin make ${TARGET}_defconfig..." && echo ""
 	pushd Kernel > /dev/null
-		make V=1 -j"$THREADS" ARCH=arm ${TARGET}_defconfig > make.defconfig.out 2>&1
+		make V=1 -j"$THREADS" ARCH=arm ${TARGET}_defconfig 2>&1 >make.defconfig.out
 	popd > /dev/null
 	local T2=$(date +%s)
 	echo "" && echo "make ${TARGET}_defconfig took $(($T2 - $T1)) seconds."
