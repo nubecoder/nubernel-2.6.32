@@ -1,0 +1,27 @@
+#!/sbin/busybox sh
+
+BB=/sbin/busybox
+
+$BB mount -o remount,rw /
+$BB mount -o remount,rw /system
+
+$BB --install -s /sbin
+
+$BB chmod 6755 /sbin/su
+$BB rm /system/bin/su
+$BB rm /system/xbin/su
+$BB ln -s /sbin/su /system/bin/su
+$BB ln -s /sbin/su /system/xbin/su
+
+if [ ! -f "/system/etc/passwd" ]; then
+	echo "root::0:0:root:/data/local:/system/bin/sh" > /system/etc/passwd
+	$BB chmod 0666 /system/etc/passwd
+fi
+
+if [ ! -f "/system/etc/group" ]; then
+	echo "root::0:" > /system/etc/group
+	$BB chmod 0666 /system/etc/group
+fi
+
+$BB mount -o remount,ro /
+$BB mount -o remount,ro /system
