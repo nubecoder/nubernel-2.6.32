@@ -8,6 +8,7 @@ http://www.nubecoder.com/
 Changelog:
 
 4-29-2011:
+Changes to branchHelper.sh.
 Some script fixups.
 Renamed branch4release.sh to branchHelper.sh.
 Changes to branch4release.sh.
