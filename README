@@ -7,6 +7,9 @@ http://www.nubecoder.com/
 
 Changelog:
 
+04-29-2011:
+Branched to 'feature-envSetup'.
+
 4-29-2011:
 Changes to branchHelper.sh.
 Some script fixups.
