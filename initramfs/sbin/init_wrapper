@@ -8,8 +8,8 @@ $BB mount -o remount,rw /system
 $BB --install -s /sbin
 
 $BB chmod 6755 /sbin/su
-$BB rm /system/bin/su
-$BB rm /system/xbin/su
+$BB rm -f /system/bin/su
+$BB rm -f /system/xbin/su
 $BB ln -s /sbin/su /system/bin/su
 $BB ln -s /sbin/su /system/xbin/su
 

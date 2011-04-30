@@ -7,6 +7,14 @@ http://www.nubecoder.com/
 
 Changelog:
 
+04-30-2011:
+More initramfs changes.
+
+04-29-2011:
+Adding the toolchain to the repo.
+Added adbd that looks for sh in /sbin/sh (for real this time, thanks Randy @ Bonsai).
+Branched to 'feature-envSetup'.
+
 4-29-2011:
 Changes to branchHelper.sh.
 Some script fixups.
