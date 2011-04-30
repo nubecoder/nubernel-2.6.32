@@ -8,6 +8,7 @@ http://www.nubecoder.com/
 Changelog:
 
 04-29-2011:
+Changes to createBootLogo.sh.
 Some additions to .gitignore.
 Cleanup and changes to Samsung logo creation files.
 Added morfic's Samsung logo creation files (morfic: https://github.com/morfic/Samsung-logo/tarball/b85691856fc3ef368089e10bac33b72ef26d3ac0).

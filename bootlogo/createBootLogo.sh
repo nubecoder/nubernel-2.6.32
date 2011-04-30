@@ -10,39 +10,88 @@
 # defines
 LOGO_PATH="$PWD/../Kernel/drivers/video/samsung"
 LOGO_FILE="$LOGO_PATH/logo_rgb24_wvga_portrait_nubecoder.h"
+ERROR_MSG=
 
-if [ ! -f makelogo ]
-then
+# functions
+SHOW_COMPLETED()
+{
+	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+	echo "Script completed."
+	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+	exit
+}
+SHOW_ERROR()
+{
+	if [ -n "$ERROR_MSG" ] ; then
+		echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+		echo "$ERROR_MSG"
+	fi
+}
+
+BUILD_MAKELOGO()
+{
+	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+	# start time
+	local T1=$(date +%s)
+	echo "Begin build makelogo..." && echo ""
 	# build binary
-	echo "makelogo binary not found, attempting to build it."
-	RESULT=$(g++ -o makelogo makelogo.cpp 2>&1 >/dev/null)
+	local RESULT=$(g++ -o makelogo makelogo.cpp 2>&1 >/dev/null)
 	# check for errors
-	FIND_ERR="g++:"
-	if [ "$RESULT" != "${RESULT/$FIND_ERR/}" ]
+	local FIND_ERR_1="g++: "
+	if [ "$RESULT" != "${RESULT/$FIND_ERR_1/}" ]
 	then
-		echo "g++ Error:"${RESULT/$FIND_ERR/}
-		exit
+		ERROR_MSG="g++ Error: "${RESULT/$FIND_ERR_1/}
+		SHOW_ERROR
+		SHOW_COMPLETED
+	fi
+	local FIND_ERR_2="fatal error: "
+	if [ "$RESULT" != "${RESULT/$FIND_ERR_2/}" ]
+	then
+		ERROR_MSG="Fatal Error: "${RESULT/$FIND_ERR_2/}
+		SHOW_ERROR
+		SHOW_COMPLETED
 	fi
 	# check for warnings
-	FIND_WARNING="warning:"
+	local FIND_WARNING="warning: "
 	if [ "$RESULT" != "${RESULT/$FIND_WARNING/}" ]
 	then
+		#ERROR_MSG="Warning: "${RESULT/$FIND_WARNING/}
 		echo "Warning: "${RESULT/$FIND_WARNING/}
+		SHOW_ERROR
 	fi
-	echo "makelogo binary built successfully."
+	# end time
+	local T2=$(date +%s)
+	echo "" && echo "Build makelogo took $(($T2 - $T1)) seconds."
+	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+	echo "*"
+}
+CREATE_LOGO()
+{
+	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+	# start time
+	local T1=$(date +%s)
+	echo "Begin bootlogo creation..." && echo ""
+	# convert header to usable data
+	./makelogo > boot_logo
+	# output to file
+	echo "const unsigned long LOGO_RGB24[] = {" >$LOGO_FILE
+	cat boot_logo >>$LOGO_FILE
+	echo "};" >>$LOGO_FILE
+	cat charge_logo.h   >>$LOGO_FILE
+	# end time
+	local T2=$(date +%s)
+	echo "" && echo "bootlogo creation took $(($T2 - $T1)) seconds."
+	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+	echo "*"
+}
+
+# main
+if [ ! -f makelogo ]
+then
+	BUILD_MAKELOGO
 fi
 
-# convert header to usable data
-echo "Creating boot_logo data file."
-./makelogo > boot_logo
+CREATE_LOGO
 
-# output everything to the file
-echo "Creating output file."
-echo "const unsigned long LOGO_RGB24[] = {" >$LOGO_FILE
-cat boot_logo >>$LOGO_FILE
-echo "};" >>$LOGO_FILE
-cat charge_logo.h   >>$LOGO_FILE
-
-# done
-echo "Scripte complete."
+SHOW_COMPLETED
 
