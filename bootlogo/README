@@ -1,3 +1,15 @@
+Edited by nubecoder, original READEME text has been left intact below.
+****************************************************************
+
+Create an image as 480x800 24bit RGB.
+In gimp save as "C Header".
+Name the file "boot_logo_gimp.h".
+Save into folder with other files.
+Run the createBootLogo.sh script.
+
+****************************************************************
+Original README below...
+****************************************************************
 Create an image as 480x800 24bit RGB.
 In gimp save as "C Header"
 
@@ -18,6 +30,4 @@ Compile your kernel as usual.
 look at end_logo.h if you plan on replacing the charge image.
 
 I never got to just doing it all at once, that would be on my todo list.
-
-
 
