@@ -7,6 +7,7 @@ int main()
 {
 	int totalpixels = 480 * 800;
 	int breakcount = 1;
+	cout << "const unsigned long LOGO_RGB24[] = {\n";
 	for (int i = 0; i < totalpixels; i++)
 	{
 		unsigned char pixel[6] = "";
@@ -31,6 +32,7 @@ int main()
 			cout << ",";
 		}
 	}
+	cout << "};\n";
 	return 0;
 }
 

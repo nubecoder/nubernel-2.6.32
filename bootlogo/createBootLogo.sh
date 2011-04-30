@@ -71,12 +71,13 @@ CREATE_LOGO()
 	# start time
 	local T1=$(date +%s)
 	echo "Begin bootlogo creation..." && echo ""
+	# remove old files
+	rm -f boot_logo.h
+	rm -f $LOGO_FILE
 	# convert header to usable data
-	./makelogo > boot_logo
+	./makelogo > boot_logo.h
 	# output to file
-	echo "const unsigned long LOGO_RGB24[] = {" >$LOGO_FILE
-	cat boot_logo >>$LOGO_FILE
-	echo "};" >>$LOGO_FILE
+	cat boot_logo.h >>$LOGO_FILE
 	cat charge_logo.h   >>$LOGO_FILE
 	# end time
 	local T2=$(date +%s)
