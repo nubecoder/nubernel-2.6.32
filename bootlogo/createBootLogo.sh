@@ -34,6 +34,8 @@ BUILD_MAKELOGO()
 	# start time
 	local T1=$(date +%s)
 	echo "Begin build makelogo..." && echo ""
+	# remove old files
+	rm -f makelogo
 	# build binary
 	local RESULT=$(g++ -o makelogo makelogo.cpp 2>&1 >/dev/null)
 	# check for errors
@@ -87,10 +89,7 @@ CREATE_LOGO()
 }
 
 # main
-if [ ! -f makelogo ]
-then
-	BUILD_MAKELOGO
-fi
+BUILD_MAKELOGO
 
 CREATE_LOGO
 

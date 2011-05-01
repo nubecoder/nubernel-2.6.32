@@ -7,6 +7,9 @@ http://www.nubecoder.com/
 
 Changelog:
 
+05-01-2011:
+Fixing up createBootLogo.sh (makelogo needs to be re-built when changing the boot_logo_gimp.h file).
+
 04-30-2011:
 More cleanup and changes to Samsung logo creation files.
 
