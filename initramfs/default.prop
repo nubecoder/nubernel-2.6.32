@@ -6,3 +6,6 @@ ro.allow.mock.location=0
 ro.debuggable=1
 persist.service.adb.enable=1
 ro.build.version.release=nubernel-kernel_v0.0.0
+
+ro.product.device=SPH-D700
+ro.build.product=SPH-D700

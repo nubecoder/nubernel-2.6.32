@@ -8,6 +8,7 @@ http://www.nubecoder.com/
 Changelog:
 
 05-02-2011:
+Attempting to fix getprop command for recovery.
 Fixing permissions on adbd.
 
 05-01-2011:
