@@ -7,6 +7,9 @@ http://www.nubecoder.com/
 
 Changelog:
 
+05-02-2011:
+Fixing permissions on adbd.
+
 05-01-2011:
 File rename cleanup.
 Some file renaming.
