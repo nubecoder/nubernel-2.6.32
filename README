@@ -8,6 +8,7 @@ http://www.nubecoder.com/
 Changelog:
 
 05-01-2011:
+Some file renaming.
 Added new boot logo (thanks anomaly: http://www.graphicanomaly.com/).
 Fixing up createBootLogo.sh (makelogo needs to be re-built when changing the boot_logo_gimp.h file).
 
