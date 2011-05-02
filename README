@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 05-08-2011:
+Modified BOOTCLASSPATH for CM/AOSP support (tanimn: https://github.com/tanimn/Twilight_Zone_Kernel/commit/92bb17a0265b8ee326888e4f3b247fe19b1f3b77).
 Branched to 'feature-initramfs'.
 
 05-07-2011:
