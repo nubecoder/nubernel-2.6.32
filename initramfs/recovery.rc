@@ -1,22 +1,30 @@
 on init
-#GyuTae FIX : we should not use system partition!!!!!
-#	export PATH /sbin:/bin
-	export PATH /sbin:/system/bin
+
+	export PATH /sbin:/system/xbin:/system/bin
 	export ANDROID_ROOT /system
 	export ANDROID_DATA /data
 	export EXTERNAL_STORAGE /sdcard
-
-	symlink /res/etc /etc
 
 # Create BML devices
 	mknod /dev/block/bml7 b 137 7
 	mknod /dev/block/bml8 b 137 8
 
-	mkdir /tmp
+# create mountpoints
+	mkdir /data 0771 system system
+	mkdir /cache 0770 system cache
+	mkdir /system 0775 system system
+	mkdir /tmp 1777 root root
 	mkdir /mnt 0775 root system
-	mount tmpfs nodev /tmp
-	mkdir /sdcard 0000 system system
+	mkdir /mnt/sdcard 0775 system system
+	mkdir /mnt/sd-ext 0775 system system
 
+	symlink /res/etc /etc
+	symlink /mnt/sdcard /sdcard
+	symlink /mnt/sd-ext /sd-ext
+
+	mount tmpfs tmpfs /tmp size=4m
+
+	insmod /lib/modules/logger.ko
 	insmod /lib/modules/fsr.ko
 	insmod /lib/modules/fsr_stl.ko
 	insmod /lib/modules/rfs_glue.ko
@@ -82,6 +90,10 @@ on boot
 
 	class_start default
 
+service init_local /sbin/init_wrapper
+	user root
+	oneshot
+
 ## Daemon processes to be run by init.
 
 #service console /system/bin/sh
@@ -98,8 +110,5 @@ on property:persist.service.adb.enable=0
 	stop adbd
 
 service recovery /sbin/recovery
-
-setprop ro.debuggable "1"
-setprop persist.service.adb.enable "1"
 
 service adbd /sbin/adbd recovery
