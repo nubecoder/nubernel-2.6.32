@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-27-2011:
+ASOC: update CDMA specific clock settings (Thomas Ryu via Bonsai: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/b2938ff3ea380a43fc4c26953f29b1bf39e86846).
 staging: binder: Fix use of uninitialized variable (Nick Kralevich: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=4ef78fa8848b4a6fc60268431492d1502454fb5e).
 ARM: herring: Increase delay to 200 ms in wlan power on (Dmitry Shmidt: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=9e3aca5aed77290075be4ce59ff1a0feabfa2ab3).
 shmem: reduce pagefault lock contention (Shaohua Li: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=ff36b801624d02a876bb7deded6ab860ea3503f2).
