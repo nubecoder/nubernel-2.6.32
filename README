@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-27-2011:
+Quiet warning in samsung_mipi driver config (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/05a923aaad791c21e2425da19578352efd3d01d1).
 Clean up compile warnings (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/dbb52269d6cbd042a6ebb041c7657ad8fd01afc0).
 Quiet compiler warnings (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/f752a3101dd481601195a4d915a75c1cfa90b454).
 Fix a couple of compile errors and debug message formating (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/f2f5b3d4f524cb0b4da89250542176826ab0d5c2).
