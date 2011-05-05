@@ -8,6 +8,7 @@ http://www.nubecoder.com/
 Changelog:
 
 05-03-2011:
+More recovery cleanup.
 Changes to .gitignore.
 Select changes to initramfs (Bonsai: https://github.com/Bonsai-Project/bonsai_android_initramfs/commit/5c2b71bc11358f01bda17deebaf883060030ed90).
 Branched to 'feature-recovery_cleanup'.
