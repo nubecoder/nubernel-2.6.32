@@ -19,8 +19,8 @@ IP="192.168.1.187"
 ZIMAGE_SRC="$PWD/Kernel/arch/arm/boot/zImage"
 ZIMAGE_DEST="/data/local/tmp/zImage"
 
-REDBEND_SRC="$PWD/initramfs/sbin/bmlwrite"
-REDBEND_DEST="/data/local/tmp/bmlwrite"
+REDBEND_SRC="$PWD/initramfs/sbin/redbend_ua"
+REDBEND_DEST="/data/local/tmp/redbend_ua"
 
 BMLWRITE_SRC="$PWD/initramfs/sbin/bmlwrite"
 BMLWRITE_DEST="/data/local/tmp/bmlwrite"
@@ -60,9 +60,13 @@ done
 
 if [ "$ERROR" != "yes" ];
 then
-	#remove previous kernel and push new one to phone
-	echo "Removing previous zImage from $ZIMAGE_DEST."
+	#remove previous files
+	echo "Removing previous files."
 	$ADB_SHELL "rm" $ZIMAGE_DEST
+	$ADB_SHELL "rm" $REDBEND_DEST
+	$ADB_SHELL "rm" $BMLWRITE_DEST
+
+	#push new kernel to phone
 	echo "Pushing zImage, this may take a minute."
 	$ADB_PUSH $ZIMAGE_SRC $ZIMAGE_DEST
 

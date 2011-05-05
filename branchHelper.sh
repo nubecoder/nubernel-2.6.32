@@ -88,10 +88,12 @@ BRANCH_RELEASE()
 	if [ "$VERBOSE" = "y" ]
 	then
 		sed -i "s/$PATTERN/$REPLACEMENT/g" ncMultiBuild.sh
+		sed -i "s/$PATTERN/$REPLACEMENT/g" initramfs/default.prop
 		sed -i "s/$PATTERN/$REPLACEMENT/g" README
 		sed -i "s/$PATTERN/$REPLACEMENT/g" $0
 	else
 		sed -i "s/$PATTERN/$REPLACEMENT/g" ncMultiBuild.sh >/dev/null 2>&1
+		sed -i "s/$PATTERN/$REPLACEMENT/g" initramfs/default.prop >/dev/null 2>&1
 		sed -i "s/$PATTERN/$REPLACEMENT/g" README >/dev/null 2>&1
 		sed -i "s/$PATTERN/$REPLACEMENT/g" $0 >/dev/null 2>&1
 	fi
