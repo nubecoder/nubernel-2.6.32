@@ -7,6 +7,9 @@ http://www.nubecoder.com/
 
 Changelog:
 
+05-04-2011:
+Script cleanup (fixing automatic versioning).
+
 05-03-2011:
 Add helper script for kernel flashing.
 More script cleanup.
