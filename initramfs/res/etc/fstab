@@ -1,0 +1,11 @@
+tmpfs /dev tmpfs rw,relatime,mode=755 0 0
+devpts /dev/pts devpts rw,relatime,mode=600 0 0
+proc /proc proc rw,relatime 0 0
+sysfs /sys sysfs rw,relatime 0 0
+tmpfs /tmp tmpfs rw,relatime,size=4096k 0 0
+/dev/block/stl6 /mnt/.lfs j4fs rw,relatime 0 0
+/dev/block/stl9 /system ext4 ro,noatime,nodiratime,barrier=1,data=writeback,noauto_da_alloc 0 0
+/dev/block/stl10 /data ext4 rw,nosuid,nodev,noatime,nodiratime,barrier=1,data=writeback,noauto_da_alloc 0 0
+/dev/block/stl11 /cache ext4 rw,nosuid,nodev,noatime,nodiratime,barrier=1,data=writeback,noauto_da_alloc 0 0
+/dev/block/mmcblk0p1 /mnt/sdcard vfat rw,nodev,noatime,nodiratime,errors=continue 0 0
+/dev/block/mmcblk0p2 /mnt/sd-ext ext2 rw,nodev,nobh,nouser_xattr,noatime,nodiratime,check=none,errors=continue 0 0

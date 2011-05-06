@@ -1,0 +1,4 @@
+modver=SPH-D700_nubernel-kernel_v0.0.0
+post-build=google/soju/crespo:2.3.3/GRI54/105536:user/release-keys
+post-timestamp=0
+pre-device=epic

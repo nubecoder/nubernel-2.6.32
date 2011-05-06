@@ -1,17 +1,38 @@
-#/bin/bash
+#!/bin/bash
 
 echo "$1 $2 $3"
 
 case "$1" in
 	Clean)
-		echo "********************************************************************************"
-		echo "* Clean Kernel                                                                 *"
-		echo "********************************************************************************"
-
+		echo "************************************************************"
+		echo "* Clean Kernel                                             *"
+		echo "************************************************************"
 		pushd Kernel
-		make clean
+			make clean V=1 ARCH=arm CROSS_COMPILE=$TOOLCHAIN/$TOOLCHAIN_PREFIX 2>&1 | tee make.clean.out
 		popd
-		echo " It's done... "
+		echo " Clean is done... "
+		exit
+		;;
+	mrproper)
+		echo "************************************************************"
+		echo "* mrproper Kernel                                          *"
+		echo "************************************************************"
+		pushd Kernel
+			make clean V=1 ARCH=arm CROSS_COMPILE=$TOOLCHAIN/$TOOLCHAIN_PREFIX 2>&1 | tee make.clean.out
+			make mrproper 2>&1 | tee make.mrproper.out
+		popd
+		echo " mrproper is done... "
+		exit
+		;;
+	distclean)
+		echo "************************************************************"
+		echo "* distclean Kernel                                         *"
+		echo "************************************************************"
+		pushd Kernel
+			make clean V=1 ARCH=arm CROSS_COMPILE=$TOOLCHAIN/$TOOLCHAIN_PREFIX 2>&1 | tee make.clean.out
+			make distclean 2>&1 | tee make.distclean.out
+		popd
+		echo " distclean is done... "
 		exit
 		;;
 	*)
@@ -26,8 +47,11 @@ fi
 
 TARGET_LOCALE="vzw"
 
-TOOLCHAIN=`pwd`/../arm-2009q3/bin
-TOOLCHAIN_PREFIX=arm-none-eabi-
+export KBUILD_BUILD_VERSION="nubernel-EC05_v0.0.0"
+DEFCONFIG_STRING=nubernel_defconfig
+
+TOOLCHAIN=`pwd`/toolchains/android-toolchain-4.4.3/bin
+TOOLCHAIN_PREFIX=arm-linux-androideabi-
 
 KERNEL_BUILD_DIR=`pwd`/Kernel
 ANDROID_OUT_DIR=`pwd`/Android/out/target/product/SPH-D700
@@ -39,46 +63,48 @@ export HW_BOARD_REV
 export LD_LIBRARY_PATH=.:${TOOLCHAIN}/../lib
 
 echo "************************************************************"
-echo "* EXPORT VARIABLE		                            	 *"
+echo "* EXPORT VARIABLE                                          *"
 echo "************************************************************"
 echo "PRJROOT=$PRJROOT"
 echo "PROJECT_NAME=$PROJECT_NAME"
 echo "HW_BOARD_REV=$HW_BOARD_REV"
+echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
 echo "************************************************************"
 
 BUILD_MODULE()
 {
 	echo "************************************************************"
-	echo "* BUILD_MODULE	                                       	 *"
+	echo "* BUILD_MODULE                                             *"
 	echo "************************************************************"
 	echo
-
 	pushd Kernel
 		make ARCH=arm modules
 	popd
 }
 
+CLEAN_ZIMAGE()
+{
+	echo "************************************************************"
+	echo "* Removing old zImage                                      *"
+	echo "************************************************************"
+	rm -f `pwd`/Kernel/arch/arm/boot/zImage
+	echo "* zImage removed"
+	echo "************************************************************"
+	echo
+}
+
 BUILD_KERNEL()
 {
 	echo "************************************************************"
-	echo "*        BUILD_KERNEL                                      *"
+	echo "* BUILD_KERNEL                                             *"
 	echo "************************************************************"
 	echo
-
-
 	pushd $KERNEL_BUILD_DIR
-
-	export KDIR=`pwd`
-
-	make ARCH=arm victory_03_defconfig
-
-	# make kernel
-
-	make -j$CPU_JOB_NUM ARCH=arm CROSS_COMPILE=$TOOLCHAIN/$TOOLCHAIN_PREFIX
-
-
+		export KDIR=`pwd`
+		make ARCH=arm $DEFCONFIG_STRING
+#		make -j$CPU_JOB_NUM ARCH=arm CROSS_COMPILE=$TOOLCHAIN/$TOOLCHAIN_PREFIX
+		make V=1 -j$CPU_JOB_NUM ARCH=arm CROSS_COMPILE=$TOOLCHAIN/$TOOLCHAIN_PREFIX 2>&1 | tee make.out
 	popd
-	
 }
 
 # print title
@@ -94,7 +120,7 @@ PRINT_TITLE()
 {
 	echo
 	echo "************************************************************"
-	echo "*                     MAKE PACKAGES"
+	echo "* MAKE PACKAGES                                            *"
 	echo "************************************************************"
 	echo "* 1. kernel : zImage"
 	echo "* 2. modules"
@@ -107,16 +133,16 @@ PRINT_TITLE()
 if [ $# -gt 3 ]
 then
 	echo
-	echo "**************************************************************"
-	echo "*  Option Error                                              *"
+	echo "************************************************************"
+	echo "* Option Error                                             *"
 	PRINT_USAGE
 	exit 1
 fi
 
 START_TIME=`date +%s`
-
 PRINT_TITLE
-
+#BUILD_MODULE
+CLEAN_ZIMAGE
 BUILD_KERNEL
 END_TIME=`date +%s`
 let "ELAPSED_TIME=$END_TIME-$START_TIME"

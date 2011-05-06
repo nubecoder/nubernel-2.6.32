@@ -1,98 +1,114 @@
 on init
-###
-# GyuTae FIX : we should not use system partition!!!!!
-#	export PATH /sbin:/bin
 
-	export PATH /sbin:/system/bin
-
-    export ANDROID_ROOT /system
-    export ANDROID_DATA /data
+	export PATH /sbin:/system/xbin:/system/bin
+	export ANDROID_ROOT /system
+	export ANDROID_DATA /data
 	export EXTERNAL_STORAGE /sdcard
 
-	mkdir /sdcard
-	mkdir /system
-	mkdir /data
-	mkdir /cache
-    mkdir /tmp
-    mkdir /mnt 0775 root system    
-    mount tmpfs nodev /tmp
-    # etinum.recovery create /bin for busybox
-	mkdir /bin 0771 system system
+# Create BML devices
+	mknod /dev/block/bml7 b 137 7
+	mknod /dev/block/bml8 b 137 8
 
-    insmod /lib/modules/fsr.ko
-    insmod /lib/modules/fsr_stl.ko
-    insmod /lib/modules/rfs_glue.ko
-    insmod /lib/modules/rfs_fat.ko
+# create mountpoints
+	mkdir /data 0771 system system
+	mkdir /cache 0770 system cache
+	mkdir /system 0775 system system
+	mkdir /tmp 1777 root root
+	mkdir /mnt 0775 root system
+	mkdir /mnt/sdcard 0775 system system
+	mkdir /mnt/sd-ext 0775 system system
 
-# parameter block
-    mkdir /mnt/.lfs 0755 root root
-    insmod /lib/modules/j4fs.ko
-    mount j4fs /dev/block/stl6 /mnt/.lfs
+	symlink /res/etc /etc
+	symlink /mnt/sdcard /sdcard
+	symlink /mnt/sd-ext /sd-ext
+
+	mount tmpfs tmpfs /tmp size=4m
+
+	insmod /lib/modules/logger.ko
+	insmod /lib/modules/fsr.ko
+	insmod /lib/modules/fsr_stl.ko
+	insmod /lib/modules/rfs_glue.ko
+	insmod /lib/modules/rfs_fat.ko
+	insmod /lib/modules/j4fs.ko
 	insmod /lib/modules/dpram_recovery.ko
-
-	insmod /lib/modules/param.ko 
-
-	mkdir /sdcard 0000 system system
-    mkdir /data 0771 system system
-    mkdir /cache 0770 system cache
+	insmod /lib/modules/param.ko
 
 
-    #Thomas Ryu, Cache 
-    mount rfs /dev/block/stl11 /cache nosuid nodev check=no
-    chown system cache /cache
-    chmod 0770 /cache
+###################################################################
+# mount mtd partitions begin
 
-    # This may have been created by the recovery system with odd permissions
-    chown system system /cache/recovery
-    chmod 0770 /cache/recovery
+# /.lfs
+	mkdir /mnt/.lfs 0755 root root
+	mount j4fs /dev/block/stl6 /mnt/.lfs
 
-    #This recovery_fota_mode
+# /system
+	mkdir /system 0775 system system
+	#mount ext4 /dev/block/stl9 /system noatime nodiratime check=no errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
+	mount ext4 /dev/block/stl9 /system noatime nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
+	mount rfs /dev/block/stl9 /system nosuid nodev check=no
+	chown root system /system
+	chmod 0775 /system
+
+# /data
+	mkdir /data 0771 system system
+	#mount ext4 /dev/block/stl10 /data nosuid nodev noatime nodiratime check=no errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
+	mount ext4 /dev/block/stl10 /data nosuid nodev noatime nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
+	mount rfs /dev/block/stl10 /data nosuid nodev check=no
+	chown system system /data
+	chmod 0771 /data
+
+# /cache
+	mkdir /cache 0770 system cache
+	#mount ext4 /dev/block/stl11 /cache nosuid nodev noatime nodiratime check=no errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
+	mount ext4 /dev/block/stl11 /cache nosuid nodev noatime nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
+	mount rfs /dev/block/stl11 /cache nosuid nodev check=no
+	chown system cache /cache
+	chmod 0770 /cache
+	chown system cache /cache/recovery
+	chmod 0770 /cache/recovery
+
+# /efs
+	mkdir /efs 0771
+	mount rfs /dev/block/stl3 /efs nosuid nodev check=no
+	chown radio radio /efs
+	chmod 0771 /efs
+
+# mount mtd partitions complete
+###################################################################
+
+	#This recovery_fota_mode
 	#mkdir /cache/recovery_fota_mode
 	#chmod 0770 /cache/recovery_fota_mode
 
-    #Garnett
-    #mount rfs /dev/block/mmcblk0p2 /data nosuid nodev check=no
-    #chown system system /data
-    #chmod 0771 /data
-
-    mount rfs /dev/block/stl10 /data nosuid nodev check=no
-    chown system system /data
-    chmod 0771 /data
-
-  	mount rfs /dev/block/stl9 /system check=no
-
-    #mkdir /dbdata
-	#mount rfs /dev/block/stl10 /dbdata
-    #chown system system /dbdata
-    #chmod 0771 /dbdata
-    	
 on boot
 	#write /sys/class/sec/switch/uart_sel PDA
 	#write /sys/class/sec/switch/usb_sel PDA
 
-    ifup lo
-    hostname localhost
-    domainname localdomain
-    class_start default
+	ifup lo
+	hostname localhost
+	domainname localdomain
 
-## Daemon processes to be run by init.
-##
-#service console /system/bin/sh
-#    console
+	class_start default
 
-
-# adbd is controlled by the persist.service.adb.enable system property
-service adbd /sbin/adbd
-	disabled
-
-on property:persist.service.adb.enable=1
-    start adbd
-
-on property:persist.service.adb.enable=0
-    stop adbd
-
-service recovery /system/bin/recovery
+service init_local /sbin/init_wrapper
+	user root
 	oneshot
 
+## Daemon processes to be run by init.
 
-#service adbd /sbin/adbd recovery
+#service console /system/bin/sh
+#	console
+
+# adbd is controlled by the persist.service.adb.enable system property
+#service adbd /sbin/adbd
+#	disabled
+
+on property:persist.service.adb.enable=1
+	start adbd
+
+on property:persist.service.adb.enable=0
+	stop adbd
+
+service recovery /sbin/recovery
+
+service adbd /sbin/adbd recovery

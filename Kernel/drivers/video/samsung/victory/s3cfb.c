@@ -145,7 +145,8 @@ extern int get_boot_charger_info(void);
 #elif defined(CONFIG_ARIES_NTT)
 #include "logo_rgb24_wvga_portrait_docomo.h"
 #elif defined(CONFIG_ARIES_VER_B2)
-#include "../logo_rgb24_wvga_portrait_victory.h"// victory ansari
+//#include "../logo_rgb24_wvga_portrait_victory.h"// victory ansari
+#include "../logo_rgb24_wvga_portrait_nubecoder.h"
 #endif
 
 static int s3cfb_draw_logo(struct fb_info *fb)
@@ -1178,7 +1179,7 @@ int s3cfb_register_framebuffer(void)
 		if (i == pdata->default_win) {
 			s3cfb_check_var(&fbdev->fb[i]->var, fbdev->fb[i]);
 			s3cfb_set_par(fbdev->fb[i]);
-			//s3cfb_draw_logo(fbdev->fb[i]);
+			s3cfb_draw_logo(fbdev->fb[i]);
 		}
 #endif	/* CONFIG_MACH_S5PC110_ARIES */
 #endif	/* CONFIG_FRAMEBUFFER_CONSOLE */

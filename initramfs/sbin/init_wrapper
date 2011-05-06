@@ -1,0 +1,27 @@
+#!/system/bin/sh
+
+mount -o remount,rw /
+mount -o remount,rw /system
+
+chmod 6755 /sbin/su
+if [ -f /system/bin/su ]; then
+	rm -f /system/bin/su
+	ln -s /sbin/su /system/bin/su
+fi
+if [ -x /system/xbin/su ]; then
+	rm -f /system/xbin/su
+	ln -s /sbin/su /system/xbin/su
+fi
+
+if [ ! -f "/etc/passwd" ]; then
+	echo "root::0:0:root:/data/local:/sbin/sh" > /etc/passwd
+	chmod 0400 /system/etc/passwd
+fi
+
+if [ ! -f "/etc/group" ]; then
+	echo "root::0:" > /etc/group
+	chmod 0400 /etc/group
+fi
+
+mount -o remount,ro /
+mount -o remount,ro /system
