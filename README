@@ -1,13 +1,20 @@
-nubernel-EC05_v0.0.0
-
 Samsung SPH-D700 (Epic 4G) kernel by nubecoder
 
 http://www.nubecoder.com/
+
+nubernel-EC05_v0.0.0
+
+
+Feature list:
+=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]
+
+=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]
 
 
 Changelog:
 
 05-06-2011:
+Changes to README.
 Use NOOP I/O scheduler by default.
 
 05-04-2011:
