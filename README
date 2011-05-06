@@ -7,6 +7,9 @@ http://www.nubecoder.com/
 
 Changelog:
 
+05-06-2011:
+Use NOOP I/O scheduler by default.
+
 05-04-2011:
 Script cleanup (fixing automatic versioning).
 
