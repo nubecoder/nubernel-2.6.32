@@ -36,6 +36,11 @@ CONFIG_CONSTRUCTORS=y
 ##########
 # Custom setup
 ##########
+# nubernel batt_charge_mods sysfs
+CONFIG_NUBERNEL_SYSFS=y
+CONFIG_NUBERNEL_CHARGE_CONTROL_SYSFS=y
+CONFIG_NUBERNEL_FUEL_GAUGE_SYSFS=y
+CONFIG_NUBERNEL_CHARGE_RATE_SYSFS=y
 
 CONFIG_INITRAMFS_SOURCE="/home/nubecoder/android/kernel_dev/nubernel-kernel/initramfs"
 
