@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+05-08-2011:
+Branched to 'feature-initramfs'.
+
 05-07-2011:
 Changes to Kernel/.gitignore.
 Enabled Voodoo sound in defconfig.
