@@ -112,6 +112,7 @@ scripts/mod/modpost
 include/asm
 include/linux/utsrelease.h
 scripts/conmakehash
+scripts/kconfig/mconf
 scripts/kconfig/lex.zconf.c
 scripts/kconfig/zconf.hash.c
 scripts/kconfig/zconf.tab.c
