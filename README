@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 05-09-2011:
+Some fixes to branchHelper.sh.
 Branched to 'feature-scripting'.
 
 05-08-2011:
