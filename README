@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 05-09-2011:
+Fixing up the path change for wifiFlashHelper.
 Moved wifiFlashHelper.sh to scripts folder.
 Some fixes to branchHelper.sh.
 Branched to 'feature-scripting'.

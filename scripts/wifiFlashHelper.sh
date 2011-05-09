@@ -16,13 +16,13 @@
 IP="192.168.1.187"
 
 #define paths
-ZIMAGE_SRC="$PWD/Kernel/arch/arm/boot/zImage"
+ZIMAGE_SRC="$PWD/../Kernel/arch/arm/boot/zImage"
 ZIMAGE_DEST="/data/local/tmp/zImage"
 
-REDBEND_SRC="$PWD/initramfs/sbin/redbend_ua"
+REDBEND_SRC="$PWD/../initramfs/sbin/redbend_ua"
 REDBEND_DEST="/data/local/tmp/redbend_ua"
 
-BMLWRITE_SRC="$PWD/initramfs/sbin/bmlwrite"
+BMLWRITE_SRC="$PWD/../initramfs/sbin/bmlwrite"
 BMLWRITE_DEST="/data/local/tmp/bmlwrite"
 
 DST_PATH="/data/local/tmp/"
