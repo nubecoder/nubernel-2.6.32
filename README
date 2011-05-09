@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 05-09-2011:
+Corrected link to morfic's Samsung logo creation files.
 Fixed up the wifiFlashHelper.sh and kernelFlash scripts a bit.
 Fixing up the path change for wifiFlashHelper.
 Moved wifiFlashHelper.sh to scripts folder.
@@ -88,7 +89,7 @@ More initramfs changes.
 Changes to createBootLogo.sh.
 Some additions to .gitignore.
 Cleanup and changes to Samsung logo creation files.
-Added morfic's Samsung logo creation files (morfic: https://github.com/morfic/Samsung-logo/tarball/b85691856fc3ef368089e10bac33b72ef26d3ac0).
+Added morfic's Samsung logo creation files (morfic: https://github.com/morfic/Samsung-logo/commit/b85691856fc3ef368089e10bac33b72ef26d3ac0).
 Added custom boot logo.
 Enabled s3cfb_draw_logo function (Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/30ceb7263083ba83a7c6d6b61436a2b6fc46a236).
 Branched to 'feature-boot_logo'.
