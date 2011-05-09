@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+05-09-2011:
+Branched to 'feature-scripting'.
+
 05-08-2011:
 Enabled batt_charge_mods in defconfig.
 Added battery charge control, battery charge rate, and battery fuel gauge sysfs entries.
