@@ -30,6 +30,23 @@
 #include <plat/gpio-cfg.h>
 #include <mach/gpio.h>
 
+#ifdef CONFIG_NUBERNEL_SYSFS
+#include <linux/nubernel/nc_kset.h>
+#else
+#define CHARGE_RATE_AC_DEFAULT		5
+#define CHARGE_RATE_USB_DEFAULT		1
+#endif
+
+#ifdef CONFIG_NUBERNEL_CHARGE_RATE_SYSFS
+#define CHARGE_RATE_AC		charge_rate_ac
+unsigned long charge_rate_ac =		CHARGE_RATE_AC_DEFAULT;
+#define CHARGE_RATE_USB		charge_rate_usb
+unsigned long charge_rate_usb =		CHARGE_RATE_USB_DEFAULT;
+#else
+#define CHARGE_RATE_AC		CHARGE_RATE_AC_DEFAULT
+#define CHARGE_RATE_USB		CHARGE_RATE_USB_DEFAULT
+#endif /* CONFIG_NUBERNEL_CHARGE_RATE_SYSFS */
+
 /* Registers */
 #ifdef MAX8698
 #define MAX8698_REG_ONOFF1	0x00
@@ -1103,6 +1120,9 @@ static int __devinit max8998_pmic_probe(struct i2c_client *client,
 	struct max8998_platform_data *pdata = client->dev.platform_data;
 	struct max8998_data *max8998;
 	int i = 0, id, ret;
+#ifdef CONFIG_NUBERNEL_CHARGE_RATE_SYSFS
+//	int retval;
+#endif /* CONFIG_NUBERNEL_CHARGE_RATE_SYSFS */
 
 
 	if (!pdata)
@@ -1193,8 +1213,90 @@ static struct i2c_driver max8998_pmic_driver = {
 	.id_table	= max8998_ids,
 };
 
+#ifdef CONFIG_NUBERNEL_CHARGE_RATE_SYSFS
+static ssize_t charge_rate_ac_show(struct nubernel_obj *nubernel_obj, struct nubernel_attribute *attr, char *buf)
+{
+	unsigned long var;
+	var = charge_rate_ac;
+	return snprintf(buf, PAGE_SIZE, "%lu\n", var);
+}
+static ssize_t charge_rate_ac_store(struct nubernel_obj *nubernel_obj, struct nubernel_attribute *attr, const char *buf, size_t count)
+{
+	unsigned long var;
+	int res;
+
+	if ((res = strict_strtoul(buf, 10, &var)) < 0)
+		return res;
+
+	if (var < CHARGE_RATE_AC_DEFAULT || var > CHARGE_RATE_AC_MAX)
+		return -EINVAL;
+
+	charge_rate_ac = var;
+	return count;
+}
+static struct nubernel_attribute charge_rate_ac_attribute =
+	__ATTR(charge_rate_ac, 0666, charge_rate_ac_show, charge_rate_ac_store);
+static ssize_t charge_rate_usb_show(struct nubernel_obj *nubernel_obj, struct nubernel_attribute *attr, char *buf)
+{
+	unsigned long var;
+	var = charge_rate_usb;
+	return snprintf(buf, PAGE_SIZE, "%lu\n", var);
+}
+static ssize_t charge_rate_usb_store(struct nubernel_obj *nubernel_obj, struct nubernel_attribute *attr, const char *buf, size_t count)
+{
+	unsigned long var;
+	int res;
+
+	if ((res = strict_strtoul(buf, 10, &var)) < 0)
+		return res;
+
+	if (var < CHARGE_RATE_USB_DEFAULT || var > CHARGE_RATE_USB_MAX)
+		return -EINVAL;
+
+	charge_rate_usb = var;
+	return count;
+}
+static struct nubernel_attribute charge_rate_usb_attribute =
+	__ATTR(charge_rate_usb, 0666, charge_rate_usb_show, charge_rate_usb_store);
+static struct attribute * charge_rate_attrs[] = {
+	&charge_rate_ac_attribute.attr,
+	&charge_rate_usb_attribute.attr,
+	NULL // null terminated
+};
+static struct attribute_group charge_rate_attr_group = {
+	.attrs = charge_rate_attrs,
+};
+struct nubernel_obj *charge_rate_obj;
+#endif /* CONFIG_NUBERNEL_CHARGE_RATE_SYSFS */
+
 static int __init max8998_pmic_init(void)
 {
+#ifdef CONFIG_NUBERNEL_CHARGE_RATE_SYSFS
+	int error;
+	error = nc_kset_init();
+	if (error)
+	{
+		return error;
+	}
+	charge_rate_obj = create_nubernel_obj("chargerate");
+	if (!charge_rate_obj)
+	{
+		return -ENOMEM;
+	}
+	error = nubernel_sysfs_create_file(charge_rate_obj, &charge_rate_ac_attribute);
+	if (error)
+	{
+		destroy_nubernel_obj(charge_rate_obj);
+		return error;
+	}
+	error = nubernel_sysfs_create_file(charge_rate_obj, &charge_rate_usb_attribute);
+	if (error)
+	{
+		destroy_nubernel_obj(charge_rate_obj);
+		return error;
+	}
+//	return 0;
+#endif /* CONFIG_NUBERNEL_CHARGE_RATE_SYSFS */
 	return i2c_add_driver(&max8998_pmic_driver);
 }
 //module_init(max8998_pmic_init);
@@ -1202,6 +1304,12 @@ subsys_initcall(max8998_pmic_init);
 
 static void __exit max8998_pmic_exit(void)
 {
+#ifdef CONFIG_NUBERNEL_CHARGE_RATE_SYSFS
+	nubernel_sysfs_remove_file(charge_rate_obj, &charge_rate_usb_attribute);
+	nubernel_sysfs_remove_file(charge_rate_obj, &charge_rate_ac_attribute);
+	destroy_nubernel_obj(charge_rate_obj);
+	nc_kset_exit();
+#endif /* CONFIG_NUBERNEL_CHARGE_RATE_SYSFS */
 	i2c_del_driver(&max8998_pmic_driver);
 };
 module_exit(max8998_pmic_exit);

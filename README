@@ -28,6 +28,12 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+05-08-2011:
+Enabled batt_charge_mods in defconfig.
+Added battery charge control, battery charge rate, and battery fuel gauge sysfs entries.
+Added nubernel sysfs parent kset.
+Branched to 'feature-batt_charge_mods'.
+
 05-07-2011:
 Changes to Kernel/.gitignore.
 Enabled Voodoo sound in defconfig.

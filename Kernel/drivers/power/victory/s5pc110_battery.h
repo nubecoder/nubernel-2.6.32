@@ -163,13 +163,10 @@ typedef enum s3c_adc_channel {
 
 #ifdef __ADJUST_RECHARGE_ADC__
 #define BATT_RECHARGE_CODE	0	// hanapark (fix compile error)
-#define BATT_RECHARGE_COUNT	20
 #endif
 
 #ifdef __FUEL_GAUGES_IC__
-#define FULL_CHARGE_COND_VOLTAGE	4000
-#define RECHARGE_COND_VOLTAGE		4110	// 2010.05.08.
-#define RECHARGE_COND_VOLTAGE_BACKUP		4000
+#define OVER_CHARGE_COND_VOLTAGE	4210 // battery over-charge protection
 
 #define LOW_BATT_COUNT	30
 #define LOW_BATT_COND_VOLTAGE		3400
@@ -178,9 +175,4 @@ typedef enum s3c_adc_channel {
 
 #define BATT_VF_MIN	0	//12	// hanapark_Victory
 #define BATT_VF_MAX	50	//30	// hanapark_Victory
-
-#ifdef __CHECK_CHG_CURRENT__
-#define CURRENT_OF_FULL_CHG  91	// 2010.05.08.
-#define CHG_CURRENT_COUNT		20
-#endif
 
