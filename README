@@ -28,6 +28,13 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+05-09-2011:
+Fixed up the wifiFlashHelper.sh and kernelFlash scripts a bit.
+Fixing up the path change for wifiFlashHelper.
+Moved wifiFlashHelper.sh to scripts folder.
+Some fixes to branchHelper.sh.
+Branched to 'feature-scripting'.
+
 05-08-2011:
 Enabled batt_charge_mods in defconfig.
 Added battery charge control, battery charge rate, and battery fuel gauge sysfs entries.

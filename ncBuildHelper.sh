@@ -181,7 +181,9 @@ WIFI_FLASH_SCRIPT()
 	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
 	local T1=$(date +%s)
 	echo "Begin Wifi kernel flash helper script..." && echo ""
-	sh wifiFlashHelper.sh
+	pushd scripts > /dev/null
+			sh wifiFlashHelper.sh
+	popd > /dev/null
 	local T2=$(date +%s)
 	echo "" && echo "Wifi kernel flash took $(($T2 - $T1)) seconds."
 	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"

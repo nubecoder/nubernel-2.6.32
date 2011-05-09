@@ -124,7 +124,7 @@ BRANCH_RELEASE()
 	git branch
 	# git commit
 	echo "Commit:"
-	git commit -m "\"$BRANCH_MSG\""
+	git commit -m "$BRANCH_MSG"
 	# end time
 	local T2=$(date +%s)
 	echo "" && echo "Release branch took $(($T2 - $T1)) seconds."
@@ -175,7 +175,7 @@ BRANCH_FEATURE()
 	git branch
 	# git commit
 	echo "Commit:"
-	git commit -m "\"$BRANCH_MSG\""
+	git commit -m "$BRANCH_MSG"
 	# end time
 	local T2=$(date +%s)
 	echo "" && echo "Feature branch took $(($T2 - $T1)) seconds."
