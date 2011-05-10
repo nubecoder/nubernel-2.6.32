@@ -30,6 +30,7 @@ Changelog:
 
 05-10-2011:
 These are apparently not needed.
+Changes to scripts/wifiFlashHelper.sh (new phone gets a new IP from my router).
 
 05-08-2011:
 Modified BOOTCLASSPATH for CM/AOSP support (tanimn: https://github.com/tanimn/Twilight_Zone_Kernel/commit/92bb17a0265b8ee326888e4f3b247fe19b1f3b77).
