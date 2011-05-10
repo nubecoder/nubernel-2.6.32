@@ -51,6 +51,36 @@ Voodoo sound: driver v6 (supercurio: https://github.com/project-voodoo/linux_sph
 Voodoo sound: driver v5 (supercurio: https://github.com/project-voodoo/linux_sph-d700/commit/6ef87ad029eb21f0cae62fa2ac6a4c51ab489b1b).
 Branched to 'feature-Voodoo_Sound'.
 
+05-07-2011:
+Added SECCOMP support (Nicolas Pitre: http://git390.marist.edu/cgi-bin/gitweb.cgi?p=linux-2.6.git;a=commit;h=70c70d97809c3cdb8ff04f38ee3718c5385a2a4d).
+Added "Tiny RCU", The Bloatwatch Edition (Paul E. McKenney: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=9b1d82fa1611706fa7ee1505f290160a18caf95d).
+Fix Thumb-2 kernel builds when UACCESS_WITH_MEMCPY is enabled (Catalin Marinas: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=e814d826dc1821dbce3aa1ddb7f2f739f420ffd8).
+Prevent multiple syscall restarts (Russell King: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=b2b163bb82b12bae2504a5b31399c37d099ad3cc).
+Fix really nasty sigreturn bug (Al Viro: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=653d48b22166db2d8b1515ebe6f9f0f7c95dfc86).
+Fix build error in arch/arm/kernel/process.c (Russell King: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=4260415f6a3b92c5c986398d96c314df37a4ccbf).
+Fix memory allocation size for max8998->rdev (Axel Lin: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=11fa0d1d20c7cc432c77369bc8bbfbc21030e457).
+Fix memory leak in cpufreq_add_dev (Xiaotian Feng: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=cad70a6ae5aaef4641a3efdfd536c30f13891afe).
+Prevent memory leak in cpufreq_stats on hotplug (Colin Cross: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=fa51e1a77ebb12ca61510370e78e679a314e3dda).
+Fix ASHMEM_SET_PROT_MASK (Arve Hjønnevåg: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=c98a285075f26e2b17a5baa2cb3eb6356a75597e).
+Applied lowmemorykiller patch: Don't wait more than one second for a process to die (Arve Hjønnevåg: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=d72d17229a7b9271560ea053b9e8e8f864658893).
+Applied patch series for Ext4 (tytso via Bonsai: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/e1e481169cc6dbdfa358914e8e473bdb2a088030).
+Applied lowmemorykiller patch: don't unregister notifier from atomic context (Rabin Vincent: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=5545554aac04918ece318270d63cbfcb015577a9).
+Fix compile error for idle timer (tanimn: https://github.com/tanimn/Twilight_Zone_Kernel/commit/b615fff7d3ff365e50481f3015900c2457301aa0).
+Added idle timer from 2.6.34 (nullghost via tanimn: https://github.com/tanimn/Twilight_Zone_Kernel/commit/ee501b7ceef1e4d85fe3dbefe466143200a7a2ca).
+
+05-06-2011:
+Loglevel set in defconfig for modular logging (gzub: https://github.com/gzub/EC05-Zub/commit/9411ec0ec97bbedeccaf1e86d365101f6c2c0fa1).
+Compile host OS tools with 03 (gzub: https://github.com/gzub/EC05-Zub/commit/2ffe0408f656f47fadab08c3d4d8c8bff3e45f0c).
+Optimized config flags (gzub: https://github.com/gzub/EC05-Zub/commit/68e3d8f7070a17d82db768170aef97d0dbfebd59).
+Applied keyboard delay sysfs patch (mkasick via Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/7f1de5d146bae58ee3a8d71765ed6495922a58c6).
+Set 4k read ahead in mtd_blkdevs.c (Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/98e056fb95419865a28138281b710c68989283e6).
+Changed swappiness from 60 to 10 (Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/ccc8837e761f8ee2774ac4a5a78eca9da08824f9).
+Commented out "BUG_ON(!gps_dev)" in mach-aries-gps.c (Dameon87 via nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/422fbcf9aaa86833cb0f34e8dc244769664a752d).
+Expose sysfs file for scaling_available_frequencies (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/5da806c6fafff535a31b6d4863ad1ecdf6a113d1).
+Change freq tables to help conform to standards (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/f4844be4c222be26dc0b49b308b09089dfe92cfe).
+Fix tv20 compile error (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/73113db76b1e85e8d1816097ff180737a3238df5).
+Branched to 'feature-misc_patches'.
+
 05-06-2011:
 Feature list for v0.0.0.
 Branched to 'release-v0.0.0'.

@@ -132,24 +132,24 @@ static unsigned int s_arm_voltage=0, s_int_voltage=0;
 #ifndef DECREASE_DVFS_DELAY
 /*only 4 Arm voltages and 2 internal voltages possible*/
 static const unsigned int dvs_volt_table_800MHZ[][3] = {
-        {L0, DVSARM2, DVSINT1},
-        {L1, DVSARM3, DVSINT1},
- //266       {L2, DVSARM3, DVSINT1},
-        {L2, DVSARM4, DVSINT1},
-        {L3, DVSARM4, DVSINT2},
-//        {L4, DVSARM4, DVSINT2},
-//        {L5, DVSARM4, DVSINT2},
+        {0, DVSARM2, DVSINT1},
+        {1, DVSARM3, DVSINT1},
+ //266       {2, DVSARM3, DVSINT1},
+        {2, DVSARM4, DVSINT1},
+        {3, DVSARM4, DVSINT2},
+//        {4, DVSARM4, DVSINT2},
+//        {5, DVSARM4, DVSINT2},
 };
 
 static const unsigned int dvs_volt_table_1GHZ[][3] = {
-        {L0, DVSARM1, DVSINT1},//DVSINT0
-        {L1, DVSARM2, DVSINT1},
-        {L2, DVSARM3, DVSINT1},
- //266       {L3, DVSARM3, DVSINT1},
-        {L3, DVSARM4, DVSINT1},
-        {L4, DVSARM4, DVSINT2},
-//        {L5, DVSARM4, DVSINT2},
-//        {L6, DVSARM4, DVSINT2},
+        {0, DVSARM1, DVSINT1},//DVSINT0
+        {1, DVSARM2, DVSINT1},
+        {2, DVSARM3, DVSINT1},
+ //266       {3, DVSARM3, DVSINT1},
+        {3, DVSARM4, DVSINT1},
+        {4, DVSARM4, DVSINT2},
+//        {5, DVSARM4, DVSINT2},
+//        {6, DVSARM4, DVSINT2},
 };
 
 
