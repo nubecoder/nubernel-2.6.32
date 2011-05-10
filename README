@@ -44,6 +44,8 @@ Enabled batt_charge_mods in defconfig.
 Added battery charge control, battery charge rate, and battery fuel gauge sysfs entries.
 Added nubernel sysfs parent kset.
 Branched to 'feature-batt_charge_mods'.
+Modified BOOTCLASSPATH for CM/AOSP support (tanimn: https://github.com/tanimn/Twilight_Zone_Kernel/commit/92bb17a0265b8ee326888e4f3b247fe19b1f3b77).
+Branched to 'feature-initramfs'.
 
 05-07-2011:
 Changes to Kernel/.gitignore.
