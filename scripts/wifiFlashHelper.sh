@@ -13,7 +13,7 @@
 #
 
 #define variables
-IP="192.168.1.187"
+IP="192.168.1.168"
 
 #define paths
 TMP_PATH="/data/local/tmp"

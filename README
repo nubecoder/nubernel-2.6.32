@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+05-10-2011:
+Changes to scripts/wifiFlashHelper.sh (new phone gets a new IP from my router).
+
 05-09-2011:
 Fixed up the wifiFlashHelper.sh and kernelFlash scripts a bit.
 Fixing up the path change for wifiFlashHelper.
