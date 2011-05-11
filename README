@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+05-11-2011:
+Added bash kit to install zip (bash as default shell, subash script for easy su access, profile installed onto /sdcard).
+
 05-10-2011:
 These are apparently not needed.
 Changes to scripts/wifiFlashHelper.sh (new phone gets a new IP from my router).

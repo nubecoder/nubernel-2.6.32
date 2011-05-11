@@ -34,13 +34,37 @@ ui_print("");ui_print("");ui_print("");ui_print("");ui_print("");
 ui_print("");ui_print("");ui_print("");ui_print("");ui_print("");
 ui_print("");ui_print("");sleep(1);
 
-
 ui_print("");
 ui_print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 ui_print("@             nubernel-kernel v0.0.0           @");
 ui_print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 ui_print("");
 sleep(2);
+
+ui_print("");
+ui_print("Installing bash as default shell.");
+ui_print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+assert(
+	run_program("/sbin/mount", "/dev/block/stl9", "/system"),
+	package_extract_file("bash/bash", "/system/bin/bash"),
+	package_extract_file("bash/subash", "/system/bin/subash")
+	);
+set_perm(0, 2000, 0755, "/system/bin/bash");
+set_perm(0, 2000, 0755, "/system/bin/subash");
+delete("/system/bin/sh");
+symlink("/system/bin/bash", "/system/bin/sh");
+unmount("/system");
+sleep(0.5);
+
+ui_print("");
+ui_print("Installing bash_profile onto sdcard.");
+ui_print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+assert(
+	run_program("/sbin/mount", "/sdcard"),
+	package_extract_file("bash/bash_profile", "/sdcard/bash_profile"),
+	unmount("/sdcard")
+	);
+sleep(0.5);
 
 ui_print("");
 ui_print("Flashing kernel image.");
@@ -54,6 +78,7 @@ assert(
 	run_program("/tmp/bmlwrite", "/tmp/zImage", "/dev/block/bml7")
 	);
 sleep(0.5);
+
 ui_print("");
 ui_print("Finished.");
 ui_print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
