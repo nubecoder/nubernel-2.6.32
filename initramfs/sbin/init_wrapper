@@ -1,27 +1,97 @@
 #!/system/bin/sh
+#
+# init_wrapper
+#
+#
+# 2011 nubecoder
+# http://www.nubecoder.com/
+#
+# Modeled after Bonsai's init_wrapper script
+# Bits taken from DRockstar's Clean Kernel sdx.sh script
 
-mount -o remount,rw /
-mount -o remount,rw /system
+/sbin/busybox mount -o remount,rw / /
+/sbin/busybox mount -o remount,rw /dev/block/stl9 /system
+
+# Install busybox
+/sbin/busybox mkdir /bin
+/sbin/busybox2 rm -rf /sbin/busybox
+/sbin/busybox2 mv /sbin/busybox2 /sbin/busybox
+/sbin/busybox --install -s /bin
+rm -rf /system/xbin/busybox
+ln -s /sbin/busybox /system/xbin/busybox
+rm -rf /sbin/recovery
+rm -rf /res/sbin
+sync
+
+# Fix permissions in /sbin, just in case
+chmod 755 /sbin/*
+
+# Fix screwy ownerships
+for blip in conf default.prop fota.rc init init.goldfish.rc init.rc init.smdkc110.rc lib lpm.rc modules recovery.rc res sbin
+do
+	chown root.system /$blip
+	chown root.system /$blip/*
+done
+
+chown root.system /lib/modules/*
+chown root.system /res/images/*
+
+# Enable init.d support
+if [ -d /system/etc/init.d ]
+then
+	logwrapper busybox run-parts /system/etc/init.d
+fi
+sync
 
 chmod 6755 /sbin/su
+
 if [ -f /system/bin/su ]; then
 	rm -f /system/bin/su
 	ln -s /sbin/su /system/bin/su
 fi
+
 if [ -x /system/xbin/su ]; then
 	rm -f /system/xbin/su
 	ln -s /sbin/su /system/xbin/su
 fi
 
-if [ ! -f "/etc/passwd" ]; then
-	echo "root::0:0:root:/data/local:/sbin/sh" > /etc/passwd
+if [ -f /system/bin/jk-su ]; then
+	rm -f /system/bin/jk-su
+fi
+
+# fix busybox DNS while system is read-write
+if [ ! -f "/system/etc/resolv.conf" ]; then
+	echo "nameserver 8.8.8.8" >> /system/etc/resolv.conf
+	echo "nameserver 8.8.4.4" >> /system/etc/resolv.conf
+fi
+
+if [ ! -f "/system/etc/passwd" ]; then
+	echo "root::0:0:root:/data/local:/sbin/sh" > /system/etc/passwd
 	chmod 0400 /system/etc/passwd
 fi
 
-if [ ! -f "/etc/group" ]; then
-	echo "root::0:" > /etc/group
-	chmod 0400 /etc/group
+if [ ! -f "/system/etc/group" ]; then
+	echo "root::0:" > /system/etc/group
+	chmod 0400 /system/etc/group
 fi
 
-mount -o remount,ro /
-mount -o remount,ro /system
+# provide support for a shell script to protect root access
+if [ ! -f "/system/app/Superuser.apk" ]; then
+	cp /sbin/Superuser.apk /system/app/Superuser.apk
+fi
+rm /sbin/Superuser.apk
+
+# patch to prevent certain malware apps
+. > /system/bin/profile
+chmod 644 /system/bin/profile
+
+# keyboard patch sysfs
+if [ ! -f "/data/local/timer_delay" ]; then
+  echo 7 > /data/local/timer_delay
+fi
+cat /data/local/timer_delay > /sys/devices/platform/s3c-keypad/timer_delay
+
+sync
+
+mount -o remount,ro / /
+mount -o remount,ro /dev/block/stl9 /system
