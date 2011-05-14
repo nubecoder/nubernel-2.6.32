@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+05-14-2011:
+Changes to bash_profile.
+
 05-11-2011:
 Added bash kit to install zip (bash as default shell, subash script for easy su access, profile installed onto /sdcard).
 

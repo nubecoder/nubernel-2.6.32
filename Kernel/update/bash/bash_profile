@@ -1,12 +1,24 @@
-PATH="/sbin:/system/sbin:/system/bin:/system/xbin"
+PATH="/sbin:/system/bin:/system/xbin:/system/sbin"
+
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
 
 # Enable color
 CLICOLOR=1
 
-# Enable history
-HISTFILE="/system/etc/bash/bash_history"
-HISTFILESIZE=1000000000
-HISTSIZE=1000000
+# set history file path
+HISTFILE="/mnt/sdcard/.bash_history"
+
+# don't put duplicate lines in the history. See bash(1) for more options
+# ... or force ignoredups and ignorespace
+HISTCONTROL=ignoredups:ignorespace
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=131072
+HISTFILESIZE=1048576
 
 # Prompt color codes
 txtblk='\e[0;30m' # Black - Regular
@@ -55,26 +67,33 @@ fi
 PS2='> '
 PS4='+ '
 
-# Set up a ton of aliases to cover toolbox with the nice busybox
-# equivalents of its commands
+# aliases
+#
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+# NOTE:: not sure this would work in android
+#alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+#
+# Set up a ton of aliases to cover toolbox with the nice busybox equivalents of its commands
+#
 alias cat='busybox cat'
-alias ll='busybox ls -AlF'
-alias ln='busybox ln'
-#alias ls='busybox ls --color'
-alias ls='busybox ls'
-alias mount='busybox mount'
-alias rm='busybox rm'
-alias umount='busybox umount'
-alias df='busybox df'
 alias chmod='busybox chmod'
 alias chown='busybox chown'
-alias mv='busybox mv'
-alias mkdir='busybox mkdir'
-alias rmdir='busybox rmdir'
-alias insmod='busybox insmod'
-alias rmmod='busybox rmmod'
-alias lsmod='busybox lsmod'
-alias vi='busybox vi'
-alias more='busybox more'
 alias cp='busybox cp'
-
+alias df='busybox df'
+alias insmod='busybox insmod'
+alias l='busybox ls -CF'
+alias la='busybox ls -A'
+alias ll='busybox ls -AlF'
+alias ln='busybox ln'
+alias ls='busybox ls'
+alias lsmod='busybox lsmod'
+alias mkdir='busybox mkdir'
+alias more='busybox more'
+alias mount='busybox mount'
+alias mv='busybox mv'
+alias rm='busybox rm'
+alias rmdir='busybox rmdir'
+alias rmmod='busybox rmmod'
+alias umount='busybox umount'
+alias vi='busybox vi'
