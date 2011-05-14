@@ -61,7 +61,7 @@ ui_print("Installing bash_profile onto sdcard.");
 ui_print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 assert(
 	run_program("/sbin/mount", "/sdcard"),
-	package_extract_file("bash/bash_profile", "/sdcard/bash_profile"),
+	package_extract_file("bash/.bash_profile", "/sdcard/.bash_profile"),
 	unmount("/sdcard")
 	);
 sleep(0.5);
