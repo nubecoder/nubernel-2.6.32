@@ -28,9 +28,12 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+05-15-2011:
+Stupid typo...
+
 05-14-2011:
 Added new bash binary.
-Changes to recovery install script for bew bash.
+Changes to recovery install script for new bash.
 Changes to subash for new bash.
 Rename bash_profile in preparation for new custom built bash-4.1.11(2).
 Changes to bash_profile.
