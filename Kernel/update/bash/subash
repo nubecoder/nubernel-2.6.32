@@ -1,4 +1,4 @@
 #!/system/bin/sh
 
-su -c "/system/bin/bash --rcfile /sdcard/bash_profile"
+su -c "/system/bin/bash --rcfile /mnt/sdcard/.bash_profile"
 
