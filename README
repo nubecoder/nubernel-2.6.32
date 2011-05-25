@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+05-25-2011:
+Changes to "s5pc11x_target_frq" so it respects the minimum scaling frequency.
+
 05-17-2011:
 Branched to 'feature-conservative_governor_fix'.
 

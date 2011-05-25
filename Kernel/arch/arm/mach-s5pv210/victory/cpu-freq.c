@@ -270,7 +270,7 @@ EXPORT_SYMBOL(s5pc110_unlock_dvfs_high_level);
 #endif //ENABLE_DVFS_LOCK_HIGH
 
 unsigned int s5pc11x_target_frq(unsigned int pred_freq, 
-				int flag)
+				int flag, unsigned int policy_min)
 {
 	int index;
 	//unsigned long irqflags;
@@ -319,7 +319,12 @@ s5pc11x_target_frq_end:
 	
 	freq = freq_tab[index].frequency;
 	spin_unlock(&g_dvfslock);
-	return freq;
+	if (freq > policy_min) {
+		return freq;
+	}
+	else {
+		return policy_min;
+	}
 }
 
 
