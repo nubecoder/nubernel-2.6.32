@@ -1,17 +1,37 @@
 #!/system/bin/sh
+#
+# cpufreq_info
+#
+#
+# 2011 nubecoder
+# http://www.nubecoder.com/
+#
 
-echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
-echo "scaling_governor:"
-echo "$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)"
-echo ""
-echo "scaling_min_freq:"
-echo "$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq)"
-echo "scaling_max_freq:"
-echo "$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq)"
-echo ""
-echo "scaling_setlog:"
-echo "$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_setlog)"
-echo ""
-echo "time_in_state:"
-echo "$(cat /sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state)"
-echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+#define paths
+scaling_governor="/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor"
+scaling_min_freq="/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq"
+scaling_max_freq="/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq"
+scaling_setlog="/sys/devices/system/cpu/cpu0/cpufreq/scaling_setlog"
+time_in_state="/sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state"
+
+# functions
+SHOW_INFO()
+{
+	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+
+	echo "scaling_governor: $(cat $scaling_governor)"
+	echo "*"
+	echo "scaling_min_freq: $(($(cat $scaling_min_freq) / 1000)) MHz"
+	echo "scaling_max_freq: $(($(cat $scaling_max_freq) / 1000)) MHz"
+	echo "*"
+	echo "scaling_setlog: $(cat $scaling_setlog)"
+	echo "*"
+	echo "time_in_state:"
+	echo "$(cat $time_in_state)"
+	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+	exit 1
+}
+
+# main
+SHOW_INFO
+

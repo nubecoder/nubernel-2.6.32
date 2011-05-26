@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+05-26-2011:
+Changes to cpufreq_info script.
+
 05-25-2011:
 Addition of cpufreq_info script.
 
