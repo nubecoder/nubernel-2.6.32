@@ -63,7 +63,7 @@ static int bluetooth_set_power(void *data, enum rfkill_user_states state)
 		case RFKILL_USER_STATE_UNBLOCKED:
 			printk(KERN_DEBUG "[BT] Device Powering ON \n");
 			s3c_setup_uart_cfg_gpio(0);
-			if(on_off) return; //shiks_DF03 temp for AP sleep issue //just 1 time //FROYO MERGE
+			if(on_off) return ret; //shiks_DF03 temp for AP sleep issue //just 1 time //FROYO MERGE
 
 			if (gpio_is_valid(GPIO_WLAN_BT_EN))
 			{

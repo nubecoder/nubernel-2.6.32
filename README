@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-27-2011:
+Quiet compile warning (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/55f8dd06d3edc6f70195227efc89fb5f11cd11cd).
 Fixing a Samsung typo in arch/arm/Kconfig.
 Fix tty low latency causing an interrupt during a spinlock (gzub via Bonsai: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/f964f1e655fb496d78ffcf0f3ffd731d4c4070b8).
 ARM: SAMSUNG: Add a workaround for get_clock() for serial driver (Marek Szyprowski: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=7cf4b482f06df0b590a9bc1561a5a81d67e0fe4c).
