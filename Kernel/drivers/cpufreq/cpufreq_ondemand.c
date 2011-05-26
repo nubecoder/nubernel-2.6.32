@@ -554,6 +554,7 @@ static void dbs_check_cpu(struct cpu_dbs_info_s *this_dbs_info)
 				(dbs_tuners_ins.up_threshold -
 				 dbs_tuners_ins.down_differential);
 
+#ifndef CONFIG_CPU_S5PV210
 		if (!dbs_tuners_ins.powersave_bias) {
 			__cpufreq_driver_target(policy, freq_next,
 					CPUFREQ_RELATION_L);
@@ -563,6 +564,27 @@ static void dbs_check_cpu(struct cpu_dbs_info_s *this_dbs_info)
 			__cpufreq_driver_target(policy, freq,
 				CPUFREQ_RELATION_L);
 		}
+#else
+		if (!dbs_tuners_ins.powersave_bias) {
+			if (freq_next > policy->min) {
+				__cpufreq_driver_target(policy, freq_next,
+					CPUFREQ_RELATION_L);
+			} else {
+				__cpufreq_driver_target(policy, policy->min,
+					CPUFREQ_RELATION_L);
+			}
+		} else {
+			int freq = powersave_bias_target(policy, freq_next,
+					CPUFREQ_RELATION_L);
+			if (freq > policy->min) {
+				__cpufreq_driver_target(policy, freq,
+					CPUFREQ_RELATION_L);
+			} else {
+				__cpufreq_driver_target(policy, policy->min,
+					CPUFREQ_RELATION_L);
+			}
+		}
+#endif
 	}
 }
 
