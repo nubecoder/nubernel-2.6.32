@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+05-26-2011:
+Branched to 'feature-ondemand_governor_fix'.
+
 05-25-2011:
 Voodoo sound: driver v9 (supercurio: https://github.com/project-voodoo/linux_sph-d700/commit/dbd81fda1ff71e7557ea694425580074d587ebee).
 Quiet the "CONFIG_TINY_RCU not defined" warning.
