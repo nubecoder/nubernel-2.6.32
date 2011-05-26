@@ -1,0 +1,17 @@
+#!/system/bin/sh
+
+echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+echo "scaling_governor:"
+echo "$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)"
+echo ""
+echo "scaling_min_freq:"
+echo "$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq)"
+echo "scaling_max_freq:"
+echo "$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq)"
+echo ""
+echo "scaling_setlog:"
+echo "$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_setlog)"
+echo ""
+echo "time_in_state:"
+echo "$(cat /sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state)"
+echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
