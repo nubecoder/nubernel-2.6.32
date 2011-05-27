@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+05-27-2011:
+Branched to 'feature-governors'.
+
 05-26-2011:
 Reworked the fix a bit, I find this a bit more elegant.
 Changes to Ondemand governor so it respects the minimum scaling frequency.
