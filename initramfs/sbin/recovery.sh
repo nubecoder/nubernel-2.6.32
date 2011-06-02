@@ -11,7 +11,7 @@ done
 rmdir /res/sbin
 
 # Remove unneccessary files used in normal boot
-for file in busybox2 Superuser.apk su keytimer
+for file in Superuser.apk su keytimer
 do
   rm -rf /sbin/$file
 done

@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 06-20-2011:
+Updating to Drockstar's Clockwork Mod 3.1.0.1. Using smaller recovery busybox 1.16.2 (DRockstar: https://github.com/DRockstar/Clean-Kernel-EC05/commit/ac713f90ec2a2560bc7fb05225341a4e4772a199).
 Added initial support for Clockwork Mod reboot recovery & ROM Manager support (DRockstar: https://github.com/DRockstar/Clean-Kernel-EC05/commit/ae07f3a6e1ad73fe44bf32b3b5b14ec212ed6394).
 
 05-10-2011:
