@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 06-05-2011:
+Changes to DEFAULT_AWAKE_MIN_FREQ in smartass governor.
 Selective changes to smartass governor (Bonsai: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/b29a06217375e137ae51762959385627ec95d0d9).
 Added "EXPORT_SYMBOL_GPL(nr_running);" to kernel/sched.c as required by smartass governor (Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/747b6ac123cb5b34a54952c9e5199c0dbfa6fcb7).
 Added (partial) fix for lock screen flickering when using smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/d8af4eefc8dcb15d490a53408f6a6de0759b419b).
