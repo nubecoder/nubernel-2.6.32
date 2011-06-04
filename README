@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 06-05-2011:
+Added "EXPORT_SYMBOL_GPL(nr_running);" to kernel/sched.c as required by smartass governor (Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/747b6ac123cb5b34a54952c9e5199c0dbfa6fcb7).
 Added (partial) fix for lock screen flickering when using smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/d8af4eefc8dcb15d490a53408f6a6de0759b419b).
 Selective changes to smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/6d62c169faa4d03205a4cc00767ec069473dfe82).
 
