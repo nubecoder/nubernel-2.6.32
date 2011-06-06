@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 06-06-2011:
+Added some error checking to interactive and smartass governors.
 Tweaked smartass governor config settings a bit.
 Adjusted defconfig for new smartass config settings.
 SPH-D700 specific changes to /drivers/cpufreq/Kconfig for smartass governor.
