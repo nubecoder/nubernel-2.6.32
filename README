@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 06-06-2011:
+Adjusted defconfig for new smartass config settings.
 SPH-D700 specific changes to /drivers/cpufreq/Kconfig for smartass governor.
 Fixed sysfs interface and added Kconfig options in smartass governor (Ziggy471 via jdkoreclipse: https://github.com/jdkoreclipse/jdkernel/commit/29b220860a8dea5c9420f408e07d129b8ed2c553).
 
