@@ -28,6 +28,30 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+06-06-2011:
+Fixing up the debugging a bit in smartass governor.
+Added some error checking to interactive and smartass governors.
+Tweaked smartass governor config settings a bit.
+Adjusted defconfig for new smartass config settings.
+SPH-D700 specific changes to /drivers/cpufreq/Kconfig for smartass governor.
+Fixed sysfs interface and added Kconfig options in smartass governor (Ziggy471 via jdkoreclipse: https://github.com/jdkoreclipse/jdkernel/commit/29b220860a8dea5c9420f408e07d129b8ed2c553).
+
+06-05-2011:
+Changes to DEFAULT_AWAKE_MIN_FREQ in smartass governor.
+Selective changes to smartass governor (Bonsai: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/b29a06217375e137ae51762959385627ec95d0d9).
+Added "EXPORT_SYMBOL_GPL(nr_running);" to kernel/sched.c as required by smartass governor (Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/747b6ac123cb5b34a54952c9e5199c0dbfa6fcb7).
+Added (partial) fix for lock screen flickering when using smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/d8af4eefc8dcb15d490a53408f6a6de0759b419b).
+Selective changes to smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/6d62c169faa4d03205a4cc00767ec069473dfe82).
+
+06-04-2011:
+Major tweaking and bug squasing to the smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/beb6b4d71c7883800c3b5cc17631cd4ddb11ce66).
+Logic rewrite / cleanup of smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/d701a9ea0629a218ce8860d3f8481273680e68a8).
+Convert tabs to spaces in smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/9763a3b2014790f7e180f9b7a1b3dd751927f449).
+Add awake_min_freq to smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/d8ddd9d1e2254a0ec8c462e386f1d306b636c2c2).
+Add wakeup from sleep configurable parameter to smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/f7ef2f6aa83c6321100f21f6dfbd1a286161cee4).
+Changes to smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/eac5ee69928d03dc5c42ff6a46495de3c0895652).
+Added smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/41b7d84d73ae96e07f9e3be62eb09eef4b998ace).
+
 06-03-2011:
 Changes to Interactive governor so it respects the minimum scaling frequency.
 
