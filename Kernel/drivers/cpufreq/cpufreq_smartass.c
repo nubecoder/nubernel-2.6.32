@@ -68,6 +68,7 @@ enum {
 /*
  * Combination of the above debug flags.
  */
+#define DEFAULT_DEBUG_MASK CONFIG_SMARTASS_DEFAULT_DEBUG_MASK;
 static unsigned long debug_mask;
 
 /*
@@ -749,7 +750,7 @@ static int __init cpufreq_smartass_init(void)
 	int err;
         unsigned int i;
         struct smartass_info_s *this_smartass;
-        debug_mask = 0;
+        debug_mask = DEFAULT_DEBUG_MASK;
         up_rate_us = DEFAULT_UP_RATE_US;
         down_rate_us = DEFAULT_DOWN_RATE_US;
         up_min_freq = DEFAULT_UP_MIN_FREQ;

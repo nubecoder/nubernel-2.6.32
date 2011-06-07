@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+06-07-2011:
+Added DEFAULT_DEBUG_MASK and Kconfig option for smartass governor.
+
 06-06-2011:
 Fixing up the debugging a bit in smartass governor.
 Added some error checking to interactive and smartass governors.

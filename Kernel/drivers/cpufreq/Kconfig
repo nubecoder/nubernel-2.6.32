@@ -319,4 +319,12 @@ config SMARTASS_DEFAULT_AWAKE_MIN_FREQ
 	  go below this frequency.
 	  Set awake_min_freq=0 to disable this behavior.
 
+config SMARTASS_DEFAULT_DEBUG_MASK
+	int "Default setting for debugging"
+	default 0
+	depends on CPU_FREQ_GOV_SMARTASS
+	help
+	  Debug values, set 0 = off, 1 = SMARTASS_DEBUG_JUMPS, 2 = SMARTASS_DEBUG_LOAD,
+	  3 = Both of the above
+
 endif	# CPU_FREQ
