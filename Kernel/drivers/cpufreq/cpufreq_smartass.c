@@ -34,6 +34,10 @@
 #include <asm/cputime.h>
 #include <linux/earlysuspend.h>
 
+#ifdef CONFIG_CPU_S5PV210
+extern unsigned int s5pc11x_target_frq(unsigned int pred_freq, int flag, unsigned int policy_min);
+#endif
+
 static void (*pm_idle_old)(void);
 static atomic_t active_count = ATOMIC_INIT(0);
 
@@ -308,9 +312,12 @@ static void cpufreq_idle(void)
                 reset_timer(smp_processor_id(), this_smartass);
 }
 
-/* We use the same work function to sale up and down */
+/* We use the same work function to scale up and down */
 static void cpufreq_smartass_freq_change_time_work(struct work_struct *work)
 {
+#ifdef CONFIG_CPU_S5PV210
+        int flag;
+#endif
         unsigned int cpu;
         int new_freq;
         unsigned int force_ramp_up;
@@ -327,6 +334,9 @@ static void cpufreq_smartass_freq_change_time_work(struct work_struct *work)
                 this_smartass->force_ramp_up = 0;
 
                 if (force_ramp_up || cpu_load > max_cpu_load) {
+#ifdef CONFIG_CPU_S5PV210
+                        flag = 1; // scale up
+#endif
                         if (force_ramp_up && up_min_freq) {
                                 new_freq = up_min_freq;
                                 relation = CPUFREQ_RELATION_L;
@@ -339,6 +349,9 @@ static void cpufreq_smartass_freq_change_time_work(struct work_struct *work)
                         }
                 }
                 else if (cpu_load < min_cpu_load) {
+#ifdef CONFIG_CPU_S5PV210
+                        flag = -1; // scale down
+#endif
                         if (ramp_down_step)
                                 new_freq = policy->cur - ramp_down_step;
                         else {
@@ -352,6 +365,14 @@ static void cpufreq_smartass_freq_change_time_work(struct work_struct *work)
                 new_freq = validate_freq(this_smartass,new_freq);
 
                 if (new_freq != policy->cur) {
+#ifdef CONFIG_CPU_S5PV210
+                        if ((new_freq != up_min_freq) && (new_freq != this_smartass->max_speed) &&
+                                 (new_freq != this_smartass->min_speed)) {
+                                // use transition states when scaling
+                                new_freq = s5pc11x_target_frq(policy->cur, flag, policy->min);
+                        }
+#endif
+
                         if (debug_mask & SMARTASS_DEBUG_JUMPS)
                                 printk(KERN_INFO "SmartassQ: jumping from %dMHz to %dMHz\n",policy->cur/1000,new_freq/1000);
 
