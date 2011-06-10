@@ -317,6 +317,7 @@ static void cpufreq_smartass_freq_change_time_work(struct work_struct *work)
 {
 #ifdef CONFIG_CPU_S5PV210
         int flag;
+        int req_freq;
 #endif
         unsigned int cpu;
         int new_freq;
@@ -368,8 +369,21 @@ static void cpufreq_smartass_freq_change_time_work(struct work_struct *work)
 #ifdef CONFIG_CPU_S5PV210
                         if ((new_freq != up_min_freq) && (new_freq != this_smartass->max_speed) &&
                                  (new_freq != this_smartass->min_speed)) {
+                                req_freq = new_freq;
                                 // use transition states when scaling
                                 new_freq = s5pc11x_target_frq(policy->cur, flag, policy->min);
+#if 1 // <--- easy on / off switch
+                                if (flag == 1) { // scale up
+                                        if (new_freq < req_freq) { // if lower than requested frequency scale up again
+                                                new_freq = s5pc11x_target_frq(new_freq, flag, policy->min);
+                                        }
+                                }
+                                else { // scale down
+                                        if (new_freq > req_freq) { // if greater than requested frequency scale down again
+                                                new_freq = s5pc11x_target_frq(new_freq, flag, policy->min);
+                                        }
+                                }
+#endif
                         }
 #endif
 
