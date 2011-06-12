@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+06-12-2011:
+Squashing the up_min_freq bug in smartass governor.
+
 06-09-2011:
 Allowing smartass governor the ability scale more than a single step (limited to 2).
 Forcing smartass governor to use transition states when scaling.

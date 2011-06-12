@@ -338,15 +338,16 @@ static void cpufreq_smartass_freq_change_time_work(struct work_struct *work)
 #ifdef CONFIG_CPU_S5PV210
                         flag = 1; // scale up
 #endif
-                        if (force_ramp_up && up_min_freq) {
-                                new_freq = up_min_freq;
-                                relation = CPUFREQ_RELATION_L;
-                        } else if (ramp_up_step) {
+                        if (ramp_up_step) {
                                 new_freq = policy->cur + ramp_up_step;
                                 relation = CPUFREQ_RELATION_H;
                         } else {
                                 new_freq = this_smartass->max_speed;
                                 relation = CPUFREQ_RELATION_H;
+                        }
+                        if (force_ramp_up && (new_freq < up_min_freq)) {
+                                new_freq = up_min_freq;
+                                relation = CPUFREQ_RELATION_L;
                         }
                 }
                 else if (cpu_load < min_cpu_load) {
