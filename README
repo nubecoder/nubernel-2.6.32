@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+06-13-2011:
+Branched to 'feature-clock_rates'.
+
 06-06-2011:
 Fixing up the debugging a bit in smartass governor.
 Added some error checking to interactive and smartass governors.
