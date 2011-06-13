@@ -30,7 +30,7 @@ config SMARTASS_DEFAULT_SAMPLE_RATE_JIFFIES
 
 config SMARTASS_DEFAULT_RAMP_UP_STEP
 	int "Default ramp up step"
-	default 500000
+	default 200000
 	depends on CPU_FREQ_GOV_SMARTASS
 	help
 	  Freqeuncy delta when ramping up.
@@ -38,7 +38,7 @@ config SMARTASS_DEFAULT_RAMP_UP_STEP
 
 config SMARTASS_DEFAULT_RAMP_DOWN_STEP
 	int "Default ramp down step"
-	default 500000
+	default 200000
 	depends on CPU_FREQ_GOV_SMARTASS
 	help
 	  Max freqeuncy delta when ramping down. zero disables.
@@ -81,7 +81,7 @@ config SMARTASS_DEFAULT_UP_MIN_FREQ
 
 config SMARTASS_DEFAULT_AWAKE_MIN_FREQ
 	int "Default awake minimum frequency"
-	default 200000
+	default 100000
 	depends on CPU_FREQ_GOV_SMARTASS
 	help
 	  When awake_min_freq>0 the frequency when not suspended will not

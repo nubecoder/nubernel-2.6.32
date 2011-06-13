@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 06-12-2011:
+Changed smartass governor config settings to work better with the new fixes.
 Squashing the up_min_freq bug in smartass governor.
 
 06-09-2011:
