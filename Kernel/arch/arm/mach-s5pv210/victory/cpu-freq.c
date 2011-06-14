@@ -96,16 +96,16 @@ static struct cpufreq_frequency_table s5pc110_freq_table_1GHZ[] = {
 
 /*Assigning different index for fast scaling up*/
 static unsigned char transition_state_1GHZ[][2] = {
-	{1, 5},//1400
-	{2, 5},//1300
-	{3, 5},//1200
-	{4, 5},//1120
-	{5, 5},//1000
-	{6, 5},//800
-	{7, 5},//600
-	{8, 6},//400
-	{9, 7},//200
-	{10, 8},//100
+	{1, 0},//1400 //Down 0 to 1  Up 0 to 0
+	{2, 0},//1300 //Down 1 to 2  Up 1 to 0
+	{3, 1},//1200 //Down 2 to 3  Up 2 to 1
+	{4, 2},//1120 //Down 3 to 4  Up 3 to 2
+	{5, 3},//1000 //Down 4 to 5  Up 4 to 3
+	{6, 4},//800  //Down 5 to 6  Up 5 to 4
+	{7, 5},//600  //Down 6 to 7  Up 6 to 5
+	{8, 6},//400  //Down 7 to 8  Up 7 to 6
+	{9, 7},//200  //Down 8 to 9  Up 8 to 7
+	{9, 8},//100  //Down 9 to 9 Up 9 to 8
 };
 
 /* frequency */
@@ -121,12 +121,12 @@ static struct cpufreq_frequency_table s5pc110_freq_table_1d2GHZ[] = {
 
 /*Assigning different index for fast scaling up*/
 static unsigned char transition_state_1d2GHZ[][2] = {
-	{1, 0},
-	{2, 0},
-	{3, 1},
-	{4, 2},
-	{5, 3},
-	{5, 4},
+	{1, 0},//Down 0 to 1  Up 0 to 0
+	{2, 0},//Down 1 to 2  Up 1 to 0
+	{3, 1},//Down 2 to 3  Up 2 to 1
+	{4, 2},//Down 3 to 4  Up 3 to 2
+	{5, 3},//Down 4 to 5  Up 4 to 3
+	{5, 4},//Down 5 to 5  Up 5 to 4
 };
 
 

@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 06-14-2011:
+Fixing up transitions states in /arch/arm/mach-s5pv210/victory/cpu-freq.c.
 Enabling 1120MHz and 1200MHz states by default.
 Formatting changes for uniformity.
 New CPU frequencies and sysfs undervolting support (multiple via Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/f47551598e22409cf32f96bf1decf65b0e8d1ce9).
