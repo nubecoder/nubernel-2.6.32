@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 06-19-2011:
+Removed bash from update zip (should not be forced with kernel).
 Added audible notification to ncBuildHelper.sh (notify.wav).
 Changes to ncBuildHelper.sh (use nice to run make, always use defconfig, added total time).
 A bit of script cleanup related to wifiFlashHelper.sh.
