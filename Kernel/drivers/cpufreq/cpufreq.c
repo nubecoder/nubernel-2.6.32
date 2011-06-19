@@ -32,10 +32,50 @@
 #define dprintk(msg...) cpufreq_debug_printk(CPUFREQ_DEBUG_CORE, \
 						"cpufreq-core", msg)
 
-unsigned int exp_UV_mV[10] = {0,0,0,0,0,0,0,0,0,0}; //default undervolts {1400,1300,1200,1120,1000,800,600,400,200,100}
-int active_states[10] = {0,0,1,1,1,1,1,1,1,1}; //default enabled states {1400,1300,1200,1120,1000,800,600,400,200,100}
 int exp_update_states=1;
 
+extern unsigned int s5pc110_thres_table_1GHZ[][2];
+
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+#if 0 // not using above 1.4GHz
+// default undervolts
+unsigned int exp_UV_mV[13] = {
+	0,0,0,0,		// 1600,1500,1400,1300,
+	0,0,0,0,		// 1200,1120,1000,900,
+	0,0,0,0,0		// 800,600,400,200,100
+};
+// default enabled states
+int active_states[13] = {
+	0,0,0,0,		// 1600,1500,1400,1300,
+	0,1,1,1,		// 1200,1120,1000,900,
+	1,1,1,1,1		// 800,600,400,200,100
+};
+#else
+// default undervolts
+unsigned int exp_UV_mV[11] = {
+	0,0,0,0,	// 1400,1300,1200,1120,
+	0,0,0,0,	// 1000,900,800,600,
+	0,0,0			// 400,200,100
+};
+// default enabled states
+int active_states[11] = {
+	0,0,1,1,	//1400,1300,1200,1120,
+	1,1,1,1,	//1000,900,800,600,
+	1,1,1			//400,200,100
+};
+#endif // end not using above 1.4GHz
+#else // no OC
+// default undervolts
+unsigned int exp_UV_mV[7] = {
+	0,0,0,0,	//1000,900,800,600,
+	0,0,0			//400,200,100
+};
+// default enabled states
+int active_states[7] = {
+	1,1,1,1,	//1000,900,800,600,
+	1,1,1			//400,200,100
+};
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
 extern unsigned int frequency_voltage_tab[][3];
 u32 ControllerControlRegister0 = 0;
 u32 ControllerControlRegister1 = 0;
@@ -763,19 +803,145 @@ static ssize_t show_scaling_setspeed(struct cpufreq_policy *policy, char *buf)
 	return policy->governor->show_setspeed(policy, buf);
 }
 
+static ssize_t show_cpu_thres_table(struct cpufreq_policy *policy, char *buf)
+{
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+#if 0 // not using above 1.4GHz
+	return sprintf(buf, "%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n",
+		s5pc110_thres_table_1GHZ[0][0],s5pc110_thres_table_1GHZ[0][1],
+		s5pc110_thres_table_1GHZ[1][0],s5pc110_thres_table_1GHZ[1][1],
+		s5pc110_thres_table_1GHZ[2][0],s5pc110_thres_table_1GHZ[2][1],
+		s5pc110_thres_table_1GHZ[3][0],s5pc110_thres_table_1GHZ[3][1],
+		s5pc110_thres_table_1GHZ[4][0],s5pc110_thres_table_1GHZ[4][1],
+		s5pc110_thres_table_1GHZ[5][0],s5pc110_thres_table_1GHZ[5][1],
+		s5pc110_thres_table_1GHZ[6][0],s5pc110_thres_table_1GHZ[6][1],
+		s5pc110_thres_table_1GHZ[7][0],s5pc110_thres_table_1GHZ[7][1],
+		s5pc110_thres_table_1GHZ[8][0],s5pc110_thres_table_1GHZ[8][1],
+		s5pc110_thres_table_1GHZ[9][0],s5pc110_thres_table_1GHZ[9][1],
+		s5pc110_thres_table_1GHZ[10][0],s5pc110_thres_table_1GHZ[10][1],
+		s5pc110_thres_table_1GHZ[11][0],s5pc110_thres_table_1GHZ[11][1],
+		s5pc110_thres_table_1GHZ[12][0],s5pc110_thres_table_1GHZ[12][1]);
+#else
+	return sprintf(buf, "%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n",
+		s5pc110_thres_table_1GHZ[0][0],s5pc110_thres_table_1GHZ[0][1],
+		s5pc110_thres_table_1GHZ[1][0],s5pc110_thres_table_1GHZ[1][1],
+		s5pc110_thres_table_1GHZ[2][0],s5pc110_thres_table_1GHZ[2][1],
+		s5pc110_thres_table_1GHZ[3][0],s5pc110_thres_table_1GHZ[3][1],
+		s5pc110_thres_table_1GHZ[4][0],s5pc110_thres_table_1GHZ[4][1],
+		s5pc110_thres_table_1GHZ[5][0],s5pc110_thres_table_1GHZ[5][1],
+		s5pc110_thres_table_1GHZ[6][0],s5pc110_thres_table_1GHZ[6][1],
+		s5pc110_thres_table_1GHZ[7][0],s5pc110_thres_table_1GHZ[7][1],
+		s5pc110_thres_table_1GHZ[8][0],s5pc110_thres_table_1GHZ[8][1],
+		s5pc110_thres_table_1GHZ[9][0],s5pc110_thres_table_1GHZ[9][1],
+		s5pc110_thres_table_1GHZ[10][0],s5pc110_thres_table_1GHZ[10][1]);
+#endif // end not using above 1.4GHz
+#else // no OC
+	return sprintf(buf, "%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n",
+		s5pc110_thres_table_1GHZ[0][0],s5pc110_thres_table_1GHZ[0][1],
+		s5pc110_thres_table_1GHZ[1][0],s5pc110_thres_table_1GHZ[1][1],
+		s5pc110_thres_table_1GHZ[2][0],s5pc110_thres_table_1GHZ[2][1],
+		s5pc110_thres_table_1GHZ[3][0],s5pc110_thres_table_1GHZ[3][1],
+		s5pc110_thres_table_1GHZ[4][0],s5pc110_thres_table_1GHZ[4][1],
+		s5pc110_thres_table_1GHZ[5][0],s5pc110_thres_table_1GHZ[5][1],
+		s5pc110_thres_table_1GHZ[6][0],s5pc110_thres_table_1GHZ[6][1]);
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
+}
+
+static ssize_t store_cpu_thres_table(struct cpufreq_policy *policy,
+					const char *buf, size_t count)
+{
+	unsigned int ret = -EINVAL;
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+#if 0 // not using above 1.4GHz
+	ret = sscanf(buf, "%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n",
+		&s5pc110_thres_table_1GHZ[0][0],&s5pc110_thres_table_1GHZ[0][1],
+		&s5pc110_thres_table_1GHZ[1][0],&s5pc110_thres_table_1GHZ[1][1],
+		&s5pc110_thres_table_1GHZ[2][0],&s5pc110_thres_table_1GHZ[2][1],
+		&s5pc110_thres_table_1GHZ[3][0],&s5pc110_thres_table_1GHZ[3][1],
+		&s5pc110_thres_table_1GHZ[4][0],&s5pc110_thres_table_1GHZ[4][1],
+		&s5pc110_thres_table_1GHZ[5][0],&s5pc110_thres_table_1GHZ[5][1],
+		&s5pc110_thres_table_1GHZ[6][0],&s5pc110_thres_table_1GHZ[6][1],
+		&s5pc110_thres_table_1GHZ[7][0],&s5pc110_thres_table_1GHZ[7][1],
+		&s5pc110_thres_table_1GHZ[8][0],&s5pc110_thres_table_1GHZ[8][1],
+		&s5pc110_thres_table_1GHZ[9][0],&s5pc110_thres_table_1GHZ[9][1],
+		&s5pc110_thres_table_1GHZ[10][0],&s5pc110_thres_table_1GHZ[10][1],
+		&s5pc110_thres_table_1GHZ[11][0],&s5pc110_thres_table_1GHZ[11][1],
+		&s5pc110_thres_table_1GHZ[12][0],&s5pc110_thres_table_1GHZ[12][1]);
+#else
+	ret = sscanf(buf, "%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n",
+		&s5pc110_thres_table_1GHZ[0][0],&s5pc110_thres_table_1GHZ[0][1],
+		&s5pc110_thres_table_1GHZ[1][0],&s5pc110_thres_table_1GHZ[1][1],
+		&s5pc110_thres_table_1GHZ[2][0],&s5pc110_thres_table_1GHZ[2][1],
+		&s5pc110_thres_table_1GHZ[3][0],&s5pc110_thres_table_1GHZ[3][1],
+		&s5pc110_thres_table_1GHZ[4][0],&s5pc110_thres_table_1GHZ[4][1],
+		&s5pc110_thres_table_1GHZ[5][0],&s5pc110_thres_table_1GHZ[5][1],
+		&s5pc110_thres_table_1GHZ[6][0],&s5pc110_thres_table_1GHZ[6][1],
+		&s5pc110_thres_table_1GHZ[7][0],&s5pc110_thres_table_1GHZ[7][1],
+		&s5pc110_thres_table_1GHZ[8][0],&s5pc110_thres_table_1GHZ[8][1],
+		&s5pc110_thres_table_1GHZ[9][0],&s5pc110_thres_table_1GHZ[9][1],
+		&s5pc110_thres_table_1GHZ[10][0],&s5pc110_thres_table_1GHZ[10][1]);
+#endif // end not using above 1.4GHz
+#else // no OC
+	ret = sscanf(buf, "%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n%d %d\n",
+		&s5pc110_thres_table_1GHZ[0][0],&s5pc110_thres_table_1GHZ[0][1],
+		&s5pc110_thres_table_1GHZ[1][0],&s5pc110_thres_table_1GHZ[1][1],
+		&s5pc110_thres_table_1GHZ[2][0],&s5pc110_thres_table_1GHZ[2][1],
+		&s5pc110_thres_table_1GHZ[3][0],&s5pc110_thres_table_1GHZ[3][1],
+		&s5pc110_thres_table_1GHZ[4][0],&s5pc110_thres_table_1GHZ[4][1],
+		&s5pc110_thres_table_1GHZ[5][0],&s5pc110_thres_table_1GHZ[5][1],
+		&s5pc110_thres_table_1GHZ[6][0],&s5pc110_thres_table_1GHZ[6][1]);
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
+	if (ret != 1)
+		return -EINVAL;
+	else
+		return count;
+}
+
 static ssize_t show_UV_mV_table(struct cpufreq_policy *policy, char *buf)
 {
-	return sprintf(buf, "%d %d %d %d %d %d %d %d %d %d\n", exp_UV_mV[0],exp_UV_mV[1],exp_UV_mV[2],exp_UV_mV[3],exp_UV_mV[4],exp_UV_mV[5],exp_UV_mV[6],exp_UV_mV[7],exp_UV_mV[8],exp_UV_mV[9]);
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+#if 0 // not using above 1.4GHz
+	return sprintf(buf, "%d %d %d %d %d %d %d %d %d %d %d %d %d\n",
+		exp_UV_mV[0],exp_UV_mV[1],exp_UV_mV[2],exp_UV_mV[3],
+		exp_UV_mV[4],exp_UV_mV[5],exp_UV_mV[6],exp_UV_mV[7],
+		exp_UV_mV[8],exp_UV_mV[9],exp_UV_mV[10],exp_UV_mV[11],
+		exp_UV_mV[12]);
+#else
+	return sprintf(buf, "%d %d %d %d %d %d %d %d %d %d %d\n",
+		exp_UV_mV[0],exp_UV_mV[1],exp_UV_mV[2],exp_UV_mV[3],
+		exp_UV_mV[4],exp_UV_mV[5],exp_UV_mV[6],exp_UV_mV[7],
+		exp_UV_mV[8],exp_UV_mV[9],exp_UV_mV[10]);
+#endif // end not using above 1.4GHz
+#else // no OC
+	return sprintf(buf, "%d %d %d %d %d %d %d\n",
+		exp_UV_mV[0],exp_UV_mV[1],exp_UV_mV[2],exp_UV_mV[3],
+		exp_UV_mV[4],exp_UV_mV[5],exp_UV_mV[6]);
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
 	// return -EINVAL;
 }
 
 static ssize_t store_UV_mV_table(struct cpufreq_policy *policy,
-const char *buf, size_t count)
+					const char *buf, size_t count)
 {
 	unsigned int ret = -EINVAL;
-
-	//ret = sscanf(buf, "%d %d %d %d %d %d %d %d %d %d", &exp_UV_mV[0],&exp_UV_mV[1],&exp_UV_mV[2],&exp_UV_mV[3],&exp_UV_mV[4],&exp_UV_mV[5],&exp_UV_mV[6],&exp_UV_mV[7],&exp_UV_mV[8],&exp_UV_mV[9]);
-	ret = sscanf(buf, "%u %u %u %u %u %u %u %u %u %u", &exp_UV_mV[0],&exp_UV_mV[1],&exp_UV_mV[2],&exp_UV_mV[3],&exp_UV_mV[4],&exp_UV_mV[5],&exp_UV_mV[6],&exp_UV_mV[7],&exp_UV_mV[8],&exp_UV_mV[9]);
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+#if 0 // not using above 1.4GHz
+	ret = sscanf(buf, "%u %u %u %u %u %u %u %u %u %u %u %u %u",
+		&exp_UV_mV[0],&exp_UV_mV[1],&exp_UV_mV[2],&exp_UV_mV[3],
+		&exp_UV_mV[4],&exp_UV_mV[5],&exp_UV_mV[6],&exp_UV_mV[7],
+		&exp_UV_mV[8],&exp_UV_mV[9],&exp_UV_mV[10],&exp_UV_mV[11],
+		&exp_UV_mV[12]);
+#else
+	ret = sscanf(buf, "%u %u %u %u %u %u %u %u %u %u %u",
+		&exp_UV_mV[0],&exp_UV_mV[1],&exp_UV_mV[2],&exp_UV_mV[3],
+		&exp_UV_mV[4],&exp_UV_mV[5],&exp_UV_mV[6],&exp_UV_mV[7],
+		&exp_UV_mV[8],&exp_UV_mV[9],&exp_UV_mV[10]);
+#endif // end not using above 1.4GHz
+#else // no OC
+	ret = sscanf(buf, "%u %u %u %u %u %u %u",
+		&exp_UV_mV[0],&exp_UV_mV[1],&exp_UV_mV[2],&exp_UV_mV[3],
+		&exp_UV_mV[4],&exp_UV_mV[5],&exp_UV_mV[6]);
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
 	if (ret != 1)
 		return -EINVAL;
 	else
@@ -811,9 +977,23 @@ static ssize_t show_timing_registers(struct cpufreq_policy *policy, char *buf)
 	return sprintf(buf, "%d %d\n", TimingRegister0,TimingRegister1);
 	// return -EINVAL;
 }
+#if 0 // this isn't used
+static ssize_t store_memory_control_registers(struct cpufreq_policy *policy,
+					const char *buf, size_t count)
+{
+	unsigned int ret = -EINVAL;
+	ret = sscanf(buf, "%d %d", &MemoryControlRegister0,&MemoryControlRegister1);
+	modMemoryControlRegister0 = MemoryControlRegister0;
+	modMemoryControlRegister1 = MemoryControlRegister1;
+	if (ret != 1)
+		return -EINVAL;
+	else
+		return count;
+}
+#endif
 
 static ssize_t store_AC_timing_registers_row(struct cpufreq_policy *policy,
-const char *buf, size_t count)
+					const char *buf, size_t count)
 {
 	unsigned int ret = -EINVAL;
 	ret = sscanf(buf, "%d %d", &ACTimingRegisterRow0,&ACTimingRegisterRow1);
@@ -826,7 +1006,7 @@ const char *buf, size_t count)
 }
 
 static ssize_t store_AC_timing_registers_data(struct cpufreq_policy *policy,
-const char *buf, size_t count)
+					const char *buf, size_t count)
 {
 	unsigned int ret = -EINVAL;
 	ret = sscanf(buf, "%d %d", &ACTimingRegisterData0,&ACTimingRegisterData1);
@@ -839,7 +1019,7 @@ const char *buf, size_t count)
 }
 
 static ssize_t store_timing_registers(struct cpufreq_policy *policy,
-const char *buf, size_t count)
+					const char *buf, size_t count)
 {
 	unsigned int ret = -EINVAL;
 	ret = sscanf(buf, "%d %d", &TimingRegister0,&TimingRegister1);
@@ -855,7 +1035,9 @@ const char *buf, size_t count)
 
 static ssize_t show_frequency_voltage_table(struct cpufreq_policy *policy, char *buf)
 {
-	return sprintf(buf, "%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n",
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+#if 0 // not using above 1.4GHz
+	return sprintf(buf, "%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n",
 		frequency_voltage_tab[0][0],frequency_voltage_tab[0][1],frequency_voltage_tab[0][2],
 		frequency_voltage_tab[1][0],frequency_voltage_tab[1][1],frequency_voltage_tab[1][2],
 		frequency_voltage_tab[2][0],frequency_voltage_tab[2][1],frequency_voltage_tab[2][2],
@@ -865,27 +1047,81 @@ static ssize_t show_frequency_voltage_table(struct cpufreq_policy *policy, char 
 		frequency_voltage_tab[6][0],frequency_voltage_tab[6][1],frequency_voltage_tab[6][2],
 		frequency_voltage_tab[7][0],frequency_voltage_tab[7][1],frequency_voltage_tab[7][2],
 		frequency_voltage_tab[8][0],frequency_voltage_tab[8][1],frequency_voltage_tab[8][2],
-		frequency_voltage_tab[9][0],frequency_voltage_tab[9][1],frequency_voltage_tab[9][2]
-		// frequency_voltage_tab[10][0],frequency_voltage_tab[10][1],frequency_voltage_tab[10][2],
-		// frequency_voltage_tab[11][0],frequency_voltage_tab[11][1],frequency_voltage_tab[11][2],
-		// frequency_voltage_tab[12][0],frequency_voltage_tab[12][1],frequency_voltage_tab[12][2]
-	);
+		frequency_voltage_tab[9][0],frequency_voltage_tab[9][1],frequency_voltage_tab[9][2],
+		frequency_voltage_tab[10][0],frequency_voltage_tab[10][1],frequency_voltage_tab[10][2],
+		frequency_voltage_tab[11][0],frequency_voltage_tab[11][1],frequency_voltage_tab[11][2],
+		frequency_voltage_tab[12][0],frequency_voltage_tab[12][1],frequency_voltage_tab[12][2]);
+#else
+	return sprintf(buf, "%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n",
+		frequency_voltage_tab[0][0],frequency_voltage_tab[0][1],frequency_voltage_tab[0][2],
+		frequency_voltage_tab[1][0],frequency_voltage_tab[1][1],frequency_voltage_tab[1][2],
+		frequency_voltage_tab[2][0],frequency_voltage_tab[2][1],frequency_voltage_tab[2][2],
+		frequency_voltage_tab[3][0],frequency_voltage_tab[3][1],frequency_voltage_tab[3][2],
+		frequency_voltage_tab[4][0],frequency_voltage_tab[4][1],frequency_voltage_tab[4][2],
+		frequency_voltage_tab[5][0],frequency_voltage_tab[5][1],frequency_voltage_tab[5][2],
+		frequency_voltage_tab[6][0],frequency_voltage_tab[6][1],frequency_voltage_tab[6][2],
+		frequency_voltage_tab[7][0],frequency_voltage_tab[7][1],frequency_voltage_tab[7][2],
+		frequency_voltage_tab[8][0],frequency_voltage_tab[8][1],frequency_voltage_tab[8][2],
+		frequency_voltage_tab[9][0],frequency_voltage_tab[9][1],frequency_voltage_tab[9][2],
+		frequency_voltage_tab[10][0],frequency_voltage_tab[10][1],frequency_voltage_tab[10][2]);
+#endif // end not using above 1.4GHz
+#else // no OC
+	return sprintf(buf, "%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n",
+		frequency_voltage_tab[0][0],frequency_voltage_tab[0][1],frequency_voltage_tab[0][2],
+		frequency_voltage_tab[1][0],frequency_voltage_tab[1][1],frequency_voltage_tab[1][2],
+		frequency_voltage_tab[2][0],frequency_voltage_tab[2][1],frequency_voltage_tab[2][2],
+		frequency_voltage_tab[3][0],frequency_voltage_tab[3][1],frequency_voltage_tab[3][2],
+		frequency_voltage_tab[4][0],frequency_voltage_tab[4][1],frequency_voltage_tab[4][2],
+		frequency_voltage_tab[5][0],frequency_voltage_tab[5][1],frequency_voltage_tab[5][2],
+		frequency_voltage_tab[6][0],frequency_voltage_tab[6][1],frequency_voltage_tab[6][2]);
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
 }
 
 static ssize_t show_states_enabled_table(struct cpufreq_policy *policy, char *buf)
 {
-	return sprintf(buf, "%d %d %d %d %d %d %d %d %d %d\n", active_states[0],active_states[1],active_states[2],active_states[3],active_states[4],active_states[5],active_states[6],active_states[7],active_states[8],active_states[9]);
-	// return sprintf(buf, "%d %d %d %d %d %d %d %d %d %d %d %d %d\n", active_states[0],active_states[1],active_states[2],active_states[3],active_states[4],active_states[5],active_states[6],active_states[7],active_states[8],active_states[9],active_states[10],active_states[11],active_states[12]);
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+#if 0 // not using above 1.4GHz
+	return sprintf(buf, "%d %d %d %d %d %d %d %d %d %d %d %d %d\n",
+		active_states[0],active_states[1],active_states[2],active_states[3],
+		active_states[4],active_states[5],active_states[6],active_states[7],
+		active_states[8],active_states[9],active_states[10],active_states[11],
+		active_states[12]);
+#else
+	return sprintf(buf, "%d %d %d %d %d %d %d %d %d %d %d\n",
+		active_states[0],active_states[1],active_states[2],active_states[3],
+		active_states[4],active_states[5],active_states[6],active_states[7],
+		active_states[8],active_states[9],active_states[10]);
+#endif // end not using above 1.4GHz
+#else // no OC
+	return sprintf(buf, "%d %d %d %d %d %d %d\n",
+		active_states[0],active_states[1],active_states[2],active_states[3],
+		active_states[4],active_states[5],active_states[6]);
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
 	// return -EINVAL;
 }
 
 static ssize_t store_states_enabled_table(struct cpufreq_policy *policy,
-const char *buf, size_t count)
+					const char *buf, size_t count)
 {
 	unsigned int ret = -EINVAL;
-
-	ret = sscanf(buf, "%d %d %d %d %d %d %d %d %d %d", &active_states[0],&active_states[1],&active_states[2],&active_states[3],&active_states[4],&active_states[5],&active_states[6],&active_states[7],&active_states[8],&active_states[9]);
-	// ret = sscanf(buf, "%d %d %d %d %d %d %d %d %d %d %d %d %d", &active_states[0],&active_states[1],&active_states[2],&active_states[3],&active_states[4],&active_states[5],&active_states[6],&active_states[7],&active_states[8],&active_states[9],&active_states[10],&active_states[11],&active_states[12]);
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+#if 0 // not using above 1.4GHz
+	ret = sscanf(buf, "%d %d %d %d %d %d %d %d %d %d %d %d %d",
+		&active_states[0],&active_states[1],&active_states[2],&active_states[3],
+		&active_states[4],&active_states[5],&active_states[6],&active_states[7],
+		&active_states[8],&active_states[9],&active_states[10],&active_states[11],
+		&active_states[12]);
+#else
+	ret = sscanf(buf, "%d %d %d %d %d %d %d %d %d %d %d",
+		&active_states[0],&active_states[1],&active_states[2],&active_states[3],
+		&active_states[4],&active_states[5],&active_states[6],&active_states[7],
+		&active_states[8],&active_states[9],&active_states[10]);
+#endif // end not using above 1.4GHz
+#else // no OC
+	ret = sscanf(buf, "%d %d %d %d %d %d %d",
+		&active_states[0],&active_states[1],&active_states[2],&active_states[3],
+		&active_states[4],&active_states[5],&active_states[6]);
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
 	if (ret != 1)
 		return -EINVAL;
 	else
@@ -919,6 +1155,7 @@ define_one_rw(scaling_min_freq);
 define_one_rw(scaling_max_freq);
 define_one_rw(scaling_governor);
 define_one_rw(UV_mV_table);
+define_one_rw(cpu_thres_table);
 define_one_rw(states_enabled_table);
 define_one_rw(update_states);
 define_one_rw(timing_registers);
@@ -945,6 +1182,7 @@ static struct attribute *default_attrs[] = {
 	&related_cpus.attr,
 	&scaling_governor.attr,
 	&UV_mV_table.attr,
+	&cpu_thres_table.attr,
 	&states_enabled_table.attr,
 	&update_states.attr,
 	&frequency_voltage_table.attr,

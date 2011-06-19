@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+06-19-2011:
+Compilation of changes to CPU frequencies, voltages, sysfs under-volting, etc. (existz, raspdeep, Rodderik, gzub, RandyT, nemesis2all, and myself).
+
 06-15-2011:
 Fixing a possible out of bounds related to "active_states" (ssewk2x via nemesis2all: https://github.com/nemesis2all/OTB-Reloaded/commit/136dc15d6bd7ff162135aaf1494b049ddbe08988).
 

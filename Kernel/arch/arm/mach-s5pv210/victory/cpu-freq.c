@@ -42,7 +42,15 @@
 #define DBG(fmt...)
 //#define DBG(fmt...) printk(fmt)
 
-extern int active_states[10];
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+#if 0 // not using above 1.4GHz
+extern int active_states[13];
+#else
+extern int active_states[11];
+#endif // end not using above 1.4GHz
+#else // no OC
+extern int active_states[7];
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
 
 unsigned int dvfs_change_direction;
 #define CLIP_LEVEL(a, b) (a > b ? b : a)
@@ -52,7 +60,7 @@ unsigned int S5PC11X_MAXFREQLEVEL = 4;
 unsigned int S5PC11X_FREQ_TAB;
 static spinlock_t g_dvfslock = SPIN_LOCK_UNLOCKED;
 static unsigned int s5pc11x_cpufreq_level = 3;
-unsigned int s5pc11x_cpufreq_index = 6;
+unsigned int s5pc11x_cpufreq_index = 4;
 
 static char cpufreq_governor_name[CPUFREQ_NAME_LEN] = "conservative";// default governor
 static char userspace_governor[CPUFREQ_NAME_LEN] = "userspace";
@@ -81,31 +89,87 @@ extern int store_up_down_threshold(unsigned int down_threshold_value,
 
 /* frequency */
 static struct cpufreq_frequency_table s5pc110_freq_table_1GHZ[] = {
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+#if 0 // not using above 1.4GHz
+	{0, 1600*1000},
+	{1, 1500*1000},
+	{2, 1400*1000},
+	{3, 1300*1000},
+	{4, 1200*1000},
+	{5, 1120*1000},
+	{6, 1000*1000},
+	{7, 900*1000},
+	{8, 800*1000},
+	{9, 600*1000},
+	{10, 400*1000},
+	{11, 200*1000},
+	{12, 100*1000},
+	{0, CPUFREQ_TABLE_END},
+#else
 	{0, 1400*1000},
 	{1, 1300*1000},
 	{2, 1200*1000},
 	{3, 1120*1000},
 	{4, 1000*1000},
-	{5, 800*1000},
-	{6, 600*1000},
-	{7, 400*1000},
-	{8, 200*1000},
-	{9, 100*1000},
+	{5, 900*1000},
+	{6, 800*1000},
+	{7, 600*1000},
+	{8, 400*1000},
+	{9, 200*1000},
+	{10, 100*1000},
 	{0, CPUFREQ_TABLE_END},
+#endif // end not using above 1.4GHz
+#else // no OC
+	{0, 1000*1000},
+	{1, 900*1000},
+	{2, 800*1000},
+	{3, 600*1000},
+	{4, 400*1000},
+	{5, 200*1000},
+	{6, 100*1000},
+	{0, CPUFREQ_TABLE_END},
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
 };
 
 /*Assigning different index for fast scaling up*/
 static unsigned char transition_state_1GHZ[][2] = {
-	{1, 0},//1400 //Down 0 to 1  Up 0 to 0
-	{2, 0},//1300 //Down 1 to 2  Up 1 to 0
-	{3, 1},//1200 //Down 2 to 3  Up 2 to 1
-	{4, 2},//1120 //Down 3 to 4  Up 3 to 2
-	{5, 3},//1000 //Down 4 to 5  Up 4 to 3
-	{6, 4},//800  //Down 5 to 6  Up 5 to 4
-	{7, 5},//600  //Down 6 to 7  Up 6 to 5
-	{8, 6},//400  //Down 7 to 8  Up 7 to 6
-	{9, 7},//200  //Down 8 to 9  Up 8 to 7
-	{9, 8},//100  //Down 9 to 9 Up 9 to 8
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+#if 0 // not using above 1.4GHz
+	{1, 0},   //Down 0  to 1  Up 0  to 0
+	{2, 0},   //Down 1  to 2  Up 1  to 0
+	{3, 1},   //Down 2  to 3  Up 2  to 1
+	{4, 2},   //Down 3  to 4  Up 3  to 2
+	{5, 3},   //Down 4  to 5  Up 4  to 3
+	{6, 4},   //Down 5  to 6  Up 5  to 4
+	{7, 5},   //Down 6  to 7  Up 6  to 5
+	{8, 6},   //Down 7  to 8  Up 7  to 6
+	{9, 7},   //Down 8  to 9  Up 8  to 7
+	{10, 8},  //Down 9  to 10 Up 9  to 8
+	{11, 9},  //Down 10 to 11 Up 10 to 9
+	{12, 10}, //Down 11 to 12 Up 11 to 10
+	{12, 11}, //Down 12 to 12 Up 12 to 11
+#else
+	{1, 0},   //Down 0  to 1  Up 0  to 0
+	{2, 0},   //Down 1  to 2  Up 1  to 0
+	{3, 1},   //Down 2  to 3  Up 2  to 1
+	{4, 2},   //Down 3  to 4  Up 3  to 2
+	{5, 3},   //Down 4  to 5  Up 4  to 3
+	{6, 4},   //Down 5  to 6  Up 5  to 4
+	{7, 5},   //Down 6  to 7  Up 6  to 5
+	{8, 6},   //Down 7  to 8  Up 7  to 6
+	{9, 7},   //Down 8  to 9  Up 8  to 7
+	{10, 8},  //Down 9  to 10 Up 9  to 8
+	{10, 9},  //Down 10 to 10 Up 10 to 9
+#endif // end not using above 1.4GHz
+#else // no OC
+	{1, 0}, //Down 0 to 1  Up 0 to 0
+	{2, 0}, //Down 1 to 2  Up 1 to 0
+	{3, 1}, //Down 2 to 3  Up 2 to 1
+	{4, 2}, //Down 3 to 4  Up 3 to 2
+	{5, 3}, //Down 4 to 5  Up 4 to 3
+	{6, 4}, //Down 5 to 6  Up 5 to 4
+	{6, 5}, //Down 6 to 6  Up 6 to 5
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
 };
 
 /* frequency */
@@ -121,14 +185,13 @@ static struct cpufreq_frequency_table s5pc110_freq_table_1d2GHZ[] = {
 
 /*Assigning different index for fast scaling up*/
 static unsigned char transition_state_1d2GHZ[][2] = {
-	{1, 0},//Down 0 to 1  Up 0 to 0
-	{2, 0},//Down 1 to 2  Up 1 to 0
-	{3, 1},//Down 2 to 3  Up 2 to 1
-	{4, 2},//Down 3 to 4  Up 3 to 2
-	{5, 3},//Down 4 to 5  Up 4 to 3
-	{5, 4},//Down 5 to 5  Up 5 to 4
+	{1, 0}, //Down 0 to 1  Up 0 to 0
+	{2, 0}, //Down 1 to 2  Up 1 to 0
+	{3, 1}, //Down 2 to 3  Up 2 to 1
+	{4, 2}, //Down 3 to 4  Up 3 to 2
+	{5, 3}, //Down 4 to 5  Up 4 to 3
+	{5, 4}, //Down 5 to 5  Up 5 to 4
 };
-
 
 static unsigned char (*transition_state[2])[2] = {
 	transition_state_1GHZ,
@@ -140,26 +203,53 @@ static struct cpufreq_frequency_table *s5pc110_freq_table[] = {
 	s5pc110_freq_table_1d2GHZ,
 };
 
-static unsigned int s5pc110_thres_table_1GHZ[][2] = {
-	{55, 80},
-	{55, 90},
-	{55, 90},
-	{55, 90},
-	{55, 90},
-	{55, 90},
-	{60, 80},
-	{60, 80},
-	{60, 80},
-	{60, 80},
+unsigned int s5pc110_thres_table_1GHZ[][2] = {
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+#if 0 // not using above 1.4GHz
+	{55, 80}, //1600
+	{55, 90}, //1500
+	{55, 90}, //1400
+	{55, 90}, //1300
+	{55, 90}, //1200
+	{55, 90}, //1120
+	{55, 90}, //1000
+	{60, 80}, //900
+	{60, 80}, //800
+	{60, 80}, //600
+	{60, 80}, //400
+	{60, 80}, //200
+	{60, 80}, //100
+#else
+	{55, 90}, //1400
+	{55, 90}, //1300
+	{55, 90}, //1200
+	{55, 90}, //1120
+	{55, 90}, //1000
+	{60, 80}, //900
+	{60, 80}, //800
+	{60, 80}, //600
+	{60, 80}, //400
+	{60, 80}, //200
+	{60, 80}, //100
+#endif // end not using above 1.4GHz
+#else // no OC
+	{55, 80}, //1000
+	{50, 90}, //900
+	{50, 90}, //800
+	{50, 90}, //600
+	{40, 90}, //400
+	{40, 90}, //200
+	{20, 80}, //100
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
 };
 
 static unsigned int s5pc110_thres_table_1d2GHZ[][2] = {
-	{30, 70},
-	{30, 70},
-	{30, 70},
-	{30, 70},
-	{30, 70},
-	{30, 70},
+	{55, 80}, //1200
+	{50, 90}, //1000
+	{50, 90}, //800
+	{40, 90}, //400
+	{30, 80}, //200
+	{20, 70}, //100
 };
 
 static unsigned int  (*s5pc110_thres_table[2])[2] = {
@@ -174,6 +264,15 @@ static int get_dvfs_perf_level(enum freq_level_states freq_level, unsigned int *
 	struct cpufreq_frequency_table *freq_tab = s5pc110_freq_table[S5PC11X_FREQ_TAB];
 	switch(freq_level)
 	{
+#if CONFIG_MACH_S5PC110_ARIES_OC
+#if 0 // not using above 1.4GHz
+	case LEV_1600MHZ:
+		freq = 1600 * 1000;
+		break;
+	case LEV_1500MHZ:
+		freq = 1500 * 1000;
+		break;
+#endif // end not using above 1.4GHz
 	case LEV_1400MHZ:
 		freq = 1400 * 1000;
 		break;
@@ -186,8 +285,12 @@ static int get_dvfs_perf_level(enum freq_level_states freq_level, unsigned int *
 	case LEV_1120MHZ:
 		freq = 1120 * 1000;
 		break;
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
 	case LEV_1000MHZ:
 		freq = 1000 * 1000;
+		break;
+	case LEV_900MHZ:
+		freq = 900 * 1000;
 		break;
 	case LEV_800MHZ:
 		freq = 800 * 1000;
@@ -626,7 +729,11 @@ static int s5pc110_target(struct cpufreq_policy *policy,
 		
 		// ARM MCS value set
 		if (S5PC11X_FREQ_TAB  == 0) { // for 1G table
+#if 0 // not using above 1.4GHz
 			if ((prevIndex < 11) && (index >= 11)) {
+#else
+			if ((prevIndex < 9) && (index >= 9)) {
+#endif // end not using above 1.4GHz
 				ret = __raw_readl(S5P_ARM_MCS);
 				DBG("MDSvalue = %08x\n", ret);
 				ret = (ret & ~(0x3)) | 0x3;
@@ -684,7 +791,11 @@ static int s5pc110_target(struct cpufreq_policy *policy,
 
 		// ARM MCS value set
 		if (S5PC11X_FREQ_TAB  == 0) { // for 1G table
+#if 0 // not using above 1.4GHz
 			if ((prevIndex >= 11) && (index < 11)) {
+#else
+			if ((prevIndex >= 9) && (index < 9)) {
+#endif // end not using above 1.4GHz
 				ret = __raw_readl(S5P_ARM_MCS);
 				DBG("MDSvalue = %08x\n", ret);				
 				ret = (ret & ~(0x3)) | 0x1;
@@ -822,28 +933,37 @@ static int __init s5pc110_cpu_init(struct cpufreq_policy *policy)
 		policy->min = 200000;
 	//spin_lock_irqsave(&g_cpufreq_lock, irqflags);
 
-#if USE_1DOT2GHZ
-	S5PC11X_FREQ_TAB = 1;
-	S5PC11X_MAXFREQLEVEL = 5;
-	MAXFREQ_LEVEL_SUPPORTED = 6;
-	g_dvfs_high_lock_limit = 5;
-#else
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
 	S5PC11X_FREQ_TAB = 0;
-	S5PC11X_MAXFREQLEVEL = 9;
-	MAXFREQ_LEVEL_SUPPORTED = 10;
+#if 0 // not using above 1.4GHz
+	S5PC11X_MAXFREQLEVEL = 12;
+	MAXFREQ_LEVEL_SUPPORTED = 13;
 	g_dvfs_high_lock_limit = 12;
-#endif
+#else
+	S5PC11X_MAXFREQLEVEL = 10;
+	MAXFREQ_LEVEL_SUPPORTED = 11;
+	g_dvfs_high_lock_limit = 10;
+#endif // end not using above 1.4GHz
+#else // no OC
+	S5PC11X_FREQ_TAB = 0;
+	S5PC11X_MAXFREQLEVEL = 6;
+	MAXFREQ_LEVEL_SUPPORTED = 7;
+	g_dvfs_high_lock_limit = 6;
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
 	
 	printk("S5PC11X_FREQ_TAB=%d , S5PC11X_MAXFREQLEVEL=%d\n",S5PC11X_FREQ_TAB,S5PC11X_MAXFREQLEVEL);
 
 	s5pc11x_cpufreq_level = S5PC11X_MAXFREQLEVEL;
 	//spin_unlock_irqrestore(&g_cpufreq_lock, irqflags);
-
-	if (S5PC11X_FREQ_TAB) {	
-		prevIndex = 2;// we are currently at 800MHZ level
-	} else {
-		prevIndex = 1;// we are currently at 800MHZ level
-	}
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+#if 0 // not using above 1.4GHz
+	prevIndex = 8;// we are currently at 800MHZ level
+#else
+	prevIndex = 6;// we are currently at 800MHZ level
+#endif // end not using above 1.4GHz
+#else // no OC
+	prevIndex = 2;// we are currently at 800MHZ level
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
 
 #ifdef CONFIG_CPU_FREQ_LOG
 	//schedule_delayed_work(&dvfs_info_print_work, 60 * HZ);

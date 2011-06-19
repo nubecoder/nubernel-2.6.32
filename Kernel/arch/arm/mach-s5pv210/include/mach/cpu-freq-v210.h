@@ -11,7 +11,15 @@
 
 //extern void s5pc110_lock_power_domain(unsigned int nToken);
 
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+#if 0 // not using above 1.4GHz
+#define MAXIMUM_FREQ 1600000
+#else
+#define MAXIMUM_FREQ 1400000
+#endif // end not using above 1.4GHz
+#else // no OC
 #define MAXIMUM_FREQ 1000000
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
 #define USE_FREQ_TABLE
 //#undef USE_DVS
 #define USE_DVS
@@ -34,16 +42,26 @@ enum perf_level {
 	L7,
 	L8,
 	L9,
+	L10,
+#if 0 // not using above 1.4GHz
+	L11,
+	L12,
+#endif // end not using above 1.4GHz
 };
 
 enum freq_level_states {
+#if 0 // not using above 1.4GHz
+	LEV_1600MHZ,
+	LEV_1500MHZ,
+#endif // end not using above 1.4GHz
 	LEV_1400MHZ,
 	LEV_1300MHZ,
 	LEV_1200MHZ,
 	LEV_1120MHZ,
 	LEV_1000MHZ,
-	LEV_600MHZ,
+	LEV_900MHZ,
 	LEV_800MHZ,
+	LEV_600MHZ,
 	LEV_400MHZ,
 	LEV_200MHZ,
 	LEV_100MHZ,
