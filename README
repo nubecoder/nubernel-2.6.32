@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 06-19-2011:
+A bit of script cleanup related to wifiFlashHelper.sh.
 Added 82-nubernel_battery_mods script (init.d script to set some battery values).
 Added 81-rm_batterrystats script (init.d script to remove /data/system/batterystats.bin on boot).
 More changes to cpufreq_info script (added governor specific info).
