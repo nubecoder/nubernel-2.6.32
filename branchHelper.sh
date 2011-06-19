@@ -87,13 +87,19 @@ BRANCH_RELEASE()
 	local REPLACEMENT="${VERSION_STRING}$NEW_VERSION"
 	if [ "$VERBOSE" = "y" ]
 	then
-		sed -i "s/$PATTERN/$REPLACEMENT/g" ncMultiBuild.sh
+		sed -i "s/$PATTERN/$REPLACEMENT/g" build_kernel.sh
 		sed -i "s/$PATTERN/$REPLACEMENT/g" initramfs/default.prop
+		sed -i "s/$PATTERN/$REPLACEMENT/g" Kernel/update/META-INF/com/google/android/updater-script
+		sed -i "s/$PATTERN/$REPLACEMENT/g" Kernel/update/META-INF/com/android/metadata
+		sed -i "s/$PATTERN/$REPLACEMENT/g" ncBuildHelper.sh
 		sed -i "s/$PATTERN/$REPLACEMENT/g" README
 		sed -i "s/$PATTERN/$REPLACEMENT/g" $0
 	else
-		sed -i "s/$PATTERN/$REPLACEMENT/g" ncMultiBuild.sh >/dev/null 2>&1
+		sed -i "s/$PATTERN/$REPLACEMENT/g" build_kernel.sh
 		sed -i "s/$PATTERN/$REPLACEMENT/g" initramfs/default.prop >/dev/null 2>&1
+		sed -i "s/$PATTERN/$REPLACEMENT/g" Kernel/update/META-INF/com/google/android/updater-script >/dev/null 2>&1
+		sed -i "s/$PATTERN/$REPLACEMENT/g" Kernel/update/META-INF/com/android/metadata >/dev/null 2>&1
+		sed -i "s/$PATTERN/$REPLACEMENT/g" ncBuildHelper.sh >/dev/null 2>&1
 		sed -i "s/$PATTERN/$REPLACEMENT/g" README >/dev/null 2>&1
 		sed -i "s/$PATTERN/$REPLACEMENT/g" $0 >/dev/null 2>&1
 	fi
@@ -109,11 +115,19 @@ BRANCH_RELEASE()
 	# git add changes
 	if [ "$VERBOSE" = "y" ]
 	then
-		git add ncMultiBuild.sh
+		git add build_kernel.sh
+		git add initramfs/default.prop
+		git add Kernel/update/META-INF/com/google/android/updater-script
+		git add Kernel/update/META-INF/com/android/metadata
+		git add ncBuildHelper.sh
 		git add README
 		git add $0
 	else
-		git add ncMultiBuild.sh >/dev/null 2>&1
+		git add build_kernel.sh >/dev/null 2>&1
+		git add initramfs/default.prop >/dev/null 2>&1
+		git add Kernel/update/META-INF/com/google/android/updater-script >/dev/null 2>&1
+		git add Kernel/update/META-INF/com/android/metadata >/dev/null 2>&1
+		git add ncBuildHelper.sh >/dev/null 2>&1
 		git add README >/dev/null 2>&1
 		git add $0 >/dev/null 2>&1
 	fi

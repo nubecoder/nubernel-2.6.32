@@ -1,0 +1,10 @@
+#!/system/bin/sh
+#
+# 81-rm_batterystats
+#
+# 2011 nubecoder
+# http://www.nubecoder.com/
+#
+
+rm -f "/data/system/batterystats.bin"
+

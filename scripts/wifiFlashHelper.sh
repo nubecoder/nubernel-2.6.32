@@ -79,12 +79,16 @@ then
 	echo "Setting permissions on redbend_ua (0755)."
 	$ADB_SHELL "chmod 0755" $REDBEND_DEST
 	echo "*"
-	#push bmlwrite to phone and set permissions
-	echo "Pushing bmlwrite, this may take a minute."
-	$ADB_PUSH $BMLWRITE_SRC $BMLWRITE_DEST >/dev/null 2>&1
-	echo "Setting permissions on bmlwrite (0755)."
-	$ADB_SHELL "chmod 0755" $BMLWRITE_DEST
-	echo "*"
+
+# not using bmlwrite currently
+#
+#	#push bmlwrite to phone and set permissions
+#	echo "Pushing bmlwrite, this may take a minute."
+#	$ADB_PUSH $BMLWRITE_SRC $BMLWRITE_DEST >/dev/null 2>&1
+#	echo "Setting permissions on bmlwrite (0755)."
+#	$ADB_SHELL "chmod 0755" $BMLWRITE_DEST
+#	echo "*"
+
 	#push kernelFlash to phone and set permissions
 	echo "Pushing kernelFlash, this may take a minute."
 	$ADB_PUSH $KERNELFLASH_SRC $KERNELFLASH_DEST >/dev/null 2>&1

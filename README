@@ -28,6 +28,16 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+06-19-2011:
+Versioning related changes to branchHelper.sh and other files.
+Removed bash from update zip (should not be forced with kernel).
+Added audible notification to ncBuildHelper.sh (notify.wav).
+Changes to ncBuildHelper.sh (use nice to run make, always use defconfig, added total time).
+A bit of script cleanup related to wifiFlashHelper.sh.
+Added 82-nubernel_battery_mods script (init.d script to set some battery values).
+Added 81-rm_batterrystats script (init.d script to remove /data/system/batterystats.bin on boot).
+More changes to cpufreq_info script (added governor specific info).
+
 06-06-2011:
 Fixing up the debugging a bit in smartass governor.
 Added some error checking to interactive and smartass governors.
@@ -61,11 +71,13 @@ Added interactive governor (Mike Chan via CyanogenMod: https://github.com/Cyanog
 Branched to 'feature-governors'.
 
 05-26-2011:
+Changes to cpufreq_info script.
 Reworked the fix a bit, I find this a bit more elegant.
 Changes to Ondemand governor so it respects the minimum scaling frequency.
 Branched to 'feature-ondemand_governor_fix'.
 
 05-25-2011:
+Addition of cpufreq_info script.
 Voodoo sound: driver v9 (supercurio: https://github.com/project-voodoo/linux_sph-d700/commit/dbd81fda1ff71e7557ea694425580074d587ebee).
 Quiet the "CONFIG_TINY_RCU not defined" warning.
 Changes to "s5pc11x_target_frq" so it respects the minimum scaling frequency.
@@ -73,9 +85,12 @@ Changes to "s5pc11x_target_frq" so it respects the minimum scaling frequency.
 05-17-2011:
 Branched to 'feature-conservative_governor_fix'.
 
+05-15-2011:
+Stupid typo...
+
 05-14-2011:
 Added new bash binary.
-Changes to recovery install script for bew bash.
+Changes to recovery install script for new bash.
 Changes to subash for new bash.
 Rename bash_profile in preparation for new custom built bash-4.1.11(2).
 Changes to bash_profile.

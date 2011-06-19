@@ -1,11 +1,7 @@
 #!/system/bin/sh
 #
 # kernelFlash
-# For use with adb wireless.
-#
-#	Usage:
-#		Change the IP variable below to match the IP given in adb wireless.
-#		Run the script.
+# For use with wifiFlashHelper.sh
 #
 #
 # 2011 nubecoder
