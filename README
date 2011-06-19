@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 06-19-2011:
+Added audible notification to ncBuildHelper.sh (notify.wav).
 Changes to ncBuildHelper.sh (use nice to run make, always use defconfig, added total time).
 A bit of script cleanup related to wifiFlashHelper.sh.
 Added 82-nubernel_battery_mods script (init.d script to set some battery values).

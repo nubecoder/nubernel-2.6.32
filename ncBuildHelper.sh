@@ -76,6 +76,10 @@ SHOW_SETTINGS()
 	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
 	echo "*"
 }
+NOTIFY_COMPLETED()
+{
+	aplay notify.wav >/dev/null 2>&1
+}
 SHOW_COMPLETED()
 {
 	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
@@ -83,6 +87,7 @@ SHOW_COMPLETED()
 	TIME_END=$(date +%s)
 	echo "" && echo "Total time: $(($TIME_END - $TIME_START)) seconds."
 	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+	NOTIFY_COMPLETED
 	exit
 }
 SHOW_ERROR()
