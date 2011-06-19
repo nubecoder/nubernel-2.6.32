@@ -36,7 +36,7 @@ ui_print("");ui_print("");sleep(1);
 
 ui_print("");
 ui_print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-ui_print("@             nubernel-kernel v0.0.0           @");
+ui_print("@              nubernel-EC05_v0.0.0            @");
 ui_print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 ui_print("");
 sleep(2);
