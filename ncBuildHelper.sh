@@ -27,6 +27,8 @@ MKZIP='7z -mx9 -mmt=1 a "$OUTFILE" .'
 THREADS=$(expr 1 + $(grep processor /proc/cpuinfo | wc -l))
 VERSION=$(date +%m-%d-%Y)
 ERROR_MSG=
+TIME_START=
+TIME_END=
 
 # define outfile path
 OUTFILE_PATH="$PWD/$TARGET-$VERSION"
@@ -56,6 +58,7 @@ SHOW_HELP()
 }
 SHOW_SETTINGS()
 {
+	TIME_START=$(date +%s)
 	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
 	echo "build version  == $KBUILD_BUILD_VERSION"
 	echo "cross compile  == $CROSS_COMPILE"
@@ -77,8 +80,10 @@ SHOW_COMPLETED()
 {
 	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
 	echo "Script completed."
+	TIME_END=$(date +%s)
+	echo "" && echo "Total time: $(($TIME_END - $TIME_START)) seconds."
 	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
-exit
+	exit
 }
 SHOW_ERROR()
 {
@@ -87,13 +92,17 @@ SHOW_ERROR()
 		echo "$ERROR_MSG"
 	fi
 }
+REMOVE_DOTCONFIG()
+{
+	rm -f Kernel/.config
+}
 MAKE_CLEAN()
 {
 	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
 	local T1=$(date +%s)
 	echo "Begin make clean..." && echo ""
 	pushd Kernel > /dev/null
-		make V=1 -j"$THREADS" ARCH=arm clean 2>&1 >make.clean.out
+		nice make V=1 -j"$THREADS" ARCH=arm clean 2>&1 >make.clean.out
 	popd > /dev/null
 	local T2=$(date +%s)
 	echo "" && echo "make clean took $(($T2 - $T1)) seconds."
@@ -106,7 +115,7 @@ MAKE_DISTCLEAN()
 	local T1=$(date +%s)
 	echo "Begin make distclean..." && echo ""
 	pushd Kernel > /dev/null
-		make V=1 -j"$THREADS" ARCH=arm distclean 2>&1 >make.distclean.out
+		nice make V=1 -j"$THREADS" ARCH=arm distclean 2>&1 >make.distclean.out
 	popd > /dev/null
 	local T2=$(date +%s)
 	echo "" && echo "make distclean took $(($T2 - $T1)) seconds."
@@ -119,7 +128,7 @@ MAKE_DEFCONFIG()
 	local T1=$(date +%s)
 	echo "Begin make ${TARGET}_defconfig..." && echo ""
 	pushd Kernel > /dev/null
-		make V=1 -j"$THREADS" ARCH=arm ${TARGET}_defconfig 2>&1 >make.defconfig.out
+		nice make V=1 -j"$THREADS" ARCH=arm ${TARGET}_defconfig 2>&1 >make.defconfig.out
 	popd > /dev/null
 	local T2=$(date +%s)
 	echo "" && echo "make ${TARGET}_defconfig took $(($T2 - $T1)) seconds."
@@ -134,9 +143,9 @@ BUILD_ZIMAGE()
 	pushd Kernel > /dev/null
 	if [ "$VERBOSE" = "y" ] ;
 		then
-			make V=1 -j"$THREADS" ARCH=arm CROSS_COMPILE="$CROSS_COMPILE" 2>&1 | tee make.out
+			nice make V=1 -j"$THREADS" ARCH=arm CROSS_COMPILE="$CROSS_COMPILE" 2>&1 | tee make.out
 		else
-			make -j"$THREADS" ARCH=arm CROSS_COMPILE="$CROSS_COMPILE" 2>&1 | tee make.out
+			nice make -j"$THREADS" ARCH=arm CROSS_COMPILE="$CROSS_COMPILE" 2>&1 | tee make.out
 	fi
 	popd > /dev/null
 	local T2=$(date +%s)
@@ -235,6 +244,9 @@ done
 
 # show current settings
 SHOW_SETTINGS
+
+# force MAKE_DEFCONFIG below
+REMOVE_DOTCONFIG
 
 if [ "$CLEAN" = "y" ] ; then
 	MAKE_CLEAN
