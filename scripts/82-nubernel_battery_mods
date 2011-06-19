@@ -1,0 +1,29 @@
+#!/system/bin/sh
+#
+# 82-nubernel_battery_mods
+#
+# 2011 nubecoder
+# http://www.nubecoder.com/
+#
+
+#default 5
+echo "5" > /sys/nubernel/chargerate/charge_rate_ac
+#default 1
+echo "3" > /sys/nubernel/chargerate/charge_rate_usb
+
+#default 20
+echo "20" > /sys/nubernel/chargecontrol/charge_full_count
+#default 91
+echo "80" > /sys/nubernel/chargecontrol/charge_full_current
+#default 4000
+echo "4210" > /sys/nubernel/chargecontrol/charge_full_voltage
+#default 20
+echo "20" > /sys/nubernel/chargecontrol/charge_recharge_count
+#default 4100
+echo "4150" > /sys/nubernel/chargecontrol/charge_recharge_voltage
+#default 4000
+echo "4030" > /sys/nubernel/chargecontrol/charge_backup_voltage
+
+#default 950
+echo "980" > /sys/nubernel/fuelgauge/fg_adj_value
+
