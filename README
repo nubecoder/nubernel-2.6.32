@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 06-19-2011:
+Enabled overclock in defconfig.
 Compilation of changes to CPU frequencies, voltages, sysfs under-volting, etc. (existz, raspdeep, Rodderik, gzub, RandyT, nemesis2all, and myself).
 
 06-15-2011:
