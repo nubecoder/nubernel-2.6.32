@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 06-19-2011:
+Changes to "cpu_thres_table" sysfs entry for safety and usability (min value of 20, max value of 95, corrected the error checking).
 Versioning related changes to branchHelper.sh and other files.
 Removed bash from update zip (should not be forced with kernel).
 Added audible notification to ncBuildHelper.sh (notify.wav).
@@ -37,6 +38,20 @@ A bit of script cleanup related to wifiFlashHelper.sh.
 Added 82-nubernel_battery_mods script (init.d script to set some battery values).
 Added 81-rm_batterrystats script (init.d script to remove /data/system/batterystats.bin on boot).
 More changes to cpufreq_info script (added governor specific info).
+Enabled overclock in defconfig.
+Compilation of changes to CPU frequencies, voltages, sysfs under-volting, etc. (existz, raspdeep, Rodderik, gzub, RandyT, nemesis2all, and myself).
+
+06-15-2011:
+Fixing a possible out of bounds related to "active_states" (ssewk2x via nemesis2all: https://github.com/nemesis2all/OTB-Reloaded/commit/136dc15d6bd7ff162135aaf1494b049ddbe08988).
+
+06-14-2011:
+Fixing up transitions states in /arch/arm/mach-s5pv210/victory/cpu-freq.c.
+Enabling 1120MHz and 1200MHz states by default.
+Formatting changes for uniformity.
+New CPU frequencies and sysfs undervolting support (multiple via Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/f47551598e22409cf32f96bf1decf65b0e8d1ce9).
+
+06-13-2011:
+Branched to 'feature-clock_rates'.
 
 06-06-2011:
 Fixing up the debugging a bit in smartass governor.
