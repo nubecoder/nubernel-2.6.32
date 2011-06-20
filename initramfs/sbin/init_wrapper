@@ -33,13 +33,6 @@ done
 chown root.system /lib/modules/*
 chown root.system /res/images/*
 
-# Enable init.d support
-if [ -d /system/etc/init.d ]
-then
-	logwrapper busybox run-parts /system/etc/init.d
-fi
-sync
-
 chmod 6755 /sbin/su
 
 if [ -f /system/bin/su ]; then
@@ -72,7 +65,7 @@ if [ ! -f "/system/etc/group" ]; then
 	chmod 0400 /system/etc/group
 fi
 
-# provide support for a shell script to protect root access
+# Superusuer.apk to protect root access
 if [ ! -f "/system/app/Superuser.apk" ]; then
 	cp /sbin/Superuser.apk /system/app/Superuser.apk
 fi
