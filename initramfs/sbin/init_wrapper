@@ -65,7 +65,7 @@ if [ ! -f "/system/etc/group" ]; then
 	chmod 0400 /system/etc/group
 fi
 
-# Superusuer.apk to protect root access
+# Superuser.apk to protect root access
 if [ ! -f "/system/app/Superuser.apk" ]; then
 	cp /sbin/Superuser.apk /system/app/Superuser.apk
 fi
