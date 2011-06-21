@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+06-21-2011:
+Fixing fix_permissions' Sha-Bang for cm-recovery.
+
 06-20-2011:
 Added DRockstar's Clockwork Mod 3.1.0.1 recovery binary, added Superuser.apk, and other changes to initramfs.
 Cleaning up whitespace a bit.
