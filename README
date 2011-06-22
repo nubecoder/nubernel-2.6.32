@@ -28,6 +28,21 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+06-21-2011:
+Fixing /sdcard mounts for DRockstar's Clockwork Mod 3.1.0.1 recovery.
+Added bash shell support in init_wrapper.
+Fixing some syntax in init_wrapper.
+Minor changes to init_wrapper.
+Added keytimer script and support (Drockstar via Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/880e45112493f3656bece0f417f1c9ec01392ffb).
+Added malware prevention patch (DroidDream) (Drockstar: https://github.com/DRockstar/Clean-Kernel-EC05/commit/19497f101712867cae24a1de6cd3f98fb88b81a4).
+Changes to init_wrapper (with proper tracking) (Drockstar: https://github.com/DRockstar/Clean-Kernel-EC05/commit/bea8fa7b503d16653fde98eb88b5a13f71d471bb#diff-8).
+Changes to init_wrapper (with proper tracking) (Tanimn: https://github.com/tanimn/Twilight_Zone_Kernel/commit/5fb5ab9ecc8e6806b91c568ae789cd08a90c8294#diff-7).
+Changes to init_wrapper in preparation of proper tracking.
+
+06-21-2011:
+Fixing a typo.
+Fixing fix_permissions' Sha-Bang for cm-recovery.
+
 06-20-2011:
 Added DRockstar's Clockwork Mod 3.1.0.1 recovery binary, added Superuser.apk, and other changes to initramfs.
 Cleaning up whitespace a bit.

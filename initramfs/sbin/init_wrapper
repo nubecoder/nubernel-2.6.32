@@ -20,60 +20,62 @@ ln -s /sbin/busybox /system/xbin/busybox
 rm -rf /res
 sync
 
-# Fix permissions in /sbin, just in case
+# Fixing permissions and ownership
 chmod 755 /sbin/*
-
-# Fix screwy ownerships
 for blip in conf default.prop fota.rc init init.goldfish.rc init.rc init.smdkc110.rc lib lpm.rc modules recovery.rc res sbin
 do
 	chown root.system /$blip
 	chown root.system /$blip/*
 done
-
 chown root.system /lib/modules/*
 chown root.system /res/images/*
 
+# Ensuring su is properly installed
 chmod 6755 /sbin/su
-
 if [ -f /system/bin/su ]; then
 	rm -f /system/bin/su
 	ln -s /sbin/su /system/bin/su
 fi
-
-if [ -x /system/xbin/su ]; then
+if [ -f /system/xbin/su ]; then
 	rm -f /system/xbin/su
 	ln -s /sbin/su /system/xbin/su
 fi
-
 if [ -f /system/bin/jk-su ]; then
 	rm -f /system/bin/jk-su
 fi
 
-# fix busybox DNS while system is read-write
-if [ ! -f "/system/etc/resolv.conf" ]; then
-	echo "nameserver 8.8.8.8" >> /system/etc/resolv.conf
-	echo "nameserver 8.8.4.4" >> /system/etc/resolv.conf
-fi
-
+# Setup proper passwd and group files for root access
 if [ ! -f "/system/etc/passwd" ]; then
 	echo "root::0:0:root:/data/local:/sbin/sh" > /system/etc/passwd
 	chmod 0400 /system/etc/passwd
 fi
-
 if [ ! -f "/system/etc/group" ]; then
 	echo "root::0:" > /system/etc/group
 	chmod 0400 /system/etc/group
 fi
 
-# Superusuer.apk to protect root access
-if [ ! -f "/system/app/Superuser.apk" ]; then
+# Ensure Superuser is installed to protect root access
+if [ ! -f "/system/app/Superuser.apk" ] && [ ! -f "/data/app/Superuser.apk" ]; then
 	cp /sbin/Superuser.apk /system/app/Superuser.apk
 fi
 rm /sbin/Superuser.apk
 
-# patch to prevent certain malware apps
+# Support bash shell
+BASH_FOUND=$(ls -l "/system/bin/sh" | grep "system/bin/bash")
+if [ ! "$BASH_FOUND" = "" ] && [ -f "/system/bin/bash" ]; then
+	rm -f /bin/sh
+	rm -f /sbin/sh
+fi
+
+# Prevent certain malware apps (DroidDream)
 . > /system/bin/profile
 chmod 644 /system/bin/profile
+
+# Fixing busybox DNS
+if [ ! -f "/system/etc/resolv.conf" ]; then
+	echo "nameserver 8.8.8.8" >> /system/etc/resolv.conf
+	echo "nameserver 8.8.4.4" >> /system/etc/resolv.conf
+fi
 
 # keyboard patch sysfs
 if [ ! -f "/data/local/timer_delay" ]; then

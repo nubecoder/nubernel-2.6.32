@@ -15,12 +15,14 @@ on init
 	mkdir /system 0775 system system
 	mkdir /tmp 1777 root root
 	mkdir /mnt 0775 root system
-	mkdir /mnt/sdcard 0775 system system
-	mkdir /mnt/sd-ext 0775 system system
+	mkdir /sdcard 0775 system system
+	mkdir /sd-ext 0775 system system
+	#mkdir /mnt/sdcard 0775 system system
+	#mkdir /mnt/sd-ext 0775 system system
 
-	symlink /res/etc /etc
-	symlink /mnt/sdcard /sdcard
-	symlink /mnt/sd-ext /sd-ext
+	#symlink /res/etc /etc
+	#symlink /mnt/sdcard /sdcard
+	#symlink /mnt/sd-ext /sd-ext
 
 	mount tmpfs nodev /tmp
 
