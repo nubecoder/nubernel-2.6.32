@@ -29,6 +29,9 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 06-21-2011:
+Changes to init_wrapper in preparation of proper tracking.
+
+06-21-2011:
 Fixing a typo.
 Fixing fix_permissions' Sha-Bang for cm-recovery.
 
