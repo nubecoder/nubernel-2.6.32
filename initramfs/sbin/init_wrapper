@@ -30,28 +30,25 @@ done
 chown root.system /lib/modules/*
 chown root.system /res/images/*
 
+# Ensuring su is properly installed
 chmod 6755 /sbin/su
-
 if [ -f /system/bin/su ]; then
 	rm -f /system/bin/su
 	ln -s /sbin/su /system/bin/su
 fi
-
-if [ -x /system/xbin/su ]; then
+if [ -f /system/xbin/su ]; then
 	rm -f /system/xbin/su
 	ln -s /sbin/su /system/xbin/su
 fi
-
 if [ -f /system/bin/jk-su ]; then
 	rm -f /system/bin/jk-su
 fi
 
-# Setup proper passwd and group files for 3rd party root access
+# Setup proper passwd and group files for root access
 if [ ! -f "/system/etc/passwd" ]; then
 	echo "root::0:0:root:/data/local:/sbin/sh" > /system/etc/passwd
 	chmod 0400 /system/etc/passwd
 fi
-
 if [ ! -f "/system/etc/group" ]; then
 	echo "root::0:" > /system/etc/group
 	chmod 0400 /system/etc/group
