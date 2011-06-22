@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 06-21-2011:
+Added bash shell support in init_wrapper.
 Fixing some syntax in init_wrapper.
 Minor changes to init_wrapper.
 Added keytimer script and support (Drockstar via Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/880e45112493f3656bece0f417f1c9ec01392ffb).

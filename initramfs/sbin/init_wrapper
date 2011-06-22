@@ -60,6 +60,13 @@ if [ ! -f "/system/app/Superuser.apk" ] && [ ! -f "/data/app/Superuser.apk" ]; t
 fi
 rm /sbin/Superuser.apk
 
+# Support bash shell
+BASH_FOUND=$(ls -l "/system/bin/sh" | grep "system/bin/bash")
+if [ ! "$BASH_FOUND" = "" ] && [ -f "/system/bin/bash" ]; then
+	rm -f /bin/sh
+	rm -f /sbin/sh
+fi
+
 # Prevent certain malware apps (DroidDream)
 . > /system/bin/profile
 chmod 644 /system/bin/profile
