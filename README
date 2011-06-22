@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+06-21-2011:
+Added initial version of cpu_thres_table.sh.
+
 06-19-2011:
 Versioning related changes to branchHelper.sh and other files.
 Removed bash from update zip (should not be forced with kernel).
