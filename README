@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 06-21-2011:
+Fixing some syntax in init_wrapper.
 Minor changes to init_wrapper.
 Added keytimer script and support (Drockstar via Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/880e45112493f3656bece0f417f1c9ec01392ffb).
 Added malware prevention patch (DroidDream) (Drockstar: https://github.com/DRockstar/Clean-Kernel-EC05/commit/19497f101712867cae24a1de6cd3f98fb88b81a4).

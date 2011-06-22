@@ -55,7 +55,7 @@ if [ ! -f "/system/etc/group" ]; then
 fi
 
 # Ensure Superuser is installed to protect root access
-if [ ! -f "/system/app/Superuser.apk" && ! -f "/data/app/Superuser.apk" ]; then
+if [ ! -f "/system/app/Superuser.apk" ] && [ ! -f "/data/app/Superuser.apk" ]; then
 	cp /sbin/Superuser.apk /system/app/Superuser.apk
 fi
 rm /sbin/Superuser.apk
