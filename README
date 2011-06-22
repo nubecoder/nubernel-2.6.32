@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 06-21-2011:
+Fixing /sdcard mounts for DRockstar's Clockwork Mod 3.1.0.1 recovery.
 Added bash shell support in init_wrapper.
 Fixing some syntax in init_wrapper.
 Minor changes to init_wrapper.
