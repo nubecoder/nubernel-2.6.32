@@ -806,36 +806,7 @@ static ssize_t show_cpu_thres_table(struct cpufreq_policy *policy, char *buf)
 {
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
 #if 0 // not using above 1.4GHz
-	return sprintf(buf, "\
-%d %d - 1600 MHz\n\
-%d %d - 1500 MHz\n\
-%d %d - 1400 MHz\n\
-%d %d - 1300 MHz\n\
-%d %d - 1200 Mhz\n\
-%d %d - 1120 MHz\n\
-%d %d - 1000 MHz\n\
-%d %d - 900 MHz\n\
-%d %d - 800 MHz\n\
-%d %d - 600 MHz\n\
-%d %d - 400 MHz\n\
-%d %d - 200 MHz\n\
-%d %d - 100 MHz\n\
-Use the format below when setting values:\n\
-%d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d\n",
-		s5pc110_thres_table_1GHZ[0][0], s5pc110_thres_table_1GHZ[0][1],
-		s5pc110_thres_table_1GHZ[1][0], s5pc110_thres_table_1GHZ[1][1],
-		s5pc110_thres_table_1GHZ[2][0], s5pc110_thres_table_1GHZ[2][1],
-		s5pc110_thres_table_1GHZ[3][0], s5pc110_thres_table_1GHZ[3][1],
-		s5pc110_thres_table_1GHZ[4][0], s5pc110_thres_table_1GHZ[4][1],
-		s5pc110_thres_table_1GHZ[5][0], s5pc110_thres_table_1GHZ[5][1],
-		s5pc110_thres_table_1GHZ[6][0], s5pc110_thres_table_1GHZ[6][1],
-		s5pc110_thres_table_1GHZ[7][0], s5pc110_thres_table_1GHZ[7][1],
-		s5pc110_thres_table_1GHZ[8][0], s5pc110_thres_table_1GHZ[8][1],
-		s5pc110_thres_table_1GHZ[9][0], s5pc110_thres_table_1GHZ[9][1],
-		s5pc110_thres_table_1GHZ[10][0], s5pc110_thres_table_1GHZ[10][1],
-		s5pc110_thres_table_1GHZ[11][0], s5pc110_thres_table_1GHZ[11][1],
-		s5pc110_thres_table_1GHZ[12][0], s5pc110_thres_table_1GHZ[12][1],
-		// duplicated for the above edit
+	return sprintf(buf, "%d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d\n",
 		s5pc110_thres_table_1GHZ[0][0], s5pc110_thres_table_1GHZ[0][1],
 		s5pc110_thres_table_1GHZ[1][0], s5pc110_thres_table_1GHZ[1][1],
 		s5pc110_thres_table_1GHZ[2][0], s5pc110_thres_table_1GHZ[2][1],
@@ -850,32 +821,7 @@ Use the format below when setting values:\n\
 		s5pc110_thres_table_1GHZ[11][0], s5pc110_thres_table_1GHZ[11][1],
 		s5pc110_thres_table_1GHZ[12][0], s5pc110_thres_table_1GHZ[12][1]);
 #else
-	return sprintf(buf, "\
-%d %d - 1400 MHz\n\
-%d %d - 1300 MHz\n\
-%d %d - 1200 Mhz\n\
-%d %d - 1120 MHz\n\
-%d %d - 1000 MHz\n\
-%d %d - 900 MHz\n\
-%d %d - 800 MHz\n\
-%d %d - 600 MHz\n\
-%d %d - 400 MHz\n\
-%d %d - 200 MHz\n\
-%d %d - 100 MHz\n\
-Use the format below when setting values:\n\
-%d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d\n",
-		s5pc110_thres_table_1GHZ[0][0], s5pc110_thres_table_1GHZ[0][1],
-		s5pc110_thres_table_1GHZ[1][0], s5pc110_thres_table_1GHZ[1][1],
-		s5pc110_thres_table_1GHZ[2][0], s5pc110_thres_table_1GHZ[2][1],
-		s5pc110_thres_table_1GHZ[3][0], s5pc110_thres_table_1GHZ[3][1],
-		s5pc110_thres_table_1GHZ[4][0], s5pc110_thres_table_1GHZ[4][1],
-		s5pc110_thres_table_1GHZ[5][0], s5pc110_thres_table_1GHZ[5][1],
-		s5pc110_thres_table_1GHZ[6][0], s5pc110_thres_table_1GHZ[6][1],
-		s5pc110_thres_table_1GHZ[7][0], s5pc110_thres_table_1GHZ[7][1],
-		s5pc110_thres_table_1GHZ[8][0], s5pc110_thres_table_1GHZ[8][1],
-		s5pc110_thres_table_1GHZ[9][0], s5pc110_thres_table_1GHZ[9][1],
-		s5pc110_thres_table_1GHZ[10][0], s5pc110_thres_table_1GHZ[10][1],
-		// duplicated for the above edit
+	return sprintf(buf, "%d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d\n",
 		s5pc110_thres_table_1GHZ[0][0], s5pc110_thres_table_1GHZ[0][1],
 		s5pc110_thres_table_1GHZ[1][0], s5pc110_thres_table_1GHZ[1][1],
 		s5pc110_thres_table_1GHZ[2][0], s5pc110_thres_table_1GHZ[2][1],
@@ -889,24 +835,7 @@ Use the format below when setting values:\n\
 		s5pc110_thres_table_1GHZ[10][0], s5pc110_thres_table_1GHZ[10][1]);
 #endif // end not using above 1.4GHz
 #else // no OC
-	return sprintf(buf, "\
-%d %d - 1000 MHz\n\
-%d %d - 900 MHz\n\
-%d %d - 800 MHz\n\
-%d %d - 600 MHz\n\
-%d %d - 400 MHz\n\
-%d %d - 200 MHz\n\
-%d %d - 100 MHz\n\
-Use the format below when setting values:\n\
-%d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d\n",
-		s5pc110_thres_table_1GHZ[0][0], s5pc110_thres_table_1GHZ[0][1],
-		s5pc110_thres_table_1GHZ[1][0], s5pc110_thres_table_1GHZ[1][1],
-		s5pc110_thres_table_1GHZ[2][0], s5pc110_thres_table_1GHZ[2][1],
-		s5pc110_thres_table_1GHZ[3][0], s5pc110_thres_table_1GHZ[3][1],
-		s5pc110_thres_table_1GHZ[4][0], s5pc110_thres_table_1GHZ[4][1],
-		s5pc110_thres_table_1GHZ[5][0], s5pc110_thres_table_1GHZ[5][1],
-		s5pc110_thres_table_1GHZ[6][0], s5pc110_thres_table_1GHZ[6][1],
-		// duplicated for the above edit
+	return sprintf(buf, "%d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d\n",
 		s5pc110_thres_table_1GHZ[0][0], s5pc110_thres_table_1GHZ[0][1],
 		s5pc110_thres_table_1GHZ[1][0], s5pc110_thres_table_1GHZ[1][1],
 		s5pc110_thres_table_1GHZ[2][0], s5pc110_thres_table_1GHZ[2][1],

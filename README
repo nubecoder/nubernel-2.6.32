@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+06-23-2011:
+Changes to "cpu_thres_table" sysfs entry, this can be handled via script.
+
 06-22-2011:
 Fixing a copy / paste fail.
 Fixing /sdcard mounts for DRockstar's Clockwork Mod 3.1.0.1 recovery.
