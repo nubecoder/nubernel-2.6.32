@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+06-23-2011:
+Changes to "cpu_thres_table" sysfs entry, this can be handled via script.
+
 06-19-2011:
 Changes to "cpu_thres_table" sysfs entry for safety and usability (min value of 20, max value of 95, corrected the error checking).
 Enabled overclock in defconfig.
