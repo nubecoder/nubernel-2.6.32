@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+06-24-2011:
+Branched to 'feature-initramfs'.
+
 06-23-2011:
 Major changes to cpu_thres_table.sh.
 Changes to "cpu_thres_table" sysfs entry, this can be handled via script.
