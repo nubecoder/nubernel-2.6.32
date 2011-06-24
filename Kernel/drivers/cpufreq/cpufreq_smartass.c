@@ -391,16 +391,16 @@ static void cpufreq_smartass_freq_change_time_work(struct work_struct *work)
 #if 1 // <--- easy on / off switch
                                 if (flag == 1) { // scale up
                                         if (new_freq < req_freq) { // if lower than requested frequency scale up again
-                                                new_freq = s5pc11x_target_frq(new_freq, flag, policy->min);
                                                 if (debug_mask & SMARTASS_DEBUG_JUMPS)
-                                                        printk(KERN_INFO "SmartassQ: Re-scale up: %dMHz < %dMHz\n", new_freq/1000, req_freq/1000);
+                                                        printk(KERN_INFO "SmartassQ: Re-scale: up: %dMHz < %dMHz\n", new_freq/1000, req_freq/1000);
+                                                new_freq = s5pc11x_target_frq(new_freq, flag, policy->min);
                                         }
                                 }
                                 else { // scale down
                                         if (new_freq > req_freq) { // if greater than requested frequency scale down again
-                                                new_freq = s5pc11x_target_frq(new_freq, flag, policy->min);
                                                 if (debug_mask & SMARTASS_DEBUG_JUMPS)
-                                                        printk(KERN_INFO "SmartassQ: Re-scale down: %dMHz > %dMHz\n", new_freq/1000, req_freq/1000);
+                                                        printk(KERN_INFO "SmartassQ: Re-scale: down: %dMHz > %dMHz\n", new_freq/1000, req_freq/1000);
+                                                new_freq = s5pc11x_target_frq(new_freq, flag, policy->min);
                                         }
                                 }
 #endif

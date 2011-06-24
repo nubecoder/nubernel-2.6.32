@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 06-24-2011:
+Fixing a debugging placement fail in smartass governor.
 Branched to 'feature-governors'.
 
 06-23-2011:
