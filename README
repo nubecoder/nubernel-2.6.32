@@ -28,7 +28,10 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
-06-21-2011:
+06-23-2011:
+Major changes to cpu_thres_table.sh.
+
+06-22-2011:
 Added initial version of cpu_thres_table.sh.
 
 06-19-2011:
