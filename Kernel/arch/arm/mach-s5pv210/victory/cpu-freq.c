@@ -578,6 +578,34 @@ s5pc11x_target_freq_index_end:
 	return index;
 } 
 
+unsigned int s5pc11x_nearest_freq(unsigned int req_freq, int flag)
+{
+	int index;
+	unsigned int hi_freq;
+	unsigned int lo_freq;
+	struct cpufreq_frequency_table *freq_tab = s5pc110_freq_table[S5PC11X_FREQ_TAB];
+
+	index = s5pc11x_target_freq_index(req_freq);
+	if (req_freq == freq_tab[index].frequency)
+	{
+		return req_freq;
+	}
+	else
+	{
+		if(flag == 1) {
+			//
+		} else {
+			//
+		}
+		hi_freq = freq_tab[index].frequency;
+		lo_freq = freq_tab[index + 1].frequency;
+		if ((hi_freq - req_freq) < (req_freq - lo_freq)) {
+			return hi_freq;
+		} else {
+			return lo_freq;
+		}
+	}
+}
 
 int s5pc110_pm_target(unsigned int target_freq)
 {

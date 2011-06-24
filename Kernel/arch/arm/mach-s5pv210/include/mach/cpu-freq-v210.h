@@ -71,6 +71,7 @@ extern unsigned int s5pc11x_cpufreq_index;
 extern unsigned int S5PC11X_FREQ_TAB;
 extern unsigned int S5PC11X_MAXFREQLEVEL;
 
+extern unsigned int s5pc11x_nearest_freq(unsigned int req_freq, int flag);
 extern unsigned int s5pc11x_target_frq(unsigned int pred_freq, int flag, unsigned int policy_min);
 extern int s5pc110_pm_target(unsigned int target_freq);
 extern int is_conservative_gov(void);
