@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 06-24-2011:
+Changes to init_wrapper (more agressive su instalation).
 Branched to 'feature-initramfs'.
 
 06-23-2011:
