@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 06-27-2011:
+Applied changes for smartass governor to defconfig (matching default scaling rates, up min of 900MHz, and disable debugging).
 Changes to default scaling rates of smartass governor (matching Conservative and Ondemand's sample rate).
 
 06-24-2011:
