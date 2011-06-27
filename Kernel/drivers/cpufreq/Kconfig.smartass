@@ -59,14 +59,14 @@ config SMARTASS_DEFAULT_MIN_CPU_LOAD
 
 config SMARTASS_DEFAULT_UP_RATE_US
 	int "Default up rate in us"
-	default 24000
+	default 80000
 	depends on CPU_FREQ_GOV_SMARTASS
 	help
 	  The minimum amount of time to spend at a frequency before we can ramp up.
 
 config SMARTASS_DEFAULT_DOWN_RATE_US
 	int "Default down rate in us"
-	default 49000
+	default 80000
 	depends on CPU_FREQ_GOV_SMARTASS
 	help
 	  The minimum amount of time to spend at a frequency before we can ramp down.

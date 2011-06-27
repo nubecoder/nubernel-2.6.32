@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+06-27-2011:
+Changes to default scaling rates of smartass governor (matching Conservative and Ondemand's sample rate).
+
 06-24-2011:
 Added initial s5pc11x_nearest_freq function for testing.
 Fixing a debugging placement fail in smartass governor.
