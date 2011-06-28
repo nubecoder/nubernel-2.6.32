@@ -138,7 +138,7 @@ static void early_suspend(struct work_struct *work)
 	if (has_audio_wake_lock()) {
 		printk("******************* Enter LP-Audio mode\n");
 #ifdef CONFIG_CPU_FREQ
-	if(is_conservative_gov()) {
+	if(!is_userspace_gov()) {
 		/*Fix the upper transition scaling*/
 		g_dvfs_fix_lock_limit = true;
 		s5pc110_lock_dvfs_high_level(DVFS_LOCK_TOKEN_5, LEV_800MHZ);
