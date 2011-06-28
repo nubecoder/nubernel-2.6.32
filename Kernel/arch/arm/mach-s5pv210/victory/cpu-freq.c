@@ -514,14 +514,18 @@ unsigned int s5pc11x_target_frq(unsigned int pred_freq,
 	if (g_dvfs_high_lock_token) {
 		if(g_dvfs_fix_lock_limit == true) {
 #ifdef CONFIG_NC_DEBUG
-			printk(KERN_INFO "PM:DVFS: fix: true, index: %d, dvfs_high_lock: %d, freq: %dMHz\n", index, g_dvfs_high_lock_limit, freq_tab[index].frequency/1000);
+			printk(KERN_INFO "PM:DVFS: fix: true, index: %d, dvfs_high_lock: %d\n", index, g_dvfs_high_lock_limit);
+			printk(KERN_INFO "PM:DVFS: index freq: %dMHz, lock freq: %dMHz\n",
+				freq_tab[index].frequency/1000, freq_tab[g_dvfs_high_lock_limit].frequency/1000);
 #endif
 			index = g_dvfs_high_lock_limit;// use the same level
 		}
 		else {
 			if (index > g_dvfs_high_lock_limit) {
 #ifdef CONFIG_NC_DEBUG
-				printk(KERN_INFO "PM:DVFS: index: %d > dvfs_high_lock: %d, freq: %dMHz\n", index, g_dvfs_high_lock_limit, freq_tab[index].frequency/1000);
+				printk(KERN_INFO "PM:DVFS: index: %d > dvfs_high_lock: %d\n", index, g_dvfs_high_lock_limit);
+				printk(KERN_INFO "PM:DVFS: index freq: %dMHz, lock freq: %dMHz\n",
+					freq_tab[index].frequency/1000, freq_tab[g_dvfs_high_lock_limit].frequency/1000);
 #endif
 				index = g_dvfs_high_lock_limit;
 			}
@@ -610,6 +614,9 @@ unsigned int s5pc11x_nearest_freq(unsigned int req_freq, int flag)
 	index = s5pc11x_target_freq_index(req_freq);
 	if (req_freq == freq_tab[index].frequency)
 	{
+#ifdef CONFIG_NC_DEBUG
+		printk(KERN_INFO "PM:GOV:NC: match: %dMHz\n", req_freq/1000);
+#endif
 		ret = req_freq;
 	}
 	else
@@ -619,18 +626,52 @@ unsigned int s5pc11x_nearest_freq(unsigned int req_freq, int flag)
 		hi_diff = hi_freq - req_freq;
 		lo_diff = req_freq - lo_freq;
 
+#ifdef CONFIG_NC_DEBUG
+		printk(KERN_INFO "PM:GOV:NC: req: %dMHz| lo: %dMHz| hi: %dMhz\n", req_freq/1000, lo_freq/1000, hi_freq/1000);
+#endif
+
 		if (hi_diff < lo_diff) {
 			ret = hi_freq;
+#ifdef CONFIG_NC_DEBUG
+			printk(KERN_INFO "PM:GOV:NC: ret hi: %dMHz", ret/1000);
+#endif
 		} else if (hi_diff == lo_diff) {
 			if(flag == 1) { // scale up
 				ret = hi_freq;
+#ifdef CONFIG_NC_DEBUG
+				printk(KERN_INFO "PM:GOV:NC: ret hi: %dMHz", ret/1000);
+#endif
 			} else { // scale down
 				ret = lo_freq;
+#ifdef CONFIG_NC_DEBUG
+				printk(KERN_INFO "PM:GOV:NC: ret lo: %dMHz", ret/1000);
+#endif
 			}
 		} else {
 			ret = lo_freq;
+#ifdef CONFIG_NC_DEBUG
+			printk(KERN_INFO "PM:GOV:NC: ret lo: %dMHz", ret/1000);
+#endif
 		}
 	}
+#ifdef CONFIG_NC_DEBUG
+	if (g_dvfs_high_lock_token) {
+		if(g_dvfs_fix_lock_limit == true) {
+			printk(KERN_INFO "PM:DVFS:NC: fix: true, index: %d, dvfs_high_lock: %d\n", index, g_dvfs_high_lock_limit);
+			printk(KERN_INFO "PM:DVFS:NC: index freq: %dMHz, lock freq: %dMHz\n",
+				freq_tab[index].frequency/1000, freq_tab[g_dvfs_high_lock_limit].frequency/1000);
+			//index = g_dvfs_high_lock_limit;// use the same level
+		} else {
+			if (index > g_dvfs_high_lock_limit) {
+				printk(KERN_INFO "PM:DVFS:NC: index: %d > dvfs_high_lock: %d\n", index, g_dvfs_high_lock_limit);
+				printk(KERN_INFO "PM:DVFS:NC: index freq: %dMHz, lock freq: %dMHz\n",
+					freq_tab[index].frequency/1000, freq_tab[g_dvfs_high_lock_limit].frequency/1000);
+				//index = g_dvfs_high_lock_limit;
+			}
+		}
+	}
+	printk(KERN_INFO "PM:GOV:NC: ret: %dMHz", ret/1000);
+#endif
 	return ret;
 }
 
