@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 06-27-2011:
+More debugging fixes and clean up.
 Allow earlysuspend and suspend to set a fixed DVFS lock to 800MHz for the rest of the governors (not just conservative).
 Added an easy on / off switch related to previous load checking in smartass governor.
 Squashing a bug in smartass governor, we should always scale up if cpu load is above threshold, even if force_ramp_up isn't set.

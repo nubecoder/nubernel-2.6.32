@@ -217,7 +217,7 @@ static void cpufreq_smartass_timer(unsigned long data)
 
         delta_idle = cputime64_sub(now_idle, this_smartass->time_in_idle);
         delta_time = cputime64_sub(update_time, this_smartass->idle_exit_time);
-        //printk(KERN_INFO "smartassT: t=%llu i=%llu\n",cputime64_sub(update_time,this_smartass->idle_exit_time),delta_idle);
+        //printk(KERN_INFO "SmartassT: t=%llu i=%llu\n",cputime64_sub(update_time,this_smartass->idle_exit_time),delta_idle);
 
         // If timer ran less than 1ms after short-term sample started, retry.
         if (delta_time < 1000) {
@@ -346,7 +346,7 @@ static void cpufreq_smartass_freq_change_time_work(struct work_struct *work)
                                 new_freq = policy->cur + ramp_up_step;
                                 relation = CPUFREQ_RELATION_H;
                                 if (debug_mask & SMARTASS_DEBUG_JUMPS)
-                                        printk(KERN_INFO "SmartassQ: up %dMHz -> %dMhz\n", policy->cur/1000, new_freq/1000);
+                                        printk(KERN_INFO "SmartassQ: up %dMHz -> %dMHz\n", policy->cur/1000, new_freq/1000);
                         } else {
                                 new_freq = this_smartass->max_speed;
                                 relation = CPUFREQ_RELATION_H;
@@ -367,14 +367,14 @@ static void cpufreq_smartass_freq_change_time_work(struct work_struct *work)
                         if (ramp_down_step) {
                                 new_freq = policy->cur - ramp_down_step;
                                 if (debug_mask & SMARTASS_DEBUG_JUMPS)
-                                        printk(KERN_INFO "SmartassQ: down %dMHz -> %dMhz\n", policy->cur/1000, new_freq/1000);
+                                        printk(KERN_INFO "SmartassQ: down %dMHz -> %dMHz\n", policy->cur/1000, new_freq/1000);
 
                         }
                         else {
                                 cpu_load += 100 - max_cpu_load; // dummy load.
                                 new_freq = policy->cur * cpu_load / 100;
                                 if (debug_mask & SMARTASS_DEBUG_JUMPS)
-                                        printk(KERN_INFO "SmartassQ: Auto down %dMHz -> %dMhz\n", policy->cur/1000, new_freq/1000);
+                                        printk(KERN_INFO "SmartassQ: Auto down %dMHz -> %dMHz\n", policy->cur/1000, new_freq/1000);
                         }
                         relation = CPUFREQ_RELATION_L;
                 }

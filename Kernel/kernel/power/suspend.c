@@ -310,7 +310,7 @@ int enter_state(suspend_state_t state)
 #endif
 #endif
 
-	printk(KERN_INFO "PM: Syncing filesystems ... ");
+	printk(KERN_INFO "PM: Syncing filesystems ... \n");
 	sys_sync();
 	printk(KERN_INFO "PM: Syncing filesystems done.\n");
 

@@ -496,7 +496,7 @@ unsigned int s5pc11x_target_frq(unsigned int pred_freq,
 	}
 
 	if((flag != 1)&&(flag != -1)) {
-		printk("s5pc1xx_target_frq: flag error!!!!!!!!!!!!!");
+		printk("s5pc1xx_target_frq: flag error!!!!!!!!!!!!!\n");
 	}
 
 	index = s5pc11x_cpufreq_index;
@@ -633,24 +633,24 @@ unsigned int s5pc11x_nearest_freq(unsigned int req_freq, int flag)
 		if (hi_diff < lo_diff) {
 			ret = hi_freq;
 #ifdef CONFIG_NC_DEBUG
-			printk(KERN_INFO "PM:GOV:NC: ret hi: %dMHz", ret/1000);
+			printk(KERN_INFO "PM:GOV:NC: ret hi: %dMHz\n", ret/1000);
 #endif
 		} else if (hi_diff == lo_diff) {
 			if(flag == 1) { // scale up
 				ret = hi_freq;
 #ifdef CONFIG_NC_DEBUG
-				printk(KERN_INFO "PM:GOV:NC: ret hi: %dMHz", ret/1000);
+				printk(KERN_INFO "PM:GOV:NC: ret hi: %dMHz\n", ret/1000);
 #endif
 			} else { // scale down
 				ret = lo_freq;
 #ifdef CONFIG_NC_DEBUG
-				printk(KERN_INFO "PM:GOV:NC: ret lo: %dMHz", ret/1000);
+				printk(KERN_INFO "PM:GOV:NC: ret lo: %dMHz\n", ret/1000);
 #endif
 			}
 		} else {
 			ret = lo_freq;
 #ifdef CONFIG_NC_DEBUG
-			printk(KERN_INFO "PM:GOV:NC: ret lo: %dMHz", ret/1000);
+			printk(KERN_INFO "PM:GOV:NC: ret lo: %dMHz\n", ret/1000);
 #endif
 		}
 	}
@@ -670,7 +670,7 @@ unsigned int s5pc11x_nearest_freq(unsigned int req_freq, int flag)
 			}
 		}
 	}
-	printk(KERN_INFO "PM:GOV:NC: ret: %dMHz", ret/1000);
+	printk(KERN_INFO "PM:GOV:NC: ret: %dMHz\n", ret/1000);
 #endif
 	return ret;
 }
@@ -1047,7 +1047,7 @@ static int __init s5pc110_cpu_init(struct cpufreq_policy *policy)
 	g_dvfs_high_lock_limit = 6;
 #endif // end CONFIG_MACH_S5PC110_ARIES_OC
 	
-	printk("S5PC11X_FREQ_TAB=%d , S5PC11X_MAXFREQLEVEL=%d\n",S5PC11X_FREQ_TAB,S5PC11X_MAXFREQLEVEL);
+	printk("S5PC11X_FREQ_TAB=%d, S5PC11X_MAXFREQLEVEL=%d\n",S5PC11X_FREQ_TAB,S5PC11X_MAXFREQLEVEL);
 
 	s5pc11x_cpufreq_level = S5PC11X_MAXFREQLEVEL;
 	//spin_unlock_irqrestore(&g_cpufreq_lock, irqflags);
