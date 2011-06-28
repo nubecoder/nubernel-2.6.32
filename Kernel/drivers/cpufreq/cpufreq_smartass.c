@@ -235,11 +235,13 @@ static void cpufreq_smartass_timer(unsigned long data)
                 printk(KERN_INFO "SmartassT @ %dMHz: load %d (delta_time %llu), load_since_change %d\n",
                        policy->cur/1000,cpu_load,delta_time,load_since_change);
 
+#if 1
         // Choose greater of short-term load (since last idle timer
         // started or timer function re-armed itself) or long-term load
         // (since last frequency change).
         if (load_since_change > cpu_load)
                 cpu_load = load_since_change;
+#endif
 
         this_smartass->cur_cpu_load = cpu_load;
 
