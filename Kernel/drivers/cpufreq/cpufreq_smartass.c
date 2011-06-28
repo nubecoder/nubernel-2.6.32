@@ -336,7 +336,7 @@ static void cpufreq_smartass_freq_change_time_work(struct work_struct *work)
                 force_ramp_up = this_smartass->force_ramp_up && nr_running() > 1;
                 this_smartass->force_ramp_up = 0;
 
-                if (force_ramp_up || cpu_load > max_cpu_load) {
+                if (force_ramp_up | (cpu_load > max_cpu_load)) {
 #ifdef CONFIG_CPU_S5PV210
                         flag = 1; // scale up
 #endif
