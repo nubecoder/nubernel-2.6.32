@@ -600,30 +600,38 @@ s5pc11x_target_freq_index_end:
 unsigned int s5pc11x_nearest_freq(unsigned int req_freq, int flag)
 {
 	int index;
+	unsigned int ret;
 	unsigned int hi_freq;
 	unsigned int lo_freq;
+	int hi_diff;
+	int lo_diff;
 	struct cpufreq_frequency_table *freq_tab = s5pc110_freq_table[S5PC11X_FREQ_TAB];
 
 	index = s5pc11x_target_freq_index(req_freq);
 	if (req_freq == freq_tab[index].frequency)
 	{
-		return req_freq;
+		ret = req_freq;
 	}
 	else
 	{
-		if(flag == 1) {
-			//
-		} else {
-			//
-		}
 		hi_freq = freq_tab[index].frequency;
 		lo_freq = freq_tab[index + 1].frequency;
-		if ((hi_freq - req_freq) < (req_freq - lo_freq)) {
-			return hi_freq;
+		hi_diff = hi_freq - req_freq;
+		lo_diff = req_freq - lo_freq;
+
+		if (hi_diff < lo_diff) {
+			ret = hi_freq;
+		} else if (hi_diff == lo_diff) {
+			if(flag == 1) { // scale up
+				ret = hi_freq;
+			} else { // scale down
+				ret = lo_freq;
+			}
 		} else {
-			return lo_freq;
+			ret = lo_freq;
 		}
 	}
+	return ret;
 }
 
 int s5pc110_pm_target(unsigned int target_freq)
