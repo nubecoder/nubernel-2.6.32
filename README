@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 06-27-2011:
+Some aditions and cleanup for debugging DVFS (DFVS lock @ 800MHz during suspend, etc).
 Initial testing of s5pc11x_nearest_freq function in smartass governor.
 Applied changes for smartass governor to defconfig (matching default scaling rates, up min of 900MHz, and disable debugging).
 Changes to default scaling rates of smartass governor (matching Conservative and Ondemand's sample rate).

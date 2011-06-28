@@ -402,9 +402,12 @@ void s5pc110_lock_dvfs_high_level(unsigned int nToken, enum freq_level_states fr
 	if(ret)
 		return;
 	nLevel = perf_level;
+#ifdef CONFIG_NC_DEBUG
+	printk(KERN_INFO "PM:DVFS: lock with token: %d, level: %d\n", nToken, nLevel);
+#endif
 	if (nToken == DVFS_LOCK_TOKEN_6 ) nLevel--; // token for launcher , this can use 1GHz
 	// check lock corruption
-	if (g_dvfs_high_lock_token & (1 << nToken) ) printk ("\n\n[DVFSLOCK] lock token %d is already used!\n\n", nToken);
+	if (g_dvfs_high_lock_token & (1 << nToken)) printk ("PM:DVFS: [DVFSLOCK] lock token %d is already used!\n", nToken);
 	//mutex_lock(&dvfs_high_lock);
 	g_dvfs_high_lock_token |= (1 << nToken);
 	g_dvfslockval[nToken] = nLevel;
@@ -418,6 +421,9 @@ EXPORT_SYMBOL(s5pc110_lock_dvfs_high_level);
 void s5pc110_unlock_dvfs_high_level(unsigned int nToken) 
 {
 	unsigned int i;
+#ifdef CONFIG_NC_DEBUG
+	printk(KERN_INFO "PM:DVFS: unlock with token %d\n", nToken);
+#endif
 	//printk("dvfs unlock with token %d\n",nToken);
 	//mutex_lock(&dvfs_high_lock);
 	g_dvfs_high_lock_token &= ~(1 << nToken);
@@ -507,11 +513,18 @@ unsigned int s5pc11x_target_frq(unsigned int pred_freq,
 
 	if (g_dvfs_high_lock_token) {
 		if(g_dvfs_fix_lock_limit == true) {
+#ifdef CONFIG_NC_DEBUG
+			printk(KERN_INFO "PM:DVFS: fix: true, index: %d, dvfs_high_lock: %d, freq: %dMHz\n", index, g_dvfs_high_lock_limit, freq_tab[index].frequency/1000);
+#endif
 			index = g_dvfs_high_lock_limit;// use the same level
 		}
 		else {
-			if (index > g_dvfs_high_lock_limit)
+			if (index > g_dvfs_high_lock_limit) {
+#ifdef CONFIG_NC_DEBUG
+				printk(KERN_INFO "PM:DVFS: index: %d > dvfs_high_lock: %d, freq: %dMHz\n", index, g_dvfs_high_lock_limit, freq_tab[index].frequency/1000);
+#endif
 				index = g_dvfs_high_lock_limit;
+			}
 		}
 	}
 	//printk("s5pc11x_target_frq index = %d\n",index);
@@ -526,9 +539,15 @@ s5pc11x_target_frq_end:
 	freq = freq_tab[index].frequency;
 	spin_unlock(&g_dvfslock);
 	if (freq > policy_min) {
+#ifdef CONFIG_NC_DEBUG
+		printk(KERN_INFO "PM:FREQ: ret freq: %dMHz\n", freq/1000);
+#endif
 		return freq;
 	}
 	else {
+#ifdef CONFIG_NC_DEBUG
+		printk(KERN_INFO "PM:FREQ: ret min: %dMHz, freq: %dMHz\n", policy_min/1000, freq/1000);
+#endif
 		return policy_min;
 	}
 }
