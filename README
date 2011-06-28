@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+06-28-2011:
+Lowering the fixed DVFS lock in earlysuspend and suspend to 600MHz.
+
 06-27-2011:
 More debugging fixes and clean up.
 Allow earlysuspend and suspend to set a fixed DVFS lock to 800MHz for the rest of the governors (not just conservative).

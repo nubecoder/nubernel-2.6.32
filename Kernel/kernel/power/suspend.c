@@ -291,7 +291,7 @@ int enter_state(suspend_state_t state)
 	} else {
 		/*Fix the upper transition scaling*/
 		g_dvfs_fix_lock_limit = true;
-		s5pc110_lock_dvfs_high_level(DVFS_LOCK_TOKEN_7, LEV_800MHZ);
+		s5pc110_lock_dvfs_high_level(DVFS_LOCK_TOKEN_7, LEV_600MHZ);
 		gbClockFix = true;
 
 		error = cpufreq_get_policy(&policy, 0);
@@ -301,7 +301,7 @@ int enter_state(suspend_state_t state)
 			goto Unlock;
 		}
 
-		cpufreq_driver_target(&policy, 800000, CPUFREQ_RELATION_L);
+		cpufreq_driver_target(&policy, 600000, CPUFREQ_RELATION_L);
 	}
 	
 #else
