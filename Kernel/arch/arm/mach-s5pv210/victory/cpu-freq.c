@@ -604,80 +604,6 @@ s5pc11x_target_freq_index_end:
 	return index;
 } 
 
-unsigned int s5pc11x_nearest_freq(unsigned int req_freq, int flag)
-{
-	int index;
-	unsigned int ret;
-	unsigned int hi_freq;
-	unsigned int lo_freq;
-	int hi_diff;
-	int lo_diff;
-	struct cpufreq_frequency_table *freq_tab = s5pc110_freq_table[S5PC11X_FREQ_TAB];
-
-	index = s5pc11x_target_freq_index(req_freq);
-	if (req_freq == freq_tab[index].frequency)
-	{
-#ifdef CONFIG_NC_DEBUG
-		printk(KERN_INFO "PM:GOV:NC: match: %dMHz\n", req_freq/1000);
-#endif
-		ret = req_freq;
-	}
-	else
-	{
-		hi_freq = freq_tab[index].frequency;
-		lo_freq = freq_tab[index + 1].frequency;
-		hi_diff = hi_freq - req_freq;
-		lo_diff = req_freq - lo_freq;
-
-#ifdef CONFIG_NC_DEBUG
-		printk(KERN_INFO "PM:GOV:NC: req: %dMHz| lo: %dMHz| hi: %dMhz\n", req_freq/1000, lo_freq/1000, hi_freq/1000);
-#endif
-
-		if (hi_diff < lo_diff) {
-			ret = hi_freq;
-#ifdef CONFIG_NC_DEBUG
-			printk(KERN_INFO "PM:GOV:NC: ret hi: %dMHz\n", ret/1000);
-#endif
-		} else if (hi_diff == lo_diff) {
-			if(flag == 1) { // scale up
-				ret = hi_freq;
-#ifdef CONFIG_NC_DEBUG
-				printk(KERN_INFO "PM:GOV:NC: ret hi: %dMHz\n", ret/1000);
-#endif
-			} else { // scale down
-				ret = lo_freq;
-#ifdef CONFIG_NC_DEBUG
-				printk(KERN_INFO "PM:GOV:NC: ret lo: %dMHz\n", ret/1000);
-#endif
-			}
-		} else {
-			ret = lo_freq;
-#ifdef CONFIG_NC_DEBUG
-			printk(KERN_INFO "PM:GOV:NC: ret lo: %dMHz\n", ret/1000);
-#endif
-		}
-	}
-#ifdef CONFIG_NC_DEBUG
-	if (g_dvfs_high_lock_token) {
-		if(g_dvfs_fix_lock_limit == true) {
-			printk(KERN_INFO "PM:DVFS:NC: fix: true, index: %d, dvfs_high_lock: %d\n", index, g_dvfs_high_lock_limit);
-			printk(KERN_INFO "PM:DVFS:NC: index freq: %dMHz, lock freq: %dMHz\n",
-				freq_tab[index].frequency/1000, freq_tab[g_dvfs_high_lock_limit].frequency/1000);
-			//index = g_dvfs_high_lock_limit;// use the same level
-		} else {
-			if (index > g_dvfs_high_lock_limit) {
-				printk(KERN_INFO "PM:DVFS:NC: index: %d > dvfs_high_lock: %d\n", index, g_dvfs_high_lock_limit);
-				printk(KERN_INFO "PM:DVFS:NC: index freq: %dMHz, lock freq: %dMHz\n",
-					freq_tab[index].frequency/1000, freq_tab[g_dvfs_high_lock_limit].frequency/1000);
-				//index = g_dvfs_high_lock_limit;
-			}
-		}
-	}
-	printk(KERN_INFO "PM:GOV:NC: ret: %dMHz\n", ret/1000);
-#endif
-	return ret;
-}
-
 int s5pc110_pm_target(unsigned int target_freq)
 {
 	int ret = 0;
@@ -762,6 +688,190 @@ unsigned int s5pc110_getspeed(unsigned int cpu)
 	return rate;
 }
 
+unsigned int s5pc11x_nearest_avail_index(struct cpufreq_policy *policy, unsigned int target_freq, unsigned int relation)
+{
+	unsigned int ret_index = 0;
+	unsigned int hi_index = 0;
+	unsigned int lo_index = 0;
+	unsigned int max_index = 0;
+	unsigned int min_index = 0;
+	int hi_diff;
+	int lo_diff;
+	struct cpufreq_frequency_table *freq_tab = s5pc110_freq_table[S5PC11X_FREQ_TAB];
+
+	// Find the 1st freq lower than or equal to target_freq
+	while((target_freq < freq_tab[hi_index].frequency) && (freq_tab[hi_index].frequency != CPUFREQ_TABLE_END)) {
+		hi_index++;
+	}
+	if (hi_index != 0) {
+		/*
+			If we don't have an exact match, or the current index is not an active state, or we are at CPUFREQ_TABLE_END.
+			Then we need to increase the freq and check for the next available active state
+		*/
+		if((target_freq != freq_tab[hi_index].frequency) | (active_states[hi_index] == 0) | (freq_tab[hi_index].frequency == CPUFREQ_TABLE_END)) {
+			hi_index--;
+			while((hi_index > 0) && (active_states[hi_index] == 0)) {
+				hi_index--;
+			}
+		}
+	}
+	// index == 0
+	else {
+		// if hi_index == 0, find highest available freq
+		while((freq_tab[hi_index].frequency != CPUFREQ_TABLE_END) && active_states[hi_index] == 0) {
+			hi_index++;
+		}
+		// if we hit the end of the table, force the lowest freq
+		if (freq_tab[hi_index].frequency == CPUFREQ_TABLE_END) {
+			hi_index--;
+		}
+	}
+	// if hi_index is an exact match, use it
+	if (target_freq == freq_tab[hi_index].frequency) {
+		ret_index = hi_index;
+#ifdef CONFIG_NC_DEBUG
+		printk(KERN_INFO "FREQ:NC: target match: %dMHz \n", freq_tab[ret_index].frequency/1000);
+#endif
+	}
+	// not an exact match
+	else {
+		lo_index = hi_index+1;
+		// if lo_index puts us at CPUFREQ_TABLE_END, use hi_index
+		if (freq_tab[lo_index].frequency == CPUFREQ_TABLE_END) {
+			ret_index = hi_index;
+		} else {
+			// find next available lower freq
+			while((freq_tab[lo_index].frequency != CPUFREQ_TABLE_END) && active_states[lo_index] == 0) {
+				lo_index++;
+			}
+			// if we hit the end of the table, force the lowest freq
+			if (freq_tab[lo_index].frequency == CPUFREQ_TABLE_END) {
+				lo_index--;
+			}
+#ifdef CONFIG_NC_DEBUG
+			printk(KERN_INFO "FREQ:NC: target: %dMHz| lo: %dMHz| hi: %dMHz \n",
+				target_freq/1000, freq_tab[lo_index].frequency/1000, freq_tab[hi_index].frequency/1000);
+#endif
+			// calculate difference
+			hi_diff = freq_tab[hi_index].frequency - target_freq;
+			lo_diff = target_freq - freq_tab[lo_index].frequency;
+			// if hi_diff < lo_diff, hi_index is nearest
+			if (hi_diff < lo_diff) {
+				ret_index = hi_index;
+#ifdef CONFIG_NC_DEBUG
+				printk(KERN_INFO "FREQ:NC: ret hi_index: %d, freq: %dMHz \n", ret_index, freq_tab[ret_index].frequency/1000);
+#endif
+			}
+			// if hi_diff == lo_diff, use the scaling relation
+			else if (hi_diff == lo_diff) {
+				// flag == 1,  scale up
+				// relation == CPUFREQ_RELATION_L, Lowest freq at or above, scale up
+				if(relation == CPUFREQ_RELATION_L) {
+					ret_index = hi_index;
+#ifdef CONFIG_NC_DEBUG
+					printk(KERN_INFO "FREQ:NC: RELATION_L, freq: %dMHz \n", freq_tab[ret_index].frequency/1000);
+#endif
+				}
+				// flag != 1, scale down
+				// relation == CPUFREQ_RELATION_H, Highest freq at or below, scale down
+				else {
+					ret_index = lo_index;
+#ifdef CONFIG_NC_DEBUG
+					printk(KERN_INFO "FREQ:NC: RELATION_H, freq: %dMHz \n", freq_tab[ret_index].frequency/1000);
+#endif
+				}
+			}
+			// if hi_diff != lo_diff, and !(hi_diff < lo_diff), lo_index is nearest
+			else {
+				ret_index = lo_index;
+#ifdef CONFIG_NC_DEBUG
+				printk(KERN_INFO "FREQ:NC: ret lo_index: %d, freq: %dMHz \n", ret_index, freq_tab[ret_index].frequency/1000);
+#endif
+			}
+		}
+	}
+	// if we have a lock
+	if (g_dvfs_high_lock_token) {
+		// if fixed lock == true, use fixed lock freq
+		if(g_dvfs_fix_lock_limit == true) {
+			ret_index = g_dvfs_high_lock_limit;
+#ifdef CONFIG_NC_DEBUG
+			printk(KERN_INFO "PM:DVFS:NC: fixed lock: %dMHz \n", freq_tab[ret_index].frequency/1000);
+#endif
+		} else {
+			// if freq < lock freq (freq_index > lock_index), use lock freq
+			if (ret_index > g_dvfs_high_lock_limit) {
+				ret_index = g_dvfs_high_lock_limit;
+#ifdef CONFIG_NC_DEBUG
+				printk(KERN_INFO "PM:DVFS:NC: lock: %dMHz \n", freq_tab[ret_index].frequency/1000);
+#endif
+			}
+		}
+	}
+	//we do not have a lock
+	else {
+		// if freq > policy max, find and use policy max
+		if (freq_tab[ret_index].frequency > policy->max) {
+			// Find the 1st freq equal to policy max
+			while(freq_tab[max_index].frequency != CPUFREQ_TABLE_END) {
+				if (policy->max == freq_tab[max_index].frequency) {
+#ifdef CONFIG_NC_DEBUG
+					printk(KERN_INFO "FREQ:NC: found max_index: %d, freq: %dMHz \n", max_index, freq_tab[max_index].frequency/1000);
+#endif
+					break;
+				} else {
+					max_index++;
+				}
+			}
+			if(freq_tab[max_index].frequency == CPUFREQ_TABLE_END) {
+#ifdef CONFIG_NC_DEBUG
+				printk(KERN_INFO "FREQ:NC: max_index == CPUFREQ_TABLE_END \n");
+#endif
+				max_index--;
+			}
+#ifdef CONFIG_NC_DEBUG
+			printk(KERN_INFO "FREQ:NC: ret max_index: %d, freq: %dMHz \n", max_index, freq_tab[max_index].frequency/1000);
+#endif
+			ret_index = max_index;
+		}
+		// if freq < policy min, find and use policy min
+		if (freq_tab[ret_index].frequency < policy->min) {
+			// Find the 1st freq equal to policy min
+			while(freq_tab[min_index].frequency != CPUFREQ_TABLE_END) {
+				if (policy->min == freq_tab[min_index].frequency) {
+#ifdef CONFIG_NC_DEBUG
+					printk(KERN_INFO "FREQ:NC: found min_index: %d, freq: %dMHz \n", min_index, freq_tab[min_index].frequency/1000);
+#endif
+					break;
+				} else {
+					min_index++;
+				}
+			}
+			// if min_index = TABLE END
+			if(freq_tab[min_index].frequency == CPUFREQ_TABLE_END) {
+#ifdef CONFIG_NC_DEBUG
+				printk(KERN_INFO "FREQ:NC: min_index == CPUFREQ_TABLE_END \n");
+#endif
+				min_index--;
+			}
+#ifdef CONFIG_NC_DEBUG
+			printk(KERN_INFO "FREQ:NC: ret min_index: %d, freq: %dMHz \n", min_index, freq_tab[min_index].frequency/1000);
+#endif
+			ret_index = min_index;
+		}
+	}
+#if 1
+	spin_lock(&g_dvfslock);
+	s5pc11x_cpufreq_index = ret_index;
+	spin_unlock(&g_dvfslock);
+#endif
+	// return nearest index
+#ifdef CONFIG_NC_DEBUG
+	printk(KERN_INFO "FREQ:NC: ret ret_index: %d, freq: %dMHz \n", ret_index, freq_tab[ret_index].frequency/1000);
+#endif
+	return ret_index;
+}
+
 extern void print_clocks(void);
 extern void dvs_set_for_1dot2Ghz (int onoff);
 extern bool gbTransitionLogEnable;
@@ -791,7 +901,11 @@ static int s5pc110_target(struct cpufreq_policy *policy,
 		}
 	}
 
+#ifdef CONFIG_CPU_S5PV210
+	index = s5pc11x_nearest_avail_index(policy, target_freq, relation);
+#else
 	index = s5pc11x_target_freq_index(target_freq);
+#endif
 	if(index == INDX_ERROR) {
 		printk("s5pc110_target: INDX_ERROR \n");
 		return -EINVAL;
