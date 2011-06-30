@@ -588,6 +588,9 @@ int s5pc11x_target_freq_index(unsigned int freq)
 
 	if(index > 0) {
 		if(freq != freq_tab[index].frequency) {
+#ifdef CONFIG_NC_DEBUG
+			printk(KERN_INFO "PM: freq: %dMHz != freq_tab[index]: %dMHz \n", freq/1000, freq_tab[index].frequency/1000);
+#endif
 			index--;
 		}
 	}
