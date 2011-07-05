@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+07-11-2011:
+Added dual boot (boot from sdcard) support (Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/a5dfd9f369ae4f2c90c1e7fc7d8995f88f72bd01).
+
 06-24-2011:
 Changes to init_wrapper (more agressive su instalation).
 Branched to 'feature-initramfs'.
