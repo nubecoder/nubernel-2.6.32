@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-05-2011:
+Reverting changes to ondemand governor (commit ID's: bc8e028c, b153d55c).
 Manual removal of older changes to smartass governor (transition states, s5pc11x_nearest_freq, etc).
 Removed s5pc11x_nearest_freq function and added s5pc11x_nearest_avail_index function (global governor fix).
 
