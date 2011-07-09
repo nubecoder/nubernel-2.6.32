@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-09-2011:
+Ensure FM is disabled for Voodoo sound in defconfig.
 Whitespace change to sync with supercurio.
 Correcting support for Voodoo sound in sound/soc/codecs/Makefile.
 Voodoo sound: driver v10 (supercurio: https://github.com/project-voodoo/linux_sph-d700/commit/544113453303e0acf1acecff7957bad6e486607b).
