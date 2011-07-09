@@ -98,7 +98,7 @@ static const unsigned int frequency_match_1GHZ[][4] = {
 	{800000, 1200, 1100, 8},
 	{600000, 1150, 1100, 9},
 	{400000, 1050, 1100, 10},
-	{200000, 950, 1100, 11},
+	{200000, 950, 1000, 11},
 	{100000, 950, 1000, 12},
 #else
 	{1400000, 1375, 1100, 0}, //WARNING: out of spec voltage for VDD_ARM
@@ -110,7 +110,7 @@ static const unsigned int frequency_match_1GHZ[][4] = {
 	{800000, 1200, 1100, 6},
 	{600000, 1150, 1100, 7},
 	{400000, 1050, 1100, 8},
-	{200000, 950, 1100, 9},
+	{200000, 950, 1000, 9},
 	{100000, 950, 1000, 10},
 #endif // end not using above 1.4GHz
 #else // no OC
@@ -119,7 +119,7 @@ static const unsigned int frequency_match_1GHZ[][4] = {
 	{800000, 1200, 1100, 2},
 	{600000, 1150, 1100, 3},
 	{400000, 1050, 1100, 4},
-	{200000, 950, 1100, 5},
+	{200000, 950, 1000, 5},
 	{100000, 950, 1000, 6},
 #endif // end CONFIG_MACH_S5PC110_ARIES_OC
 };
@@ -139,7 +139,7 @@ unsigned int frequency_voltage_tab[][3] = {
 	{800000, 1200, 1100},
 	{600000, 1150, 1100},
 	{400000, 1050, 1100},
-	{200000, 950, 1100},
+	{200000, 950, 1000},
 	{100000, 950, 1000},
 #else
 	{1400000, 1375, 1100}, //WARNING: out of spec voltage for VDD_ARM
@@ -151,7 +151,7 @@ unsigned int frequency_voltage_tab[][3] = {
 	{800000, 1200, 1100},
 	{600000, 1150, 1100},
 	{400000, 1050, 1100},
-	{200000, 950, 1100},
+	{200000, 950, 1000},
 	{100000, 950, 1000},
 #endif // end not using above 1.4GHz
 #else // no OC
@@ -160,7 +160,7 @@ unsigned int frequency_voltage_tab[][3] = {
 	{800000, 1200, 1100},
 	{600000, 1150, 1100},
 	{400000, 1050, 1100},
-	{200000, 950, 1100},
+	{200000, 950, 1000},
 	{100000, 950, 1000},
 #endif // end CONFIG_MACH_S5PC110_ARIES_OC
 };
@@ -169,7 +169,7 @@ static const unsigned int frequency_match_800MHZ[][4] = {
 /* frequency, Mathced VDD ARM voltage , Matched VDD INT*/
 	{800000, 1200, 1100, 0},
 	{400000, 1050, 1100, 1},
-	{200000, 950, 1100, 2},
+	{200000, 950, 1000, 2},
 	{100000, 950, 1000, 3},
 };
 const unsigned int (*frequency_match[2])[4] = {
@@ -216,7 +216,7 @@ static unsigned int s_arm_voltage=0, s_int_voltage=0;
 static const unsigned int dvs_volt_table_800MHZ[][3] = {
 	{0, DVSARM2, DVSINT1},  //800
 	{1, DVSARM3, DVSINT1},  //400
-	{2, DVSARM4, DVSINT1},  //200
+	{2, DVSARM4, DVSINT2},  //200
 	{3, DVSARM4, DVSINT2},  //100
 };
 
@@ -234,7 +234,7 @@ static const unsigned int dvs_volt_table_1GHZ[][3] = {
 	{8, DVSARM2, DVSINT1},  //800
 	{9, DVSARM2, DVSINT1},  //600
 	{10, DVSARM3, DVSINT1}, //400
-	{11, DVSARM4, DVSINT1}, //200
+	{11, DVSARM4, DVSINT2}, //200
 	{12, DVSARM4, DVSINT2}, //100
 #else
 	{0, DVSARM1, DVSINT1},  //1400
@@ -246,7 +246,7 @@ static const unsigned int dvs_volt_table_1GHZ[][3] = {
 	{6, DVSARM2, DVSINT1},  //800
 	{7, DVSARM2, DVSINT1},  //600
 	{8, DVSARM3, DVSINT1},  //400
-	{9, DVSARM4, DVSINT1},  //200
+	{9, DVSARM4, DVSINT2},  //200
 	{10, DVSARM4, DVSINT2}, //100
 #endif // end not using above 1.4GHz
 #else // no OC
@@ -255,7 +255,7 @@ static const unsigned int dvs_volt_table_1GHZ[][3] = {
 	{2, DVSARM2, DVSINT1},  //800
 	{3, DVSARM2, DVSINT1},  //600
 	{4, DVSARM3, DVSINT1},  //400
-	{5, DVSARM4, DVSINT1},  //200
+	{5, DVSARM4, DVSINT2},  //200
 	{6, DVSARM4, DVSINT2},  //100
 #endif // end CONFIG_MACH_S5PC110_ARIES_OC
 };
