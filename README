@@ -29,6 +29,9 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-09-2011:
+Branched to 'feature-dvfs'.
+
+07-09-2011:
 Fixing a bug in the s5pc11x_nearest_avail_index function.
 
 07-08-2011:
