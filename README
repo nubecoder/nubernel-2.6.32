@@ -77,6 +77,8 @@ Changes to default scaling rates of smartass governor (matching Conservative and
 Added initial s5pc11x_nearest_freq function for testing.
 Fixing a debugging placement fail in smartass governor.
 Branched to 'feature-governors'.
+Changes to init_wrapper (more agressive su instalation).
+Branched to 'feature-initramfs'.
 
 06-23-2011:
 Major changes to cpu_thres_table.sh.
