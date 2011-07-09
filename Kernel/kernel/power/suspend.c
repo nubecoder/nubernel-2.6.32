@@ -310,9 +310,9 @@ int enter_state(suspend_state_t state)
 #endif
 #endif
 
-	printk(KERN_INFO "PM: Syncing filesystems ... \n");
+	printk(KERN_INFO "PM: Syncing filesystems ... ");
 	sys_sync();
-	printk(KERN_INFO "PM: Syncing filesystems done.\n");
+	printk(KERN_INFO "done.\n");
 
 	pr_debug("PM: Preparing system for %s sleep\n", pm_states[state]);
 #ifdef CONFIG_NC_DEBUG
