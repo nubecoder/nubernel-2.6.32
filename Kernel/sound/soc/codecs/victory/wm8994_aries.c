@@ -5112,9 +5112,9 @@ void wm8994_set_fmradio_headset_mix(struct snd_soc_codec *codec)
 		val &= ~(WM8994_DAC1L_MUTE_MASK | WM8994_DAC1L_VOL_MASK);
 		val |= (WM8994_DAC1_VU | TUNING_DAC1L_VOL);
 		wm8994_write(codec,WM8994_DAC1_LEFT_VOLUME ,val);
-		
+
 		//Unmute and volume ctrl RightDAC
-		val = wm8994_read(codec, WM8994_DAC1_RIGHT_VOLUME);
+		val = wm8994_read(codec, WM8994_DAC1_RIGHT_VOLUME );
 		val &= ~(WM8994_DAC1R_MUTE_MASK | WM8994_DAC1R_VOL_MASK);
 		val |= (WM8994_DAC1_VU | TUNING_DAC1R_VOL); //0 db volume
 		wm8994_write(codec,WM8994_DAC1_RIGHT_VOLUME,val);
