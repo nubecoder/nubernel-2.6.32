@@ -475,8 +475,8 @@ unsigned int s5pc11x_target_freq_find_index(unsigned int index_find, int flag)
 	return index;
 }
 
-unsigned int s5pc11x_target_frq(unsigned int pred_freq,
-                               int flag, unsigned int policy_min)
+unsigned int s5pc11x_target_frq(unsigned int pred_freq, 
+				int flag)
 {
 	int index;
 	//unsigned long irqflags;
@@ -542,18 +542,7 @@ s5pc11x_target_frq_end:
 
 	freq = freq_tab[index].frequency;
 	spin_unlock(&g_dvfslock);
-	if (freq > policy_min) {
-#ifdef CONFIG_NC_DEBUG
-		printk(KERN_INFO "PM:FREQ: ret freq: %dMHz\n", freq/1000);
-#endif
-		return freq;
-	}
-	else {
-#ifdef CONFIG_NC_DEBUG
-		printk(KERN_INFO "PM:FREQ: ret min: %dMHz, freq: %dMHz\n", policy_min/1000, freq/1000);
-#endif
-		return policy_min;
-	}
+	return freq;
 }
 
 int s5pc11x_target_freq_index(unsigned int freq)

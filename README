@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+07-08-2011:
+Reverting changes to conservative governor (commit ID: 1bb5e487).
+
 07-05-2011:
 Reverting changes to interactive governor (commit ID: 5b3153ab).
 Reverting changes to ondemand governor (commit ID's: bc8e028c, b153d55c).
