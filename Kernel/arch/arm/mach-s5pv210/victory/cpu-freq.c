@@ -702,6 +702,16 @@ unsigned int s5pc11x_nearest_avail_index(struct cpufreq_policy *policy, unsigned
 			while((hi_index > 0) && (active_states[hi_index] == 0)) {
 				hi_index--;
 			}
+			if (hi_index == 0) {
+				// if hi_index == 0, find highest available freq
+				while((freq_tab[hi_index].frequency != CPUFREQ_TABLE_END) && active_states[hi_index] == 0) {
+					hi_index++;
+				}
+				// if we hit the end of the table, force the lowest freq
+				if (freq_tab[hi_index].frequency == CPUFREQ_TABLE_END) {
+					hi_index--;
+				}
+			}
 		}
 	}
 	// index == 0
