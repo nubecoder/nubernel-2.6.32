@@ -16,12 +16,12 @@
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
 #if 0 // not using above 1.4GHz
 #define MAXIMUM_FREQ 1600000
-#else
-#define MAXIMUM_FREQ 1400000
 #endif // end not using above 1.4GHz
+#define MAXIMUM_FREQ 1400000
 #else // no OC
 #define MAXIMUM_FREQ 1000000
 #endif // end CONFIG_MACH_S5PC110_ARIES_OC
+
 #define USE_FREQ_TABLE
 //#undef USE_DVS
 #define USE_DVS
