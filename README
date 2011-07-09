@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-09-2011:
+Removed original 1.6GHz overclock comments (too messy).
 Cleaning up some comments of the original 1.6GHz overclock.
 Fixing up these voltages (was a major contributor to Sleep Of Death).
 Fixing some typos and doing some cleanup.

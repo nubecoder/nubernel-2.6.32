@@ -43,9 +43,6 @@
 //#define DBG(fmt...) printk(fmt)
 
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
-#if 0 // not using above 1.4GHz
-extern int active_states[13];
-#endif // end not using above 1.4GHz
 extern int active_states[11];
 #else // no OC
 extern int active_states[7];
@@ -89,22 +86,6 @@ extern int store_up_down_threshold(unsigned int down_threshold_value,
 /* frequency */
 static struct cpufreq_frequency_table s5pc110_freq_table_1GHZ[] = {
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
-#if 0 // not using above 1.4GHz
-	{0, 1600*1000},
-	{1, 1500*1000},
-	{2, 1400*1000},
-	{3, 1300*1000},
-	{4, 1200*1000},
-	{5, 1120*1000},
-	{6, 1000*1000},
-	{7, 900*1000},
-	{8, 800*1000},
-	{9, 600*1000},
-	{10, 400*1000},
-	{11, 200*1000},
-	{12, 100*1000},
-	{0, CPUFREQ_TABLE_END},
-#endif // end not using above 1.4GHz
 	{0, 1400*1000},
 	{1, 1300*1000},
 	{2, 1200*1000},
@@ -132,21 +113,6 @@ static struct cpufreq_frequency_table s5pc110_freq_table_1GHZ[] = {
 /*Assigning different index for fast scaling up*/
 static unsigned char transition_state_1GHZ[][2] = {
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
-#if 0 // not using above 1.4GHz
-	{1, 0},   //Down 0  to 1  Up 0  to 0
-	{2, 0},   //Down 1  to 2  Up 1  to 0
-	{3, 1},   //Down 2  to 3  Up 2  to 1
-	{4, 2},   //Down 3  to 4  Up 3  to 2
-	{5, 3},   //Down 4  to 5  Up 4  to 3
-	{6, 4},   //Down 5  to 6  Up 5  to 4
-	{7, 5},   //Down 6  to 7  Up 6  to 5
-	{8, 6},   //Down 7  to 8  Up 7  to 6
-	{9, 7},   //Down 8  to 9  Up 8  to 7
-	{10, 8},  //Down 9  to 10 Up 9  to 8
-	{11, 9},  //Down 10 to 11 Up 10 to 9
-	{12, 10}, //Down 11 to 12 Up 11 to 10
-	{12, 11}, //Down 12 to 12 Up 12 to 11
-#endif // end not using above 1.4GHz
 	{1, 0},   //Down 0  to 1  Up 0  to 0
 	{2, 0},   //Down 1  to 2  Up 1  to 0
 	{3, 1},   //Down 2  to 3  Up 2  to 1
@@ -202,21 +168,6 @@ static struct cpufreq_frequency_table *s5pc110_freq_table[] = {
 
 unsigned int s5pc110_thres_table_1GHZ[][2] = {
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
-#if 0 // not using above 1.4GHz
-	{55, 80}, //1600
-	{55, 90}, //1500
-	{55, 90}, //1400
-	{55, 90}, //1300
-	{55, 90}, //1200
-	{55, 90}, //1120
-	{55, 90}, //1000
-	{60, 80}, //900
-	{60, 80}, //800
-	{60, 80}, //600
-	{60, 80}, //400
-	{60, 80}, //200
-	{60, 80}, //100
-#endif // end not using above 1.4GHz
 	{55, 90}, //1400
 	{55, 90}, //1300
 	{55, 90}, //1200
@@ -261,14 +212,6 @@ static int get_dvfs_perf_level(enum freq_level_states freq_level, unsigned int *
 	switch(freq_level)
 	{
 #if CONFIG_MACH_S5PC110_ARIES_OC
-#if 0 // not using above 1.4GHz
-	case LEV_1600MHZ:
-		freq = 1600 * 1000;
-		break;
-	case LEV_1500MHZ:
-		freq = 1500 * 1000;
-		break;
-#endif // end not using above 1.4GHz
 	case LEV_1400MHZ:
 		freq = 1400 * 1000;
 		break;
@@ -938,9 +881,6 @@ static int s5pc110_target(struct cpufreq_policy *policy,
 		// ARM MCS value set
 		if (S5PC11X_FREQ_TAB == 0) { // for 1G table
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
-#if 0 // not using above 1.4GHz
-			if ((prevIndex < 11) && (index >= 11)) { // index 11 = 200MHz
-#endif // end not using above 1.4GHz
 			if ((prevIndex < 9) && (index >= 9)) { // index 9 = 200MHz
 #else // no OC
 			if ((prevIndex < 5) && (index >= 5)) { // index 5 = 200MHz
@@ -1003,9 +943,6 @@ static int s5pc110_target(struct cpufreq_policy *policy,
 		// ARM MCS value set
 		if (S5PC11X_FREQ_TAB == 0) { // for 1G table
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
-#if 0 // not using above 1.4GHz
-			if ((prevIndex >= 11) && (index < 11)) { // index 11 = 200MHz
-#endif // end not using above 1.4GHz
 			if ((prevIndex >= 9) && (index < 9)) { // index 9 = 200MHz
 #else // no OC
 			if ((prevIndex >= 5) && (index < 5)) { // index 5 = 200MHz
@@ -1149,11 +1086,6 @@ static int __init s5pc110_cpu_init(struct cpufreq_policy *policy)
 
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
 	S5PC11X_FREQ_TAB = 0;
-#if 0 // not using above 1.4GHz
-	S5PC11X_MAXFREQLEVEL = 12;
-	MAXFREQ_LEVEL_SUPPORTED = 13;
-	g_dvfs_high_lock_limit = 12;
-#endif // end not using above 1.4GHz
 	S5PC11X_MAXFREQLEVEL = 10;
 	MAXFREQ_LEVEL_SUPPORTED = 11;
 	g_dvfs_high_lock_limit = 10;
@@ -1169,9 +1101,6 @@ static int __init s5pc110_cpu_init(struct cpufreq_policy *policy)
 	s5pc11x_cpufreq_level = S5PC11X_MAXFREQLEVEL;
 	//spin_unlock_irqrestore(&g_cpufreq_lock, irqflags);
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
-#if 0 // not using above 1.4GHz
-	prevIndex = 8;// we are currently at 800MHZ level
-#endif // end not using above 1.4GHz
 	prevIndex = 6;// we are currently at 800MHZ level
 #else // no OC
 	prevIndex = 2;// we are currently at 800MHZ level

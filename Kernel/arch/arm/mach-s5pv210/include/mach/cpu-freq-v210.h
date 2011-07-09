@@ -14,9 +14,6 @@
 #define CONFIG_NC_DEBUG
 
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
-#if 0 // not using above 1.4GHz
-#define MAXIMUM_FREQ 1600000
-#endif // end not using above 1.4GHz
 #define MAXIMUM_FREQ 1400000
 #else // no OC
 #define MAXIMUM_FREQ 1000000
@@ -46,19 +43,11 @@ enum perf_level {
 	L8,
 	L9,
 	L10,
-#if 0 // not using above 1.4GHz
-	L11,
-	L12,
-#endif // end not using above 1.4GHz
 #endif // end CONFIG_MACH_S5PC110_ARIES_OC
 };
 
 enum freq_level_states {
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
-#if 0 // not using above 1.4GHz
-	LEV_1600MHZ,
-	LEV_1500MHZ,
-#endif // end not using above 1.4GHz
 	LEV_1400MHZ,
 	LEV_1300MHZ,
 	LEV_1200MHZ,
