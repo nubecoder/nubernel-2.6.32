@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-09-2011:
+Added kmsg.sh to scripts folder (wifi adb /proc/kmsg logging).
 Branched to 'feature-misc'.
 
 07-09-2011:
