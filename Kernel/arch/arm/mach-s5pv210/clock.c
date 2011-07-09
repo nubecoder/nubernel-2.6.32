@@ -74,32 +74,6 @@ struct S5PC110_clk_info {
 
 struct S5PC110_clk_info clk_info[] = {
 #if CONFIG_MACH_S5PC110_ARIES_OC
-#if 0 // not using above 1.4GHz
-	{
-	// APLL:1600,ARMCLK:1600,HCLK_MSYS:200,MPLL:667,HCLK_DSYS:166,HCLK_PSYS:133,PCLK_MSYS:100,PCLK_DSYS:83,PCLK_PSYS:66
-	.armclk = 1600* MHZ,
-	.apllout = 1600* MHZ,
-	.apll_mps = ((400<<16)|(6<<8)|1),
-	.msys_div0 = (0|(7<<4)|(7<<8)|(1<<12)),
-	.mpllout = 667* MHZ,
-	.mpll_mps = ((667<<16)|(12<<8)|(1)),
-	.psys_dsys_div0 = ((3<<16)|(1<<20)|(4<<24)|(1<<28)),
-	.div2val = ((4<<0)|(4<<4)|(4<<8)),
-	.dmc0_div6 = (3<<28),
-	},
-	{
-	// APLL:1500,ARMCLK:1500,HCLK_MSYS:200,MPLL:667,HCLK_DSYS:166,HCLK_PSYS:133,PCLK_MSYS:100,PCLK_DSYS:83,PCLK_PSYS:66
-	.armclk = 1500* MHZ,
-	.apllout = 1500* MHZ,
-	.apll_mps = ((375<<16)|(6<<8)|1),
-	.msys_div0 = (0|(7<<4)|(7<<8)|(1<<12)),
-	.mpllout = 667* MHZ,
-	.mpll_mps = ((667<<16)|(12<<8)|(1)),
-	.psys_dsys_div0 = ((3<<16)|(1<<20)|(4<<24)|(1<<28)),
-	.div2val = ((4<<0)|(4<<4)|(4<<8)),
-	.dmc0_div6 = (3<<28),
-	},
-#endif // end not using above 1.4GHz
 	{
 	// APLL:1400,ARMCLK:1400,HCLK_MSYS:200,MPLL:667,HCLK_DSYS:166,HCLK_PSYS:133,PCLK_MSYS:100,PCLK_DSYS:83,PCLK_PSYS:66
 	.armclk = 1400* MHZ,

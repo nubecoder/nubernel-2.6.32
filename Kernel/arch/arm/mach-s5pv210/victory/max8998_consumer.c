@@ -86,21 +86,6 @@ enum PMIC_VOLTAGE {
 static const unsigned int frequency_match_1GHZ[][4] = {
 /* frequency, Mathced VDD ARM voltage , Matched VDD INT*/
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
-#if 0 // not using above 1.4GHz
-	{1600000, 1400, 1100, 0}, //WARNING: out of spec voltage for VDD_ARM
-	{1500000, 1400, 1100, 1}, //WARNING: out of spec voltage for VDD_ARM
-	{1400000, 1375, 1100, 2}, //WARNING: out of spec voltage for VDD_ARM
-	{1300000, 1325, 1100, 3}, //WARNING: out of spec voltage for VDD_ARM
-	{1200000, 1300, 1100, 4},
-	{1120000, 1275, 1100, 5},
-	{1000000, 1250, 1100, 6},
-	{900000, 1225, 1100, 7},
-	{800000, 1200, 1100, 8},
-	{600000, 1150, 1100, 9},
-	{400000, 1050, 1100, 10},
-	{200000, 950, 1100, 11},
-	{100000, 950, 1000, 12},
-#else
 	{1400000, 1375, 1100, 0}, //WARNING: out of spec voltage for VDD_ARM
 	{1300000, 1325, 1100, 1}, //WARNING: out of spec voltage for VDD_ARM
 	{1200000, 1300, 1100, 2},
@@ -110,26 +95,22 @@ static const unsigned int frequency_match_1GHZ[][4] = {
 	{800000, 1200, 1100, 6},
 	{600000, 1150, 1100, 7},
 	{400000, 1050, 1100, 8},
-	{200000, 950, 1100, 9},
+	{200000, 950, 1000, 9},
 	{100000, 950, 1000, 10},
-#endif // end not using above 1.4GHz
 #else // no OC
-	{1000000, 1250, 1100, 4},
-	{900000, 1225, 1100, 5},
-	{800000, 1200, 1100, 6},
-	{600000, 1150, 1100, 7},
-	{400000, 1050, 1100, 8},
-	{200000, 950, 1100, 9},
-	{100000, 950, 1000, 10},
+	{1000000, 1250, 1100, 0},
+	{900000, 1225, 1100, 1},
+	{800000, 1200, 1100, 2},
+	{600000, 1150, 1100, 3},
+	{400000, 1050, 1100, 4},
+	{200000, 950, 1000, 5},
+	{100000, 950, 1000, 6},
 #endif // end CONFIG_MACH_S5PC110_ARIES_OC
 };
 
 unsigned int frequency_voltage_tab[][3] = {
 /* frequency, Mathced VDD ARM voltage , Matched VDD INT*/
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
-#if 0 // not using above 1.4GHz
-	{1600000, 1400, 1100}, //WARNING: out of spec voltage for VDD_ARM
-	{1500000, 1400, 1100}, //WARNING: out of spec voltage for VDD_ARM
 	{1400000, 1375, 1100}, //WARNING: out of spec voltage for VDD_ARM
 	{1300000, 1325, 1100}, //WARNING: out of spec voltage for VDD_ARM
 	{1200000, 1300, 1100},
@@ -139,28 +120,15 @@ unsigned int frequency_voltage_tab[][3] = {
 	{800000, 1200, 1100},
 	{600000, 1150, 1100},
 	{400000, 1050, 1100},
-	{200000, 950, 1100},
+	{200000, 950, 1000},
 	{100000, 950, 1000},
-#else
-	{1400000, 1375, 1100}, //WARNING: out of spec voltage for VDD_ARM
-	{1300000, 1325, 1100}, //WARNING: out of spec voltage for VDD_ARM
-	{1200000, 1300, 1100},
-	{1120000, 1275, 1100},
-	{1000000, 1250, 1100},
-	{900000, 1225, 1100},
-	{800000, 1200, 1100},
-	{600000, 1150, 1100},
-	{400000, 1050, 1100},
-	{200000, 950, 1100},
-	{100000, 950, 1000},
-#endif // end not using above 1.4GHz
 #else // no OC
 	{1000000, 1250, 1100},
 	{900000, 1225, 1100},
 	{800000, 1200, 1100},
 	{600000, 1150, 1100},
 	{400000, 1050, 1100},
-	{200000, 950, 1100},
+	{200000, 950, 1000},
 	{100000, 950, 1000},
 #endif // end CONFIG_MACH_S5PC110_ARIES_OC
 };
@@ -169,8 +137,8 @@ static const unsigned int frequency_match_800MHZ[][4] = {
 /* frequency, Mathced VDD ARM voltage , Matched VDD INT*/
 	{800000, 1200, 1100, 0},
 	{400000, 1050, 1100, 1},
-	{200000, 950, 1100, 3},
-	{100000, 950, 1000, 4},
+	{200000, 950, 1000, 2},
+	{100000, 950, 1000, 3},
 };
 const unsigned int (*frequency_match[2])[4] = {
         frequency_match_1GHZ,
@@ -214,52 +182,33 @@ static unsigned int s_arm_voltage=0, s_int_voltage=0;
 #ifndef DECREASE_DVFS_DELAY
 /*only 4 Arm voltages and 2 internal voltages possible*/
 static const unsigned int dvs_volt_table_800MHZ[][3] = {
-	{0, DVSARM2, DVSINT1},
-	{1, DVSARM3, DVSINT1},
-	//{2, DVSARM3, DVSINT1}, // 266
-	{2, DVSARM4, DVSINT1},
-	{3, DVSARM4, DVSINT2},
-	//{4, DVSARM4, DVSINT2},
-	//{5, DVSARM4, DVSINT2},
+	{0, DVSARM2, DVSINT1},  //800
+	{1, DVSARM3, DVSINT1},  //400
+	{2, DVSARM4, DVSINT2},  //200
+	{3, DVSARM4, DVSINT2},  //100
 };
 
 static const unsigned int dvs_volt_table_1GHZ[][3] = {
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
-#if 0 // not using above 1.4GHz
-	{0, DVSARM1, DVSINT1},	//1600
-	{1, DVSARM1, DVSINT1},	//1500
-	{2, DVSARM1, DVSINT1},	//1400
-	{3, DVSARM1, DVSINT1},	//1300
-	{4, DVSARM1, DVSINT1},	//1200
-	{5, DVSARM1, DVSINT1},	//1120
-	{6, DVSARM1, DVSINT1},	//1000
-	{7, DVSARM1, DVSINT1},	//900
-	{8, DVSARM2, DVSINT1},	//800
-	{9, DVSARM2, DVSINT1},	//600
-	{10, DVSARM3, DVSINT1},	//400
-	{11, DVSARM4, DVSINT1},	//200
-	{12, DVSARM4, DVSINT2},	//100
-#else
-	{0, DVSARM1, DVSINT1},	//1400
-	{1, DVSARM1, DVSINT1},	//1300
-	{2, DVSARM1, DVSINT1},	//1200
-	{3, DVSARM1, DVSINT1},	//1120
-	{4, DVSARM1, DVSINT1},	//1000
-	{5, DVSARM1, DVSINT1},	//900
-	{6, DVSARM2, DVSINT1},	//800
-	{7, DVSARM2, DVSINT1},	//600
-	{8, DVSARM3, DVSINT1},	//400
-	{9, DVSARM4, DVSINT1},	//200
-	{10, DVSARM4, DVSINT2},	//100
-#endif // end not using above 1.4GHz
+	{0, DVSARM1, DVSINT1},  //1400
+	{1, DVSARM1, DVSINT1},  //1300
+	{2, DVSARM1, DVSINT1},  //1200
+	{3, DVSARM1, DVSINT1},  //1120
+	{4, DVSARM1, DVSINT1},  //1000
+	{5, DVSARM1, DVSINT1},  //900
+	{6, DVSARM2, DVSINT1},  //800
+	{7, DVSARM2, DVSINT1},  //600
+	{8, DVSARM3, DVSINT1},  //400
+	{9, DVSARM4, DVSINT2},  //200
+	{10, DVSARM4, DVSINT2}, //100
 #else // no OC
-	{0, DVSARM1, DVSINT1},	//1000
-	{1, DVSARM1, DVSINT1},	//900
-	{2, DVSARM2, DVSINT1},	//800
-	{3, DVSARM2, DVSINT1},	//600
-	{4, DVSARM3, DVSINT1},	//400
-	{5, DVSARM4, DVSINT1},	//200
-	{6, DVSARM4, DVSINT2},	//100
+	{0, DVSARM1, DVSINT1},  //1000
+	{1, DVSARM1, DVSINT1},  //900
+	{2, DVSARM2, DVSINT1},  //800
+	{3, DVSARM2, DVSINT1},  //600
+	{4, DVSARM3, DVSINT1},  //400
+	{5, DVSARM4, DVSINT2},  //200
+	{6, DVSARM4, DVSINT2},  //100
 #endif // end CONFIG_MACH_S5PC110_ARIES_OC
 };
 
@@ -270,21 +219,12 @@ const unsigned int (*dvs_volt_table[2])[3] = {
 
 static const unsigned int dvs_arm_voltage_set[][2] = {
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
-#if 0 // not using above 1.4GHz
-	{DVSARM1, 1400},
-	{DVSARM2, 1200},
-	{DVSARM3, 1050},
-	{DVSARM4, 950},
-	{DVSINT1, 1100},
-	{DVSINT2, 1000},
-#else
 	{DVSARM1, 1375},
 	{DVSARM2, 1200},
 	{DVSARM3, 1050},
 	{DVSARM4, 950},
 	{DVSINT1, 1100},
 	{DVSINT2, 1000},
-#endif // end not using above 1.4GHz
 #else // no OC
 	{DVSARM1, 1250},
 	{DVSARM2, 1200},
@@ -297,11 +237,7 @@ static const unsigned int dvs_arm_voltage_set[][2] = {
 #endif
 
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
-#if 0 // not using above 1.4GHz
-extern unsigned int exp_UV_mV[13];
-#else
 extern unsigned int exp_UV_mV[11];
-#endif // end not using above 1.4GHz
 #else // no OC
 extern unsigned int exp_UV_mV[7];
 #endif // end CONFIG_MACH_S5PC110_ARIES_OC
@@ -511,29 +447,6 @@ static int set_max8998(unsigned int pwr, enum perf_level p_lv)
 		switch(p_lv)
 		{
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
-#if 0 // not using above 1.4GHz
-			case L0:
-			case L1:
-			case L2:
-			case L3:
-			case L4:
-			case L5:
-			case L6:
-			case L7:
-				max8998_set_dvsarm_direct(DVSARM1, voltage);
-				break;
-			case L8:
-			case L9:
-				max8998_set_dvsarm_direct(DVSARM2, voltage);
-				break;
-			case L10:
-				max8998_set_dvsarm_direct(DVSARM3, voltage);
-				break;
-			case L11:
-			case L12:
-				max8998_set_dvsarm_direct(DVSARM4, voltage);
-				break;
-#else
 			case L0:
 			case L1:
 			case L2:
@@ -553,7 +466,6 @@ static int set_max8998(unsigned int pwr, enum perf_level p_lv)
 			case L10:
 				max8998_set_dvsarm_direct(DVSARM4, voltage);
 				break;
-#endif // end not using above 1.4GHz
 #else // no OC
 			case L0:
 			case L1:
@@ -676,29 +588,6 @@ int set_gpio_dvs(enum perf_level p_lv)
 	switch(p_lv)
 	{
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
-#if 0 // not using above 1.4GHz
-		case L0:
-		case L1:
-		case L2:
-		case L3:
-		case L4:
-		case L5:
-		case L6:
-		case L7:
-			max8998_set_dvsarm_direct(DVSARM1, frequency_match_tab[p_lv][1]);
-			break;
-		case L8:
-		case L9:
-			max8998_set_dvsarm_direct(DVSARM2, frequency_match_tab[p_lv][1]);
-			break;
-		case L10:
-			max8998_set_dvsarm_direct(DVSARM3, frequency_match_tab[p_lv][1]);
-			break;
-		case L11:
-		case L12:
-			max8998_set_dvsarm_direct(DVSARM4, frequency_match_tab[p_lv][1]);
-			break;
-#else
 		case L0:
 		case L1:
 		case L2:
@@ -718,7 +607,6 @@ int set_gpio_dvs(enum perf_level p_lv)
 		case L10:
 			max8998_set_dvsarm_direct(DVSARM4, frequency_match_tab[p_lv][1]);
 			break;
-#endif // end not using above 1.4GHz
 #else // no OC
 		case L0:
 		case L1:
@@ -741,31 +629,6 @@ int set_gpio_dvs(enum perf_level p_lv)
 	switch(p_lv)
 	{
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
-#if 0 // not using above 1.4GHz
-		case L0:
-		case L1:
-		case L2:
-		case L3:
-		case L4:
-		case L5:
-		case L6:
-		case L7:
-			writel(((readl(S5PV210_GPH0DAT) & ~PMIC_SET_MASK) ), S5PV210_GPH0DAT);
-			break;
-		case L8:
-		case L9:
-			writel(((readl(S5PV210_GPH0DAT) & ~PMIC_SET_MASK) | PMIC_SET1_BIT ), S5PV210_GPH0DAT);
-			break;
-		case L10:
-			writel(((readl(S5PV210_GPH0DAT) & ~PMIC_SET_MASK) | PMIC_SET2_BIT ), S5PV210_GPH0DAT);
-			break;
-		case L11:
-			writel(((readl(S5PV210_GPH0DAT) & ~PMIC_SET_MASK) | PMIC_SET1_BIT | PMIC_SET2_BIT ), S5PV210_GPH0DAT);
-			break;
-		case L12:
-			writel(((readl(S5PV210_GPH0DAT) & ~PMIC_SET_MASK) | PMIC_SET1_BIT | PMIC_SET2_BIT | PMIC_SET3_BIT), S5PV210_GPH0DAT);
-			break;
-#else
 		case L0:
 		case L1:
 		case L2:
@@ -787,7 +650,6 @@ int set_gpio_dvs(enum perf_level p_lv)
 		case L10:
 			writel(((readl(S5PV210_GPH0DAT) & ~PMIC_SET_MASK) | PMIC_SET1_BIT | PMIC_SET2_BIT | PMIC_SET3_BIT), S5PV210_GPH0DAT);
 			break;
-#endif // end not using above 1.4GHz
 #else // no OC
 		case L0:
 		case L1:
@@ -944,7 +806,11 @@ void max8998_init(void)
 	else // for 1GHZ table
 	{
 		step_curr = L0;
-		set_voltage_dvs(L1); //switch to 800MHZ
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+		set_voltage_dvs(L6); //switch to 800MHZ
+#else // no OC
+		set_voltage_dvs(L2); //switch to 800MHZ
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
 	}
 	if (!dvs_initilized) dvs_initilized=1;
 }
@@ -974,21 +840,12 @@ static int max8998_consumer_probe(struct platform_device *pdev)
 	/*initialise the dvs registers*/
 #ifdef DECREASE_DVFS_DELAY
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
-#if 0 // not using above 1.4GHz
-	max8998_set_dvsarm_direct(DVSARM1, frequency_match_tab[6][1]);
-	max8998_set_dvsarm_direct(DVSARM2, frequency_match_tab[8][1]);
-	max8998_set_dvsarm_direct(DVSARM3, frequency_match_tab[10][1]);
-	max8998_set_dvsarm_direct(DVSARM4, frequency_match_tab[11][1]);
-	max8998_set_dvsint_direct(DVSINT1, frequency_match_tab[0][2]);
-	max8998_set_dvsint_direct(DVSINT2, frequency_match_tab[13][2]);
-#else
 	max8998_set_dvsarm_direct(DVSARM1, frequency_match_tab[2][1]);
 	max8998_set_dvsarm_direct(DVSARM2, frequency_match_tab[6][1]);
 	max8998_set_dvsarm_direct(DVSARM3, frequency_match_tab[8][1]);
 	max8998_set_dvsarm_direct(DVSARM4, frequency_match_tab[9][1]);
 	max8998_set_dvsint_direct(DVSINT1, frequency_match_tab[0][2]);
 	max8998_set_dvsint_direct(DVSINT2, frequency_match_tab[10][2]);
-#endif // end not using above 1.4GHz
 #else // no OC
 	max8998_set_dvsarm_direct(DVSARM1, frequency_match_tab[0][1]);
 	max8998_set_dvsarm_direct(DVSARM2, frequency_match_tab[2][1]);
