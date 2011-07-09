@@ -114,13 +114,13 @@ static const unsigned int frequency_match_1GHZ[][4] = {
 	{100000, 950, 1000, 10},
 #endif // end not using above 1.4GHz
 #else // no OC
-	{1000000, 1250, 1100, 4},
-	{900000, 1225, 1100, 5},
-	{800000, 1200, 1100, 6},
-	{600000, 1150, 1100, 7},
-	{400000, 1050, 1100, 8},
-	{200000, 950, 1100, 9},
-	{100000, 950, 1000, 10},
+	{1000000, 1250, 1100, 0},
+	{900000, 1225, 1100, 1},
+	{800000, 1200, 1100, 2},
+	{600000, 1150, 1100, 3},
+	{400000, 1050, 1100, 4},
+	{200000, 950, 1100, 5},
+	{100000, 950, 1000, 6},
 #endif // end CONFIG_MACH_S5PC110_ARIES_OC
 };
 
@@ -169,8 +169,8 @@ static const unsigned int frequency_match_800MHZ[][4] = {
 /* frequency, Mathced VDD ARM voltage , Matched VDD INT*/
 	{800000, 1200, 1100, 0},
 	{400000, 1050, 1100, 1},
-	{200000, 950, 1100, 3},
-	{100000, 950, 1000, 4},
+	{200000, 950, 1100, 2},
+	{100000, 950, 1000, 3},
 };
 const unsigned int (*frequency_match[2])[4] = {
         frequency_match_1GHZ,
@@ -214,52 +214,49 @@ static unsigned int s_arm_voltage=0, s_int_voltage=0;
 #ifndef DECREASE_DVFS_DELAY
 /*only 4 Arm voltages and 2 internal voltages possible*/
 static const unsigned int dvs_volt_table_800MHZ[][3] = {
-	{0, DVSARM2, DVSINT1},
-	{1, DVSARM3, DVSINT1},
-	//{2, DVSARM3, DVSINT1}, // 266
-	{2, DVSARM4, DVSINT1},
-	{3, DVSARM4, DVSINT2},
-	//{4, DVSARM4, DVSINT2},
-	//{5, DVSARM4, DVSINT2},
+	{0, DVSARM2, DVSINT1},  //800
+	{1, DVSARM3, DVSINT1},  //400
+	{2, DVSARM4, DVSINT1},  //200
+	{3, DVSARM4, DVSINT2},  //100
 };
 
 static const unsigned int dvs_volt_table_1GHZ[][3] = {
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
 #if 0 // not using above 1.4GHz
-	{0, DVSARM1, DVSINT1},	//1600
-	{1, DVSARM1, DVSINT1},	//1500
-	{2, DVSARM1, DVSINT1},	//1400
-	{3, DVSARM1, DVSINT1},	//1300
-	{4, DVSARM1, DVSINT1},	//1200
-	{5, DVSARM1, DVSINT1},	//1120
-	{6, DVSARM1, DVSINT1},	//1000
-	{7, DVSARM1, DVSINT1},	//900
-	{8, DVSARM2, DVSINT1},	//800
-	{9, DVSARM2, DVSINT1},	//600
-	{10, DVSARM3, DVSINT1},	//400
-	{11, DVSARM4, DVSINT1},	//200
-	{12, DVSARM4, DVSINT2},	//100
+	{0, DVSARM1, DVSINT1},  //1600
+	{1, DVSARM1, DVSINT1},  //1500
+	{2, DVSARM1, DVSINT1},  //1400
+	{3, DVSARM1, DVSINT1},  //1300
+	{4, DVSARM1, DVSINT1},  //1200
+	{5, DVSARM1, DVSINT1},  //1120
+	{6, DVSARM1, DVSINT1},  //1000
+	{7, DVSARM1, DVSINT1},  //900
+	{8, DVSARM2, DVSINT1},  //800
+	{9, DVSARM2, DVSINT1},  //600
+	{10, DVSARM3, DVSINT1}, //400
+	{11, DVSARM4, DVSINT1}, //200
+	{12, DVSARM4, DVSINT2}, //100
 #else
-	{0, DVSARM1, DVSINT1},	//1400
-	{1, DVSARM1, DVSINT1},	//1300
-	{2, DVSARM1, DVSINT1},	//1200
-	{3, DVSARM1, DVSINT1},	//1120
-	{4, DVSARM1, DVSINT1},	//1000
-	{5, DVSARM1, DVSINT1},	//900
-	{6, DVSARM2, DVSINT1},	//800
-	{7, DVSARM2, DVSINT1},	//600
-	{8, DVSARM3, DVSINT1},	//400
-	{9, DVSARM4, DVSINT1},	//200
-	{10, DVSARM4, DVSINT2},	//100
+	{0, DVSARM1, DVSINT1},  //1400
+	{1, DVSARM1, DVSINT1},  //1300
+	{2, DVSARM1, DVSINT1},  //1200
+	{3, DVSARM1, DVSINT1},  //1120
+	{4, DVSARM1, DVSINT1},  //1000
+	{5, DVSARM1, DVSINT1},  //900
+	{6, DVSARM2, DVSINT1},  //800
+	{7, DVSARM2, DVSINT1},  //600
+	{8, DVSARM3, DVSINT1},  //400
+	{9, DVSARM4, DVSINT1},  //200
+	{10, DVSARM4, DVSINT2}, //100
 #endif // end not using above 1.4GHz
 #else // no OC
-	{0, DVSARM1, DVSINT1},	//1000
-	{1, DVSARM1, DVSINT1},	//900
-	{2, DVSARM2, DVSINT1},	//800
-	{3, DVSARM2, DVSINT1},	//600
-	{4, DVSARM3, DVSINT1},	//400
-	{5, DVSARM4, DVSINT1},	//200
-	{6, DVSARM4, DVSINT2},	//100
+	{0, DVSARM1, DVSINT1},  //1000
+	{1, DVSARM1, DVSINT1},  //900
+	{2, DVSARM2, DVSINT1},  //800
+	{3, DVSARM2, DVSINT1},  //600
+	{4, DVSARM3, DVSINT1},  //400
+	{5, DVSARM4, DVSINT1},  //200
+	{6, DVSARM4, DVSINT2},  //100
 #endif // end CONFIG_MACH_S5PC110_ARIES_OC
 };
 
