@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-08-2011:
+Reverting changes to earlysuspend and suspend (fixed DVFS lock).
 Reverting changes to conservative governor (commit ID: 1bb5e487).
 
 07-05-2011:
