@@ -34,10 +34,6 @@
 #include <asm/cputime.h>
 #include <linux/earlysuspend.h>
 
-#ifdef CONFIG_CPU_S5PV210
-extern unsigned int s5pc11x_target_frq(unsigned int pred_freq, int flag, unsigned int policy_min);
-#endif
-
 static void (*pm_idle_old)(void);
 static atomic_t active_count = ATOMIC_INIT(0);
 
@@ -216,7 +212,7 @@ static void cpufreq_smartass_timer(unsigned long data)
 
         delta_idle = cputime64_sub(now_idle, this_smartass->time_in_idle);
         delta_time = cputime64_sub(update_time, this_smartass->idle_exit_time);
-        //printk(KERN_INFO "smartassT: t=%llu i=%llu\n",cputime64_sub(update_time,this_smartass->idle_exit_time),delta_idle);
+        //printk(KERN_INFO "SmartassT: t=%llu i=%llu\n",cputime64_sub(update_time,this_smartass->idle_exit_time),delta_idle);
 
         // If timer ran less than 1ms after short-term sample started, retry.
         if (delta_time < 1000) {
@@ -234,11 +230,13 @@ static void cpufreq_smartass_timer(unsigned long data)
                 printk(KERN_INFO "SmartassT @ %dMHz: load %d (delta_time %llu), load_since_change %d\n",
                        policy->cur/1000,cpu_load,delta_time,load_since_change);
 
+#if 1
         // Choose greater of short-term load (since last idle timer
         // started or timer function re-armed itself) or long-term load
         // (since last frequency change).
         if (load_since_change > cpu_load)
                 cpu_load = load_since_change;
+#endif
 
         this_smartass->cur_cpu_load = cpu_load;
 
@@ -316,10 +314,6 @@ static void cpufreq_idle(void)
 /* We use the same work function to scale up and down */
 static void cpufreq_smartass_freq_change_time_work(struct work_struct *work)
 {
-#ifdef CONFIG_CPU_S5PV210
-        int flag;
-        int req_freq;
-#endif
         unsigned int cpu;
         int new_freq;
         unsigned int force_ramp_up;
@@ -335,15 +329,12 @@ static void cpufreq_smartass_freq_change_time_work(struct work_struct *work)
                 force_ramp_up = this_smartass->force_ramp_up && nr_running() > 1;
                 this_smartass->force_ramp_up = 0;
 
-                if (force_ramp_up || cpu_load > max_cpu_load) {
-#ifdef CONFIG_CPU_S5PV210
-                        flag = 1; // scale up
-#endif
+                if (force_ramp_up | (cpu_load > max_cpu_load)) {
                         if (ramp_up_step) {
                                 new_freq = policy->cur + ramp_up_step;
                                 relation = CPUFREQ_RELATION_H;
                                 if (debug_mask & SMARTASS_DEBUG_JUMPS)
-                                        printk(KERN_INFO "SmartassQ: up %dMHz -> %dMhz\n", policy->cur/1000, new_freq/1000);
+                                        printk(KERN_INFO "SmartassQ: up %dMHz -> %dMHz\n", policy->cur/1000, new_freq/1000);
                         } else {
                                 new_freq = this_smartass->max_speed;
                                 relation = CPUFREQ_RELATION_H;
@@ -358,20 +349,17 @@ static void cpufreq_smartass_freq_change_time_work(struct work_struct *work)
                         }
                 }
                 else if (cpu_load < min_cpu_load) {
-#ifdef CONFIG_CPU_S5PV210
-                        flag = -1; // scale down
-#endif
                         if (ramp_down_step) {
                                 new_freq = policy->cur - ramp_down_step;
                                 if (debug_mask & SMARTASS_DEBUG_JUMPS)
-                                        printk(KERN_INFO "SmartassQ: down %dMHz -> %dMhz\n", policy->cur/1000, new_freq/1000);
+                                        printk(KERN_INFO "SmartassQ: down %dMHz -> %dMHz\n", policy->cur/1000, new_freq/1000);
 
                         }
                         else {
                                 cpu_load += 100 - max_cpu_load; // dummy load.
                                 new_freq = policy->cur * cpu_load / 100;
                                 if (debug_mask & SMARTASS_DEBUG_JUMPS)
-                                        printk(KERN_INFO "SmartassQ: Auto down %dMHz -> %dMhz\n", policy->cur/1000, new_freq/1000);
+                                        printk(KERN_INFO "SmartassQ: Auto down %dMHz -> %dMHz\n", policy->cur/1000, new_freq/1000);
                         }
                         relation = CPUFREQ_RELATION_L;
                 }
@@ -380,32 +368,6 @@ static void cpufreq_smartass_freq_change_time_work(struct work_struct *work)
                 new_freq = validate_freq(this_smartass,new_freq);
 
                 if (new_freq != policy->cur) {
-#ifdef CONFIG_CPU_S5PV210
-                        if ((new_freq != up_min_freq) && (new_freq != this_smartass->max_speed) &&
-                                 (new_freq != this_smartass->min_speed)) {
-                                req_freq = new_freq;
-                                // use transition states when scaling
-                                new_freq = s5pc11x_target_frq(policy->cur, flag, policy->min);
-                                if (debug_mask & SMARTASS_DEBUG_JUMPS)
-                                        printk(KERN_INFO "SmartassQ: req: %dMHz new: %dMHz\n", req_freq/1000, new_freq/1000);
-#if 1 // <--- easy on / off switch
-                                if (flag == 1) { // scale up
-                                        if (new_freq < req_freq) { // if lower than requested frequency scale up again
-                                                new_freq = s5pc11x_target_frq(new_freq, flag, policy->min);
-                                                if (debug_mask & SMARTASS_DEBUG_JUMPS)
-                                                        printk(KERN_INFO "SmartassQ: Re-scale up: %dMHz < %dMHz\n", new_freq/1000, req_freq/1000);
-                                        }
-                                }
-                                else { // scale down
-                                        if (new_freq > req_freq) { // if greater than requested frequency scale down again
-                                                new_freq = s5pc11x_target_frq(new_freq, flag, policy->min);
-                                                if (debug_mask & SMARTASS_DEBUG_JUMPS)
-                                                        printk(KERN_INFO "SmartassQ: Re-scale down: %dMHz > %dMHz\n", new_freq/1000, req_freq/1000);
-                                        }
-                                }
-#endif
-                        }
-#endif
 
                         if (debug_mask & SMARTASS_DEBUG_JUMPS)
                                 printk(KERN_INFO "SmartassQ: jumping from %dMHz to %dMHz\n",policy->cur/1000,new_freq/1000);

@@ -286,22 +286,22 @@ int enter_state(suspend_state_t state)
 	if(is_userspace_gov())
 	{
 		g_cpuspeed = s5pc110_getspeed(0);
-		printk("userspace cpu speed %d \n",g_cpuspeed);
+		printk(KERN_INFO "PM: userspace cpu speed %d\n",g_cpuspeed);
 		userSpaceGovernor=true;
     	} else if(is_conservative_gov()) {
 		/*Fix the upper transition scaling*/
 		g_dvfs_fix_lock_limit = true;
-		s5pc110_lock_dvfs_high_level(DVFS_LOCK_TOKEN_7, LEV_800MHZ);
+		s5pc110_lock_dvfs_high_level(DVFS_LOCK_TOKEN_7, LEV_600MHZ);
 		gbClockFix = true;
 
 		error = cpufreq_get_policy(&policy, 0);
 		if(error)
 		{
-			printk("Failed to get policy\n");
+			printk(KERN_INFO "PM: Failed to get policy\n");
 			goto Unlock;
 		}
 
-		cpufreq_driver_target(&policy, 800000, CPUFREQ_RELATION_L);
+		cpufreq_driver_target(&policy, 600000, CPUFREQ_RELATION_L);
 	}
 	
 #else
@@ -312,9 +312,12 @@ int enter_state(suspend_state_t state)
 
 	printk(KERN_INFO "PM: Syncing filesystems ... ");
 	sys_sync();
-	printk("done.\n");
+	printk(KERN_INFO "done.\n");
 
 	pr_debug("PM: Preparing system for %s sleep\n", pm_states[state]);
+#ifdef CONFIG_NC_DEBUG
+	printk(KERN_INFO "PM: Preparing system for %s sleep\n", pm_states[state]);
+#endif
 	error = suspend_prepare();
 	if (error)
 		goto Unlock;
@@ -323,10 +326,16 @@ int enter_state(suspend_state_t state)
 		goto Finish;
 
 	pr_debug("PM: Entering %s sleep\n", pm_states[state]);
+#ifdef CONFIG_NC_DEBUG
+	printk(KERN_INFO "PM: Entering %s sleep\n", pm_states[state]);
+#endif
 	error = suspend_devices_and_enter(state);
 
  Finish:
 	pr_debug("PM: Finishing wakeup.\n");
+#ifdef CONFIG_NC_DEBUG
+	printk(KERN_INFO "PM: Finishing wakeup.\n");
+#endif
 	suspend_finish();
  Unlock:
 	mutex_unlock(&pm_mutex);
@@ -335,7 +344,7 @@ int enter_state(suspend_state_t state)
 	if(userSpaceGovernor)
 	{
 		s5pc110_pm_target(g_cpuspeed);
-		printk("recover userspace cpu speed %d \n",g_cpuspeed);
+		printk(KERN_INFO "PM: recover userspace cpu speed %d\n",g_cpuspeed);
 		g_cpuspeed=0;
 		userSpaceGovernor=false;
 	}

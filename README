@@ -28,6 +28,43 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+07-09-2011:
+Fixing a bug in the s5pc11x_nearest_avail_index function.
+
+07-08-2011:
+Manual revert of a debug change in suspend.c.
+Reverting changes to earlysuspend and suspend (fixed DVFS lock).
+Reverting changes to conservative governor (commit ID: 1bb5e487).
+
+07-05-2011:
+Reverting changes to interactive governor (commit ID: 5b3153ab).
+Reverting changes to ondemand governor (commit ID's: bc8e028c, b153d55c).
+Manual removal of older changes to smartass governor (transition states, s5pc11x_nearest_freq, etc).
+Removed s5pc11x_nearest_freq function and added s5pc11x_nearest_avail_index function (global governor fix).
+
+06-30-2011:
+Additional debugging.
+
+06-28-2011:
+Lowering the fixed DVFS lock in earlysuspend and suspend to 600MHz.
+
+06-27-2011:
+More debugging fixes and clean up.
+Allow earlysuspend and suspend to set a fixed DVFS lock to 800MHz for the rest of the governors (not just conservative).
+Added an easy on / off switch related to previous load checking in smartass governor.
+Squashing a bug in smartass governor, we should always scale up if cpu load is above threshold, even if force_ramp_up isn't set.
+Added some debugging to s5pc11x_nearest_freq, changed some debugging in s5pc11x_target_frq.
+Changes to s5pc11x_nearest_freq function for better handling of freqs.
+Some aditions and cleanup for debugging DVFS (DFVS lock @ 800MHz during suspend, etc).
+Initial testing of s5pc11x_nearest_freq function in smartass governor.
+Applied changes for smartass governor to defconfig (matching default scaling rates, up min of 900MHz, and disable debugging).
+Changes to default scaling rates of smartass governor (matching Conservative and Ondemand's sample rate).
+
+06-24-2011:
+Added initial s5pc11x_nearest_freq function for testing.
+Fixing a debugging placement fail in smartass governor.
+Branched to 'feature-governors'.
+
 06-23-2011:
 Major changes to cpu_thres_table.sh.
 Changes to "cpu_thres_table" sysfs entry, this can be handled via script.

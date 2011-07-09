@@ -11,6 +11,8 @@
 
 //extern void s5pc110_lock_power_domain(unsigned int nToken);
 
+#define CONFIG_NC_DEBUG
+
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
 #if 0 // not using above 1.4GHz
 #define MAXIMUM_FREQ 1600000
@@ -71,7 +73,7 @@ extern unsigned int s5pc11x_cpufreq_index;
 extern unsigned int S5PC11X_FREQ_TAB;
 extern unsigned int S5PC11X_MAXFREQLEVEL;
 
-extern unsigned int s5pc11x_target_frq(unsigned int pred_freq, int flag, unsigned int policy_min);
+extern unsigned int s5pc11x_target_frq(unsigned int pred_freq, int flag);
 extern int s5pc110_pm_target(unsigned int target_freq);
 extern int is_conservative_gov(void);
 extern int is_userspace_gov(void);
