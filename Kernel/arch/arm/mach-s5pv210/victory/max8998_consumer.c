@@ -944,7 +944,14 @@ void max8998_init(void)
 	else // for 1GHZ table
 	{
 		step_curr = L0;
-		set_voltage_dvs(L1); //switch to 800MHZ
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+#if 0 // not using above 1.4GHz
+		set_voltage_dvs(L8); //switch to 800MHZ
+#endif // end not using above 1.4GHz
+		set_voltage_dvs(L6); //switch to 800MHZ
+#else // no OC
+		set_voltage_dvs(L2); //switch to 800MHZ
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
 	}
 	if (!dvs_initilized) dvs_initilized=1;
 }

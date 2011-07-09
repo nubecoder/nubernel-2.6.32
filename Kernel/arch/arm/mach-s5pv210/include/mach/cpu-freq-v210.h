@@ -41,6 +41,7 @@ enum perf_level {
 	L4,
 	L5,
 	L6,
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
 	L7,
 	L8,
 	L9,
@@ -49,9 +50,11 @@ enum perf_level {
 	L11,
 	L12,
 #endif // end not using above 1.4GHz
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
 };
 
 enum freq_level_states {
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
 #if 0 // not using above 1.4GHz
 	LEV_1600MHZ,
 	LEV_1500MHZ,
@@ -60,6 +63,7 @@ enum freq_level_states {
 	LEV_1300MHZ,
 	LEV_1200MHZ,
 	LEV_1120MHZ,
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
 	LEV_1000MHZ,
 	LEV_900MHZ,
 	LEV_800MHZ,

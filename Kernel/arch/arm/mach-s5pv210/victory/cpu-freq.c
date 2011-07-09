@@ -940,12 +940,16 @@ static int s5pc110_target(struct cpufreq_policy *policy,
 		}
 		
 		// ARM MCS value set
-		if (S5PC11X_FREQ_TAB  == 0) { // for 1G table
+		if (S5PC11X_FREQ_TAB == 0) { // for 1G table
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
 #if 0 // not using above 1.4GHz
-			if ((prevIndex < 11) && (index >= 11)) {
+			if ((prevIndex < 11) && (index >= 11)) { // index 11 = 200MHz
 #else
-			if ((prevIndex < 9) && (index >= 9)) {
+			if ((prevIndex < 9) && (index >= 9)) { // index 9 = 200MHz
 #endif // end not using above 1.4GHz
+#else // no OC
+			if ((prevIndex < 5) && (index >= 5)) { // index 5 = 200MHz
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
 				ret = __raw_readl(S5P_ARM_MCS);
 				DBG("MDSvalue = %08x\n", ret);
 				ret = (ret & ~(0x3)) | 0x3;
@@ -1002,12 +1006,16 @@ static int s5pc110_target(struct cpufreq_policy *policy,
 #endif
 
 		// ARM MCS value set
-		if (S5PC11X_FREQ_TAB  == 0) { // for 1G table
+		if (S5PC11X_FREQ_TAB == 0) { // for 1G table
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
 #if 0 // not using above 1.4GHz
-			if ((prevIndex >= 11) && (index < 11)) {
+			if ((prevIndex >= 11) && (index < 11)) { // index 11 = 200MHz
 #else
-			if ((prevIndex >= 9) && (index < 9)) {
+			if ((prevIndex >= 9) && (index < 9)) { // index 9 = 200MHz
 #endif // end not using above 1.4GHz
+#else // no OC
+			if ((prevIndex >= 5) && (index < 5)) { // index 5 = 200MHz
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
 				ret = __raw_readl(S5P_ARM_MCS);
 				DBG("MDSvalue = %08x\n", ret);				
 				ret = (ret & ~(0x3)) | 0x1;
