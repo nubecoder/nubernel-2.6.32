@@ -29,6 +29,9 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-09-2011:
+Branched to 'feature-patches'.
+
+07-09-2011:
 Removed original 1.6GHz overclock comments (too messy).
 Cleaning up some comments of the original 1.6GHz overclock.
 Ensure FM is disabled for Voodoo sound in defconfig.
