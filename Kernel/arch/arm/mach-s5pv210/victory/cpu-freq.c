@@ -1077,11 +1077,10 @@ static int __init s5pc110_cpu_init(struct cpufreq_policy *policy)
 	if (policy->cpu != 0)
 		return -EINVAL;
 	policy->cur = policy->min = policy->max = s5pc110_getspeed(0);
+	// forcibly set safe booting frequencies
+	policy->max = 1000000;
+	policy->min = 200000;
 
-	if(policy->max > 1000000)
-		policy->max = 1000000;
-	if(policy->min < 200000)
-		policy->min = 200000;
 	//spin_lock_irqsave(&g_cpufreq_lock, irqflags);
 
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
