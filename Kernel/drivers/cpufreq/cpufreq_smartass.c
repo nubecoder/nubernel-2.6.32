@@ -241,7 +241,7 @@ static void cpufreq_smartass_timer(unsigned long data)
         // (since last frequency change).
         if (load_since_change > cpu_load)
         if (debug_mask & SMARTASS_DEBUG_LOAD) {
-                printk(KERN_INFO "GOV:SmartassT: using load_since_change: %d , current load: %d \n",cpu_load,load_since_change);
+                printk(KERN_INFO "GOV:SmartassT: using load_since_change: %d , current load: %d \n",load_since_change,cpu_load);
                 cpu_load = load_since_change;
         }
 #endif
