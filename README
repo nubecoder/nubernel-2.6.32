@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+07-11-2011:
+Fixing a copy / paste fail.
+
 07-10-2011:
 Some more debugging cleanup in smartass governor (GOV: tag).
 
