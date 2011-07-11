@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+07-10-2011:
+Some more debugging cleanup in smartass governor (GOV: tag).
+
 07-09-2011:
 Added Froyo RDNIS patch (mkasick via Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/eb71a0a3cd074d8dba0b401a293f5d5a275d27df).
 Enabled sched_autogroup in defconfig.
