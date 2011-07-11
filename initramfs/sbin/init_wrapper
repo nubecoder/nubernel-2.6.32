@@ -59,6 +59,8 @@ BASH_FOUND=$(ls -l "/system/bin/sh" | grep "system/bin/bash")
 if [ ! "$BASH_FOUND" = "" ] && [ -f "/system/bin/bash" ]; then
 	rm -f /bin/sh
 	rm -f /sbin/sh
+	ln -s /bin/sh /system/bin/sh
+	ln -s /sbin/sh /system/bin/sh
 fi
 
 # Prevent certain malware apps (DroidDream)
