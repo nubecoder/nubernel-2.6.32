@@ -28,6 +28,10 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+07-14-2011:
+Applied necessary defconfig changes for new keyboard patch.
+Applied new Column delay sysfs keyboard patch (mkasick: http://forum.xda-developers.com/showthread.php?t=975611).
+
 07-11-2011:
 Fixing a copy / paste fail.
 Forcibly setting safe booting frequencies.
