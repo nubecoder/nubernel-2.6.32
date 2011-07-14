@@ -79,14 +79,19 @@ static u32 prevmask[KEYPAD_COLUMNS];
 
 static int in_sleep = 0;
 
-#define TIMER_DELAY_DEFAULT (3*HZ/100)
-#define TIMER_DELAY_MAX     HZ
+#define COLUMN_DELAY_DEFAULT KEYPAD_DELAY
+#define COLUMN_DELAY_MAX     (1000000/(HZ*KEYPAD_COLUMNS))
+#define TIMER_DELAY_DEFAULT  (3*HZ/100)
+#define TIMER_DELAY_MAX      HZ
 
-#ifdef CONFIG_KEYPAD_S3C_VICTORY_EXPORT_TIMER_DELAY
-#define TIMER_DELAY timer_delay
-static unsigned long timer_delay = TIMER_DELAY_DEFAULT;
+#ifdef CONFIG_KEYPAD_S3C_VICTORY_EXPORT_DELAYS
+#define COLUMN_DELAY column_delay
+#define TIMER_DELAY  timer_delay
+static unsigned long column_delay = COLUMN_DELAY_DEFAULT;
+static unsigned long timer_delay  = TIMER_DELAY_DEFAULT;
 #else
-#define TIMER_DELAY TIMER_DELAY_DEFAULT
+#define COLUMN_DELAY COLUMN_DELAY_DEFAULT
+#define TIMER_DELAY  TIMER_DELAY_DEFAULT
 #endif
 
 //static ssize_t keyshort_test(struct device *dev, struct device_attribute *attr, char *buf);
@@ -183,7 +188,7 @@ static int keypad_scan(void)
 
 		writel(cval, key_base+S3C_KEYIFCOL);             // make that Normal output.
 								 // others shuld be High-Z output.
-		udelay(KEYPAD_DELAY);
+		udelay(COLUMN_DELAY);
 
 		// rval = ~(readl(key_base+S3C_KEYIFROW)) & ((1<<KEYPAD_ROWS)-1) ;
 
@@ -669,33 +674,37 @@ static DEVICE_ATTR(key_pressed, S_IRUGO | S_IWUSR | S_IWOTH | S_IXOTH, keyshort_
 static DEVICE_ATTR(brightness, S_IRUGO | S_IWUSR | S_IWOTH | S_IXOTH, NULL, key_led_control);
 // nandu froyo merge
 
-#ifdef CONFIG_KEYPAD_S3C_VICTORY_EXPORT_TIMER_DELAY
-static ssize_t timer_delay_show(struct device *dev,
-                                struct device_attribute *attr, char *buf)
-{
-	return snprintf(buf, PAGE_SIZE, "%lu\n", timer_delay);
-}
+#ifdef CONFIG_KEYPAD_S3C_VICTORY_EXPORT_DELAYS
+#define DELAY_ATTR(delay, delay_max) \
+static ssize_t delay##_show(struct device *dev, \
+                            struct device_attribute *attr, char *buf) \
+{ \
+	return snprintf(buf, PAGE_SIZE, "%lu\n", delay); \
+} \
+\
+static ssize_t delay##_store(struct device *dev, \
+                             struct device_attribute *attr, \
+                             const char *buf, size_t count) \
+{ \
+	unsigned long val; \
+	int res; \
+\
+	if ((res = strict_strtoul(buf, 10, &val)) < 0) \
+		return res; \
+\
+	if (val == 0 || val > delay_max) \
+		return -EINVAL; \
+\
+	delay = val; \
+\
+	return count; \
+} \
+\
+static DEVICE_ATTR(delay, S_IRUGO | S_IWUSR, delay##_show, delay##_store);
 
-static ssize_t timer_delay_store(struct device *dev,
-                                 struct device_attribute *attr,
-                                 const char *buf, size_t count)
-{
-	unsigned long val;
-	int res;
-
-	if ((res = strict_strtoul(buf, 10, &val)) < 0)
-		return res;
-
-	if (val == 0 || val > TIMER_DELAY_MAX)
-		return -EINVAL;
-
-	timer_delay = val;
-
-	return count;
-}
-
-static DEVICE_ATTR(timer_delay, S_IRUGO | S_IWUSR, timer_delay_show,
-                   timer_delay_store);
+DELAY_ATTR(column_delay, COLUMN_DELAY_MAX)
+DELAY_ATTR(timer_delay,  TIMER_DELAY_MAX)
+#undef DELAY_ATTR
 #endif
 
 
@@ -880,7 +889,10 @@ static int __init s3c_keypad_probe(struct platform_device *pdev)
         pr_err("Failed to create device file(%s)!\n", dev_attr_brightness.attr.name);
   	}
 
-#ifdef CONFIG_KEYPAD_S3C_VICTORY_EXPORT_TIMER_DELAY
+#ifdef CONFIG_KEYPAD_S3C_VICTORY_EXPORT_DELAYS
+	if (device_create_file(&pdev->dev, &dev_attr_column_delay) < 0)
+		pr_err("Unable to create \"%s\".\n", dev_attr_column_delay.attr.name);
+
 	if (device_create_file(&pdev->dev, &dev_attr_timer_delay) < 0)
 		pr_err("Unable to create \"%s\".\n", dev_attr_timer_delay.attr.name);
 #endif
@@ -921,7 +933,8 @@ static int s3c_keypad_remove(struct platform_device *pdev)
 		keypad_clock = NULL;
 	}
 
-#ifdef CONFIG_KEYPAD_S3C_VICTORY_EXPORT_TIMER_DELAY
+#ifdef CONFIG_KEYPAD_S3C_VICTORY_EXPORT_DELAYS
+	device_remove_file(&pdev->dev, &dev_attr_column_delay);
 	device_remove_file(&pdev->dev, &dev_attr_timer_delay);
 #endif
 	input_unregister_device(input_dev);
