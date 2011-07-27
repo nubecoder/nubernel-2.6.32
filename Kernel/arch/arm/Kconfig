@@ -827,7 +827,7 @@ if ARCH_S5PC1XX
 source "arch/arm/mach-s5pc100/Kconfig"
 endif
 
-+source "arch/arm/mach-s5pv210/Kconfig"
+source "arch/arm/mach-s5pv210/Kconfig"
 
 source "arch/arm/mach-lh7a40x/Kconfig"
 
