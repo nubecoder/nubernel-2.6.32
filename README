@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-28-2011:
+Reverting "ARM: SAMSUNG: Fix build warnings because of unused codes" (commit ID: bace7f7).
 ARM: 6891/1: prevent heap corruption in OABI semtimedop (Dan Rosenberg: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=0f22072ab50cac7983f9660d33974b45184da4f9).
 ASOC: delay after turning on codec (sh21.won: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=44aec062d82fe3ca2ab8bdf1ee0c5bbd8a85e4b2).
 S5PC11X: USB: Remove unnecessary code for USB Tethering (sb223.kang: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=cffd6dc859595618113470a1cf2dbb574813f10e).
