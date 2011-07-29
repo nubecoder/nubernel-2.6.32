@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+07-29-2011:
+Changes to update_modules.sh to exclude dpram.ko (was causing "no service" when included).
+
 07-09-2011:
 Added update_modules.sh to scripts folder (copy modules to initramfs/lib/modules/).
 Added kmsg.sh to scripts folder (wifi adb /proc/kmsg logging).
