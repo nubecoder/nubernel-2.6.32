@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+07-29-2011:
+Raising internal voltages (DVSINT1) to 1125 for OC stability at 1.4GHz.
+
 07-11-2011:
 Forcibly setting safe booting frequencies.
 
