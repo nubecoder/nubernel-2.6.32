@@ -526,7 +526,7 @@ static void check_recharging_bat(int bat_vol)
 	static int cnt_backup = 0;
 
 	if (s3c_bat_info.bat_info.batt_is_full)
-		dev_info(dev, "check recharge : bat_vol = %d \n", __func__, bat_vol);
+		dev_info(dev, "%s: check recharge : bat_vol = %d \n", __func__, bat_vol);
 
 	if (s3c_bat_info.bat_info.batt_is_full && 
 		!s3c_bat_info.bat_info.charging_enabled &&

@@ -28,6 +28,79 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+07-28-2011:
+Reverting "binder: Move debugging information from procfs to debugfs" (commit ID: 913e4e4).
+Changes to defconfig for BFQ scheduler.
+Added BFQ scheduler (Paolo Valente via Bonsai: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/779e2750f28dc8b92a3f723a60a460764ce49ca2).
+Add defines to bcm4329 Makefile (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/fa184a719ff704c7468b67f43c3599593013905d).
+Backport bcm4329 wifi driver from 2.6.35 (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/8e6691ae6a9548876eb35fff16f9df79bd47e4bb).
+Reverting "ARM: SAMSUNG: Fix build warnings because of unused codes" (commit ID: bace7f7).
+ARM: 6891/1: prevent heap corruption in OABI semtimedop (Dan Rosenberg: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=0f22072ab50cac7983f9660d33974b45184da4f9).
+ASOC: delay after turning on codec (sh21.won: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=44aec062d82fe3ca2ab8bdf1ee0c5bbd8a85e4b2).
+S5PC11X: USB: Remove unnecessary code for USB Tethering (sb223.kang: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=cffd6dc859595618113470a1cf2dbb574813f10e).
+ARM: S5PC11X: reduce waiting time of CDMA modem power-off (Thomas Ryu: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=fba9fb35d8b6cc8789ab020983457988c04d2593).
+net: wireless: bcm4329: Disable wake irq at driver stop (Dmitry Shmidt: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=6ce9cbeef4cb7074beffbd5652b0943c8aec1246).
+
+07-27-2011:
+ASOC: update CDMA specific clock settings (Thomas Ryu via Bonsai: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/b2938ff3ea380a43fc4c26953f29b1bf39e86846).
+staging: binder: Fix use of uninitialized variable (Nick Kralevich: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=4ef78fa8848b4a6fc60268431492d1502454fb5e).
+ARM: herring: Increase delay to 200 ms in wlan power on (Dmitry Shmidt: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=9e3aca5aed77290075be4ce59ff1a0feabfa2ab3).
+shmem: reduce pagefault lock contention (Shaohua Li: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=ff36b801624d02a876bb7deded6ab860ea3503f2).
+android-common: include linux/slab.h (Arve Hjønnevåg: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=eaa7ea1e2bbe79f6af8bb282288ea33ec3149535).
+android-common: Fix slab.h includes for 2.6.34-rc4 (Colin Cross: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0981b8f4d278b6d1dcf2dee7185e79c4f1e427d5).
+binder: Move debugging information from procfs to debugfs (Arve Hjønnevåg: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=194b82978b022c0b789fcabf7acad49622c7d126).
+binder: Use seq_file for debug interface (Arve Hjønnevåg: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0d03f6594a5b06d1ff4c307a294e5ec079c0167d).
+Bluetooth: Update sec_level/auth_type for already existing connections (Ville Tervo: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=045309820afe047920a50de25634dab46a1e851d).
+ARM: SAMSUNGy: fix broken timer irq base (Marek Szyprowski: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=1131379b48228afb32fa626fb27586a02246acf9).
+Bluetooth: Make hci_send_sco() void (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0d861d8b8edd139a9b291cb262d08dec8dc3922d).
+Bluetooth: Fix ACL MTU issue (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=d1daa091e8612f3aab14d28b5836375fafe155e1).
+Update plat-samsung clock code to mainline kernel (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/41da27b00ad7b38f1c7298b7f31146bc01549a9c).
+Quiet warning in samsung_mipi driver config (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/05a923aaad791c21e2425da19578352efd3d01d1).
+Clean up compile warnings (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/dbb52269d6cbd042a6ebb041c7657ad8fd01afc0).
+Quiet compiler warnings (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/f752a3101dd481601195a4d915a75c1cfa90b454).
+Fix a couple of compile errors and debug message formating (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/f2f5b3d4f524cb0b4da89250542176826ab0d5c2).
+Quiet compile warning (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/55f8dd06d3edc6f70195227efc89fb5f11cd11cd).
+Fixing a Samsung typo in arch/arm/Kconfig.
+Fix tty low latency causing an interrupt during a spinlock (gzub via Bonsai: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/f964f1e655fb496d78ffcf0f3ffd731d4c4070b8).
+ARM: SAMSUNG: Add a workaround for get_clock() for serial driver (Marek Szyprowski: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=7cf4b482f06df0b590a9bc1561a5a81d67e0fe4c).
+ARM: S5P: Bug fix on errors of build with CONFIG_PREEMPT_NONE (SeungChull Suh: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=4341f9b38fe33aab51439ae59593e149a6f61d9f).
+ARM: SAMSUNG: Fix build warnings because of unused codes (Kukjin Kim: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=1a95036465e6abdcb639f0d7bb1ec612663caf5b).
+
+07-26-2011:
+ARM: 5939/1: ARM: Add option CMDLINE_FORCE to force usage of the in-kernel cmdline (Alexander Holler: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=92d2040d78f662f634efce7a5106bbed70b8708b).
+[HZ] if S5P_HIGH_RES_TIMER options is enable, use 256 HZ (Choi Jong-hwan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=6eced90427618b7f62f076d1407fa95633f7d43f).
+ASoC: Allow reporting of NULL jacks (Mark Brown: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=3a278a0c65c924950c4744ba451a110998998044).
+ASoC: Add a notifier for jack status changes (Mark Brown: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=d5021ec9fc32edc6f512c2375923d757e9825f6a).
+ASoC: Move dereference after NULL test (Julia Lawall: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=4f066173fe8deb8874f41917e5d26ea2e0c46e3b).
+ASoC: Add jack_status_check callback function for GPIO jacks (Joonyoung Shim: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=c871a05315d1a76034ea06feeda92081e1d608bf).
+ARM: 6318/1: ftrace: fix and update dynamic ftrace (Rabin Vincent: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=3b6c223b1b97ad60bbb0f4efda57d649414ac2a2).
+ARM: 6314/1: ftrace: allow build without frame pointers on ARM (Rabin Vincent: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=09bfafac3e237415cc4b6adde49f9f28b3a42659).
+ARM: 6316/1: ftrace: add Thumb-2 support (Rabin Vincent: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=a3ba87a614992500cf2c47e6f788e74a971ce91f).
+ARM: 6315/1: ftrace: add ENDPROC annotations (Rabin Vincent: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=72fa62fa5dff0e2e06491dd99c429adb137f299b).
+ARM: 6653/1: bitops: Use BX instead of MOV PC,LR (Dave Martin: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=3ba6e69ad887f8a814267ed36fd4bfbddf8855a9).
+ARM: avoid marking decompressor .stack section as having contents (Russell King: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=b0c4d4ee4e4f13fa3f017c00319a18c1ea31b7d7).
+ARM: improve compiler's ability to optimize page tables (Russell King: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=c0ba10b512eb2e2a3888b6e6cc0e089f5e7a191b).
+ARM: 6490/1: MM: bugfix: initialize spinlock for init_mm.context (MyungJoo Ham: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=28c22d7dc99486ef4186dde41d5260e75b3076f7).
+ARM: Fix csum_partial_copy_from_user() (Russell King: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=4609a179c97ae60fef173547a9bbb214359808ce).
+ARM: 6519/1: kuser: Fix incorrect cmpxchg syscall in kuser helpers (Dave Martin: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=55afd264cdd5d5848753e90884ed596e11bce0ff).
+ARM: 6468/1: backtrace: fix calculation of thread stack base (Will Deacon: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=d33aadbf8e9ba0b844c2a4a03723969c913ab03a).
+
+07-24-2011:
+ARM: S5PV210: Fix sysdev related warning messages (gzub via Bonsai: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/6da2a347b74d8abf5e01b8fbfa8fd58ac00d132c).
+The new jhash implementation (Jozsef Kadlecsik: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=60d509c823cca21e77d537bd356785f7cfe8f0d1).
+ipv6: Prepare the tree for un-inlined jhash (Jozsef Kadlecsik: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=82a39eb6b3829a02e235656feddb4542517fcabc).
+
+07-23-2011:
+ARM: only allow 26-bit user mode on CPUs that support it (Dima Zavin: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=049a7464f34e2d8c73646d2571f1935f19ac694c).
+USB: android gadget: mass storage: Fix format issue for Vista Host (Velempati Chiranjeevi: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=fd515513a38b53d2b961cbbc9c4fdaeedec74d44).
+USB: gadget: f_mass_storage: Defer handling interface changes until it is safe. (Mike Lockwood: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=0fc7f96b5be344f7a5499e29b30f245fb857f4a2).
+
+07-22-2011:
+USB: gadget: android: mass_storage: Use spin_lock_irqsave/spin_unlock_irqrestore (Arve Hjønnevåg: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=3274abc33ec2c170acd6fd2732c271ad9dd0b17f).
+
+07-21-2011:
+USB: gadget: f_mass_storage: Flush writes after every 4 MB. (Mike Lockwood: http://android.git.kernel.org/?p=kernel/common.git;a=commitdiff;h=5cf1b82507ed24e0ee9f4f2f3ce6dbcb82b86fa0).
+
 07-14-2011:
 Applied necessary defconfig changes for new keyboard patch.
 Applied new Column delay sysfs keyboard patch (mkasick: http://forum.xda-developers.com/showthread.php?t=975611).

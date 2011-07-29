@@ -24,7 +24,7 @@
 
 #include <linux/types.h>
 
-#if defined CONFIG_S5PV210_VICTORY
+#if defined (CONFIG_S5PV210_VICTORY)
 enum rfkill_state {
         RFKILL_STATE_SOFT_BLOCKED = 0,  /* Radio output blocked */
         RFKILL_STATE_UNBLOCKED    = 1,  /* Radio output allowed */
@@ -120,7 +120,7 @@ enum rfkill_user_states {
 	RFKILL_USER_STATE_HARD_BLOCKED	= RFKILL_STATE_HARD_BLOCKED,
 };
 
-#if CONFIG_S5PV210_ATLAS		 
+#if defined (CONFIG_S5PV210_ATLAS)
 #undef RFKILL_STATE_SOFT_BLOCKED
 #undef RFKILL_STATE_UNBLOCKED
 #undef RFKILL_STATE_HARD_BLOCKED
