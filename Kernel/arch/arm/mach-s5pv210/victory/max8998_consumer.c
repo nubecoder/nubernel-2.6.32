@@ -86,15 +86,15 @@ enum PMIC_VOLTAGE {
 static const unsigned int frequency_match_1GHZ[][4] = {
 /* frequency, Mathced VDD ARM voltage , Matched VDD INT*/
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
-	{1400000, 1375, 1100, 0}, //WARNING: out of spec voltage for VDD_ARM
-	{1300000, 1325, 1100, 1}, //WARNING: out of spec voltage for VDD_ARM
-	{1200000, 1300, 1100, 2},
-	{1120000, 1275, 1100, 3},
-	{1000000, 1250, 1100, 4},
-	{900000, 1225, 1100, 5},
-	{800000, 1200, 1100, 6},
-	{600000, 1150, 1100, 7},
-	{400000, 1050, 1100, 8},
+	{1400000, 1375, 1125, 0}, //WARNING: out of spec voltage for VDD_ARM
+	{1300000, 1325, 1125, 1}, //WARNING: out of spec voltage for VDD_ARM
+	{1200000, 1300, 1125, 2},
+	{1120000, 1275, 1125, 3},
+	{1000000, 1250, 1125, 4},
+	{900000, 1225, 1125, 5},
+	{800000, 1200, 1125, 6},
+	{600000, 1150, 1125, 7},
+	{400000, 1050, 1125, 8},
 	{200000, 950, 1000, 9},
 	{100000, 950, 1000, 10},
 #else // no OC
@@ -111,15 +111,15 @@ static const unsigned int frequency_match_1GHZ[][4] = {
 unsigned int frequency_voltage_tab[][3] = {
 /* frequency, Mathced VDD ARM voltage , Matched VDD INT*/
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
-	{1400000, 1375, 1100}, //WARNING: out of spec voltage for VDD_ARM
-	{1300000, 1325, 1100}, //WARNING: out of spec voltage for VDD_ARM
-	{1200000, 1300, 1100},
-	{1120000, 1275, 1100},
-	{1000000, 1250, 1100},
-	{900000, 1225, 1100},
-	{800000, 1200, 1100},
-	{600000, 1150, 1100},
-	{400000, 1050, 1100},
+	{1400000, 1375, 1125}, //WARNING: out of spec voltage for VDD_ARM
+	{1300000, 1325, 1125}, //WARNING: out of spec voltage for VDD_ARM
+	{1200000, 1300, 1125},
+	{1120000, 1275, 1125},
+	{1000000, 1250, 1125},
+	{900000, 1225, 1125},
+	{800000, 1200, 1125},
+	{600000, 1150, 1125},
+	{400000, 1050, 1125},
 	{200000, 950, 1000},
 	{100000, 950, 1000},
 #else // no OC
@@ -223,7 +223,7 @@ static const unsigned int dvs_arm_voltage_set[][2] = {
 	{DVSARM2, 1200},
 	{DVSARM3, 1050},
 	{DVSARM4, 950},
-	{DVSINT1, 1100},
+	{DVSINT1, 1125},
 	{DVSINT2, 1000},
 #else // no OC
 	{DVSARM1, 1250},

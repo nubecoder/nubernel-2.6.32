@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+07-29-2011:
+Raising internal voltages (DVSINT1) to 1125 for OC stability at 1.4GHz.
+
 07-28-2011:
 Reverting "binder: Move debugging information from procfs to debugfs" (commit ID: 913e4e4).
 Changes to defconfig for BFQ scheduler.
