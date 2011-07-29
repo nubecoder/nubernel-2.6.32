@@ -108,6 +108,10 @@ Applied new Column delay sysfs keyboard patch (mkasick: http://forum.xda-develop
 07-11-2011:
 Fixing a copy / paste fail.
 Forcibly setting safe booting frequencies.
+Added more credits to init_wrapper (as Ali G would say "Respect").
+Setting permissions for dbpart.sh (Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/31939b9bf5b04219f03edd37102513ef0fa4333f).
+Changes to init_wrapper related to bash as default shell.
+Added dual boot (boot from sdcard) support (Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/a5dfd9f369ae4f2c90c1e7fc7d8995f88f72bd01).
 
 07-10-2011:
 Some more debugging cleanup in smartass governor (GOV: tag).

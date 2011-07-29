@@ -6,8 +6,9 @@
 # 2011 nubecoder
 # http://www.nubecoder.com/
 #
-# Modeled after Bonsai's init_wrapper script
-# Bits taken from DRockstar's Clean Kernel sdx.sh script
+# Bonsai's init_wrapper script used as a base
+# Other bits taken from the following people:
+# Tanimn, DRockstar, Rodderik
 
 /sbin/busybox mount -o remount,rw / /
 /sbin/busybox mount -o remount,rw /dev/block/stl9 /system
@@ -59,6 +60,8 @@ BASH_FOUND=$(ls -l "/system/bin/sh" | grep "system/bin/bash")
 if [ ! "$BASH_FOUND" = "" ] && [ -f "/system/bin/bash" ]; then
 	rm -f /bin/sh
 	rm -f /sbin/sh
+	ln -s /bin/sh /system/bin/sh
+	ln -s /sbin/sh /system/bin/sh
 fi
 
 # Prevent certain malware apps (DroidDream)
