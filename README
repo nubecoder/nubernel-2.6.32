@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-28-2011:
+Changes to defconfig for BFQ scheduler.
 Added BFQ scheduler (Paolo Valente via Bonsai: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/779e2750f28dc8b92a3f723a60a460764ce49ca2).
 Add defines to bcm4329 Makefile (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/fa184a719ff704c7468b67f43c3599593013905d).
 Backport bcm4329 wifi driver from 2.6.35 (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/8e6691ae6a9548876eb35fff16f9df79bd47e4bb).
