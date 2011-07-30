@@ -29,6 +29,10 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-29-2011:
+More changes to update_modules.sh for (aparently) broken modules, maybe I'm stripping too much, will figure this out later.
+Branched to 'feature-misc'.
+
+07-29-2011:
 Changes to update_modules.sh to exclude dpram.ko (was causing "no service" when included).
 Raising internal voltages (DVSINT1) to 1125 for OC stability at 1.4GHz.
 
