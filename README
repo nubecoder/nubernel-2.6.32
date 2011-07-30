@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+07-30-2011:
+Branched to 'feature-patches'.
+
 07-29-2011:
 More changes to update_modules.sh for (aparently) broken modules, maybe I'm stripping too much, will figure this out later.
 Branched to 'feature-misc'.
