@@ -54,7 +54,7 @@ static cpumask_t work_cpumask;
 static unsigned int suspended = 0;
 static unsigned int enabled = 0;
 
-static unsigned int suspendfreq = 300000;
+static unsigned int suspendfreq = 800000;
 
 static unsigned int samples = 0;
 
@@ -65,8 +65,8 @@ static unsigned int samples = 0;
 #define DEFAULT_MIN_SAMPLE_TIME 50000;
 static unsigned long min_sample_time;
 
-static unsigned int freq_threshold = 1800000;
-static unsigned int resume_speed = 800000;
+static unsigned int freq_threshold = 1200000;
+static unsigned int resume_speed = 1000000;
 
 static int cpufreq_governor_interactivex(struct cpufreq_policy *policy,
 		unsigned int event);

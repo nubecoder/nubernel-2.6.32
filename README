@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 07-29-2011:
+Changes to interactiveX governor for compatibility with Epic 4G.
 Changes to defconfig for interactiveX governor.
 Added interactiveX governor. This is a the interactive governor modified for suspend/wake by imoseyon. (imoseyon via dalingrin: https://github.com/dalingrin/nook_kernel/commit/f452fb192f3a3b70b4e5222cfbb5e720a72784ad).
 Branched to 'feature-governors'.
