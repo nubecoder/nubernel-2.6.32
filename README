@@ -28,6 +28,12 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+07-30-2011:
+Backport lowmemory killer from 2.6.35 samsung.git (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/cdbbec98c4e953cc90a86d7cf86c90baaf6a55dc).
+Updated BFQ-v2 to BFQ-v2-r1 (Paolo Valente via netarchy: https://github.com/netarchy/nexus-s/commit/2286f36fa687b3ef7c8e354d9385d16e75c00e15).
+Updated BFQ to v2 (thalamus via netarchy: https://github.com/netarchy/nexus-s/commit/bd88709fedb771506b72b4c0c524a53651dd5d3b).
+Branched to 'feature-patches'.
+
 07-29-2011:
 More changes to update_modules.sh for (aparently) broken modules, maybe I'm stripping too much, will figure this out later.
 Branched to 'feature-misc'.
