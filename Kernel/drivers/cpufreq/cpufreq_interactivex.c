@@ -56,8 +56,6 @@ static unsigned int enabled = 0;
 
 static unsigned int suspendfreq = 800000;
 
-static unsigned int samples = 0;
-
 /*
  * The minimum ammount of time to spend at a frequency before we can ramp down,
  * default is 50ms.
@@ -65,7 +63,6 @@ static unsigned int samples = 0;
 #define DEFAULT_MIN_SAMPLE_TIME 50000;
 static unsigned long min_sample_time;
 
-static unsigned int freq_threshold = 1200000;
 static unsigned int resume_speed = 1000000;
 
 static int cpufreq_governor_interactivex(struct cpufreq_policy *policy,
@@ -109,22 +106,12 @@ static void cpufreq_interactivex_timer(unsigned long data)
 		if (nr_running() < 1)
 			return;
 
-		// imoseyon - when over 1.8Ghz jump less
-		if (policy->max > freq_threshold) {
-			if (samples > 0) {
-			  target_freq = policy->max;
-			  samples = 0;
-			} else {
-			  samples++;
-			  target_freq = freq_threshold;
-			}
-		} else target_freq = policy->max;
+		target_freq = policy->max;
 
 		cpumask_set_cpu(data, &work_cpumask);
 		queue_work(up_wq, &freq_scale_work);
 		return;
 	}
-	samples = 0; // reset sample counter
 	/*
 	 * There is a window where if the cpu utlization can go from low to high
 	 * between the timer expiring, delta_idle will be > 0 and the cpu will
@@ -210,7 +197,7 @@ static void cpufreq_interactivex_freq_change_time_work(struct work_struct *work)
 	cpumask_t tmp_mask = work_cpumask;
 
 	for_each_cpu(cpu, tmp_mask) {
-		if (!suspended && (target_freq == policy->max || target_freq == freq_threshold)) {
+		if (!suspended && target_freq == policy->max) {
 			if (nr_running() == 1) {
 				cpumask_clear_cpu(cpu, &work_cpumask);
 				return;
