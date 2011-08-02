@@ -61,6 +61,7 @@ unsigned int s5pc11x_cpufreq_index = 4;
 static char cpufreq_governor_name[CPUFREQ_NAME_LEN] = "conservative";// default governor
 static char userspace_governor[CPUFREQ_NAME_LEN] = "userspace";
 static char conservative_governor[CPUFREQ_NAME_LEN] = "conservative";
+static char transitional_governor[CPUFREQ_NAME_LEN] = "transitional";
 int s5pc11x_clk_dsys_psys_change(int index);
 int s5pc11x_armclk_set_rate(struct clk *clk, unsigned long rate);
 
@@ -587,6 +588,18 @@ int is_conservative_gov(void)
 	//unsigned long irqflags;
 	//spin_lock_irqsave(&g_cpufreq_lock, irqflags);
 	if(!strnicmp(cpufreq_governor_name, conservative_governor, CPUFREQ_NAME_LEN)) {
+		ret = 1;
+	}
+	// spin_unlock_irqrestore(&g_cpufreq_lock, irqflags);
+	return ret;
+}
+
+int is_transitional_gov(void)
+{
+	int ret = 0;
+	//unsigned long irqflags;
+	//spin_lock_irqsave(&g_cpufreq_lock, irqflags);
+	if(!strnicmp(cpufreq_governor_name, transitional_governor, CPUFREQ_NAME_LEN)) {
 		ret = 1;
 	}
 	// spin_unlock_irqrestore(&g_cpufreq_lock, irqflags);
