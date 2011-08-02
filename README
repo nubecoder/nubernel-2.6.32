@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-02-2011:
+A bit of cleanup in cpu-freq.c.
 The transitional governor is the default.
 Fixing up the transitional governor's DVFS lock related code.
 Minor changes to interactiveX governor (whitespace, debugging fixup, etc).

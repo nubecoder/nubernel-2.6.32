@@ -573,36 +573,27 @@ int s5pc110_pm_target(unsigned int target_freq)
 int is_userspace_gov(void)
 {
 	int ret = 0;
-	//unsigned long irqflags;
-	//spin_lock_irqsave(&g_cpufreq_lock, irqflags);
 	if(!strnicmp(cpufreq_governor_name, userspace_governor, CPUFREQ_NAME_LEN)) {
 		ret = 1;
 	}
-	// spin_unlock_irqrestore(&g_cpufreq_lock, irqflags);
 	return ret;
 }
 
 int is_conservative_gov(void)
 {
 	int ret = 0;
-	//unsigned long irqflags;
-	//spin_lock_irqsave(&g_cpufreq_lock, irqflags);
 	if(!strnicmp(cpufreq_governor_name, conservative_governor, CPUFREQ_NAME_LEN)) {
 		ret = 1;
 	}
-	// spin_unlock_irqrestore(&g_cpufreq_lock, irqflags);
 	return ret;
 }
 
 int is_transitional_gov(void)
 {
 	int ret = 0;
-	//unsigned long irqflags;
-	//spin_lock_irqsave(&g_cpufreq_lock, irqflags);
 	if(!strnicmp(cpufreq_governor_name, transitional_governor, CPUFREQ_NAME_LEN)) {
 		ret = 1;
 	}
-	// spin_unlock_irqrestore(&g_cpufreq_lock, irqflags);
 	return ret;
 }
 
