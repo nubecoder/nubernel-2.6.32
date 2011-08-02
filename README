@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-02-2011:
+Moving conservative governor out of victory folder.
 Fixing up display name of InteractiveX in default governor selection.
 
 08-01-2011:
