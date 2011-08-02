@@ -197,23 +197,31 @@ static void cpufreq_interactivex_freq_change_time_work(struct work_struct *work)
 	cpumask_t tmp_mask = work_cpumask;
 
 	for_each_cpu(cpu, tmp_mask) {
+		printk(KERN_INFO "GOV:InteractiveX: early target_freq: %d \n",target_freq);
 		if (!suspended && target_freq == policy->max) {
 			if (nr_running() == 1) {
 				cpumask_clear_cpu(cpu, &work_cpumask);
 				return;
 			}
+			printk(KERN_INFO "GOV:InteractiveX: !suspended: using policy->max (target_freq): %d \n",target_freq);
 			__cpufreq_driver_target(policy, target_freq, CPUFREQ_RELATION_H);
 		} else {
 			if (!suspended) {
 				target_freq = cpufreq_interactivex_calc_freq(cpu);
+				printk(KERN_INFO "GOV:InteractiveX: !suspended: using target_freq: %d \n",target_freq);
 				__cpufreq_driver_target(policy, target_freq, CPUFREQ_RELATION_L);
 			} else {  // special care when suspended
 				if (target_freq > suspendfreq) {
+					printk(KERN_INFO "GOV:InteractiveX: suspended: using suspendfreq: %d \n",suspendfreq);
 					__cpufreq_driver_target(policy, suspendfreq, CPUFREQ_RELATION_H);
 				} else {
 					target_freq = cpufreq_interactivex_calc_freq(cpu);
-					if (target_freq < policy->cur)
+					printk(KERN_INFO "GOV:InteractiveX: suspended: target_freq: %d \n",target_freq);
+					if (target_freq < policy->cur) {
+						printk(KERN_INFO "GOV:InteractiveX: suspended: using target_freq: %d \n",target_freq);
 						__cpufreq_driver_target(policy, target_freq, CPUFREQ_RELATION_H);
+					}
+					printk(KERN_INFO "GOV:InteractiveX: suspended: not doing anything \n");
 				}
 			}
 		}
