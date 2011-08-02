@@ -34,7 +34,6 @@
 
 #ifdef CONFIG_CPU_S5PV210
 #define DEF_SAMPLING_FREQ_STEP  20
-extern unsigned int s5pc11x_target_frq(unsigned int pred_freq, int flag);
 #else
 #define DEF_SAMPLING_FREQ_STEP 5
 #endif
@@ -388,9 +387,7 @@ extern int dvfs_change_quick;
 static void dbs_check_cpu(struct cpu_dbs_info_s *this_dbs_info)
 {
 	unsigned int load = 0;
-#ifndef CONFIG_CPU_S5PV210
 	unsigned int freq_target;
-#endif
 
 	struct cpufreq_policy *policy;
 	unsigned int j;
@@ -470,7 +467,6 @@ static void dbs_check_cpu(struct cpu_dbs_info_s *this_dbs_info)
 		if (this_dbs_info->requested_freq == policy->max)
 			return;
 
-#ifndef CONFIG_CPU_S5PV210
 		freq_target = (dbs_tuners_ins.freq_step * policy->max) / 100;
 
 		/* max freq cannot be less than 100. But who knows.... */
@@ -478,9 +474,6 @@ static void dbs_check_cpu(struct cpu_dbs_info_s *this_dbs_info)
 			freq_target = 5;
 
 		this_dbs_info->requested_freq += freq_target;
-#else
-		this_dbs_info->requested_freq = s5pc11x_target_frq(this_dbs_info->requested_freq, 1);
-#endif
 
 		if (this_dbs_info->requested_freq > policy->max)
 			this_dbs_info->requested_freq = policy->max;
@@ -496,12 +489,8 @@ static void dbs_check_cpu(struct cpu_dbs_info_s *this_dbs_info)
 	 * policy. To be safe, we focus 10 points under the threshold.
 	 */
 	if (load < (dbs_tuners_ins.down_threshold - 10)) {
-#ifndef CONFIG_CPU_S5PV210
 		freq_target = (dbs_tuners_ins.freq_step * policy->max) / 100;
 		this_dbs_info->requested_freq -= freq_target;
-#else
-		this_dbs_info->requested_freq = s5pc11x_target_frq(this_dbs_info->requested_freq, -1);
-#endif
 		if (this_dbs_info->requested_freq < policy->min)
 			this_dbs_info->requested_freq = policy->min;
 

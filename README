@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-02-2011:
+Allow conservative governor to scale "normally" (removed CPU_S5PV210 specific scaling).
 Moving conservative governor out of victory folder.
 Fixing up display name of InteractiveX in default governor selection.
 
