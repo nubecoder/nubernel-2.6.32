@@ -58,7 +58,7 @@ static spinlock_t g_dvfslock = SPIN_LOCK_UNLOCKED;
 static unsigned int s5pc11x_cpufreq_level = 3;
 unsigned int s5pc11x_cpufreq_index = 4;
 
-static char cpufreq_governor_name[CPUFREQ_NAME_LEN] = "conservative";// default governor
+static char cpufreq_governor_name[CPUFREQ_NAME_LEN] = "transitional";// default governor
 static char userspace_governor[CPUFREQ_NAME_LEN] = "userspace";
 static char conservative_governor[CPUFREQ_NAME_LEN] = "conservative";
 static char transitional_governor[CPUFREQ_NAME_LEN] = "transitional";
