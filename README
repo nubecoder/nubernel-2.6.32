@@ -28,6 +28,21 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+08-02-2011:
+Minor changes to interactiveX governor (whitespace, debugging fixup, etc).
+Changes to defconfig for conservative and transitional governors.
+Removed more CPU_S5PV210 specific code from conservative governor.
+Added transitional governor. This is Samsung's conservative governor for victory, renamed to transitional because it uses transition states for scaling.
+Allow conservative governor to scale "normally" (removed CPU_S5PV210 specific scaling).
+Moving conservative governor out of victory folder.
+Fixing up display name of InteractiveX in default governor selection.
+
+08-01-2011:
+Added some debugging to interactiveX governor.
+Added some error checking to interactiveX governor.
+Fixing a typo in interactiveX governor.
+Removing threshold related code from interactiveX governor (I don't see how this is needed).
+
 07-30-2011:
 Backport lowmemory killer from 2.6.35 samsung.git (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/cdbbec98c4e953cc90a86d7cf86c90baaf6a55dc).
 Updated BFQ-v2 to BFQ-v2-r1 (Paolo Valente via netarchy: https://github.com/netarchy/nexus-s/commit/2286f36fa687b3ef7c8e354d9385d16e75c00e15).
@@ -35,10 +50,12 @@ Updated BFQ to v2 (thalamus via netarchy: https://github.com/netarchy/nexus-s/co
 Branched to 'feature-patches'.
 
 07-29-2011:
+Changes to interactiveX governor for compatibility with Epic 4G.
+Changes to defconfig for interactiveX governor.
+Added interactiveX governor. This is a the interactive governor modified for suspend/wake by imoseyon. (imoseyon via dalingrin: https://github.com/dalingrin/nook_kernel/commit/f452fb192f3a3b70b4e5222cfbb5e720a72784ad).
+Branched to 'feature-governors'.
 More changes to update_modules.sh for (aparently) broken modules, maybe I'm stripping too much, will figure this out later.
 Branched to 'feature-misc'.
-
-07-29-2011:
 Changes to update_modules.sh to exclude dpram.ko (was causing "no service" when included).
 Raising internal voltages (DVSINT1) to 1125 for OC stability at 1.4GHz.
 
