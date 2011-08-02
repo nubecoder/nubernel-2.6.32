@@ -68,9 +68,15 @@ extern unsigned int S5PC11X_MAXFREQLEVEL;
 
 extern unsigned int s5pc11x_target_frq(unsigned int pred_freq, int flag);
 extern int s5pc110_pm_target(unsigned int target_freq);
+extern int is_performance_gov(void);
+extern int is_powersave_gov(void);
+extern int is_userspace_gov(void);
+extern int is_ondemand_gov(void);
 extern int is_conservative_gov(void);
 extern int is_transitional_gov(void);
-extern int is_userspace_gov(void);
+extern int is_interactive_gov(void);
+extern int is_interactivex_gov(void);
+extern int is_smartass_gov(void);
 extern void set_dvfs_target_level(enum freq_level_states freq_level);
 extern int set_voltage(enum perf_level p_lv);
 extern int set_voltage_dvs(enum perf_level p_lv);

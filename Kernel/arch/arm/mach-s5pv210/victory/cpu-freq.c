@@ -59,9 +59,15 @@ static unsigned int s5pc11x_cpufreq_level = 3;
 unsigned int s5pc11x_cpufreq_index = 4;
 
 static char cpufreq_governor_name[CPUFREQ_NAME_LEN] = "transitional";// default governor
+static char performance_governor[CPUFREQ_NAME_LEN] = "performance";
+static char powersave_governor[CPUFREQ_NAME_LEN] = "powersave";
 static char userspace_governor[CPUFREQ_NAME_LEN] = "userspace";
+static char ondemand_governor[CPUFREQ_NAME_LEN] = "ondemand";
 static char conservative_governor[CPUFREQ_NAME_LEN] = "conservative";
 static char transitional_governor[CPUFREQ_NAME_LEN] = "transitional";
+static char interactive_governor[CPUFREQ_NAME_LEN] = "interactive";
+static char interactivex_governor[CPUFREQ_NAME_LEN] = "interactiveX";
+static char smartass_governor[CPUFREQ_NAME_LEN] = "smartass";
 int s5pc11x_clk_dsys_psys_change(int index);
 int s5pc11x_armclk_set_rate(struct clk *clk, unsigned long rate);
 
@@ -570,33 +576,69 @@ int s5pc110_pm_target(unsigned int target_freq)
 	return ret;
 }
 
+int is_performance_gov(void)
+{
+	if(!strnicmp(cpufreq_governor_name, performance_governor, CPUFREQ_NAME_LEN)) {
+		return 1;
+	}
+	return 0;
+}
+int is_powersave_gov(void)
+{
+	if(!strnicmp(cpufreq_governor_name, powersave_governor, CPUFREQ_NAME_LEN)) {
+		return 1;
+	}
+	return 0;
+}
 int is_userspace_gov(void)
 {
-	int ret = 0;
 	if(!strnicmp(cpufreq_governor_name, userspace_governor, CPUFREQ_NAME_LEN)) {
-		ret = 1;
+		return 1;
 	}
-	return ret;
+	return 0;
 }
-
+int is_ondemand_gov(void)
+{
+	if(!strnicmp(cpufreq_governor_name, ondemand_governor, CPUFREQ_NAME_LEN)) {
+		return 1;
+	}
+	return 0;
+}
 int is_conservative_gov(void)
 {
-	int ret = 0;
 	if(!strnicmp(cpufreq_governor_name, conservative_governor, CPUFREQ_NAME_LEN)) {
-		ret = 1;
+		return 1;
 	}
-	return ret;
+	return 0;
 }
-
 int is_transitional_gov(void)
 {
-	int ret = 0;
 	if(!strnicmp(cpufreq_governor_name, transitional_governor, CPUFREQ_NAME_LEN)) {
-		ret = 1;
+		return 1;
 	}
-	return ret;
+	return 0;
 }
-
+int is_interactive_gov(void)
+{
+	if(!strnicmp(cpufreq_governor_name, interactive_governor, CPUFREQ_NAME_LEN)) {
+		return 1;
+	}
+	return 0;
+}
+int is_interactivex_gov(void)
+{
+	if(!strnicmp(cpufreq_governor_name, interactivex_governor, CPUFREQ_NAME_LEN)) {
+		return 1;
+	}
+	return 0;
+}
+int is_smartass_gov(void)
+{
+	if(!strnicmp(cpufreq_governor_name, smartass_governor, CPUFREQ_NAME_LEN)) {
+		return 1;
+	}
+	return 0;
+}
 
 /* TODO: Add support for SDRAM timing changes */
 
