@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-02-2011:
+Removed more CPU_S5PV210 specific code from conservative governor.
 Added transitional governor. This is Samsung's conservative governor for victory, renamed to transitional because it uses transition states for scaling.
 Allow conservative governor to scale "normally" (removed CPU_S5PV210 specific scaling).
 Moving conservative governor out of victory folder.
