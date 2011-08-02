@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-01-2011:
+Fixing a typo in interactiveX governor.
 Removing threshold related code from interactiveX governor (I don't see how this is needed).
 
 07-29-2011:

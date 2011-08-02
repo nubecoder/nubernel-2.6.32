@@ -190,7 +190,7 @@ static unsigned int cpufreq_interactivex_calc_freq(unsigned int cpu)
 }
 
 
-/* We use the same work function to sale up and down */
+/* We use the same work function to scale up and down */
 static void cpufreq_interactivex_freq_change_time_work(struct work_struct *work)
 {
 	unsigned int cpu;
