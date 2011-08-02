@@ -55,6 +55,7 @@ static unsigned int suspended = 0;
 static unsigned int enabled = 0;
 
 static unsigned int suspendfreq = 800000;
+static unsigned int resumefreq = 1000000;
 
 /*
  * The minimum ammount of time to spend at a frequency before we can ramp down,
@@ -62,8 +63,6 @@ static unsigned int suspendfreq = 800000;
  */
 #define DEFAULT_MIN_SAMPLE_TIME 50000;
 static unsigned long min_sample_time;
-
-static unsigned int resume_speed = 1000000;
 
 static int cpufreq_governor_interactivex(struct cpufreq_policy *policy,
 		unsigned int event);
@@ -88,7 +87,6 @@ static void cpufreq_interactivex_timer(unsigned long data)
 
 	u64 now_idle = get_cpu_idle_time_us(data,
 						&update_time);
-
 
 	cpu_time_in_idle = &per_cpu(time_in_idle, data);
 	cpu_idle_exit_time = &per_cpu(idle_exit_time, data);
@@ -197,31 +195,31 @@ static void cpufreq_interactivex_freq_change_time_work(struct work_struct *work)
 	cpumask_t tmp_mask = work_cpumask;
 
 	for_each_cpu(cpu, tmp_mask) {
-		printk(KERN_INFO "GOV:InteractiveX: early target_freq: %d \n",target_freq);
+		printk(KERN_INFO "GOV:InteractiveX: early target_freq: %dMHz \n",target_freq/1000);
 		if (!suspended && target_freq == policy->max) {
 			if (nr_running() == 1) {
 				cpumask_clear_cpu(cpu, &work_cpumask);
 				return;
 			}
-			printk(KERN_INFO "GOV:InteractiveX: !suspended: using policy->max (target_freq): %d \n",target_freq);
-			__cpufreq_driver_target(policy, target_freq, CPUFREQ_RELATION_H);
+			printk(KERN_INFO "GOV:InteractiveX: !suspended: using policy->max: %dMHz \n",policy->max/1000);
+			__cpufreq_driver_target(policy, policy->max, CPUFREQ_RELATION_H);
 		} else {
 			if (!suspended) {
 				target_freq = cpufreq_interactivex_calc_freq(cpu);
-				printk(KERN_INFO "GOV:InteractiveX: !suspended: using target_freq: %d \n",target_freq);
+				printk(KERN_INFO "GOV:InteractiveX: !suspended: using target_freq: %dMHz \n",target_freq/1000);
 				__cpufreq_driver_target(policy, target_freq, CPUFREQ_RELATION_L);
 			} else {  // special care when suspended
 				if (target_freq > suspendfreq) {
-					printk(KERN_INFO "GOV:InteractiveX: suspended: using suspendfreq: %d \n",suspendfreq);
+					printk(KERN_INFO "GOV:InteractiveX: suspended: using suspendfreq: %dMHz \n",suspendfreq/1000);
 					__cpufreq_driver_target(policy, suspendfreq, CPUFREQ_RELATION_H);
 				} else {
 					target_freq = cpufreq_interactivex_calc_freq(cpu);
-					printk(KERN_INFO "GOV:InteractiveX: suspended: target_freq: %d \n",target_freq);
+					printk(KERN_INFO "GOV:InteractiveX: suspended: target_freq: %dMHz \n",target_freq/1000);
 					if (target_freq < policy->cur) {
-						printk(KERN_INFO "GOV:InteractiveX: suspended: using target_freq: %d \n",target_freq);
+						printk(KERN_INFO "GOV:InteractiveX: suspended: using target_freq: %dMHz \n",target_freq/1000);
 						__cpufreq_driver_target(policy, target_freq, CPUFREQ_RELATION_H);
 					}
-					printk(KERN_INFO "GOV:InteractiveX: suspended: not doing anything \n");
+					printk(KERN_INFO "GOV:InteractiveX: suspended: no change \n");
 				}
 			}
 		}
@@ -257,20 +255,16 @@ static struct attribute_group interactivex_attr_group = {
 
 static void interactivex_suspend(int suspend)
 {
-	unsigned int max_speed;
-
-	max_speed = resume_speed;
-
 	if (!enabled) return;
-        if (!suspend) { // resume at max speed:
+	if (!suspend) { // resume at defined resumefreq:
 		suspended = 0;
-                __cpufreq_driver_target(policy, max_speed, CPUFREQ_RELATION_L);
-                pr_info("[imoseyon] interactiveX awake at %d\n", policy->cur);
-        } else {
+		__cpufreq_driver_target(policy, resumefreq, CPUFREQ_RELATION_L);
+		printk(KERN_INFO "GOV:InteractiveX: awake @ %dMHz \n", policy->cur/1000);
+	} else {
 		suspended = 1;
-                __cpufreq_driver_target(policy, suspendfreq, CPUFREQ_RELATION_H);
-                pr_info("[imoseyon] interactiveX suspended at %d\n", policy->cur);
-        }
+		__cpufreq_driver_target(policy, suspendfreq, CPUFREQ_RELATION_H);
+		printk(KERN_INFO "GOV:InteractiveX: suspended @ %dMHz \n", policy->cur/1000);
+	}
 }
 
 static void interactivex_early_suspend(struct early_suspend *handler) {
@@ -313,7 +307,7 @@ static int cpufreq_governor_interactivex(struct cpufreq_policy *new_policy,
 		policy = new_policy;
 		enabled = 1;
 		register_early_suspend(&interactivex_power_suspend);
-		pr_info("[imoseyon] interactiveX active\n");
+		printk(KERN_INFO "GOV:InteractiveX: active \n");
 		break;
 
 	case CPUFREQ_GOV_STOP:
@@ -327,16 +321,20 @@ static int cpufreq_governor_interactivex(struct cpufreq_policy *new_policy,
 		del_timer(&per_cpu(cpu_timer, new_policy->cpu));
 		enabled = 0;
 		unregister_early_suspend(&interactivex_power_suspend);
-		pr_info("[imoseyon] interactiveX inactive\n");
+		printk(KERN_INFO "GOV:InteractiveX: inactive \n");
 		break;
 
 	case CPUFREQ_GOV_LIMITS:
-		if (new_policy->max < new_policy->cur)
+		if (new_policy->max < new_policy->cur) {
+			printk(KERN_INFO "GOV:InteractiveX: GOV_LIMITS: using new_policy->max: %dMHz \n",new_policy->max/1000);
 			__cpufreq_driver_target(new_policy,
 					new_policy->max, CPUFREQ_RELATION_H);
-		else if (new_policy->min > new_policy->cur)
+		}
+		else if (new_policy->min > new_policy->cur) {
+			printk(KERN_INFO "GOV:InteractiveX: GOV_LIMITS: using new_policy->min: %dMHz \n",new_policy->min/1000);
 			__cpufreq_driver_target(new_policy,
 					new_policy->min, CPUFREQ_RELATION_L);
+		}
 		break;
 	}
 	return 0;
@@ -359,19 +357,19 @@ static int __init cpufreq_interactivex_init(void)
 
 	/* Scale up is high priority */
 	up_wq = create_rt_workqueue("kinteractivex_up");
-        if (!up_wq) {
+	if (!up_wq) {
 		printk(KERN_ERR "Creation of knteractivex_up failed\n");
 		return -EFAULT;
 	}
 	down_wq = create_workqueue("knteractivex_down");
-        if (!down_wq) {
+	if (!down_wq) {
 		printk(KERN_ERR "Creation of knteractivex_down failed\n");
 		return -EFAULT;
 	}
 
 	INIT_WORK(&freq_scale_work, cpufreq_interactivex_freq_change_time_work);
 
-	pr_info("[imoseyon] interactiveX enter\n");
+	printk(KERN_INFO "GOV:InteractiveX: enter \n");
 	err = cpufreq_register_governor(&cpufreq_gov_interactivex);
 	if (err) {
 		destroy_workqueue(up_wq);
@@ -388,7 +386,7 @@ module_init(cpufreq_interactivex_init);
 
 static void __exit cpufreq_interactivex_exit(void)
 {
-        pr_info("[imoseyon] interactiveX exit\n");
+	printk(KERN_INFO "GOV:InteractiveX: exit \n");
 	cpufreq_unregister_governor(&cpufreq_gov_interactivex);
 	destroy_workqueue(up_wq);
 	destroy_workqueue(down_wq);
