@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-02-2011:
+Miscellaneous changes to defconfig.
 Branched to 'feature-misc'.
 
 08-02-2011:
