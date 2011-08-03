@@ -16,7 +16,7 @@ CC_STRIP="$PWD/toolchains/android-toolchain-4.4.3/bin/arm-linux-androideabi-stri
 echo "Copying modules to $DST_BASE/*"
 
 #cp "$SRC_BASE/net/tun.ko" "$DST_BASE/tun.ko"
-cp "$SRC_BASE/bluetooth/bthid/bthid.ko" "$DST_BASE/bthid.ko"
+#cp "$SRC_BASE/bluetooth/bthid/bthid.ko" "$DST_BASE/bthid.ko"
 #cp "$SRC_BASE/net/wireless/bcm4329/victory/dhd.ko" "$DST_BASE/dhd.ko"
 cp "$SRC_BASE/net/wireless/wimax/cmc7xx_sdio.ko" "$DST_BASE/cmc7xx_sdio.ko"
 cp "$SRC_BASE/net/wireless/wimaxgpio/wimax_gpio.ko" "$DST_BASE/wimax_gpio.ko"
