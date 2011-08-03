@@ -288,7 +288,7 @@ int enter_state(suspend_state_t state)
 		g_cpuspeed = s5pc110_getspeed(0);
 		printk(KERN_INFO "PM: userspace cpu speed %d\n",g_cpuspeed);
 		userSpaceGovernor=true;
-    	} else if(is_conservative_gov()) {
+	} else if(is_conservative_gov() || is_transitional_gov()) {
 		/*Fix the upper transition scaling*/
 		g_dvfs_fix_lock_limit = true;
 		s5pc110_lock_dvfs_high_level(DVFS_LOCK_TOKEN_7, LEV_600MHZ);
