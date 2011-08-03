@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-02-2011:
+Change evaluation to logical in suspend.c and earlysuspend.c.
 Added code for more governor checks (for testing DVFS locks).
 A bit of cleanup in cpu-freq.c.
 The transitional governor is the default.
