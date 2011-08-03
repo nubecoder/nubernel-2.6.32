@@ -28,12 +28,18 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+08-03-2011:
+Changes to update_modules.sh to exclude bthid.ko (was causing SW KB crashes when included).
+
 08-02-2011:
 Change evaluation to logical in suspend.c and earlysuspend.c.
 Added code for more governor checks (for testing DVFS locks).
 A bit of cleanup in cpu-freq.c.
 The transitional governor is the default.
 Fixing up the transitional governor's DVFS lock related code.
+Changes to defconfig and update_modules.sh for working modules.
+Miscellaneous changes to defconfig.
+Branched to 'feature-misc'.
 Minor changes to interactiveX governor (whitespace, debugging fixup, etc).
 Changes to defconfig for conservative and transitional governors.
 Removed more CPU_S5PV210 specific code from conservative governor.
