@@ -10,7 +10,7 @@
 # define envvars
 TARGET="nubernel"
 KBUILD_BUILD_VERSION="nubernel-EC05_v0.0.0"
-CROSS_COMPILE="/home/nubecoder/android/kernel_dev/toolchains/android-toolchain-4.4.3/bin/arm-linux-androideabi-"
+CROSS_COMPILE="/home/nubecoder/android/kernel_dev/toolchains/arm-2011.03-41/bin/arm-none-linux-gnueabi-"
 
 # define defaults
 BUILD_KERNEL=n
