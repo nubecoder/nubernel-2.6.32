@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+08-04-2011:
+Removing toolchain from repo.
+
 08-03-2011:
 Changes to update_modules.sh to exclude bthid.ko (was causing SW KB crashes when included).
 
