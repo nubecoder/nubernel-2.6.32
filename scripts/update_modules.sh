@@ -10,7 +10,7 @@
 #define base paths
 SRC_BASE="$PWD/Kernel/drivers"
 DST_BASE="$PWD/initramfs/lib/modules"
-CC_STRIP="$PWD/toolchains/android-toolchain-4.4.3/bin/arm-linux-androideabi-strip"
+CC_STRIP="/home/nubecoder/android/kernel_dev/toolchains/android-toolchain-4.4.3/bin/arm-linux-androideabi-strip"
 
 #copy modules
 echo "Copying modules to $DST_BASE/*"

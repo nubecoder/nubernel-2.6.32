@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-04-2011:
+Adjusting scripts for toolchain relocation.
 Removing toolchain from repo.
 
 08-03-2011:
