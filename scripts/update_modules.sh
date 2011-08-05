@@ -7,47 +7,77 @@
 # http://www.nubecoder.com/
 #
 
+
 #define base paths
-SRC_BASE="$PWD/Kernel/drivers"
-DST_BASE="$PWD/initramfs/lib/modules"
+P_DIR="$PWD/.."
+SRC_BASE="$P_DIR/Kernel/drivers"
+DST_BASE="initramfs/lib/modules"
 CC_STRIP="/home/nubecoder/android/kernel_dev/toolchains/arm-2011.03-41/bin/arm-none-linux-gnueabi-strip"
 
-#copy modules
-echo "Copying modules to $DST_BASE/*"
+COPY_WITH_ECHO()
+{
+	local SRC=$1
+	local DST=$2
+	echo "Copying $SRC to $DST_BASE/$DST"
+	cp "$SRC_BASE/$SRC" "$P_DIR/$DST_BASE/$DST"
+}
+STRIP_WITH_ECHO()
+{
+	local DST=$1
+	echo "Stripping $DST_BASE/$DST"
+	$CC_STRIP -d --strip-unneeded "$P_DIR/$DST_BASE/$DST"
+}
+SHOW_HELP()
+{
+	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+	echo "Usage options for $0:"
+	echo "cp | copy : Copy modules to initramfs."
+	echo "st | strip : Strip modules in initramfs."
+	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+	exit 1
+}
 
-#cp "$SRC_BASE/bluetooth/bthid/bthid.ko" "$DST_BASE/bthid.ko"
-#cp "$SRC_BASE/net/wireless/bcm4329/victory/dhd.ko" "$DST_BASE/dhd.ko"
-cp "$SRC_BASE/net/wireless/wimax/cmc7xx_sdio.ko" "$DST_BASE/cmc7xx_sdio.ko"
-cp "$SRC_BASE/net/wireless/wimaxgpio/wimax_gpio.ko" "$DST_BASE/wimax_gpio.ko"
-cp "$SRC_BASE/onedram/dpram_recovery/dpram_recovery.ko" "$DST_BASE/dpram_recovery.ko"
-cp "$SRC_BASE/onedram/victory/dpram.ko" "$DST_BASE/dpram.ko"
-cp "$SRC_BASE/onedram_svn/victory/modemctl/modemctl.ko" "$DST_BASE/modemctl.ko"
-cp "$SRC_BASE/onedram_svn/victory/onedram/onedram.ko" "$DST_BASE/onedram.ko"
-cp "$SRC_BASE/onedram_svn/victory/svnet/svnet.ko" "$DST_BASE/svnet.ko"
-cp "$SRC_BASE/samsung/fm_si4709/Si4709_driver.ko" "$DST_BASE/Si4709_driver.ko"
-cp "$SRC_BASE/samsung/vibetonz/vibrator.ko" "$DST_BASE/vibrator.ko"
-cp "$SRC_BASE/scsi/scsi_wait_scan.ko" "$DST_BASE/scsi_wait_scan.ko"
-cp "$SRC_BASE/staging/android/logger.ko" "$DST_BASE/logger.ko"
+if [ "$1" == "cp" ] || [ "$1" == "copy" ] ; then
+	#copy modules
+	COPY_WITH_ECHO "bluetooth/bthid/bthid.ko" "bthid.ko"
+	#COPY_WITH_ECHO "net/wireless/bcm4329/victory/dhd.ko" "dhd.ko"
+	COPY_WITH_ECHO "net/wireless/wimax/cmc7xx_sdio.ko" "cmc7xx_sdio.ko"
+	COPY_WITH_ECHO "net/wireless/wimaxgpio/wimax_gpio.ko" "wimax_gpio.ko"
+	COPY_WITH_ECHO "onedram/dpram_recovery/dpram_recovery.ko" "dpram_recovery.ko"
+	COPY_WITH_ECHO "onedram/victory/dpram.ko" "dpram.ko"
+	COPY_WITH_ECHO "onedram_svn/victory/modemctl/modemctl.ko" "modemctl.ko"
+	COPY_WITH_ECHO "onedram_svn/victory/onedram/onedram.ko" "onedram.ko"
+	COPY_WITH_ECHO "onedram_svn/victory/svnet/svnet.ko" "svnet.ko"
+	COPY_WITH_ECHO "samsung/fm_si4709/Si4709_driver.ko" "Si4709_driver.ko"
+	COPY_WITH_ECHO "samsung/vibetonz/vibrator.ko" "vibrator.ko"
+	COPY_WITH_ECHO "scsi/scsi_wait_scan.ko" "scsi_wait_scan.ko"
+	COPY_WITH_ECHO "staging/android/logger.ko" "logger.ko"
+	#COPY_WITH_ECHO "net/tun.ko" "tun.ko"
+	# special case below =[
+	#echo "Copying fs/cifs/cifs.ko to $DST_BASE/cifs.ko"
+	#cp "$P_DIR/Kernel/fs/cifs/cifs.ko" "$DST_BASE/cifs.ko"
+	exit 0
+fi
 
-#cp "$SRC_BASE/net/tun.ko" "$DST_BASE/tun.ko"
-#cp "$PWD/Kernel/fs/cifs/cifs.ko" "$DST_BASE/cifs.ko"
+if [ "$1" == "st" ] || [ "$1" == "strip" ] ; then
+	#strip modules
+	STRIP_WITH_ECHO "bthid.ko"
+	#STRIP_WITH_ECHO "dhd.ko"
+	STRIP_WITH_ECHO "cmc7xx_sdio.ko"
+	STRIP_WITH_ECHO "wimax_gpio.ko"
+	STRIP_WITH_ECHO "dpram_recovery.ko"
+	STRIP_WITH_ECHO "dpram.ko"
+	STRIP_WITH_ECHO "modemctl.ko"
+	STRIP_WITH_ECHO "onedram.ko"
+	STRIP_WITH_ECHO "svnet.ko"
+	STRIP_WITH_ECHO "Si4709_driver.ko"
+	STRIP_WITH_ECHO "vibrator.ko"
+	STRIP_WITH_ECHO "scsi_wait_scan.ko"
+	STRIP_WITH_ECHO "logger.ko"
+	#STRIP_WITH_ECHO "tun.ko"
+	#STRIP_WITH_ECHO "cifs.ko"
+	exit 0
+fi
 
-#strip modules
-#echo "Stripping modules in $DST_BASE/*"
-
-#$CC_STRIP -s "$DST_BASE/bthid.ko"
-#$CC_STRIP -s "$DST_BASE/dhd.ko"
-#$CC_STRIP -s "$DST_BASE/cmc7xx_sdio.ko"
-#$CC_STRIP -s "$DST_BASE/wimax_gpio.ko"
-#$CC_STRIP -s "$DST_BASE/dpram_recovery.ko"
-#$CC_STRIP -s "$DST_BASE/dpram.ko"
-#$CC_STRIP -s "$DST_BASE/modemctl.ko"
-#$CC_STRIP -s "$DST_BASE/onedram.ko"
-#$CC_STRIP -s "$DST_BASE/svnet.ko"
-#$CC_STRIP -s "$DST_BASE/Si4709_driver.ko"
-#$CC_STRIP -s "$DST_BASE/vibrator.ko"
-#$CC_STRIP -s "$DST_BASE/scsi_wait_scan.ko"
-#$CC_STRIP -s "$DST_BASE/logger.ko"
-
-echo "Finished."
+SHOW_HELP
 

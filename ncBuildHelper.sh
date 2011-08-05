@@ -14,6 +14,8 @@ CROSS_COMPILE="/home/nubecoder/android/kernel_dev/toolchains/arm-2011.03-41/bin/
 
 # define defaults
 BUILD_KERNEL=n
+BUILD_MODULES=n
+MODULE_ARGS=
 CLEAN=n
 DEFCONFIG=n
 DISTCLEAN=n
@@ -50,6 +52,8 @@ SHOW_HELP()
 	echo "-h : Print this help info."
 	echo "-j : Number of threads (auto detected by default)."
 	echo "     For example, use -j4 to make with 4 threads."
+	echo "-m : Build, copy and / or strip modules."
+	echo "     To copy use 'c', to strip use 's', for both use 'cs'."
 	echo "-t : Produce tar file suitable for flashing with Odin."
 	echo "-u : Wired (USB) Flash, expects a device to be connected."
 	echo "-v : Show verbose output while building zImage (kernel)."
@@ -71,11 +75,12 @@ SHOW_SETTINGS()
 	echo "build target   == $TARGET"
 	echo "make threads   == $THREADS"
 	echo "verbose output == $VERBOSE"
+	echo "build modules  == $BUILD_MODULES"
 	echo "build kernel   == $BUILD_KERNEL"
 	echo "create tar     == $PRODUCE_TAR"
 	echo "create zip     == $PRODUCE_ZIP"
 	echo "wifi flash     == $WIFI_FLASH"
-	echo "wired flash     == $WIRED_FLASH"
+	echo "wired flash    == $WIRED_FLASH"
 	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
 	echo "*"
 }
@@ -143,17 +148,33 @@ MAKE_DEFCONFIG()
 	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
 	echo "*"
 }
+BUILD_MODULES()
+{
+	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+	local T1=$(date +%s)
+	echo "Begin building modules..." && echo ""
+	pushd Kernel > /dev/null
+	if [ "$VERBOSE" = "y" ] ; then
+		nice make V=1 -j"$THREADS" ARCH=arm modules 2>&1 | tee make.out
+	else
+		nice make -j"$THREADS" ARCH=arm modules 2>&1 | tee make.out
+	fi
+	popd > /dev/null
+	local T2=$(date +%s)
+	echo "" && echo "building modules took $(($T2 - $T1)) seconds."
+	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+	echo "*"
+}
 BUILD_ZIMAGE()
 {
 	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
 	local T1=$(date +%s)
 	echo "Begin building zImage..." && echo ""
 	pushd Kernel > /dev/null
-	if [ "$VERBOSE" = "y" ] ;
-		then
-			nice make V=1 -j"$THREADS" ARCH=arm CROSS_COMPILE="$CROSS_COMPILE" 2>&1 | tee make.out
-		else
-			nice make -j"$THREADS" ARCH=arm CROSS_COMPILE="$CROSS_COMPILE" 2>&1 | tee make.out
+	if [ "$VERBOSE" = "y" ] ; then
+		nice make V=1 -j"$THREADS" ARCH=arm CROSS_COMPILE="$CROSS_COMPILE" 2>&1 | tee make.out
+	else
+		nice make -j"$THREADS" ARCH=arm CROSS_COMPILE="$CROSS_COMPILE" 2>&1 | tee make.out
 	fi
 	popd > /dev/null
 	local T2=$(date +%s)
@@ -193,13 +214,39 @@ CREATE_ZIP()
 	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
 	echo "*"
 }
+COPY_MODULES()
+{
+	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+	local T1=$(date +%s)
+	echo "Begin copy modules..." && echo ""
+	pushd scripts > /dev/null
+		sh -c "update_modules.sh copy"
+	popd > /dev/null
+	local T2=$(date +%s)
+	echo "" && echo "Copy modules took $(($T2 - $T1)) seconds."
+	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+	echo "*"
+}
+STRIP_MODULES()
+{
+	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+	local T1=$(date +%s)
+	echo "Begin strip modules..." && echo ""
+	pushd scripts > /dev/null
+		sh -c "update_modules.sh strip"
+	popd > /dev/null
+	local T2=$(date +%s)
+	echo "" && echo "Strip modules took $(($T2 - $T1)) seconds."
+	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+	echo "*"
+}
 WIFI_FLASH_SCRIPT()
 {
 	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
 	local T1=$(date +%s)
 	echo "Begin Wifi kernel flash helper script..." && echo ""
 	pushd scripts > /dev/null
-			sh wifiFlashHelper.sh
+		sh -c "wifiFlashHelper.sh"
 	popd > /dev/null
 	local T2=$(date +%s)
 	echo "" && echo "Wifi kernel flash took $(($T2 - $T1)) seconds."
@@ -212,7 +259,7 @@ WIRED_FLASH_SCRIPT()
 	local T1=$(date +%s)
 	echo "Begin Wired kernel flash helper script..." && echo ""
 	pushd scripts > /dev/null
-			sh wiredFlashHelper.sh
+		sh -c "wiredFlashHelper.sh"
 	popd > /dev/null
 	local T2=$(date +%s)
 	echo "" && echo "Wired kernel flash took $(($T2 - $T1)) seconds."
@@ -221,7 +268,7 @@ WIRED_FLASH_SCRIPT()
 }
 
 # main
-while getopts  ":bcCd:hj:tuvwz" flag
+while getopts  ":bcCd:hj:m:tuvwz" flag
 do
 	case "$flag" in
 	b)
@@ -242,6 +289,10 @@ do
 		;;
 	j)
 		THREADS=$OPTARG
+		;;
+	m)
+		BUILD_MODULES=y
+		MODULE_ARGS="$OPTARG"
 		;;
 	t)
 		PRODUCE_TAR=y
@@ -280,6 +331,15 @@ if [ "$DISTCLEAN" = "y" ] ; then
 fi
 if [ "$DEFCONFIG" = "y" -o ! -f "Kernel/.config" ] ; then
 	MAKE_DEFCONFIG
+fi
+if [ "$BUILD_MODULES" = "y" ] ; then
+	BUILD_MODULES
+	if [ "$MODULE_ARGS" != "${MODULE_ARGS/c/}" ] ; then
+		COPY_MODULES
+	fi
+	if [ "$MODULE_ARGS" != "${MODULE_ARGS/s/}" ] ; then
+		STRIP_MODULES
+	fi
 fi
 if [ "$BUILD_KERNEL" = "y" ] ; then
 	BUILD_ZIMAGE
