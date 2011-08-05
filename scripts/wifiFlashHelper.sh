@@ -24,8 +24,8 @@ ZIMAGE_DEST="$TMP_PATH/zImage"
 REDBEND_SRC="$PWD/../initramfs/sbin/redbend_ua"
 REDBEND_DEST="$TMP_PATH/redbend_ua"
 
-BMLWRITE_SRC="$PWD/../initramfs/sbin/bmlwrite"
-BMLWRITE_DEST="$TMP_PATH/bmlwrite"
+#BMLWRITE_SRC="$PWD/../initramfs/sbin/bmlwrite"
+#BMLWRITE_DEST="$TMP_PATH/bmlwrite"
 
 KERNELFLASH_SRC="$PWD/kernelFlash"
 KERNELFLASH_DEST="$TMP_PATH/kernelFlash"
@@ -44,9 +44,14 @@ ADB_KERNEL_FLASH="su -c '/data/local/tmp/kernelFlash -k'"
 #error
 ERROR="no"
 
+echo
+echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+echo "Begin."
+echo "*"
+
 #kill adb, start, and connect to wireless
 echo "Killing adb server."
-$ADB_KILL
+$ADB_KILL >/dev/null
 echo "Connect to $IP."
 $ADB_CONNECT $IP >/dev/null
 
@@ -66,35 +71,29 @@ then
 	echo "Removing previous files."
 	$ADB_SHELL "rm" $ZIMAGE_DEST
 	$ADB_SHELL "rm" $REDBEND_DEST
-	$ADB_SHELL "rm" $BMLWRITE_DEST
+#	$ADB_SHELL "rm" $BMLWRITE_DEST
 	$ADB_SHELL "rm" $KERNELFLASH_DEST
 
 	#push new kernel to phone
 	echo "Pushing zImage, this may take a minute."
 	$ADB_PUSH $ZIMAGE_SRC $ZIMAGE_DEST >/dev/null 2>&1
-	echo "*"
 	#push redbend_ua to phone and set permissions
 	echo "Pushing redbend_ua, this may take a minute."
 	$ADB_PUSH $REDBEND_SRC $REDBEND_DEST >/dev/null 2>&1
 	echo "Setting permissions on redbend_ua (0755)."
 	$ADB_SHELL "chmod 0755" $REDBEND_DEST
-	echo "*"
 
-# not using bmlwrite currently
-#
 #	#push bmlwrite to phone and set permissions
 #	echo "Pushing bmlwrite, this may take a minute."
 #	$ADB_PUSH $BMLWRITE_SRC $BMLWRITE_DEST >/dev/null 2>&1
 #	echo "Setting permissions on bmlwrite (0755)."
 #	$ADB_SHELL "chmod 0755" $BMLWRITE_DEST
-#	echo "*"
 
 	#push kernelFlash to phone and set permissions
 	echo "Pushing kernelFlash, this may take a minute."
 	$ADB_PUSH $KERNELFLASH_SRC $KERNELFLASH_DEST >/dev/null 2>&1
 	echo "Setting permissions on kernelFlash (0755)."
 	$ADB_SHELL "chmod 0755" $KERNELFLASH_DEST
-	echo "*"
 	#flash kernel with kernelFlash script
 	echo "Flashing kernel with kernelFlash -k."
 	echo "*"
@@ -106,3 +105,11 @@ then
 else
 	echo "Please enable wireless adb and verify the IP matches: $IP."
 fi
+
+echo "*"
+echo "End."
+echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+echo
+
+exit
+

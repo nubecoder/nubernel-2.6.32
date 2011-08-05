@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-04-2011:
+Changes to wifiFlashHelper.sh.
 Changes to update_modules.sh (most modules are working again).
 Changing toolchains (Sourcery G++ Lite 2011.03-41 for ARM GNU/Linux: http://www.codesourcery.com/sgpp/lite/arm/portal/release1803).
 Adjusting scripts for toolchain relocation.
