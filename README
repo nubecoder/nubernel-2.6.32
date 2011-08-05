@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+08-04-2011:
+Quiet warning in /scripts/kconfig/conf.c.
+
 07-30-2011:
 Backport lowmemory killer from 2.6.35 samsung.git (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/cdbbec98c4e953cc90a86d7cf86c90baaf6a55dc).
 Updated BFQ-v2 to BFQ-v2-r1 (Paolo Valente via netarchy: https://github.com/netarchy/nexus-s/commit/2286f36fa687b3ef7c8e354d9385d16e75c00e15).
