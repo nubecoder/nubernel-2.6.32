@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+08-05-2011:
+Changes to update_modules.sh.
+
 08-04-2011:
 Branched to 'feature-misc'.
 
