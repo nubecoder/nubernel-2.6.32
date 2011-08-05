@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-04-2011:
+Reverting "Bluetooth: Make hci_send_sco() void" (commit ID: 7e2b3ff).
 Quiet warning in /scripts/kconfig/conf.c.
 
 07-30-2011:
