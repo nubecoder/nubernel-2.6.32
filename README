@@ -28,6 +28,17 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+08-04-2011:
+Adjusting Makefile for toolchain (why not).
+Makefile fix for non-gnueabi toolchains (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/2c979fb53092957a657ff9787cb6c061ddb3e62d).
+Changes to ncBuildHelper.sh for inclusion of wiredFlashHelper.sh.
+Added wiredFlashHelper.sh (for when Wifi isn't an option).
+Changes to wifiFlashHelper.sh.
+Changes to update_modules.sh (most modules are working again).
+Changing toolchains (Sourcery G++ Lite 2011.03-41 for ARM GNU/Linux: http://www.codesourcery.com/sgpp/lite/arm/portal/release1803).
+Adjusting scripts for toolchain relocation.
+Removing toolchain from repo.
+
 08-03-2011:
 Changes to update_modules.sh to exclude bthid.ko (was causing SW KB crashes when included).
 

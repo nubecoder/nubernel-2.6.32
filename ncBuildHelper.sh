@@ -10,7 +10,7 @@
 # define envvars
 TARGET="nubernel"
 KBUILD_BUILD_VERSION="nubernel-EC05_v0.0.0"
-CROSS_COMPILE="$PWD/toolchains/android-toolchain-4.4.3/bin/arm-linux-androideabi-"
+CROSS_COMPILE="/home/nubecoder/android/kernel_dev/toolchains/arm-2011.03-41/bin/arm-none-linux-gnueabi-"
 
 # define defaults
 BUILD_KERNEL=n
@@ -21,6 +21,7 @@ PRODUCE_TAR=n
 PRODUCE_ZIP=n
 VERBOSE=n
 WIFI_FLASH=n
+WIRED_FLASH=n
 
 # define vars
 MKZIP='7z -mx9 -mmt=1 a "$OUTFILE" .'
@@ -50,6 +51,7 @@ SHOW_HELP()
 	echo "-j : Number of threads (auto detected by default)."
 	echo "     For example, use -j4 to make with 4 threads."
 	echo "-t : Produce tar file suitable for flashing with Odin."
+	echo "-u : Wired (USB) Flash, expects a device to be connected."
 	echo "-v : Show verbose output while building zImage (kernel)."
 	echo "-w : Wifi Flash, for use with adb wireless."
 	echo "-z : Produce zip file suitable for flashing via Recovery."
@@ -73,6 +75,7 @@ SHOW_SETTINGS()
 	echo "create tar     == $PRODUCE_TAR"
 	echo "create zip     == $PRODUCE_ZIP"
 	echo "wifi flash     == $WIFI_FLASH"
+	echo "wired flash     == $WIRED_FLASH"
 	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
 	echo "*"
 }
@@ -203,9 +206,22 @@ WIFI_FLASH_SCRIPT()
 	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
 	echo "*"
 }
+WIRED_FLASH_SCRIPT()
+{
+	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+	local T1=$(date +%s)
+	echo "Begin Wired kernel flash helper script..." && echo ""
+	pushd scripts > /dev/null
+			sh wiredFlashHelper.sh
+	popd > /dev/null
+	local T2=$(date +%s)
+	echo "" && echo "Wired kernel flash took $(($T2 - $T1)) seconds."
+	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+	echo "*"
+}
 
 # main
-while getopts  ":bcCd:hj:tvwz" flag
+while getopts  ":bcCd:hj:tuvwz" flag
 do
 	case "$flag" in
 	b)
@@ -229,6 +245,9 @@ do
 		;;
 	t)
 		PRODUCE_TAR=y
+		;;
+	u)
+		WIRED_FLASH=y
 		;;
 	v)
 		VERBOSE=y
@@ -273,6 +292,9 @@ if [ "$PRODUCE_ZIP" = y ] ; then
 fi
 if [ "$WIFI_FLASH" = y ] ; then
 	WIFI_FLASH_SCRIPT
+fi
+if [ "$WIRED_FLASH" = y ] ; then
+	WIRED_FLASH_SCRIPT
 fi
 
 # show completed message
