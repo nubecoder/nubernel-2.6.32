@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-04-2011:
+Changes to ncBuildHelper.sh for inclusion of wiredFlashHelper.sh.
 Added wiredFlashHelper.sh (for when Wifi isn't an option).
 Changes to wifiFlashHelper.sh.
 Changes to update_modules.sh (most modules are working again).
