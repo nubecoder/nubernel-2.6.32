@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 08-10-2011:
+Fixing Bluetooth: Fix sending ReqSeq on I-frames (seems I missed a bit of this patch).
 Bluetooth: Fix drop of acked packets on ERTM (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=812e737e29a1d559e7bfbea675fdcfcbad9f5e1f).
 Bluetooth: Fix crash when monitor timeout expires (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0ee0d20855ae9271de3f6695f4cafc08ab2533bb).
 Bluetooth: Fix bug when retransmitting I-frames (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=f6e6b16823de0aff31cb8ee8c098383e3aceec58).

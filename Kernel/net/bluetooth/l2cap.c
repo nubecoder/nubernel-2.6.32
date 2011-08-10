@@ -1419,7 +1419,7 @@ static int l2cap_ertm_send(struct sock *sk)
 			control |= L2CAP_CTRL_FINAL;
 			pi->conn_state &= ~L2CAP_CONN_SEND_FBIT;
 		}
-		control |= (pi->req_seq << L2CAP_CTRL_REQSEQ_SHIFT)
+		control |= (pi->buffer_seq << L2CAP_CTRL_REQSEQ_SHIFT)
 				| (pi->next_tx_seq << L2CAP_CTRL_TXSEQ_SHIFT);
 		put_unaligned_le16(control, tx_skb->data + L2CAP_HDR_SIZE);
 
