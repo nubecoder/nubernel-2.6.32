@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+08-10-2011:
+Branched to 'feature-patches-bluetooth'.
+
 08-05-2011:
 Changes to ncBuildHelper.sh for inclusion of update_modules.sh.
 Changes to update_modules.sh.
