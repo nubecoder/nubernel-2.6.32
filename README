@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+08-11-2011:
+Added bootsound script (needs a working stagefright binary to be of use).
+
 08-05-2011:
 Changes to ncBuildHelper.sh for inclusion of update_modules.sh.
 Changes to update_modules.sh.
