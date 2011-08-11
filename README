@@ -28,6 +28,123 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+08-11-2011:
+Bluetooth: Defer SCO setup if mode change is pending (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=f1ef8e19ffd513c9ba35865eba16354dac0dcbcc).
+Bluetooth: Reassigned copyright to Code Aurora Forum (Ron Shaffer: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=1c094829f570a8cb5a358104a3f23eacb39bf18d).
+Bluetooth: Use non-flushable pb flag by default for ACL data on capable chipsets. (Nick Pelly: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=04a41930f122968dc2b5ec4b94670e88e7abd6e9).
+Revert "Bluetooth: Introduce L2CAP_LM_FLUSHABLE to allow flushing of ACL packets." (Nick Pelly: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=047941a817402e06f2bdd3e854355c1dab625e68).
+Revert "Bluetooth: Fix rejected connection not disconnecting ACL link" (Nick Pelly: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=331c453fc49dd01c9d2bea9efa5f0cc9a7f0e124).
+Paranoid network. (Robert Love: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=528f6d17876cc6aaa0a38e120921dc7e7564d090).
+Bluetooth: Reset the security level after an authentication failure (Johan Hedberg: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=da213f41cdd445d3df468f8fe7f24fe4f4c48508).
+Bluetooth: Use strict_strtoul instead of simple_strtoul (Tomas Winkler: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=7b767cad296d17cfe071734f71a3b7b479534c8c).
+Bluetooth: Trivial clean ups to SCO (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=b9dbdbc1f4404cba2e64939c30c87d59c9796e4e).
+Bluetooth: Use single_open() for inquiry cache within debugfs (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=d4612cb86ed8db8956b6b19435f8a30de6c67ffe).
+Bluetooth: Fix out of scope variable access in hci_sock_cmsg() (Johann Felix Soden: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=f6e623a65cb301088bd04794043e82bfc996c512).
+Bluetooth: Add SCO fallback for unsupported feature error (Stephen Coe: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=705e5711b61e9622b2d88850f38c219014aa0780).
+Bluetooth: Convert inquiry cache to use debugfs instead of sysfs (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=ca325f698996c1a0770a67f41e7dc97a007d8bc2).
+Bluetooth: Keep a copy of each HID device's report descriptor (Michael Poole: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=15c697ce1c5b408c5e20dcdc6aea2968d1125b75).
+Bluetooth: Do not call rfcomm_session_put() for RFCOMM UA on closed socket (Nick Pelly: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=6c2718da59613d76013b501bf0f8bcf9d7794b2d).
+Bluetooth: Fix sleeping function in RFCOMM within invalid context (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=485f1eff73a7b932fd3abb0dfcf804e1a1f59025).
+Bluetooth: Fallback eSCO to SCO on error 0x1a (Unsupported Remote Feature) (Nick Pelly: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=1038a00b458997661bcd0e780a24dc280a8841fc).
+HID: make raw reports possible for both feature and output reports (Jiri Kosina: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=d4bfa033ed84e0ae446eff445d107ffd5ee78df3).
+Bluetooth: Use the control channel for raw HID reports (Bastien Nocera: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=6bf8268f9a91f1065c99503161ebd061492bebe3).
+proc_fops: convert drivers/isdn/ to seq_file (Alexey Dobriyan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=9a58a80a701bdb2d220cdab4914218df5b48d781).
+Bluetooth: Fix PTR_ERR return of wrong pointer in hidp_setup_hid() (Roel Kluin: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=971beb83aeb2a309175682cf5683d64fd4591841).
+tree-wide: fix some typos and punctuation in comments (Thadeu Lima de Souza Cascardo: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=94e2bd688820aed72b4f8092f88c2ccf64e003de).
+Bluetooth: Add RFCOMM option to use L2CAP ERTM mode (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=eae38eede2e5f70d65f09327297bd698b0d3ea7e).
+Bluetooth: Fix handling of BNEP setup connection requests (Vikram Kandukuri: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=cde9f807f003676862178a6f28b52c7d431511ed).
+Bluetooth: Return ENETDOWN when interface is down (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=7e21addcd0ad87696c17409399e56e874931da57).
+Bluetooth: Implement raw output support for HIDP layer (Jiri Kosina: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=2da31939a42f7a676a0bc5155d6a0a39ed8451f2).
+net: Generalize socket rx gap / receive queue overflow cmsg (Neil Horman: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=3b885787ea4112eaa80945999ea0901bf742707f).
+Bluetooth: Fix rejected connection not disconnecting ACL link (Luiz Augusto von Dentz: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=9e726b17422bade75fba94e625cd35fd1353e682).
+
+08-10-2011:
+Bluetooth: Create per controller workqueue (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=f48fd9c8cd746fdb055a97249a209c77dca0f710).
+Bluetooth: Make hci_send_sco() void (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0d861d8b8edd139a9b291cb262d08dec8dc3922d).
+Bluetooth: Add controller types for BR/EDR and 802.11 AMP (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=943da25d95c7e8fd8c39dbf09e030f5da46f5d85).
+Bluetooth: Convert controller hdev->type to hdev->bus (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=c13854cef4751000b968d4e8ac95796562d5b96f).
+Bluetooth: Unobfuscate tasklet_schedule usage (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=c78ae283145d3a8799b2fb01650166a66af3bff8).
+Bluetooth: Turn hci_recv_frame into an exported function (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=76bca88012e1d27de794f32cc551d6314d38b6d9).
+Bluetooth: Introduce L2CAP_LM_FLUSHABLE to allow flushing of ACL packets. (Nick Pelly: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=e9a65a490d2018d7e069af43f40951a4920e9227).
+Bluetooth: Check L2CAP pending status before sending connect request (Andrei Emeltchenko: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=e501d0553a7580fcc6654d7f58a5f061d31d00af).
+net: Remove unnecessary returns from void function()s (Joe Perches: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=3fa21e07e6acefa31f974d57fba2b6920a7ebd1a).
+Bluetooth: Fix issues where sk_sleep() helper is needed now (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=2b0b05ddc04b6d45e71cd36405df512075786f1e).
+Bluetooth: Fix spec error in the RemoteBusy Logic (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=844c0972427ee5f661158160aaca10b22b3dda60).
+Bluetooth: Prevents buffer overflow on l2cap_ertm_reassembly_sdu() (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=4178ba462a3e8ab5094e69606f01d9e95f2d5ea6).
+Bluetooth: Fix race condition on l2cap_ertm_send() (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=dfc909befbfe967bd7f46ef33b6969c1b7f3cf42).
+Bluetooth: Add wait_queue to wait ack of all sent packets (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=6161c0382bbab883a634d284f7367a88bbe88534).
+Bluetooth: Implement Local Busy Condition handling (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=1890d36bb556a27684ad29654a9898ab9a5f57ee).
+Bluetooth: Completes the I-frame tx_seq check logic on RECV (João Paulo Rechi Vita: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=9b53350d3cf5b330c3261d89b5e62a2dc25c5653).
+Bluetooth: Implement missing parts of the Invalid Frame Detection (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=18778a63ddc83bc89bda3b119fb02eb121512a66).
+Bluetooth: Refactor l2cap_retransmit_frame() (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=f11d676da4059c7888efca810ab300b931736a26).
+Bluetooth: Make hci_send_acl() void (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=9a9c6a34416b3743c09c00f3d6708d9df3c21629).
+Bluetooth: Fix lockdep annotation on ERTM (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=ff12fd643334071084b6145cad3793bb6c956638).
+Bluetooth: Check if we really are in WAIT_F when F bit comes (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=9b16dc6551cbde65d0ac525af3c46efab53a2c46).
+Bluetooth: Remove unneeded control vars (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=a2e12a2a312f816d5970b0c809d43b399fbfe90c).
+Bluetooth: Remove set of SrejSaveReqSeq under receipt of REJ frame (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0301ef04b5f49a95681694fc0d75af9441faa919).
+Bluetooth: Fix errors reported by checkpatch.pl (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=59203a21a56c53afeb6f45e059299e6f1437f30f).
+Bluetooth: Don't set control bits to zero first (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=44651b85cc3a076147af5d181fc4833ef8debc59).
+Bluetooth: Close L2CAP channel on invalid ReqSeq (João Paulo Rechi Vita: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=01760bdde9a92413b7fff928d08e19352bf09d82).
+Bluetooth: Fix SDU reassembly under SREJ (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=afefdbc4cf3b9d409d07e1e5264e7ff88bc48711).
+Bluetooth: Check if mode is supported on getsockopt (João Paulo Rechi Vita: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0041ecfa3025d7612fdaab12b2f07c9c3c09f42f).
+Bluetooth: Add SOCK_STREAM support to L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=bd3c9e255e76ae232d417e3914ca5d80ca3e9485).
+Bluetooth: Add Kconfig option for L2CAP Extended Features (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=84fb0a6334af0ccad3544f6972c055d90fbb9fbe).
+Bluetooth: Optimize SREJ_QUEUE append (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=3b1a9f3fa6ad842991538da2c3b2e29e047b131f).
+Fixing Bluetooth: Fix sending ReqSeq on I-frames (seems I missed a bit of this patch).
+Bluetooth: Fix drop of acked packets on ERTM (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=812e737e29a1d559e7bfbea675fdcfcbad9f5e1f).
+Bluetooth: Fix crash when monitor timeout expires (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0ee0d20855ae9271de3f6695f4cafc08ab2533bb).
+Bluetooth: Fix bug when retransmitting I-frames (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=f6e6b16823de0aff31cb8ee8c098383e3aceec58).
+Bluetooth: Enable option to configure Max Transmission value via sockopt (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=68d7f0ce911e41e463c45911be031cdf6a096fe8).
+Bluetooth: Add module parameter for txWindow size on L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=369ba30264826f38eefc61b93688100be8adbd4d).
+Bluetooth: Change acknowledgement to use the value of txWindow (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=803020c6fa63aa738cfda3329c9675b42023e9d2).
+Bluetooth: Add sockopt configuration for txWindow on L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=14b5aa71ec506f4e38ca6a1dc02ecd668ecfd902).
+Bluetooth: Send Ack after clear the SREJ list (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=855666cccc939d392316de17512e17a08b2fa05a).
+Bluetooth: Check the SDU size against the MTU value (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=052897ca5019d9157ae09e5e84eee2a9ef5dccc6).
+Bluetooth: Add le16 macro to Retransmission and Monitor Timeouts values (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=10467e9e9b89272b25b56688bb276d0830e9ab9a).
+Bluetooth: Fix configuration of the MPS value (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=1c7621596d11b9c3e19eb88a818758dee4901c95).
+Bluetooth: Read RFC conf option on a successful Conf RSP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=7b1c0049be3aabc18831ada339dbcf41ba8c81fd).
+Bluetooth: Ignore Tx Window value with Streaming mode (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=2fb862e215e53630066c677e06d7551fa38bf235).
+Bluetooth: Add timer to Acknowledge I-frames (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=c1b4f43be01c2a363be021485dd18cca33cfab8a).
+Bluetooth: Finish implementation for Rec RR (P=1) on ERTM (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=05fbd89dd4153341717b33d9e8ae8bd29db6c1c8).
+Bluetooth: Remove duplicate use of __get_reqseq() macro on L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=8abb52ee00c4b3f857269eb6b7145991bab869bf).
+Bluetooth: Group the ack of I-frames into l2cap_data_channel_rrframe() (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=6e3a59819fac19006fe4255b87928e5a12c54532).
+Bluetooth: Handle all cases of receipt of RNR-frames into L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=99b0d4b7b09edeacf4542bced5c01239375b51a9).
+Bluetooth: Split l2cap_data_channel_sframe() (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=e072745f4adb01b909bd08a0cfc8f79348f4d2c6).
+Bluetooth: Add Recv RR (P=0)(F=0) for SREJ_SENT state on ERTM (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=73edaa9933219e25d6733b78d1e2c881025705e2).
+Bluetooth: Move set of P-bit to l2cap_send_sframe() (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=f0946ccfc7da403a46b7ff7cb2e3deffac108742).
+Bluetooth: Implement SendAck() Action on ERTM (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=9e917af13d59182f95bbb5483dc0c4254dfb7944).
+Bluetooth: Check if SDU size is greater than MTU on L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=36f2fd585f43199f006a3b5ff84e95815102cd31).
+Bluetooth: Check the minimum {I,S}-frame size into L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=277ffbe362823d18a17792fbd8e507010e666299).
+Bluetooth: Support case with F bit set under WAIT_F state (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=1d8f5d16913d74e428950ee02fe9ff7e6391c120).
+Bluetooth: Implement 'Send IorRRorRNR' event (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=d5392c8f1e9faef089bb7cb66c3314da8bddd1fe).
+Bluetooth: Use a l2cap_pinfo struct instead l2cap_pi() macro (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=e8235c6bdd1c7ffbaa7eb8dcdbb46c51f1e5d72e).
+Bluetooth: Fix expected_tx_seq calculation on L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=7dffe4210233a2860c3f41477c40b3252edf2b7d).
+Bluetooth: Fix memory leak of S-frames into L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=faaebd192ec9c3febcab98149d1309199a5b886c).
+Bluetooth: Move specific Basic Mode code to the right place (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=c69163e9ed5048407cc84f439cbfecc53f6f7131).
+bluetooth: handle l2cap_create_connless_pdu() errors (Dan Carpenter: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=477fffb082920476cc26f238d65538ccb8d601e1).
+net: sk_sleep() helper (Eric Dumazet: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=aa395145165cb06a0d0885221bbe0ce4a564391d).
+net: check the length of the socket address passed to connect(2) (Changli Gao: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=6503d96168f891ffa3b70ae6c9698a1a722025a0).
+Bluetooth: Fix kernel crash on L2CAP stress tests (Andrei Emeltchenko: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=c2c77ec83bdad17fb688557b5b3fdc36661dd1c6).
+Bluetooth: Convert debug files to actually use debugfs instead of sysfs (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=aef7d97cc604309b66f6f45cce02cd734934cd4e).
+Bluetooth: Fix potential bad memory access with sysfs files (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=101545f6fef4a0a3ea8daf0b5b880df2c6a92a69).
+driver-core: Add attribute argument to class_attribute show/store (Andi Kleen: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=28812fe11a21826ba4c97c6c7971a619987cd912).
+Bluetooth: Fix memory leak in L2CAP (Andrei Emeltchenko: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=e420aba331f44de0eed6871441293a6124d566d1).
+Bluetooth: Remove double free of SKB pointer in L2CAP (Andrei Emeltchenko: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=fcafde2e6d81aa7901f9b10e6a097592f0637b79).
+Bluetooth: Fix L2CAP locking scheme regression (Andrei Emeltchenko: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=b13f5860447a98daf0358a51fbff66154ac0663a).
+Bluetooth: Ack L2CAP I-frames before retransmit missing packet (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=186ee8cf0130993dea8ab8867ff1af8a148f9ae6).
+Bluetooth: Fix unset of RemoteBusy flag for L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=186de9a33803c7ee20d9af75c9049b50e68a3a08).
+Bluetooth: Add L2CAP option for max transmit value (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=5fbcd3d1a07e234583e17830e8aef47282c22141).
+Bluetooth: Fix 'SendRRorRNR' to send the ReqSeq value (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=2ab25cdd7b54473dd42dcffc9872737de2517466).
+Bluetooth: Implement RejActioned flag (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=4ec10d9720ef78cd81d8bcc30a3238665744569f).
+Bluetooth: Fix sending ReqSeq on I-frames (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=9f121a5a80b4417c6db5a35e26d2e79c29c3fc0d).
+Bluetooth: Fix unset of SrejActioned flag (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=889a3ca466018ab68363c3168993793bc2d984f1).
+Bluetooth: Initialize variables and timers for both channel's sides (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0565c1c24af94130b891f989fa608faddfadc52c).
+net: Move && and || to end of previous line (Joe Perches: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=f64f9e719261a87818dd192a3a2352e5b20fbd0f).
+net: check kern before calling security subsystem (Eric Paris: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=c84b3268da3b85c9d8a9e504e1001a14ed829e94).
+net: pass kern to net_proto_family create function (Eric Paris: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=3f378b684453f2a028eda463ce383370545d9cc9).
+net: mark net_proto_ops as const (Stephen Hemminger: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=ec1b4cf74c81bfd0fbe5bf62bafc86c45917e72f).
+Branched to 'feature-patches-bluetooth'.
+
 08-05-2011:
 Changes to ncBuildHelper.sh for inclusion of update_modules.sh.
 Changes to update_modules.sh.

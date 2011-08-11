@@ -60,7 +60,8 @@ static inline void phonet_proto_put(struct phonet_protocol *pp)
 
 /* protocol family functions */
 
-static int pn_socket_create(struct net *net, struct socket *sock, int protocol)
+static int pn_socket_create(struct net *net, struct socket *sock, int protocol,
+			    int kern)
 {
 	struct sock *sk;
 	struct pn_sock *pn;
@@ -120,7 +121,7 @@ out:
 	return err;
 }
 
-static struct net_proto_family phonet_proto_family = {
+static const struct net_proto_family phonet_proto_family = {
 	.family = PF_PHONET,
 	.create = pn_socket_create,
 	.owner = THIS_MODULE,
