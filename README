@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+08-13-2011:
+Removed battery_mods init.d script (controlled by app).
+
 08-11-2011:
 Added bootsound script (needs a working stagefright binary to be of use).
 
