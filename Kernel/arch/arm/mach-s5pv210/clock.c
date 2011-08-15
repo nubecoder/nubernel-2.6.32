@@ -100,11 +100,11 @@ struct S5PC110_clk_info clk_info[NUM_FREQ] = {
 	.dmc0_div6 = (3<<28),
 	},
 	{
-	// APLL:1200,ARMCLK:1200,HCLK_MSYS:200,MPLL:667,HCLK_DSYS:166,HCLK_PSYS:133,PCLK_MSYS:100,PCLK_DSYS:83,PCLK_PSYS:66
+	// APLL:1200,ARMCLK:1200,A2M:200,HCLK_MSYS:200,MPLL:667,HCLK_DSYS:166.75,HCLK_PSYS:133.4,PCLK_MSYS:100,PCLK_DSYS:83.375,G3D:166.75,PCLK_PSYS:66.7
 	.armclk = 1200* MHZ,
 	.apllout = 1200* MHZ,
 	.apll_mps = ((300<<16)|(6<<8)|1),
-	.msys_div0 = (0|(6<<4)|(6<<8)|(1<<12)),
+	.msys_div0 = (0|(5<<4)|(5<<8)|(1<<12)),
 	.mpllout = 667* MHZ,
 	.mpll_mps = ((667<<16)|(12<<8)|(1)),
 	.psys_dsys_div0 = ((3<<16)|(1<<20)|(4<<24)|(1<<28)),

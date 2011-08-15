@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+08-15-2011:
+Fixing up 1200MHz frequency.
+
 08-14-2011:
 Add a #define for NUM_FREQ and other miscellaneous cleanup (gzub: https://github.com/gzub/EC05-Zub/commit/e8e3d72fa8bef44b98c93a8a4fdeaa74565cf35c).
 Fixing up 600MHz frequency (gzub: https://github.com/gzub/EC05-Zub/commit/6be25a07b497a36d8bf8e229c1685b23bae10144).
