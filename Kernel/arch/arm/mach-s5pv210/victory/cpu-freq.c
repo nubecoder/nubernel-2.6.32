@@ -114,7 +114,7 @@ static struct cpufreq_frequency_table s5pc110_freq_table_1GHZ[NUM_FREQ + 1] = {
 };
 
 /*Assigning different index for fast scaling up*/
-static unsigned char transition_state_1GHZ[NUM_FREQ][2] = {
+unsigned char transition_state_1GHZ[NUM_FREQ][2] = {
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
 	{1, 0},   //Down 0  to 1  Up 0  to 0
 	{2, 0},   //Down 1  to 2  Up 1  to 0
