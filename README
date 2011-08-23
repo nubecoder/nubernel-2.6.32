@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+08-23-2011:
+Adding a DVFS lock for interactiveX governor in an attempt to fix it's SOD problem.
+
 08-15-2011:
 Added a read only cpu_transition_states_table sysfs entry, some cleanup to the cpu_thres_table sysfs entry, and added value checking to states_enabled_table sysfs entry.
 Fixing comments for the rest of the frequencies.
