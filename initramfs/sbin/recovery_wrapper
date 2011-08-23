@@ -1,35 +1,50 @@
-#!/sbin/sh
-# DRockstar Clean Kernel recovery.sh called from recovery.rc and fota.rc
+#!/sbin/busybox sh
+#
+# recovery_wrapper
+#
+#
+# 2011 nubecoder
+# http://www.nubecoder.com/
+#
+# Bonsai's init_wrapper script used as a base
+# Other bits taken from the following people:
+# Tanimn, DRockstar, Rodderik
 
+# Remount as RW
 /sbin/busybox mount -o remount,rw / /
 
-# Install recovery busybox to /sbin
-/sbin/busybox ls /res/sbin | while read line
-do
-  /sbin/busybox mv -f /res/sbin/$line /sbin/$line
-done
-rmdir /res/sbin
+# Install busybox to /sbin
+/sbin/busybox --install -s /sbin
 
-# Remove unneccessary files used in normal boot
+# Sync filesystem
+sync
+
+# Move recovery assets to /sbin
+mv -f /res/sbin* /sbin/
+
+# Move recovery.fstab to proper location
+mkdir /etc
+mv -f /res/etc/recovery.fstab /etc/recovery.fstab
+
+# Remove unneccessary files
 for file in Superuser.apk su keytimer
 do
-  rm -rf /sbin/$file
+	rm -rf /sbin/$file
 done
+rmdir /res/sbin
+#rmdir /res/etc
 
-# Fix permissions in /sbin, just in case
-/sbin/busybox chmod 755 /sbin/*
-
-# Fix screwy ownerships
-for blip in conf default.prop fota.rc init init.goldfish.rc init.rc init.smdkc110.rc lib lpm.rc modules recovery.rc res sbin
+# Fixing permissions and ownership
+chmod 0755 /sbin/*
+for blip in conf default.prop fota.rc init init.sh init.rc init.rc.sdcard init.smdkc110.rc lib lib/modules lpm.rc modules recovery.rc res res/images sbin
 do
-  chown root.system /$blip
-  chown root.system /$blip/*
+	chown root.system /$blip
+	chown root.system /$blip/*
 done
 
-chown root.system /lib/modules/*
-chown root.system /res/images/*
+# Sync filesystem
+sync
 
-mkdir /etc
-cp /res/etc/recovery.fstab /etc/recovery.fstab
+# Execute recovery binary
 /sbin/recovery
 

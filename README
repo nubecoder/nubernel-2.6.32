@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+08-23-2011:
+Changes to init_wrapper and recovery_wrapper in initramfs.
+
 08-13-2011:
 Removed battery_mods init.d script (controlled by app).
 

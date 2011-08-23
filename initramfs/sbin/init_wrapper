@@ -1,4 +1,4 @@
-#!/system/bin/sh
+#!/sbin/busybox sh
 #
 # init_wrapper
 #
@@ -10,26 +10,29 @@
 # Other bits taken from the following people:
 # Tanimn, DRockstar, Rodderik
 
+# Remount as RW
 /sbin/busybox mount -o remount,rw / /
 /sbin/busybox mount -o remount,rw /dev/block/stl9 /system
 
 # Install busybox
 /sbin/busybox mkdir /bin
 /sbin/busybox --install -s /bin
-rm -rf /system/xbin/busybox
-ln -s /sbin/busybox /system/xbin/busybox
-rm -rf /res
+/sbin/busybox rm -rf /system/xbin/busybox
+/sbin/busybox ln -s /sbin/busybox /system/xbin/busybox
+
+# Sync filesystem
 sync
 
+# Remove unneccessary files
+rm -rf /res
+
 # Fixing permissions and ownership
-chmod 755 /sbin/*
-for blip in conf default.prop fota.rc init init.goldfish.rc init.rc init.smdkc110.rc lib lpm.rc modules recovery.rc res sbin
+chmod 0755 /sbin/*
+for blip in conf default.prop fota.rc init init.sh init.rc init.rc.sdcard init.smdkc110.rc lib lib/modules lpm.rc modules recovery.rc res res/images sbin
 do
 	chown root.system /$blip
 	chown root.system /$blip/*
 done
-chown root.system /lib/modules/*
-chown root.system /res/images/*
 
 # Ensure su is properly installed
 chmod 6755 /sbin/su
@@ -39,19 +42,23 @@ rm -rf /system/bin/jk-su
 ln -s /sbin/su /system/bin/su
 ln -s /sbin/su /system/xbin/su
 
-# Setup proper passwd and group files for root access
+# Setup proper passwd and group files
 if [ ! -f "/system/etc/passwd" ]; then
-	echo "root::0:0:root:/data/local:/sbin/sh" > /system/etc/passwd
-	chmod 0400 /system/etc/passwd
+	echo "root::0:0:root:/:/sbin/sh" > /system/etc/passwd
+	echo "shell::2000:2000:shell:/data/local:/sbin/sh" >> /system/etc/passwd
 fi
+chown root.root /system/etc/passwd
+chmod 0644 /system/etc/passwd
 if [ ! -f "/system/etc/group" ]; then
 	echo "root::0:" > /system/etc/group
-	chmod 0400 /system/etc/group
+	echo "shell::2000:" >> /system/etc/group
 fi
+chown root.root /system/etc/group
+chmod 0644 /system/etc/group
 
 # Ensure Superuser is installed to protect root access
 if [ ! -f "/system/app/Superuser.apk" ] && [ ! -f "/data/app/Superuser.apk" ]; then
-	cp /sbin/Superuser.apk /system/app/Superuser.apk
+	cp /sbin/Superuser.apk /data/app/Superuser.apk
 fi
 rm /sbin/Superuser.apk
 
@@ -66,7 +73,7 @@ fi
 
 # Prevent certain malware apps (DroidDream)
 . > /system/bin/profile
-chmod 644 /system/bin/profile
+chmod 0400 /system/bin/profile
 
 # Fixing busybox DNS
 if [ ! -f "/system/etc/resolv.conf" ]; then
@@ -76,11 +83,14 @@ fi
 
 # keyboard patch sysfs
 if [ ! -f "/data/local/timer_delay" ]; then
-  echo 5 > /data/local/timer_delay
+	echo 5 > /data/local/timer_delay
 fi
 cat /data/local/timer_delay > /sys/devices/platform/s3c-keypad/timer_delay
 
+# Sync filesystem
 sync
 
+# Remount as RO
 mount -o remount,ro / /
 mount -o remount,ro /dev/block/stl9 /system
+
