@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+08-26-2011:
+Actually using the "DEF_SAMPLING_FREQ_STEP" define in conservative governor.
+
 08-23-2011:
 Adding a DVFS lock for interactiveX governor in an attempt to fix it's SOD problem.
 

@@ -33,7 +33,7 @@
 #define DEF_FREQUENCY_DOWN_THRESHOLD		(20)
 
 #ifdef CONFIG_CPU_S5PV210
-#define DEF_SAMPLING_FREQ_STEP  20
+#define DEF_SAMPLING_FREQ_STEP 20
 #else
 #define DEF_SAMPLING_FREQ_STEP 5
 #endif
@@ -102,7 +102,7 @@ static struct dbs_tuners {
 	.down_threshold = DEF_FREQUENCY_DOWN_THRESHOLD,
 	.sampling_down_factor = DEF_SAMPLING_DOWN_FACTOR,
 	.ignore_nice = 0,
-	.freq_step = 5,
+	.freq_step = DEF_SAMPLING_FREQ_STEP,
 };
 
 static inline cputime64_t get_cpu_idle_time_jiffy(unsigned int cpu,
