@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+08-26-2011:
+Added Bash to initramfs (gets installed to /system/bin/bash if it doesn't already exist).
+
 08-23-2011:
 Changes to init_wrapper and recovery_wrapper in initramfs.
 

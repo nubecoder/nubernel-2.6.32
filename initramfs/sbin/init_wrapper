@@ -62,7 +62,14 @@ if [ ! -f "/system/app/Superuser.apk" ] && [ ! -f "/data/app/Superuser.apk" ]; t
 fi
 rm /sbin/Superuser.apk
 
-# Support bash shell
+# Install Bash if not found
+if [ ! -f "/system/bin/bash" ]; then
+	cp /sbin/bash /system/bin/bash
+	chmod 0755 /system/bin/bash
+fi
+rm -f /sbin/bash
+
+# Support Bash as default shell
 BASH_FOUND=$(ls -l "/system/bin/sh" | grep "system/bin/bash")
 if [ ! "$BASH_FOUND" = "" ] && [ -f "/system/bin/bash" ]; then
 	rm -f /bin/sh
