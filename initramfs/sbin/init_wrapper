@@ -10,31 +10,49 @@
 # Other bits taken from the following people:
 # Tanimn, DRockstar, Rodderik
 
-# Remount as RW
-/sbin/busybox mount -o remount,rw / /
-/sbin/busybox mount -o remount,rw /dev/block/stl9 /system
+#functions
+SEND_LOG()
+{
+	log -p i -t init:init_wrapper "init_wrapper : $1"
+}
 
-# Install busybox
+#main
+SEND_LOG "Start"
+
+SEND_LOG "Remount as RW"
+/sbin/busybox mount -o remount,rw /
+/sbin/busybox mount -o remount,rw /system
+
+SEND_LOG "Installing busybox to /bin"
 /sbin/busybox mkdir /bin
 /sbin/busybox --install -s /bin
 /sbin/busybox rm -rf /system/xbin/busybox
 /sbin/busybox ln -s /sbin/busybox /system/xbin/busybox
 
-# Sync filesystem
+SEND_LOG "Sync filesystem"
 sync
 
-# Remove unneccessary files
-rm -rf /res
-
-# Fixing permissions and ownership
-chmod 0755 /sbin/*
-for blip in conf default.prop fota.rc init init.sh init.rc init.rc.sdcard init.smdkc110.rc lib lib/modules lpm.rc modules recovery.rc res res/images sbin
-do
-	chown root.system /$blip
-	chown root.system /$blip/*
+SEND_LOG "Remove unneccessary files"
+for FOLDER in res ; do
+	SEND_LOG "  rm -rf $FOLDER"
+	rm -rf /$FOLDER
 done
 
-# Ensure su is properly installed
+SEND_LOG "Fixing permissions and ownership"
+SEND_LOG "chmod 0755 /sbin/*"
+chmod 0755 /sbin/*
+for FILE in default.prop init init.sh ; do
+	SEND_LOG "  chown root.system /$FILE"
+	chown root.system /$FILE
+done
+for FOLDER in lib lib/modules modules sbin ; do
+	SEND_LOG "  chown root.system /$FOLDER"
+	chown root.system /$FOLDER
+	SEND_LOG "  chown root.system /$FOLDER/*"
+	chown root.system /$FOLDER/*
+done
+
+SEND_LOG "Ensuring su is properly installed"
 chmod 6755 /sbin/su
 rm -rf /system/bin/su
 rm -rf /system/xbin/su
@@ -42,62 +60,70 @@ rm -rf /system/bin/jk-su
 ln -s /sbin/su /system/bin/su
 ln -s /sbin/su /system/xbin/su
 
-# Setup proper passwd and group files
+SEND_LOG "Ensuring user files are set up properly"
 if [ ! -f "/system/etc/passwd" ]; then
+	SEND_LOG "  Setting up /etc/passwd"
 	echo "root::0:0:root:/:/sbin/sh" > /system/etc/passwd
 	echo "shell::2000:2000:shell:/data/local:/sbin/sh" >> /system/etc/passwd
 fi
 chown root.root /system/etc/passwd
 chmod 0644 /system/etc/passwd
 if [ ! -f "/system/etc/group" ]; then
+	SEND_LOG "  Setting up /etc/group"
 	echo "root::0:" > /system/etc/group
 	echo "shell::2000:" >> /system/etc/group
 fi
 chown root.root /system/etc/group
 chmod 0644 /system/etc/group
 
-# Ensure Superuser is installed to protect root access
+SEND_LOG "Ensuring Superuser.apk is installed"
 if [ ! -f "/system/app/Superuser.apk" ] && [ ! -f "/data/app/Superuser.apk" ]; then
+	SEND_LOG "  Installing Superuser.apk to /data/app/"
 	cp /sbin/Superuser.apk /data/app/Superuser.apk
 fi
 rm /sbin/Superuser.apk
 
-# Install Bash if not found
+SEND_LOG "Ensuring bash is installed"
 if [ ! -f "/system/bin/bash" ]; then
+	SEND_LOG "  Installing Bash to /system/bin/"
 	cp /sbin/bash /system/bin/bash
-	chmod 0755 /system/bin/bash
 fi
+chmod 0755 /system/bin/bash
 rm -f /sbin/bash
 
-# Support Bash as default shell
+SEND_LOG "Checking for bash as default shell"
 BASH_FOUND=$(ls -l "/system/bin/sh" | grep "system/bin/bash")
 if [ ! "$BASH_FOUND" = "" ] && [ -f "/system/bin/bash" ]; then
+	SEND_LOG "  Allowing bash as default shell"
 	rm -f /bin/sh
 	rm -f /sbin/sh
 	ln -s /bin/sh /system/bin/sh
 	ln -s /sbin/sh /system/bin/sh
 fi
 
-# Prevent certain malware apps (DroidDream)
+SEND_LOG "Preventing certain malware apps (DroidDream)"
 . > /system/bin/profile
 chmod 0400 /system/bin/profile
 
-# Fixing busybox DNS
+SEND_LOG "Ensuring busybox DNS is set up properly"
 if [ ! -f "/system/etc/resolv.conf" ]; then
+	SEND_LOG "  Setting Busybox DNS"
 	echo "nameserver 8.8.8.8" >> /system/etc/resolv.conf
 	echo "nameserver 8.8.4.4" >> /system/etc/resolv.conf
 fi
 
-# keyboard patch sysfs
+SEND_LOG "Ensuring KB timer_delay is set up properly"
 if [ ! -f "/data/local/timer_delay" ]; then
+	SEND_LOG "  Setting KB timer_delay to 5"
 	echo 5 > /data/local/timer_delay
 fi
 cat /data/local/timer_delay > /sys/devices/platform/s3c-keypad/timer_delay
 
-# Sync filesystem
+SEND_LOG "Sync filesystem"
 sync
 
-# Remount as RO
-mount -o remount,ro / /
-mount -o remount,ro /dev/block/stl9 /system
+SEND_LOG "Remove self"
+rm -f "/sbin/init_wrapper"
+
+SEND_LOG "End"
 

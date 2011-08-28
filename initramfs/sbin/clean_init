@@ -1,0 +1,53 @@
+#!/sbin/busybox sh
+#
+# clean_init
+#
+#
+# 2011 nubecoder
+# http://www.nubecoder.com/
+#
+
+#functions
+SEND_LOG()
+{
+	log -p i -t init:clean_init "clean_init : $1"
+}
+
+#main
+SEND_LOG "Start"
+
+if /sbin/busybox test "$1" = "recovery" ; then
+	SEND_LOG "Waiting for recovery_wrapper to finish"
+	while /sbin/busybox test -f "/sbin/recovery_wrapper" ; do
+		SEND_LOG "Sleep 1"
+		sleep 1
+	done
+else
+	SEND_LOG "Waiting for init_wrapper to finish"
+	while /sbin/busybox test -f "/sbin/init_wrapper" ; do
+		SEND_LOG "Sleep 1"
+		sleep 1
+	done
+fi
+
+SEND_LOG "Remove unneccessary files"
+if /sbin/busybox test "$1" = "recovery" ; then
+	for FILE in sbin/init_wrapper fota.rc init.rc init.rc.sdcard lpm.rc recovery.rc ; do
+		SEND_LOG "rm -f /$FILE"
+		/sbin/busybox rm -f /$FILE
+	done
+else
+	for FILE in sbin/recovery_wrapper fota.rc init.rc init.rc.sdcard init.smdkc110.rc lpm.rc recovery.rc ; do
+		SEND_LOG "rm -f /$FILE"
+		/sbin/busybox rm -f /$FILE
+	done
+fi
+
+SEND_LOG "Sync filesystem"
+sync
+
+SEND_LOG "Remove self"
+/sbin/busybox rm -f "/sbin/clean_init"
+
+SEND_LOG "End"
+

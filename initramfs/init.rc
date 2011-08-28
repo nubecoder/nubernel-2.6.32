@@ -463,9 +463,17 @@ service console /system/bin/sh
 	group shell system log
 	console
 
-service init_local /sbin/init_wrapper
-    user root
-    oneshot
+service init_local /system/bin/logwrapper /sbin/busybox sh /sbin/init_wrapper
+	user root
+	oneshot
+
+service clean_init /system/bin/logwrapper /sbin/busybox sh /sbin/clean_init
+	user root
+	oneshot
+
+service mount_ro /system/bin/logwrapper /sbin/busybox sh /sbin/mount_ro
+	user root
+	oneshot
 
 service playlogos1 /system/bin/playlogos1
 	user root

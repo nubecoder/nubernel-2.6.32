@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+08-28-2011:
+Changes to initramfs to remove unneccessary files after boot.
+
 08-27-2011:
 Some minor cleanup to kernelFlash.
 Some cleanup and changes to ncBuildHelper.sh.

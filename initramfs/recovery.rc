@@ -91,7 +91,11 @@ on boot
 ## Daemon processes to be run by init.
 ##
 #service recovery /sbin/recovery
-service init_local /sbin/recovery_wrapper
+service init_local /system/bin/logwrapper /sbin/busybox sh /sbin/recovery_wrapper
+	user root
+	oneshot
+
+service clean_init /system/bin/logwrapper /sbin/busybox sh /sbin/clean_init recovery
 	user root
 	oneshot
 

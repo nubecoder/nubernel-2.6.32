@@ -10,41 +10,65 @@
 # Other bits taken from the following people:
 # Tanimn, DRockstar, Rodderik
 
-# Remount as RW
-/sbin/busybox mount -o remount,rw / /
+#functions
+SEND_LOG()
+{
+	log -p i -t init:recovery_wrapper "recovery_wrapper : $1"
+}
 
-# Install busybox to /sbin
+#main
+SEND_LOG "Start"
+
+SEND_LOG "Remount as rw"
+/sbin/busybox mount -o remount,rw /
+
+SEND_LOG "Installing busybox to /sbin"
 /sbin/busybox --install -s /sbin
 
-# Sync filesystem
+SEND_LOG "Syncing filesystem"
 sync
 
-# Move recovery assets to /sbin
-mv -f /res/sbin* /sbin/
+SEND_LOG "Moving recovery assets to /sbin"
+mv -f /res/sbin/* /sbin/
 
-# Move recovery.fstab to proper location
+SEND_LOG "Moving recovery.fstab to /etc"
 mkdir /etc
 mv -f /res/etc/recovery.fstab /etc/recovery.fstab
 
-# Remove unneccessary files
-for file in Superuser.apk su keytimer
+SEND_LOG "Remove unneccessary files"
+for FILE in Superuser.apk keytimer mount_ro
 do
-	rm -rf /sbin/$file
+	SEND_LOG "  rm -f /sbin/$FILE"
+	rm -f /sbin/$FILE
 done
-rmdir /res/sbin
+for FOLDER in res/sbin ; do
+	SEND_LOG "  rm -rf $FOLDER"
+	rm -rf /$FOLDER
+done
 #rmdir /res/etc
 
-# Fixing permissions and ownership
+SEND_LOG "Fixing permissions and ownership"
+SEND_LOG "chmod 0755 /sbin/*"
 chmod 0755 /sbin/*
-for blip in conf default.prop fota.rc init init.sh init.rc init.rc.sdcard init.smdkc110.rc lib lib/modules lpm.rc modules recovery.rc res res/images sbin
-do
-	chown root.system /$blip
-	chown root.system /$blip/*
+for FILE in default.prop init init.sh init.smdkc110.rc ; do
+	SEND_LOG "  chown root.system /$FILE"
+	chown root.system /$FILE
+done
+for FOLDER in conf lib lib/modules modules res res/images sbin ; do
+	SEND_LOG "  chown root.system /$FOLDER"
+	chown root.system /$FOLDER
+	SEND_LOG "  chown root.system /$FOLDER/*"
+	chown root.system /$FOLDER/*
 done
 
-# Sync filesystem
+SEND_LOG "Sync filesystem"
 sync
 
-# Execute recovery binary
+SEND_LOG "Remove self"
+rm -f "/sbin/recovery_wrapper"
+
+SEND_LOG "Execute recovery binary"
 /sbin/recovery
+
+SEND_LOG "End"
 
