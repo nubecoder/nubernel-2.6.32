@@ -69,10 +69,10 @@ if [ "$ERROR" != "yes" ];
 then
 	#remove previous files
 	echo "Removing previous files."
-	$ADB_SHELL "rm" $ZIMAGE_DEST
-	$ADB_SHELL "rm" $REDBEND_DEST
-#	$ADB_SHELL "rm" $BMLWRITE_DEST
-	$ADB_SHELL "rm" $KERNELFLASH_DEST
+	$ADB_SHELL "rm -f" $ZIMAGE_DEST
+	$ADB_SHELL "rm -f" $REDBEND_DEST
+#	$ADB_SHELL "rm -f" $BMLWRITE_DEST
+	$ADB_SHELL "rm -f" $KERNELFLASH_DEST
 
 	#push new kernel to phone
 	echo "Pushing zImage, this may take a minute."
