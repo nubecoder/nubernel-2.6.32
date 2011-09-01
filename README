@@ -28,7 +28,28 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+09-01-2011:
+Switched to ro.secure=0.
+
+08-28-2011:
+Using rm -f in wiredFlashHelper and wifiFlashHelper scripts.
+Changes to initramfs to remove unneccessary files after boot.
+
+08-27-2011:
+Some minor cleanup to kernelFlash.
+Some cleanup and changes to ncBuildHelper.sh.
+
+08-26-2011:
+Added Bash to initramfs (gets installed to /system/bin/bash if it doesn't already exist).
+
+08-23-2011:
+Changes to init_wrapper and recovery_wrapper in initramfs.
+
+08-13-2011:
+Removed battery_mods init.d script (controlled by app).
+
 08-11-2011:
+Added bootsound script (needs a working stagefright binary to be of use).
 Reverting, "Bluetooth: Make hci_send_sco() void" (commit ID: fb33667).
 Bluetooth: Defer SCO setup if mode change is pending (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=f1ef8e19ffd513c9ba35865eba16354dac0dcbcc).
 Bluetooth: Reassigned copyright to Code Aurora Forum (Ron Shaffer: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=1c094829f570a8cb5a358104a3f23eacb39bf18d).

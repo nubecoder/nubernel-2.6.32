@@ -154,11 +154,11 @@ BUILD_MODULES()
 	local T1=$(date +%s)
 	echo "Begin building modules..." && echo ""
 	pushd Kernel > /dev/null
-	if [ "$VERBOSE" = "y" ] ; then
-		nice make V=1 -j"$THREADS" ARCH=arm modules 2>&1 | tee make.out
-	else
-		nice make -j"$THREADS" ARCH=arm modules 2>&1 | tee make.out
-	fi
+		if [ "$VERBOSE" = "y" ] ; then
+			nice make V=1 -j"$THREADS" ARCH=arm modules 2>&1 | tee make.out
+		else
+			nice make -j"$THREADS" ARCH=arm modules 2>&1 | tee make.out
+		fi
 	popd > /dev/null
 	local T2=$(date +%s)
 	echo "" && echo "building modules took $(($T2 - $T1)) seconds."
@@ -171,11 +171,12 @@ BUILD_ZIMAGE()
 	local T1=$(date +%s)
 	echo "Begin building zImage..." && echo ""
 	pushd Kernel > /dev/null
-	if [ "$VERBOSE" = "y" ] ; then
-		nice make V=1 -j"$THREADS" ARCH=arm CROSS_COMPILE="$CROSS_COMPILE" 2>&1 | tee make.out
-	else
-		nice make -j"$THREADS" ARCH=arm CROSS_COMPILE="$CROSS_COMPILE" 2>&1 | tee make.out
-	fi
+		rm -f usr/initramfs_data.cpio.lzma
+		if [ "$VERBOSE" = "y" ] ; then
+			nice make V=1 -j"$THREADS" ARCH=arm CROSS_COMPILE="$CROSS_COMPILE" 2>&1 | tee make.out
+		else
+			nice make -j"$THREADS" ARCH=arm CROSS_COMPILE="$CROSS_COMPILE" 2>&1 | tee make.out
+		fi
 	popd > /dev/null
 	local T2=$(date +%s)
 	echo "" && echo "building zImage took $(($T2 - $T1)) seconds."

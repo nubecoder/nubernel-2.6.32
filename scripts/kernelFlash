@@ -49,11 +49,10 @@ SHOW_HELP()
 SHOW_SETTINGS()
 {
 	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
-	if [ "$USE_BMLWRITE" = "y" ]
-	then
-		echo "Flash with     == bmlwrite."
+	if [ "$USE_BMLWRITE" = "y" ] ; then
+		echo "Flash with       == bmlwrite."
 	else
-		echo "Flash with     == redbend_ua."
+		echo "Flash with       == redbend_ua."
 	fi
 	echo "Flash a kernel   == $DO_KERNEL"
 	echo "Flash a recovery == $DO_RECOVERY"
@@ -79,8 +78,7 @@ FLASH_TO_BML7()
 {
 	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
 	local T1=$(date +%s)
-	if [ "$USE_BMLWRITE" = "y" ]
-	then
+	if [ "$USE_BMLWRITE" = "y" ] ; then
 		echo "Begin kernel flash with bmlwrite..." && echo ""
 		$BMLWRITE_DO_KERNEL > /dev/null
 	else
@@ -96,8 +94,7 @@ FLASH_TO_BML8()
 {
 	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
 	local T1=$(date +%s)
-	if [ "$USE_BMLWRITE" = "y" ]
-	then
+	if [ "$USE_BMLWRITE" = "y" ] ; then
 		echo "Begin recovery flash with bmlwrite..." && echo ""
 		$BMLWRITE_DO_RECOVERY > /dev/null
 	else
@@ -137,18 +134,19 @@ done
 # show current settings
 SHOW_SETTINGS
 
-if [ "$DO_KERNEL" = "y" ]
-then
-	FLASH_TO_BML7
+if [ "$DO_KERNEL" = "y" ] ; then
+	if [ -f $ZIMAGE ] ; then
+		FLASH_TO_BML7
+	fi
 fi
 
-if [ "$DO_RECOVERY" = "y" ]
-then
-	FLASH_TO_BML8
+if [ "$DO_RECOVERY" = "y" ] ; then
+	if [ -f $ZIMAGE ] ; then
+		FLASH_TO_BML8
+	fi
 fi
 
-if [ "$DO_KERNEL" = "n" -a "$DO_RECOVERY" = "n" ]
-then
+if [ "$DO_KERNEL" = "n" -a "$DO_RECOVERY" = "n" ] ; then
 	SHOW_HELP
 fi
 

@@ -1,35 +1,74 @@
-#!/sbin/sh
-# DRockstar Clean Kernel recovery.sh called from recovery.rc and fota.rc
+#!/sbin/busybox sh
+#
+# recovery_wrapper
+#
+#
+# 2011 nubecoder
+# http://www.nubecoder.com/
+#
+# Bonsai's init_wrapper script used as a base
+# Other bits taken from the following people:
+# Tanimn, DRockstar, Rodderik
 
-/sbin/busybox mount -o remount,rw / /
+#functions
+SEND_LOG()
+{
+	log -p i -t init:recovery_wrapper "recovery_wrapper : $1"
+}
 
-# Install recovery busybox to /sbin
-/sbin/busybox ls /res/sbin | while read line
-do
-  /sbin/busybox mv -f /res/sbin/$line /sbin/$line
-done
-rmdir /res/sbin
+#main
+SEND_LOG "Start"
 
-# Remove unneccessary files used in normal boot
-for file in Superuser.apk su keytimer
-do
-  rm -rf /sbin/$file
-done
+SEND_LOG "Remount as rw"
+/sbin/busybox mount -o remount,rw /
 
-# Fix permissions in /sbin, just in case
-/sbin/busybox chmod 755 /sbin/*
+SEND_LOG "Installing busybox to /sbin"
+/sbin/busybox --install -s /sbin
 
-# Fix screwy ownerships
-for blip in conf default.prop fota.rc init init.goldfish.rc init.rc init.smdkc110.rc lib lpm.rc modules recovery.rc res sbin
-do
-  chown root.system /$blip
-  chown root.system /$blip/*
-done
+SEND_LOG "Syncing filesystem"
+sync
 
-chown root.system /lib/modules/*
-chown root.system /res/images/*
+SEND_LOG "Moving recovery assets to /sbin"
+mv -f /res/sbin/* /sbin/
 
+SEND_LOG "Moving recovery.fstab to /etc"
 mkdir /etc
-cp /res/etc/recovery.fstab /etc/recovery.fstab
+mv -f /res/etc/recovery.fstab /etc/recovery.fstab
+
+SEND_LOG "Remove unneccessary files"
+for FILE in Superuser.apk keytimer mount_ro
+do
+	SEND_LOG "  rm -f /sbin/$FILE"
+	rm -f /sbin/$FILE
+done
+for FOLDER in res/sbin ; do
+	SEND_LOG "  rm -rf $FOLDER"
+	rm -rf /$FOLDER
+done
+#rmdir /res/etc
+
+SEND_LOG "Fixing permissions and ownership"
+SEND_LOG "chmod 0755 /sbin/*"
+chmod 0755 /sbin/*
+for FILE in default.prop init init.sh init.smdkc110.rc ; do
+	SEND_LOG "  chown root.system /$FILE"
+	chown root.system /$FILE
+done
+for FOLDER in conf lib lib/modules modules res res/images sbin ; do
+	SEND_LOG "  chown root.system /$FOLDER"
+	chown root.system /$FOLDER
+	SEND_LOG "  chown root.system /$FOLDER/*"
+	chown root.system /$FOLDER/*
+done
+
+SEND_LOG "Sync filesystem"
+sync
+
+SEND_LOG "Remove self"
+rm -f "/sbin/recovery_wrapper"
+
+SEND_LOG "Execute recovery binary"
 /sbin/recovery
+
+SEND_LOG "End"
 
