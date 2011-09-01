@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+09-01-2011:
+Switched to ro.secure=0.
+
 08-28-2011:
 Using rm -f in wiredFlashHelper and wifiFlashHelper scripts.
 Changes to initramfs to remove unneccessary files after boot.
