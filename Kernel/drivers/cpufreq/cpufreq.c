@@ -28,37 +28,37 @@
 #include <linux/cpu.h>
 #include <linux/completion.h>
 #include <linux/mutex.h>
+#include <mach/cpu-freq-v210.h>
 
 #define dprintk(msg...) cpufreq_debug_printk(CPUFREQ_DEBUG_CORE, \
 						"cpufreq-core", msg)
 
-#ifdef CONFIG_MACH_S5PC110_ARIES_OC
 // default undervolts
-unsigned int exp_UV_mV[11] = {
+unsigned int exp_UV_mV[NUM_FREQ] = {
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
 	0,0,0,0,	// 1400,1300,1200,1120,
 	0,0,0,0,	// 1000,900,800,600,
 	0,0,0			// 400,200,100
-};
-// default enabled states
-int active_states[11] = {
-	0,0,1,1,	//1400,1300,1200,1120,
-	1,1,1,1,	//1000,900,800,600,
-	1,1,1			//400,200,100
-};
 #else // no OC
-// default undervolts
-unsigned int exp_UV_mV[7] = {
-	0,0,0,0,	//1000,900,800,600,
-	0,0,0			//400,200,100
+	0,0,0,0,	// 1000,900,800,600,
+	0,0,0			// 400,200,100
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
 };
 // default enabled states
-int active_states[7] = {
-	1,1,1,1,	//1000,900,800,600,
-	1,1,1			//400,200,100
-};
+int active_states[NUM_FREQ] = {
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+	0,0,1,1,	// 1400,1300,1200,1120,
+	1,1,1,1,	// 1000,900,800,600,
+	1,1,1			// 400,200,100
+#else // no OC
+	1,1,1,1,	// 1000,900,800,600,
+	1,1,1			// 400,200,100
 #endif // end CONFIG_MACH_S5PC110_ARIES_OC
-extern unsigned int s5pc110_thres_table_1GHZ[][2];
-extern unsigned int frequency_voltage_tab[][3];
+};
+
+extern unsigned char transition_state_1GHZ[NUM_FREQ][2];
+extern unsigned int s5pc110_thres_table_1GHZ[NUM_FREQ][2];
+extern unsigned int frequency_voltage_tab[NUM_FREQ][3];
 
 int exp_update_states = 1;
 
@@ -787,6 +787,34 @@ static ssize_t show_scaling_setspeed(struct cpufreq_policy *policy, char *buf)
 	return policy->governor->show_setspeed(policy, buf);
 }
 
+static ssize_t show_cpu_transition_states_table(struct cpufreq_policy *policy, char *buf)
+{
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+	return sprintf(buf, "%d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d\n",
+		transition_state_1GHZ[0][0], transition_state_1GHZ[0][1],
+		transition_state_1GHZ[1][0], transition_state_1GHZ[1][1],
+		transition_state_1GHZ[2][0], transition_state_1GHZ[2][1],
+		transition_state_1GHZ[3][0], transition_state_1GHZ[3][1],
+		transition_state_1GHZ[4][0], transition_state_1GHZ[4][1],
+		transition_state_1GHZ[5][0], transition_state_1GHZ[5][1],
+		transition_state_1GHZ[6][0], transition_state_1GHZ[6][1],
+		transition_state_1GHZ[7][0], transition_state_1GHZ[7][1],
+		transition_state_1GHZ[8][0], transition_state_1GHZ[8][1],
+		transition_state_1GHZ[9][0], transition_state_1GHZ[9][1],
+		transition_state_1GHZ[10][0], transition_state_1GHZ[10][1]);
+#else // no OC
+	return sprintf(buf, "%d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d\n",
+		transition_state_1GHZ[0][0], transition_state_1GHZ[0][1],
+		transition_state_1GHZ[1][0], transition_state_1GHZ[1][1],
+		transition_state_1GHZ[2][0], transition_state_1GHZ[2][1],
+		transition_state_1GHZ[3][0], transition_state_1GHZ[3][1],
+		transition_state_1GHZ[4][0], transition_state_1GHZ[4][1],
+		transition_state_1GHZ[5][0], transition_state_1GHZ[5][1],
+		transition_state_1GHZ[6][0], transition_state_1GHZ[6][1]);
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
+}
+
+
 static ssize_t show_cpu_thres_table(struct cpufreq_policy *policy, char *buf)
 {
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
@@ -820,12 +848,8 @@ static ssize_t store_cpu_thres_table(struct cpufreq_policy *policy,
 	unsigned int ret = -EINVAL;
 	unsigned int cpu_thres_min = 20;
 	unsigned int cpu_thres_max = 95;
-
-#ifdef CONFIG_MACH_S5PC110_ARIES_OC
-	unsigned int temp_storage_table[11][2];
-#else
-	unsigned int temp_storage_table[7][2];
-#endif
+	unsigned int i = 0;
+	unsigned int temp_storage_table[NUM_FREQ][2];
 
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
 	ret = sscanf(buf, "%d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d\n",
@@ -840,78 +864,6 @@ static ssize_t store_cpu_thres_table(struct cpufreq_policy *policy,
 		&temp_storage_table[8][0], &temp_storage_table[8][1],
 		&temp_storage_table[9][0], &temp_storage_table[9][1],
 		&temp_storage_table[10][0], &temp_storage_table[10][1]);
-	if ((temp_storage_table[0][0] > cpu_thres_max) || (temp_storage_table[0][0] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[0][1] > cpu_thres_max) || (temp_storage_table[0][1] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[1][0] > cpu_thres_max) || (temp_storage_table[1][0] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[1][1] > cpu_thres_max) || (temp_storage_table[1][1] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[2][0] > cpu_thres_max) || (temp_storage_table[2][0] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[2][1] > cpu_thres_max) || (temp_storage_table[2][1] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[3][0] > cpu_thres_max) || (temp_storage_table[3][0] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[3][1] > cpu_thres_max) || (temp_storage_table[3][1] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[4][0] > cpu_thres_max) || (temp_storage_table[4][0] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[4][1] > cpu_thres_max) || (temp_storage_table[4][1] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[5][0] > cpu_thres_max) || (temp_storage_table[5][0] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[5][1] > cpu_thres_max) || (temp_storage_table[5][1] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[6][0] > cpu_thres_max) || (temp_storage_table[6][0] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[6][1] > cpu_thres_max) || (temp_storage_table[6][1] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[7][0] > cpu_thres_max) || (temp_storage_table[7][0] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[7][1] > cpu_thres_max) || (temp_storage_table[7][1] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[8][0] > cpu_thres_max) || (temp_storage_table[8][0] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[8][1] > cpu_thres_max) || (temp_storage_table[8][1] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[9][0] > cpu_thres_max) || (temp_storage_table[9][0] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[9][1] > cpu_thres_max) || (temp_storage_table[9][1] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[10][0] > cpu_thres_max) || (temp_storage_table[10][0] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[10][1] > cpu_thres_max) || (temp_storage_table[10][1] < cpu_thres_min)) {
-		return -EINVAL;
-	} else {
-		s5pc110_thres_table_1GHZ[0][0] = temp_storage_table[0][0];
-		s5pc110_thres_table_1GHZ[0][1] = temp_storage_table[0][1];
-		s5pc110_thres_table_1GHZ[1][0] = temp_storage_table[1][0];
-		s5pc110_thres_table_1GHZ[1][1] = temp_storage_table[1][1];
-		s5pc110_thres_table_1GHZ[2][0] = temp_storage_table[2][0];
-		s5pc110_thres_table_1GHZ[2][1] = temp_storage_table[2][1];
-		s5pc110_thres_table_1GHZ[3][0] = temp_storage_table[3][0];
-		s5pc110_thres_table_1GHZ[3][1] = temp_storage_table[3][1];
-		s5pc110_thres_table_1GHZ[4][0] = temp_storage_table[4][0];
-		s5pc110_thres_table_1GHZ[4][1] = temp_storage_table[4][1];
-		s5pc110_thres_table_1GHZ[5][0] = temp_storage_table[5][0];
-		s5pc110_thres_table_1GHZ[5][1] = temp_storage_table[5][1];
-		s5pc110_thres_table_1GHZ[6][0] = temp_storage_table[6][0];
-		s5pc110_thres_table_1GHZ[6][1] = temp_storage_table[6][1];
-		s5pc110_thres_table_1GHZ[7][0] = temp_storage_table[7][0];
-		s5pc110_thres_table_1GHZ[7][1] = temp_storage_table[7][1];
-		s5pc110_thres_table_1GHZ[8][0] = temp_storage_table[8][0];
-		s5pc110_thres_table_1GHZ[8][1] = temp_storage_table[8][1];
-		s5pc110_thres_table_1GHZ[9][0] = temp_storage_table[9][0];
-		s5pc110_thres_table_1GHZ[9][1] = temp_storage_table[9][1];
-		s5pc110_thres_table_1GHZ[10][0] = temp_storage_table[10][0];
-		s5pc110_thres_table_1GHZ[10][1] = temp_storage_table[10][1];
-	}
-	if (ret != 22)
-		return -EINVAL;
-	else
-		return count;
 #else // no OC
 	ret = sscanf(buf, "%d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d\n",
 		&temp_storage_table[0][0], &temp_storage_table[0][1],
@@ -921,55 +873,24 @@ static ssize_t store_cpu_thres_table(struct cpufreq_policy *policy,
 		&temp_storage_table[4][0], &temp_storage_table[4][1],
 		&temp_storage_table[5][0], &temp_storage_table[5][1],
 		&temp_storage_table[6][0], &temp_storage_table[6][1]);
-	if ((temp_storage_table[0][0] > cpu_thres_max) || (temp_storage_table[0][0] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[0][1] > cpu_thres_max) || (temp_storage_table[0][1] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[1][0] > cpu_thres_max) || (temp_storage_table[1][0] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[1][1] > cpu_thres_max) || (temp_storage_table[1][1] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[2][0] > cpu_thres_max) || (temp_storage_table[2][0] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[2][1] > cpu_thres_max) || (temp_storage_table[2][1] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[3][0] > cpu_thres_max) || (temp_storage_table[3][0] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[3][1] > cpu_thres_max) || (temp_storage_table[3][1] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[4][0] > cpu_thres_max) || (temp_storage_table[4][0] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[4][1] > cpu_thres_max) || (temp_storage_table[4][1] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[5][0] > cpu_thres_max) || (temp_storage_table[5][0] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[5][1] > cpu_thres_max) || (temp_storage_table[5][1] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[6][0] > cpu_thres_max) || (temp_storage_table[6][0] < cpu_thres_min)) {
-		return -EINVAL;
-	} else if ((temp_storage_table[6][1] > cpu_thres_max) || (temp_storage_table[6][1] < cpu_thres_min)) {
-		return -EINVAL;
-	} else {
-		s5pc110_thres_table_1GHZ[0][0] = temp_storage_table[0][0];
-		s5pc110_thres_table_1GHZ[0][1] = temp_storage_table[0][1];
-		s5pc110_thres_table_1GHZ[1][0] = temp_storage_table[1][0];
-		s5pc110_thres_table_1GHZ[1][1] = temp_storage_table[1][1];
-		s5pc110_thres_table_1GHZ[2][0] = temp_storage_table[2][0];
-		s5pc110_thres_table_1GHZ[2][1] = temp_storage_table[2][1];
-		s5pc110_thres_table_1GHZ[3][0] = temp_storage_table[3][0];
-		s5pc110_thres_table_1GHZ[3][1] = temp_storage_table[3][1];
-		s5pc110_thres_table_1GHZ[4][0] = temp_storage_table[4][0];
-		s5pc110_thres_table_1GHZ[4][1] = temp_storage_table[4][1];
-		s5pc110_thres_table_1GHZ[5][0] = temp_storage_table[5][0];
-		s5pc110_thres_table_1GHZ[5][1] = temp_storage_table[5][1];
-		s5pc110_thres_table_1GHZ[6][0] = temp_storage_table[6][0];
-		s5pc110_thres_table_1GHZ[6][1] = temp_storage_table[6][1];
-	}
-	if (ret != 14)
-		return -EINVAL;
-	else
-		return count;
 #endif // end CONFIG_MACH_S5PC110_ARIES_OC
+	if (ret != (NUM_FREQ * 2)) {
+		return -EINVAL;
+	}
+	else {
+		for (i = 0; i < NUM_FREQ; i++) {
+			if ((temp_storage_table[i][0] > cpu_thres_max) || (temp_storage_table[i][0] < cpu_thres_min)) {
+				return -EINVAL;
+			} else if ((temp_storage_table[i][1] > cpu_thres_max) || (temp_storage_table[i][1] < cpu_thres_min)) {
+				return -EINVAL;
+			}
+		}
+		for (i = 0; i < NUM_FREQ; i++) {
+			s5pc110_thres_table_1GHZ[i][0] = temp_storage_table[i][0];
+			s5pc110_thres_table_1GHZ[i][1] = temp_storage_table[i][1];
+		}
+		return count;
+	}
 }
 
 static ssize_t show_UV_mV_table(struct cpufreq_policy *policy, char *buf)
@@ -1136,20 +1057,32 @@ static ssize_t store_states_enabled_table(struct cpufreq_policy *policy,
 					const char *buf, size_t count)
 {
 	unsigned int ret = -EINVAL;
+	unsigned int i = 0;
+	unsigned int temp_storage_table[NUM_FREQ];
+
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
 	ret = sscanf(buf, "%d %d %d %d %d %d %d %d %d %d %d",
-		&active_states[0], &active_states[1], &active_states[2], &active_states[3],
-		&active_states[4], &active_states[5], &active_states[6], &active_states[7],
-		&active_states[8], &active_states[9], &active_states[10]);
+		&temp_storage_table[0], &temp_storage_table[1], &temp_storage_table[2], &temp_storage_table[3],
+		&temp_storage_table[4], &temp_storage_table[5], &temp_storage_table[6], &temp_storage_table[7],
+		&temp_storage_table[8], &temp_storage_table[9], &temp_storage_table[10]);
 #else // no OC
 	ret = sscanf(buf, "%d %d %d %d %d %d %d",
-		&active_states[0], &active_states[1], &active_states[2], &active_states[3],
-		&active_states[4], &active_states[5], &active_states[6]);
+		&temp_storage_table[0], &temp_storage_table[1], &temp_storage_table[2], &temp_storage_table[3],
+		&temp_storage_table[4], &temp_storage_table[5], &temp_storage_table[6]);
 #endif // end CONFIG_MACH_S5PC110_ARIES_OC
 	if (ret != 1)
 		return -EINVAL;
 	else
-		return count;
+	{
+		for (i = 0; i < NUM_FREQ; i++) {
+			if ((temp_storage_table[i] != 1) & (temp_storage_table[i] != 0)) {
+				return -EINVAL;
+			}
+		}
+		for (i = 0; i < NUM_FREQ; i++) {
+			active_states[i] = temp_storage_table[i];
+		}
+	}
 }
 
 #define define_one_ro(_name) \
@@ -1179,6 +1112,7 @@ define_one_rw(scaling_min_freq);
 define_one_rw(scaling_max_freq);
 define_one_rw(scaling_governor);
 define_one_rw(UV_mV_table);
+define_one_ro(cpu_transition_states_table);
 define_one_rw(cpu_thres_table);
 define_one_rw(states_enabled_table);
 define_one_rw(update_states);
@@ -1206,6 +1140,7 @@ static struct attribute *default_attrs[] = {
 	&related_cpus.attr,
 	&scaling_governor.attr,
 	&UV_mV_table.attr,
+	&cpu_transition_states_table.attr,
 	&cpu_thres_table.attr,
 	&states_enabled_table.attr,
 	&update_states.attr,

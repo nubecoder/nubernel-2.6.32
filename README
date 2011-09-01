@@ -41,9 +41,23 @@ Some cleanup and changes to ncBuildHelper.sh.
 
 08-26-2011:
 Added Bash to initramfs (gets installed to /system/bin/bash if it doesn't already exist).
+Actually using the "DEF_SAMPLING_FREQ_STEP" define in conservative governor.
 
 08-23-2011:
 Changes to init_wrapper and recovery_wrapper in initramfs.
+Adding a DVFS lock for interactiveX governor in an attempt to fix it's SOD problem.
+
+08-15-2011:
+Added a read only cpu_transition_states_table sysfs entry, some cleanup to the cpu_thres_table sysfs entry, and added value checking to states_enabled_table sysfs entry.
+Fixing comments for the rest of the frequencies.
+Fixing up 1200MHz frequency.
+
+08-14-2011:
+Add a #define for NUM_FREQ and other miscellaneous cleanup (gzub: https://github.com/gzub/EC05-Zub/commit/e8e3d72fa8bef44b98c93a8a4fdeaa74565cf35c).
+Fixing up 600MHz frequency (gzub: https://github.com/gzub/EC05-Zub/commit/6be25a07b497a36d8bf8e229c1685b23bae10144).
+Fixing up 1120MHz frequency (gzub: https://github.com/gzub/EC05-Zub/commit/a94a9f9c7392f7418872cd11ec3fa218613bba05).
+Fixing up the 100MHz frequency (gzub: https://github.com/gzub/EC05-Zub/commit/f96e403e1fc38d7a9c61d94af19b40037f824d66).
+Branched to 'feature-dvfs'.
 
 08-13-2011:
 Removed battery_mods init.d script (controlled by app).

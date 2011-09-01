@@ -302,7 +302,22 @@ int enter_state(suspend_state_t state)
 		}
 
 		cpufreq_driver_target(&policy, 600000, CPUFREQ_RELATION_L);
+	} else if(is_interactivex_gov()) {
+		/*Fix the upper transition scaling*/
+		g_dvfs_fix_lock_limit = true;
+		s5pc110_lock_dvfs_high_level(DVFS_LOCK_TOKEN_7, LEV_800MHZ);
+		gbClockFix = true;
+
+		error = cpufreq_get_policy(&policy, 0);
+		if(error)
+		{
+			printk(KERN_INFO "PM: Failed to get policy\n");
+			goto Unlock;
+		}
+
+		cpufreq_driver_target(&policy, 800000, CPUFREQ_RELATION_L);
 	}
+
 	
 #else
 //	cpufreq_direct_set_policy(0, "userspace");
