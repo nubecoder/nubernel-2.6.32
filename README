@@ -28,6 +28,20 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+09-05-2011:
+Added md5 sum to tar creation in ncBuildHelper.sh (DRockstar: https://github.com/DRockstar/Clean-Kernel-EC05/commit/a1c615a54b72d2dc532e05176d84ef30b32c2e0a).
+Fixing an issue with /sbin/dir_info.
+Changed permissions of /sbin/clean_init.
+Added some additional properties to default.prop.
+Added dir_info script to initramfs.
+Moved cpu_thres_table script into initramfs.
+Moved cpufreq_info script into initramfs.
+Added auto-remount script to initramfs.
+Renamed cpu_thres_table.sh to cpu_thres_table.
+Changes to cpu_thres_table.sh (syntax, cleanup etc).
+Changes to cpufreq_info script to support new governors.
+Added some scripts to initramfs (DRockstar: https://github.com/DRockstar/Clean-Kernel-EC05/commit/cd5a9c3d93d6f7db0bd4b1096094975ba29839c5).
+
 09-01-2011:
 Switched to ro.secure=0.
 

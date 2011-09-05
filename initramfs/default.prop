@@ -1,6 +1,14 @@
 #
 # ADDITIONAL_DEFAULT_PROPERTIES
 #
+ro.build.id=FROYO
+ro.product.model=SPH-D700
+ro.product.name=SPH-D700
+ro.product.device=SPH-D700
+ro.product.board=SPH-D700
+ro.product.manufacturer=Samsung
+ro.board.platform=s5pc110
+ro.build.product=SPH-D700
 ro.secure=0
 ro.allow.mock.location=0
 ro.debuggable=1
