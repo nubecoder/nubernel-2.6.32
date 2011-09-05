@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 09-05-2011:
+Added auto-remount script to initramfs.
 Renamed cpu_thres_table.sh to cpu_thres_table.
 Changes to cpu_thres_table.sh (syntax, cleanup etc).
 Changes to cpufreq_info script to support new governors.
