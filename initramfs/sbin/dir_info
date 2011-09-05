@@ -1,0 +1,23 @@
+#!/system/bin/sh
+#
+# dir_info.sh
+#
+#
+# 2011 nubecoder
+# http://www.nubecoder.com/
+#
+
+#defines
+OUTPUT="/sdcard/dir_info.log"
+
+#main
+echo "Outputting to $OUTPUT."
+cd /
+rm -f "$OUTPUT"
+for FOLDER in /bin /cache /config /data /efs /lib /mnt /modules /sbin /sqlite_stmt_journals /system /tmp ; do
+	ls -AFlnLRh $FOLDER | tee $OUTPUT
+done
+ls -AFlnLh / >>$OUTPUT
+echo "Finished output."
+exit
+

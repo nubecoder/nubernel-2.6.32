@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 09-05-2011:
+Added dir_info script to initramfs.
 Moved cpu_thres_table script into initramfs.
 Moved cpufreq_info script into initramfs.
 Added auto-remount script to initramfs.
