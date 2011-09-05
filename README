@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 09-05-2011:
+Moved cpu_thres_table script into initramfs.
 Moved cpufreq_info script into initramfs.
 Added auto-remount script to initramfs.
 Renamed cpu_thres_table.sh to cpu_thres_table.
