@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 09-05-2011:
+Changed permissions of /sbin/clean_init.
 Added some additional properties to default.prop.
 Added dir_info script to initramfs.
 Moved cpu_thres_table script into initramfs.
