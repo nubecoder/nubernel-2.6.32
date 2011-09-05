@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 09-05-2011:
+Changes to cpufreq_info script to support new governors.
 Added some scripts to initramfs (DRockstar: https://github.com/DRockstar/Clean-Kernel-EC05/commit/cd5a9c3d93d6f7db0bd4b1096094975ba29839c5).
 
 09-01-2011:
