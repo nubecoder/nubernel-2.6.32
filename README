@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 09-05-2011:
+Fixing an issue with /sbin/dir_info.
 Changed permissions of /sbin/clean_init.
 Added some additional properties to default.prop.
 Added dir_info script to initramfs.

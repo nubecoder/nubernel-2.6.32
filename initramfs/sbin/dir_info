@@ -14,10 +14,10 @@ OUTPUT="/sdcard/dir_info.log"
 echo "Outputting to $OUTPUT."
 cd /
 rm -f "$OUTPUT"
+ls -AFlnLh / >$OUTPUT
 for FOLDER in /bin /cache /config /data /efs /lib /mnt /modules /sbin /sqlite_stmt_journals /system /tmp ; do
-	ls -AFlnLRh $FOLDER | tee $OUTPUT
+	ls -AFlnLRh $FOLDER | tee -a $OUTPUT
 done
-ls -AFlnLh / >>$OUTPUT
 echo "Finished output."
 exit
 
