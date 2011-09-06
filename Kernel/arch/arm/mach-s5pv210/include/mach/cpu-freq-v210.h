@@ -11,7 +11,7 @@
 
 //extern void s5pc110_lock_power_domain(unsigned int nToken);
 
-#define CONFIG_NC_DEBUG
+//#define CONFIG_NC_DEBUG
 
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
 #define MAXIMUM_FREQ 1400000
