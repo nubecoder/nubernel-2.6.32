@@ -3,30 +3,30 @@ assert(getprop("ro.product.device") == "SPH-D700" ||
 
 ui_print("");ui_print("");ui_print("");ui_print("");ui_print("");
 ui_print("");ui_print("");ui_print("");ui_print("");ui_print("");
-ui_print("                                @@@@@");
-ui_print("                                @@@@@");
-ui_print("                                  @@@");
-ui_print("                                  @@@");
-ui_print("                                  @@@");
-ui_print("                                  @@@");
-ui_print("                                  @@@");
-ui_print("            @@@@@@@@@@@@@         @@@");
-ui_print("            @@@@@@@@@@@@@         @@@");
-ui_print("                                  @@@");
-ui_print("                                  @@@");
-ui_print("            @@@@@@@@@@@@@         @@@");
-ui_print("            @@@@@@@@@@@@@         @@@");
-ui_print("                                  @@@");
-ui_print("                                  @@@");
-ui_print("                                  @@@");
-ui_print("                                @@@@@");
-ui_print("                                @@@@@");
+ui_print("                               =]=]=]");
+ui_print("                               =]=]=]");
+ui_print("                                 =]=]");
+ui_print("                                 =]=]");
+ui_print("                                 =]=]");
+ui_print("                                 =]=]");
+ui_print("                                 =]=]");
+ui_print("           =]=]=]=]=]=]=]        =]=]");
+ui_print("           =]=]=]=]=]=]=]        =]=]");
+ui_print("                                 =]=]");
+ui_print("                                 =]=]");
+ui_print("           =]=]=]=]=]=]=]        =]=]");
+ui_print("           =]=]=]=]=]=]=]        =]=]");
+ui_print("                                 =]=]");
+ui_print("                                 =]=]");
+ui_print("                                 =]=]");
+ui_print("                               =]=]=]");
+ui_print("                               =]=]=]");
 ui_print("");ui_print("");ui_print("");
-ui_print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-ui_print("@          Brought to you by nubecoder         @");
-ui_print("@               www.nubecoder.com              @");
-ui_print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-ui_print("");ui_print("");ui_print("");ui_print("");sleep(5);
+ui_print("=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]");
+ui_print("=]         Brought to you by nubecoder        =]");
+ui_print("=]             www.nubecoder.com              =]");
+ui_print("=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]");
+ui_print("");ui_print("");ui_print("");ui_print("");sleep(4);
 ui_print("");ui_print("");ui_print("");ui_print("");ui_print("");
 ui_print("");ui_print("");ui_print("");ui_print("");ui_print("");
 ui_print("");ui_print("");ui_print("");ui_print("");ui_print("");
@@ -34,28 +34,36 @@ ui_print("");ui_print("");ui_print("");ui_print("");ui_print("");
 ui_print("");ui_print("");ui_print("");ui_print("");ui_print("");
 ui_print("");ui_print("");sleep(1);
 
-ui_print("");
-ui_print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-ui_print("@              nubernel-EC05_v0.0.0            @");
-ui_print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-ui_print("");
-sleep(2);
+ui_print("=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]");
+ui_print("=]            nubernel-EC05_v0.0.0            =]");
+ui_print("=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]");
+ui_print("");sleep(2);
+show_progress(1.335, 0);
 
-ui_print("");
-ui_print("Flashing kernel image.");
-ui_print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+ui_print("Copying needed files...");
 assert(
 	package_extract_file("bmlwrite", "/tmp/bmlwrite"),
 	package_extract_file("zImage", "/tmp/zImage")
 	);
+set_progress(0.3);
+
+ui_print("Flashing kernel image...");
 set_perm(0, 0, 0755, "/tmp/bmlwrite");
 assert(
 	run_program("/tmp/bmlwrite", "/tmp/zImage", "/dev/block/bml7")
 	);
-sleep(0.5);
+set_progress(0.3);
 
-ui_print("");
+ui_print("Clearing cache and dalvik...");
+assert(
+	delete_recursive("/cache"),
+	delete_recursive("/data/dalvik-cache")
+	);
+set_progress(0.3);
+
 ui_print("Finished.");
-ui_print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-sleep(3);
 ui_print("");
+ui_print("=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]");
+set_progress(0.1);
+sleep(2);
+
