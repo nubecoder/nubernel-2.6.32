@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 09-07-2011:
+Changes to updater-script (wipe cache and dalvik, etc).
 Quieting the touchscreen driver's debugging a bit.
 
 09-05-2011:
