@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+09-07-2011:
+Quieting the touchscreen driver's debugging a bit.
+
 09-05-2011:
 Added md5 sum to tar creation in ncBuildHelper.sh (DRockstar: https://github.com/DRockstar/Clean-Kernel-EC05/commit/a1c615a54b72d2dc532e05176d84ef30b32c2e0a).
 Fixing an issue with /sbin/dir_info.
