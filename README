@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+09-08-2011:
+Updated root related files (su and superuser.apk) to newer versions.
+
 09-07-2011:
 Changes to updater-script (wipe cache and dalvik, etc).
 Quieting the touchscreen driver's debugging a bit.
