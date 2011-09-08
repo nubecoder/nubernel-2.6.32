@@ -76,12 +76,32 @@ fi
 chown root.root /system/etc/group
 chmod 0644 /system/etc/group
 
-SEND_LOG "Ensuring Superuser.apk is installed"
-if [ ! -f "/system/app/Superuser.apk" ] && [ ! -f "/data/app/Superuser.apk" ]; then
-	SEND_LOG "  Installing Superuser.apk to /data/app/"
-	cp /sbin/Superuser.apk /data/app/Superuser.apk
+SEND_LOG "Ensuring the Superuser app is installed"
+if [ ! $(find /system/app -iname "superuser.apk") ] &&\
+		[ ! $(find /data/app -iname "superuser.apk") ] &&\
+		[ ! $(find /data/app -iname "com.noshufou.android.su*") ] ; then
+	SEND_LOG "  Installing superuser.apk to /data/app/com.noshufou.android.su-1.apk"
+	cp /sbin/superuser.apk /data/app/com.noshufou.android.su-1.apk
+	chown system.system /data/app/com.noshufou.android.su-1.apk
+	chmod 0644 /data/app/com.noshufou.android.su-1.apk
+	SEND_LOG "Ensuring old Superuser app data is removed"
+	SU_APK_TEST=$(find /data/data/ -iname "com.noshufou.android.su")
+	for SU_APK_FOLDER in $SU_APK_TEST ; do
+		SEND_LOG "  Removing data folder: $SU_APK_FOLDER"
+		rm -rf "$SU_APK_FOLDER"
+	done
+	SU_APK_TEST=$(find /data/dalvik-cache/ -iname "*superuser.apk*.dex")
+	for SU_APK_FILE in $SU_APK_TEST ; do
+		SEND_LOG "  Removing data file: $SU_APK_FILE"
+		rm -f "$SU_APK_FILE"
+	done
+	SU_APK_TEST=$(find /data/dalvik-cache/ -iname "*com.noshufou.android.su*.dex")
+	for SU_APK_FILE in $SU_APK_TEST ; do
+		SEND_LOG "  Removing data file: $SU_APK_FILE"
+		rm -f "$SU_APK_FILE"
+	done
 fi
-rm /sbin/Superuser.apk
+rm -f /sbin/superuser.apk
 
 SEND_LOG "Ensuring bash is installed"
 if [ ! -f "/system/bin/bash" ]; then
