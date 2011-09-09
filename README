@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+09-09-2011:
+Disabling TVOut related items in defconfig and init.rc files.
+
 09-08-2011:
 Added more sanity checks to Superuser app instalation (also renamed Superuser.apk to superuser.apk).
 Updated root related files (su and superuser.apk) to newer versions.
