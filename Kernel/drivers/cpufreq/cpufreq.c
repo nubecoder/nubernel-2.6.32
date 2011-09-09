@@ -922,7 +922,7 @@ static ssize_t store_UV_mV_table(struct cpufreq_policy *policy,
 		&exp_UV_mV[0], &exp_UV_mV[1], &exp_UV_mV[2], &exp_UV_mV[3],
 		&exp_UV_mV[4], &exp_UV_mV[5], &exp_UV_mV[6]);
 #endif // end CONFIG_MACH_S5PC110_ARIES_OC
-	if (ret != 1)
+	if (ret != NUM_FREQ)
 		return -EINVAL;
 	else
 		return count;
@@ -979,7 +979,7 @@ static ssize_t store_AC_timing_registers_row(struct cpufreq_policy *policy,
 	ret = sscanf(buf, "%d %d", &ACTimingRegisterRow0,&ACTimingRegisterRow1);
 	modACTimingRegisterRow0 = ACTimingRegisterRow0;
 	modACTimingRegisterRow1 = ACTimingRegisterRow1;
-	if (ret != 1)
+	if (ret != 2)
 		return -EINVAL;
 	else
 		return count;
@@ -992,7 +992,7 @@ static ssize_t store_AC_timing_registers_data(struct cpufreq_policy *policy,
 	ret = sscanf(buf, "%d %d", &ACTimingRegisterData0,&ACTimingRegisterData1);
 	modACTimingRegisterData0 = ACTimingRegisterData0;
 	modACTimingRegisterData1 = ACTimingRegisterData1;
-	if (ret != 1)
+	if (ret != 2)
 		return -EINVAL;
 	else
 		return count;
@@ -1005,7 +1005,7 @@ static ssize_t store_timing_registers(struct cpufreq_policy *policy,
 	ret = sscanf(buf, "%d %d", &TimingRegister0,&TimingRegister1);
 	modTimingRegister0 = TimingRegister0;
 	modTimingRegister1 = TimingRegister1;
-	if (ret != 1)
+	if (ret != 2)
 		return -EINVAL;
 	else
 		return count;
@@ -1070,7 +1070,7 @@ static ssize_t store_states_enabled_table(struct cpufreq_policy *policy,
 		&temp_storage_table[0], &temp_storage_table[1], &temp_storage_table[2], &temp_storage_table[3],
 		&temp_storage_table[4], &temp_storage_table[5], &temp_storage_table[6]);
 #endif // end CONFIG_MACH_S5PC110_ARIES_OC
-	if (ret != 1)
+	if (ret != NUM_FREQ)
 		return -EINVAL;
 	else
 	{
