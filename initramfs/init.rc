@@ -712,8 +712,8 @@ on property:init.svc.dhcpcd=stopped
 # end Mobile AP
 
 # for TvOut
-service tvout /system/bin/tvoutserver
-	user system
+#service tvout /system/bin/tvoutserver
+#	user system
 
 service dumpstate /system/bin/dumpstate -s
 	socket dumpstate stream 0660 shell log
