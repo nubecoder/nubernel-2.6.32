@@ -30,6 +30,9 @@ Changelog:
 
 09-09-2011:
 Disabling TVOut related items in defconfig and init.rc files.
+Fixing up some bad error checking in Kernel/drivers/cpufreq/cpufreq.c.
+Added missing return in store_states_enabled_table (oops).
+Fixing the error checking in store_states_enabled_table (should be logical not bitwise).
 
 09-08-2011:
 Added more sanity checks to Superuser app instalation (also renamed Superuser.apk to superuser.apk).
