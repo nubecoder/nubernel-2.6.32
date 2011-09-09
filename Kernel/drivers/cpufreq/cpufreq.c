@@ -1082,6 +1082,7 @@ static ssize_t store_states_enabled_table(struct cpufreq_policy *policy,
 		for (i = 0; i < NUM_FREQ; i++) {
 			active_states[i] = temp_storage_table[i];
 		}
+		return count;
 	}
 }
 
