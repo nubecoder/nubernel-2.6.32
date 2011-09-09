@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+09-09-2011:
+Fixing the error checking in store_states_enabled_table (should be logical not bitwise).
+
 09-07-2011:
 Fixing someone's typo.
 

@@ -1075,7 +1075,7 @@ static ssize_t store_states_enabled_table(struct cpufreq_policy *policy,
 	else
 	{
 		for (i = 0; i < NUM_FREQ; i++) {
-			if ((temp_storage_table[i] != 1) & (temp_storage_table[i] != 0)) {
+			if ((temp_storage_table[i] != 1) && (temp_storage_table[i] != 0)) {
 				return -EINVAL;
 			}
 		}
