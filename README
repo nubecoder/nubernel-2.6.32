@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+09-20-2011:
+Reverting, "Bluetooth: Make hci_send_acl() void" (commit ID: c1b8eb7).
+
 08-11-2011:
 Reverting, "Bluetooth: Make hci_send_sco() void" (commit ID: fb33667).
 Bluetooth: Defer SCO setup if mode change is pending (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=f1ef8e19ffd513c9ba35865eba16354dac0dcbcc).
