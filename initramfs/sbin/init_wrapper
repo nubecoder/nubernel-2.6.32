@@ -64,7 +64,7 @@ if [ ! -f "$SU_CHECK" ]; then
 	SEND_LOG "  Symlinking su in /system/xbin/su"
 	ln -s /system/bin/su /system/xbin/su
 fi
-rm -rf /su
+rm -f /su/su
 
 SEND_LOG "Ensuring user files are set up properly"
 if [ ! -f "/system/etc/passwd" ]; then
@@ -87,7 +87,7 @@ if [ ! $(find /system/app -iname "superuser.apk") ] &&\
 		[ ! $(find /data/app -iname "superuser.apk") ] &&\
 		[ ! $(find /data/app -iname "com.noshufou.android.su*") ] ; then
 	SEND_LOG "  Installing superuser.apk to /data/app/com.noshufou.android.su-1.apk"
-	cp /sbin/superuser.apk /data/app/com.noshufou.android.su-1.apk
+	cp /su/superuser.apk /data/app/com.noshufou.android.su-1.apk
 	chown system.system /data/app/com.noshufou.android.su-1.apk
 	chmod 0644 /data/app/com.noshufou.android.su-1.apk
 	SEND_LOG "Ensuring old Superuser app data is removed"
@@ -107,7 +107,7 @@ if [ ! $(find /system/app -iname "superuser.apk") ] &&\
 		rm -f "$SU_APK_FILE"
 	done
 fi
-rm -f /sbin/superuser.apk
+rm -f /su/superuser.apk
 
 SEND_LOG "Ensuring bash is installed"
 if [ ! -f "/system/bin/bash" ]; then

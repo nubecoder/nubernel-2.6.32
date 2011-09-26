@@ -43,6 +43,12 @@ else
 	done
 fi
 
+SEND_LOG "Remove unneccessary folders"
+for FOLDER in su ; do
+	SEND_LOG "rm -rf /$FOLDER"
+	/sbin/busybox rm -rf /$FOLDER
+done
+
 SEND_LOG "Sync filesystem"
 sync
 
