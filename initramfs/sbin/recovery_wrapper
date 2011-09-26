@@ -36,13 +36,15 @@ mkdir /etc
 mv -f /res/etc/recovery.fstab /etc/recovery.fstab
 
 SEND_LOG "Remove unneccessary files"
-for FILE in Superuser.apk keytimer mount_ro
+for FILE in keytimer mount_ro
 do
 	SEND_LOG "  rm -f /sbin/$FILE"
 	rm -f /sbin/$FILE
 done
+
+SEND_LOG "Remove unneccessary folders"
 for FOLDER in res/sbin ; do
-	SEND_LOG "  rm -rf $FOLDER"
+	SEND_LOG " rm -rf $FOLDER"
 	rm -rf /$FOLDER
 done
 #rmdir /res/etc
