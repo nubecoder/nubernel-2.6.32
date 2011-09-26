@@ -56,14 +56,15 @@ SEND_LOG "Ensuring su is properly installed"
 SU_CHECK=$(which su)
 if [ ! -f "$SU_CHECK" ]; then
 	SEND_LOG "  Installing su to /system/bin/su"
-	cp /sbin/su /system/bin/su
+	cp /su/su /system/bin/su
 	chown 0.0 /system/bin/su
 	chmod 6755 /system/bin/su
-	rm -rf /system/xbin/su
-	rm -rf /system/bin/jk-su
+	rm -f /system/xbin/su
+	rm -f /system/bin/jk-su
+	SEND_LOG "  Symlinking su in /system/xbin/su"
 	ln -s /system/bin/su /system/xbin/su
 fi
-rm -f /sbin/su
+rm -rf /su
 
 SEND_LOG "Ensuring user files are set up properly"
 if [ ! -f "/system/etc/passwd" ]; then
