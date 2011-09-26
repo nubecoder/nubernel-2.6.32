@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 09-26-2011:
+Update su to new version.
 Removing su from /sbin while still ensuring it is installed.
 
 09-09-2011:
