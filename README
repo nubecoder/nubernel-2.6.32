@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+09-26-2011:
+Removing su from /sbin while still ensuring it is installed.
+
 09-09-2011:
 Fixing the nr_iowait_cpu compile error properly by using smp_processor_id()(Peter Zijlstra: https://patchwork.kernel.org/patch/109011/).
 Disabling TVOut related items in defconfig and init.rc files.

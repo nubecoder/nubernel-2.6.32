@@ -53,12 +53,17 @@ for FOLDER in lib lib/modules modules sbin ; do
 done
 
 SEND_LOG "Ensuring su is properly installed"
-chmod 6755 /sbin/su
-rm -rf /system/bin/su
-rm -rf /system/xbin/su
-rm -rf /system/bin/jk-su
-ln -s /sbin/su /system/bin/su
-ln -s /sbin/su /system/xbin/su
+SU_CHECK=$(which su)
+if [ ! -f "$SU_CHECK" ]; then
+	SEND_LOG "  Installing su to /system/bin/su"
+	cp /sbin/su /system/bin/su
+	chown 0.0 /system/bin/su
+	chmod 6755 /system/bin/su
+	rm -rf /system/xbin/su
+	rm -rf /system/bin/jk-su
+	ln -s /system/bin/su /system/xbin/su
+fi
+rm -f /sbin/su
 
 SEND_LOG "Ensuring user files are set up properly"
 if [ ! -f "/system/etc/passwd" ]; then
