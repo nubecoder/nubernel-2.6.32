@@ -29,6 +29,7 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 09-26-2011:
+Reverting "Update superuser.apk to new version" (commit ID: f4aaae3).
 Switch to DEADLINE I/O scheduler by default.
 Update modules in initramfs.
 Update superuser.apk to new version.
