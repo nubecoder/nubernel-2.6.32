@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+09-26-2011:
+Disabling 1200MHz and 100MHz states by default.
+
 09-09-2011:
 Making transition states update when states_enabled_table is changed.
 Fixing up some bad error checking in Kernel/drivers/cpufreq/cpufreq.c.

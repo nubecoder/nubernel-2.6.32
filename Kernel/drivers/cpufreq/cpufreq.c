@@ -47,9 +47,9 @@ unsigned int exp_UV_mV[NUM_FREQ] = {
 // default enabled states
 int active_states[NUM_FREQ] = {
 #ifdef CONFIG_MACH_S5PC110_ARIES_OC
-	0,0,1,1,	// 1400,1300,1200,1120,
+	0,0,0,1,	// 1400,1300,1200,1120,
 	1,1,1,1,	// 1000,900,800,600,
-	1,1,1			// 400,200,100
+	1,1,0			// 400,200,100
 #else // no OC
 	1,1,1,1,	// 1000,900,800,600,
 	1,1,1			// 400,200,100
