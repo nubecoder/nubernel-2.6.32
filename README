@@ -29,6 +29,8 @@ Includes the Android logger as a (loaded) module.
 Changelog:
 
 09-26-2011:
+Switch to DEADLINE I/O scheduler by default.
+Update modules in initramfs.
 Update superuser.apk to new version.
 Some initramfs changes (move superuser.apk to /su, etc).
 Fixing up su check.
