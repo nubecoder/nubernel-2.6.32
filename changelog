@@ -8,6 +8,9 @@ nubernel-2.6.32_v1.0.0
 Change log:
 =]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]
 
+10-25-2011:
+Some ext4 mount tuning (k0nane: https://github.com/k0nane/Twilight_Zone_initramfs/commit/c0c5291fb82463c8dba97c16cd184ddb657448eb).
+
 10-24-2011:
 Fixing up RFS mounting.
 
