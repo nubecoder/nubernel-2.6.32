@@ -202,14 +202,12 @@ CREATE_ZIP()
 	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
 	local T1=$(date +%s)
 	echo "Begin $TARGET-$VERSION.zip creation..." && echo ""
-	pushd Kernel > /dev/null
-		rm -fr "$TARGET-$VERSION.zip"
-		rm -f update/zImage
-		cp arch/arm/boot/zImage update
-		OUTFILE="$OUTFILE_PATH.zip"
-		pushd update > /dev/null
-			eval "$MKZIP" > /dev/null 
-		popd > /dev/null
+	rm -fr "$TARGET-$VERSION.zip"
+	rm -f update/zImage
+	cp Kernel/arch/arm/boot/zImage update
+	OUTFILE="$OUTFILE_PATH.zip"
+	pushd update > /dev/null
+		eval "$MKZIP" > /dev/null 
 	popd > /dev/null
 	local T2=$(date +%s)
 	echo "" && echo "$TARGET-$VERSION.zip creation took $(($T2 - $T1)) seconds."
