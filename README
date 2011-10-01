@@ -39,6 +39,9 @@ Fixing up su check.
 Update su to new version.
 Removing su from /sbin while still ensuring it is installed.
 
+09-20-2011:
+Reverting, "Bluetooth: Make hci_send_acl() void" (commit ID: c1b8eb7).
+
 09-09-2011:
 Fixing the nr_iowait_cpu compile error properly by using smp_processor_id()(Peter Zijlstra: https://patchwork.kernel.org/patch/109011/).
 Making transition states update when states_enabled_table is changed.
