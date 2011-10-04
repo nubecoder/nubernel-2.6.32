@@ -47,3 +47,4 @@ service immvibed /system/bin/immvibed
 
 service lpmkey /system/bin/charging_mode
 	user root
+

@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+10-04-2011:
+Changes to initramfs (fixing up broken "reboot recovery").
+
 10-01-2011:
 Moving the update folder out of the Kernel folder.
 

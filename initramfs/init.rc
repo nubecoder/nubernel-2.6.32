@@ -103,26 +103,26 @@ loglevel 1
 	write /dev/cpuctl/bg_non_interactive/cpu.shares 52
 
 ###################################################################
-# mount mtd partitions begin
+# mount partitions begin
 
 # /system
 	#mount ext4 /dev/block/stl9 /system rw noatime check=no nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
 	mount ext4 /dev/block/stl9 /system rw noatime nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
-	mount rfs /dev/block/stl9 /system ro check=no
+	mount rfs /dev/block/stl9 /system rw check=no
 	chown root system /system
 	chmod 0775 /system
 
 # /data
 	#mount ext4 /dev/block/stl10 /data rw nosuid nodev noatime check=no nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
 	mount ext4 /dev/block/stl10 /data rw nosuid nodev noatime nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
-	mount rfs /dev/block/stl10 /data nosuid nodev check=no
+	mount rfs /dev/block/stl10 /data rw nosuid nodev check=no
 	chown system system /data
 	chmod 0771 /data
 
 # /cache
 	#mount ext4 /dev/block/stl11 /cache rw nosuid nodev noatime check=no nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
 	mount ext4 /dev/block/stl11 /cache rw nosuid nodev noatime nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
-	mount rfs /dev/block/stl11 /cache nosuid nodev check=no
+	mount rfs /dev/block/stl11 /cache rw nosuid nodev check=no
 	chown system cache /cache
 	chmod 0770 /cache
 	chown system cache /cache/recovery
@@ -134,11 +134,11 @@ loglevel 1
 	chmod 0771 /efs
 
 # /sd-ext
-	mount ext2 /dev/block/mmcblk0p2 /mnt/sd-ext rw defaults nodev nobh nouser_xattr noatime nodiratime errors=continue check=none
-	chown radio radio /efs
-	chmod 0771 /efs
+	mount ext2 /dev/block/mmcblk0p2 /mnt/sd-ext rw defaults nodev nouser_xattr noatime check=no nodiratime errors=continue nobh
+	chown system system /mnt/sd-ext
+	chmod 0771 /mnt/sd-ext
 
-# mount mtd partitions complete
+# mount partitions complete
 ###################################################################
 
 # load WiMAX modules
