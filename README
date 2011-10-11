@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+10-11-2011:
+Changes to initramfs (changes to mount args).
+
 10-04-2011:
 Changes to initramfs (fixing up broken "reboot recovery").
 

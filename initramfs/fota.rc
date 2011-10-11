@@ -46,30 +46,27 @@ on init
 	mount j4fs /dev/block/stl6 /mnt/.lfs
 
 # /system
-	#mount ext4 /dev/block/stl9 /system rw noatime check=no nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
-	mount ext4 /dev/block/stl9 /system rw noatime nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
-	mount rfs /dev/block/stl9 /system rw check=no
+	mount rfs /dev/block/stl9 /system rw noatime nodiratime check=none
+	mount ext4 /dev/block/stl9 /system rw noatime nodiratime check=none errors=continue nobh data=writeback nobarrier discard noauto_da_alloc
 	chown root system /system
 	chmod 0775 /system
 
 # /data
-	#mount ext4 /dev/block/stl10 /data rw nosuid nodev noatime check=no nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
-	mount ext4 /dev/block/stl10 /data rw nosuid nodev noatime nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
-	mount rfs /dev/block/stl10 /data rw nosuid nodev check=no
+	mount rfs /dev/block/stl10 /data rw noatime nodiratime nodev nosuid check=none
+	mount ext4 /dev/block/stl10 /data rw noatime nodiratime nodev nosuid check=none errors=continue nobh data=writeback nobarrier discard noauto_da_alloc
 	chown system system /data
 	chmod 0771 /data
 
 # /cache
-	#mount ext4 /dev/block/stl11 /cache rw nosuid nodev noatime check=no nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
-	mount ext4 /dev/block/stl11 /cache rw nosuid nodev noatime nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
-	mount rfs /dev/block/stl11 /cache rw nosuid nodev check=no
+	mount rfs /dev/block/stl11 /cache rw noatime nodiratime nodev nosuid check=none
+	mount ext4 /dev/block/stl11 /cache rw noatime nodiratime nodev nosuid check=none errors=continue nobh data=writeback nobarrier discard noauto_da_alloc
 	chown system cache /cache
 	chmod 0770 /cache
 	chown system cache /cache/recovery
 	chmod 0770 /cache/recovery
 
 # /efs
-	mount rfs /dev/block/stl3 /efs nosuid nodev check=no
+	mount rfs /dev/block/stl3 /efs nodev nosuid check=none
 	chown radio radio /efs
 	chmod 0771 /efs
 
