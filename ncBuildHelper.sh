@@ -183,6 +183,32 @@ BUILD_ZIMAGE()
 	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
 	echo "*"
 }
+GENERATE_WARNINGS_FILE()
+{
+	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+	local T1=$(date +%s)
+	echo "Generate warnings file..." && echo ""
+	pushd Kernel > /dev/null
+		local MAKE_FILE=make.out
+		local WARN_FILE=warnings.out
+		cp $MAKE_FILE $WARN_FILE
+		local ITEMS="CC LD AS CHK UPD GEN HOSTLD HOSTCC CALL MKELF TIMEC CONMK SHIPPED GZIP AR IKCFG MODPOST KSYM SYMLINK SYSMAP OBJCOPY Building Generating Kernel:"
+		for ITEM in $ITEMS; do
+			sed -ri "s/^\s*$ITEM.*//" $WARN_FILE
+		done
+		local ITEMS="scripts make WARNING:"
+		for ITEM in $ITEMS; do
+			sed -ri "s/^$ITEM.*//" $WARN_FILE
+		done
+		sed -ri "s/^To see full details build your kernel with:.*//" $WARN_FILE
+		sed -ri "s/^'make CONFIG_DEBUG_SECTION_MISMATCH=y'.*//" $WARN_FILE
+		sed -ri "/^\s*$/d" $WARN_FILE
+	popd > /dev/null
+	local T2=$(date +%s)
+	echo "" && echo "generating warnings file took $(($T2 - $T1)) seconds."
+	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+	echo "*"
+}
 CREATE_TAR()
 {
 	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
@@ -343,6 +369,7 @@ if [ "$BUILD_MODULES" = "y" ] ; then
 fi
 if [ "$BUILD_KERNEL" = "y" ] ; then
 	BUILD_ZIMAGE
+	GENERATE_WARNINGS_FILE
 fi
 if [ "$PRODUCE_TAR" = y ] ; then
 	CREATE_TAR
