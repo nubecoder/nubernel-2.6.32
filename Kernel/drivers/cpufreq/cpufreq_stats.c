@@ -64,6 +64,23 @@ static int cpufreq_stats_update(unsigned int cpu)
 				      cputime_sub(cur_time, stat->last_time));
 	stat->last_time = cur_time;
 	spin_unlock(&cpufreq_stats_lock);
+
+	#ifdef CONFIG_NC_DEBUG
+	printk(KERN_INFO "============== CPUFREQ STATS");
+	printk(KERN_INFO "CPUFREQ STATS: cpu: %u", stat->cpu);
+	printk(KERN_INFO "CPUFREQ STATS: total_trans: %u", stat->total_trans);
+	printk(KERN_INFO "CPUFREQ STATS: last_time: %lld", stat->last_time);
+	printk(KERN_INFO "CPUFREQ STATS: max_state: %u", stat->max_state);
+	printk(KERN_INFO "CPUFREQ STATS: state_num: %u", stat->state_num);
+	printk(KERN_INFO "CPUFREQ STATS: last_index: %u", stat->last_index);
+	printk(KERN_INFO "CPUFREQ STATS: time_in_state: %llu", cputime64_to_jiffies64(stat->time_in_state));
+	printk(KERN_INFO "CPUFREQ STATS: *freq_table: %p", &stat->freq_table);
+	#ifdef CONFIG_CPU_FREQ_STAT_DETAILS
+	printk(KERN_INFO "CPUFREQ STATS: *trans_table: %p", &stat->trans_table);
+	#endif
+	printk(KERN_INFO "============= END CPUFREQ STATS");
+	#endif
+
 	return 0;
 }
 

@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+10-11-2011:
+Added some logging to the cpufreq_stats_update function.
+
 09-26-2011:
 Disabling 1200MHz and 100MHz states by default.
 
