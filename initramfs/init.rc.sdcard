@@ -268,7 +268,7 @@ loglevel 1
 	insmod /lib/modules/melfas_touchkey.ko
 
 # all operation with rootfs should be finished here, root partition will mounted read-only. d.moskvitin
-	mount rootfs rootfs / ro remount
+#	mount rootfs rootfs / ro remount
 
 on boot
 # basic network init
