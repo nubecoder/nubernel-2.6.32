@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+10-14-2011:
+Minor changes to init.rc files.
+
 10-11-2011:
 Added warnings file creation to ncBuildHelper.sh.
 Changes to progress reporting in updater-script.

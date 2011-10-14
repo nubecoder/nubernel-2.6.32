@@ -107,19 +107,19 @@ loglevel 1
 
 # /system
 	mount rfs /dev/block/mmcblk0p2 /system rw noatime nodiratime check=none
-	mount ext4 /dev/block/mmcblk0p2 /system rw noatime nodiratime check=none errors=continue nobh data=writeback nobarrier discard noauto_da_alloc
+	mount ext4 /dev/block/mmcblk0p2 /system rw noatime nodiratime check=none errors=continue data=writeback nobh nobarrier noauto_da_alloc discard
 	chown root system /system
 	chmod 0775 /system
 
 # /data
 	mount rfs /dev/block/mmcblk0p3 /data rw noatime nodiratime nodev nosuid check=none
-	mount ext4 /dev/block/mmcblk0p3 /data rw noatime nodiratime nodev nosuid check=none errors=continue nobh data=writeback nobarrier discard noauto_da_alloc
+	mount ext4 /dev/block/mmcblk0p3 /data rw noatime nodiratime nodev nosuid check=none errors=continue data=writeback nobh nobarrier noauto_da_alloc discard
 	chown system system /data
 	chmod 0771 /data
 
 # /cache
 	mount rfs /dev/block/mmcblk0p4 /cache rw noatime nodiratime nodev nosuid check=none
-	mount ext4 /dev/block/mmcblk0p4 /cache rw noatime nodiratime nodev nosuid check=none errors=continue nobh data=writeback nobarrier discard noauto_da_alloc
+	mount ext4 /dev/block/mmcblk0p4 /cache rw noatime nodiratime nodev nosuid check=none errors=continue data=writeback nobh nobarrier noauto_da_alloc discard
 	chown system cache /cache
 	chmod 0770 /cache
 	chown system cache /cache/recovery
