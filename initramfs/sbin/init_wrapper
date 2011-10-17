@@ -23,11 +23,26 @@ SEND_LOG "Remount as RW"
 /sbin/busybox mount -o remount,rw /
 /sbin/busybox mount -o remount,rw /system
 
-SEND_LOG "Installing busybox to /bin"
-/sbin/busybox mkdir /bin
-/sbin/busybox --install -s /bin
-/sbin/busybox rm -rf /system/xbin/busybox
-/sbin/busybox ln -s /sbin/busybox /system/xbin/busybox
+SEND_LOG "Ensuring busybox is properly installed"
+BB_LINK_FOUND=$(/sbin/busybox ls -l "/system/xbin/busybox" | /sbin/busybox grep "/sbin/busybox")
+if /sbin/busybox test ! "$BB_LINK_FOUND" = ""; then
+	SEND_LOG "  Removing symlink to /sbin/busybox"
+	/sbin/busybox rm -f /system/xbin/busybox
+fi
+if /sbin/busybox test ! -f "/system/xbin/busybox"; then
+	SEND_LOG "  Creating busybox symlink to /system/xbin/busybox"
+	/sbin/busybox ln -s /sbin/recovery /system/xbin/busybox
+else
+	SEND_LOG "  Creating busybox symlink to /sbin/busybox"
+	/system/xbin/busybox rm -f /sbin/busybox
+	/system/xbin/busybox ln -s /system/xbin/busybox /sbin/busybox
+fi
+
+SEND_LOG "Sync filesystem"
+sync
+
+SEND_LOG "Installing busybox to /system/xbin/"
+/system/xbin/busybox --install -s /system/xbin/
 
 SEND_LOG "Sync filesystem"
 sync
@@ -56,7 +71,7 @@ SEND_LOG "Ensuring su is properly installed"
 SU_CHECK=$(which su)
 if [ ! -f "$SU_CHECK" ]; then
 	SEND_LOG "  Installing su to /system/bin/su"
-	cp /su/su /system/bin/su
+	mv -f /su/su /system/bin/su
 	chown 0.0 /system/bin/su
 	chmod 6755 /system/bin/su
 	rm -f /system/xbin/su
@@ -64,7 +79,7 @@ if [ ! -f "$SU_CHECK" ]; then
 	SEND_LOG "  Symlinking su in /system/xbin/su"
 	ln -s /system/bin/su /system/xbin/su
 fi
-rm -f /su/su
+#rm -f /su/su
 
 SEND_LOG "Ensuring user files are set up properly"
 if [ ! -f "/system/etc/passwd" ]; then
@@ -87,7 +102,7 @@ if [ ! $(find /system/app -iname "superuser.apk") ] &&\
 		[ ! $(find /data/app -iname "superuser.apk") ] &&\
 		[ ! $(find /data/app -iname "com.noshufou.android.su*") ] ; then
 	SEND_LOG "  Installing superuser.apk to /data/app/com.noshufou.android.su-1.apk"
-	cp /su/superuser.apk /data/app/com.noshufou.android.su-1.apk
+	mv -f /su/superuser.apk /data/app/com.noshufou.android.su-1.apk
 	chown system.system /data/app/com.noshufou.android.su-1.apk
 	chmod 0644 /data/app/com.noshufou.android.su-1.apk
 	SEND_LOG "Ensuring old Superuser app data is removed"
@@ -107,18 +122,18 @@ if [ ! $(find /system/app -iname "superuser.apk") ] &&\
 		rm -f "$SU_APK_FILE"
 	done
 fi
-rm -f /su/superuser.apk
+#rm -f /su/superuser.apk
 
 SEND_LOG "Ensuring bash is installed"
 if [ ! -f "/system/bin/bash" ]; then
 	SEND_LOG "  Installing Bash to /system/bin/"
-	cp /sbin/bash /system/bin/bash
+	mv -f /sbin/bash /system/bin/bash
 fi
 chmod 0755 /system/bin/bash
-rm -f /sbin/bash
+#rm -f /sbin/bash
 
 SEND_LOG "Checking for bash as default shell"
-BASH_FOUND=$(ls -l "/system/bin/sh" | grep "system/bin/bash")
+BASH_FOUND=$(ls -l "/system/bin/sh" | grep "/system/bin/bash")
 if [ ! "$BASH_FOUND" = "" ] && [ -f "/system/bin/bash" ]; then
 	SEND_LOG "  Allowing bash as default shell"
 	rm -f /bin/sh
