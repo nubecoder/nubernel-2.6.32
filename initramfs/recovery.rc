@@ -1,7 +1,7 @@
 on init
 
-	# setup the global environment
-	export PATH /sbin:/system/bin:/system/xbin
+# setup the global environment
+	export PATH /sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin
 	export ANDROID_ROOT /system
 	export ANDROID_DATA /data
 	export EXTERNAL_STORAGE /sdcard
@@ -70,7 +70,7 @@ on init
 	chown radio radio /efs
 	chmod 0771 /efs
 
-	#This recovery_fota_mode
+# This recovery_fota_mode
 	#mkdir /cache/recovery_fota_mode
 	#chmod 0770 /cache/recovery_fota_mode
 
@@ -89,22 +89,20 @@ on boot
 ##
 ## Daemon processes to be run by init.
 ##
-#service recovery /sbin/recovery
-service init_local /sbin/busybox sh /sbin/recovery_wrapper
-	user root
-	oneshot
+#service console /system/bin/sh
+#	console
 
-service clean_init /sbin/busybox sh /sbin/clean_init recovery
+#service recovery /sbin/recovery
+service init_scripts /vendor/scripts/run_init_scripts.sh recovery
 	user root
 	oneshot
 
 service adbd /sbin/adbd recovery
-	group shell log
 	disabled
 
-on property:persist.service.adb.enable=1
-	start adbd
+#on property:persist.service.adb.enable=1
+#	start adbd
 
-on property:persist.service.adb.enable=0
-	stop adbd
+#on property:persist.service.adb.enable=0
+#	stop adbd
 

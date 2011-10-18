@@ -5,8 +5,8 @@ sysclktz 0
 loglevel 1
 
 # setup the global environment
-	export PATH /sbin:/system/bin:/system/xbin:/data/local/tmp
-	export LD_LIBRARY_PATH /system/lib:/system/lib/egl
+	export PATH /sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin:/data/local/tmp
+	export LD_LIBRARY_PATH /vendor/lib:/system/lib:/system/lib/egl
 	export ANDROID_BOOTLOGO 1
 	export ANDROID_ROOT /system
 	export ANDROID_ASSETS /system/app
@@ -53,7 +53,9 @@ loglevel 1
 	mkdir /mnt/sd-ext 0775 system system
 	mkdir /mnt/sdcard 0775 system system
 
+# create symlinks
 	symlink /system/etc /etc
+	symlink /system/vendor /vendor
 	symlink /mnt/sdcard /sdcard
 	symlink /mnt/sd-ext /sd-ext
 
@@ -241,10 +243,10 @@ loglevel 1
 	mkdir /system/etc/security/drm 0777
 	chown root root /system/etc/security/drm
 	chmod 0777 /system/etc/security/drm
-	# permission for WMDRM sample.hds file
+# permission for WMDRM sample.hds file
 	chmod 0777 /system/etc/security/drm/sample.hds
 	chmod 0777 /data/data/.drm/.wmdrm/sample.hds
-	# added for testing WMDRM and DIVX DRM
+# added for testing WMDRM and DIVX DRM
 	mkdir /data/data/.drm/ 0777
 	mkdir /data/data/.drm/.wmdrm 0777
 	mkdir /data/data/.drm/.divxdrm 0777
@@ -456,30 +458,13 @@ on boot
 ## Daemon processes to be run by init.
 ##
 service console /system/bin/sh
-	user shell
-	group shell system log
 	console
+	disabled
+	user shell
+	group shell log
 
-service init_local /system/bin/logwrapper /sbin/busybox sh /sbin/init_wrapper
-	user root
-	oneshot
-
-service clean_init /system/bin/logwrapper /sbin/busybox sh /sbin/clean_init
-	user root
-	oneshot
-
-service mount_ro /system/bin/logwrapper /sbin/busybox sh /sbin/mount_ro
-	user root
-	oneshot
-
-service playlogos1 /system/bin/playlogos1
-	user root
-	oneshot
-
-# run user initscripts
-service initscripts /system/bin/logwrapper /system/xbin/busybox run-parts /system/etc/init.d
-	user root
-	oneshot
+on property:ro.secure=0
+	start console
 
 # adbd is controlled by the persist.service.adb.enable system property
 service adbd /sbin/adbd
@@ -552,10 +537,26 @@ service media /system/bin/mediaserver
 	user media
 	group system audio camera graphics inet net_bt net_bt_admin log
 
+#service playsound /system/bin/playsound
+#	user media
+#	group system
+#	disabled
+#	oneshot
+
 #service bootsound /system/bin/playmp3
-	#user media
-	#group audio
-	#oneshot
+#	user media
+#	group audio
+#	oneshot
+
+service playlogos1 /system/bin/playlogos1
+	user root
+	oneshot
+
+service bootanim /system/bin/bootanimation
+	user graphics
+	group graphics
+	disabled
+	oneshot
 
 ## start prevent lockup issue during poweron/off test
 service killmediaserver /system/bin/killmediaserver
@@ -563,12 +564,6 @@ service killmediaserver /system/bin/killmediaserver
 	group system
 	oneshot
 ## end prevent lockup issue during poweron/off test
-
-service bootanim /system/bin/bootanimation
-	user graphics
-	group graphics
-	disabled
-	oneshot
 
 ## enable wifi
 service wpa_supplicant /system/bin/wpa_supplicant -Dwext -ieth0 -c/data/wifi/bcm_supp.conf
@@ -600,16 +595,16 @@ service dbus /system/bin/dbus-daemon --system --nofork
 # for Broadcom Bluetooth
 # start BTLD -----------------------------------------
 service btld /system/bin/logwrapper /system/bin/btld -hb 3000000 -hp /dev/s3c2410_serial0 -lpm 1
-	# init.rc does not yet support applying capabilities, so run as root and
-	# let btld drop uid to bluetooth with the right linux capabilities
+#	init.rc does not yet support applying capabilities, so run as root and
+#	let btld drop uid to bluetooth with the right linux capabilities
 	group bluetooth net_bt_admin
 	disabled
 	oneshot
 
 # start DTUN OBEXD -----------------------------------------
 service obexd /system/bin/logwrapper /system/bin/obexd
-	# init.rc does not yet support applying capabilities, so run as root and
-	# let obexd drop uid to bluetooth with the right linux capabilities
+#	init.rc does not yet support applying capabilities, so run as root and
+#	let obexd drop uid to bluetooth with the right linux capabilities
 	user root
 	group bluetooth net_bt_admin
 	disabled
@@ -619,8 +614,8 @@ service obexd /system/bin/logwrapper /system/bin/obexd
 service bluetoothd /system/bin/logwrapper /system/bin/bluetoothd -n /etc/bluez/main.conf
 	socket bluetooth stream 660 bluetooth bluetooth
 	socket dbus_bluetooth stream 660 bluetooth bluetooth
-	# init.rc does not yet support applying capabilities, so run as root and
-	# let bludtoothd drop uid to bluetooth with the right linux capabilities
+# init.rc does not yet support applying capabilities, so run as root and
+# let bludtoothd drop uid to bluetooth with the right linux capabilities
 	group bluetooth net_bt_admin misc
 	disabled
 
@@ -652,13 +647,13 @@ service installd /system/bin/installd
 	socket installd stream 600 system system
 
 #service flash_recovery /system/bin/flash_image recovery /system/recovery.img
-	#oneshot
+#	oneshot
 
-#to update incremental image of recovery partition
+# to update incremental image of recovery partition
 #service flash_recovery /system/bin/sh /system/etc/install-recovery.sh
-	#user root
-	#console
-	#oneshot
+#	user root
+#	console
+#	oneshot
 
 # magnetic sensor yamaha
 service sensor-daemon /system/bin/sensorserver_yamaha
@@ -667,7 +662,7 @@ service sensor-daemon /system/bin/sensorserver_yamaha
 
 service racoon /system/bin/racoon
 	socket racoon stream 600 system system
-	# racoon will setuid to vpn after getting necessary resources.
+# racoon will setuid to vpn after getting necessary resources.
 	group net_admin keystore
 	disabled
 	oneshot
@@ -705,7 +700,6 @@ on property:init.svc.dhcpcd=stopped
 #chmod 555 /system/etc/mobileap/enable_eth.sh
 #chmod 555 /system/etc/mobileap/initialize_nat.sh
 #chmod 555 /system/etc/mobileap/tethering_enable.sh
-
 # end Mobile AP
 
 # for TvOut
@@ -735,7 +729,7 @@ service pcInternet_off /system/bin/sh /data/data/com.android.samsung.IcsService/
 on property:service.dhcp.enable=1
 	chmod 777 /data/data/com.android.samsung.IcsService/dhcp/udhcpd.conf
 	chmod 777 /data/data/com.android.samsung.IcsService/dhcp/udhcpd.leases
-	chmod 777 /data/data/com.android.samsung.IcsService/dhcp/udhcpd.pid	
+	chmod 777 /data/data/com.android.samsung.IcsService/dhcp/udhcpd.pid
 	start udhcpd
 
 on property:service.iptables.configure=1
@@ -765,5 +759,9 @@ service wimax_route /system/bin/route add default dev uwbr0
 service wimax_renew /system/bin/dhcpcd -n uwbr0
 	disabled
 	oneshot
-
 ## end Victory WiMAX DHCP
+
+service init_scripts /system/bin/logwrapper /vendor/scripts/run_init_scripts.sh
+	user root
+	oneshot
+

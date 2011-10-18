@@ -28,6 +28,9 @@ Includes the Android logger as a (loaded) module.
 
 Changelog:
 
+10-18-2011:
+Overhaul to initramfs (new folder layout derived from supercurio: https://github.com/supercurio/galaxysii-initramfs-modified).
+
 10-17-2011:
 Changes to init_wrapper (ensuring proper installation of busybox).
 
