@@ -8,6 +8,9 @@ nubernel-EC05_v0.0.0
 Changelog:
 =]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]
 
+10-19-2011:
+Added bb_install and bb_remove to /vendor/bin/.
+
 10-18-2011:
 Specifing busybox when remounting in some scripts.
 Moved custom scripts into /vendor/bin/.
