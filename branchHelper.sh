@@ -92,6 +92,8 @@ BRANCH_RELEASE()
 		sed -i "s/$PATTERN/$REPLACEMENT/g" Kernel/update/META-INF/com/google/android/updater-script
 		sed -i "s/$PATTERN/$REPLACEMENT/g" Kernel/update/META-INF/com/android/metadata
 		sed -i "s/$PATTERN/$REPLACEMENT/g" ncBuildHelper.sh
+		sed -i "s/$PATTERN/$REPLACEMENT/g" featurelist
+		sed -i "s/$PATTERN/$REPLACEMENT/g" changelog
 		sed -i "s/$PATTERN/$REPLACEMENT/g" README
 		sed -i "s/$PATTERN/$REPLACEMENT/g" $0
 	else
@@ -100,17 +102,10 @@ BRANCH_RELEASE()
 		sed -i "s/$PATTERN/$REPLACEMENT/g" Kernel/update/META-INF/com/google/android/updater-script >/dev/null 2>&1
 		sed -i "s/$PATTERN/$REPLACEMENT/g" Kernel/update/META-INF/com/android/metadata >/dev/null 2>&1
 		sed -i "s/$PATTERN/$REPLACEMENT/g" ncBuildHelper.sh >/dev/null 2>&1
+		sed -i "s/$PATTERN/$REPLACEMENT/g" featurelist >/dev/null 2>&1
+		sed -i "s/$PATTERN/$REPLACEMENT/g" changelog >/dev/null 2>&1
 		sed -i "s/$PATTERN/$REPLACEMENT/g" README >/dev/null 2>&1
 		sed -i "s/$PATTERN/$REPLACEMENT/g" $0 >/dev/null 2>&1
-	fi
-	local BRANCH_MSG="Branched to 'release-v${NEW_VERSION}'."
-	local PATTERN="Changelog:"
-	local REPLACEMENT="Changelog:\n\n"$(date +%m-%d-%Y)":\n$BRANCH_MSG"
-	if [ "$VERBOSE" = "y" ]
-	then
-		sed -i "s/$PATTERN/$REPLACEMENT/g" README
-	else
-		sed -i "s/$PATTERN/$REPLACEMENT/g" README >/dev/null 2>&1
 	fi
 	# git add changes
 	if [ "$VERBOSE" = "y" ]
@@ -120,6 +115,8 @@ BRANCH_RELEASE()
 		git add Kernel/update/META-INF/com/google/android/updater-script
 		git add Kernel/update/META-INF/com/android/metadata
 		git add ncBuildHelper.sh
+		git add featurelist
+		git add changelog
 		git add README
 		git add $0
 	else
@@ -128,6 +125,8 @@ BRANCH_RELEASE()
 		git add Kernel/update/META-INF/com/google/android/updater-script >/dev/null 2>&1
 		git add Kernel/update/META-INF/com/android/metadata >/dev/null 2>&1
 		git add ncBuildHelper.sh >/dev/null 2>&1
+		git add featurelist >/dev/null 2>&1
+		git add changelog >/dev/null 2>&1
 		git add README >/dev/null 2>&1
 		git add $0 >/dev/null 2>&1
 	fi
@@ -137,6 +136,7 @@ BRANCH_RELEASE()
 	echo "git branch:"
 	git branch
 	# git commit
+	local BRANCH_MSG="Branched to 'release-v${NEW_VERSION}'."
 	echo "Commit:"
 	git commit -m "$BRANCH_MSG"
 	echo "$BRANCH_MSG"
