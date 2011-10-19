@@ -1,0 +1,36 @@
+#!/system/bin/sh
+# simplify uninstall of busybox and links
+# written by DRockstar for SDX Developers
+# assumes alternate busybox installation in path
+#
+# modified by nubecoder
+
+PATH=/sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin:/data/local/tmp
+
+/system/bin/toolbox mount -o remount,rw /system /system
+
+for wdir in /system/bin /system/xbin; do
+	find $wdir -type l | while read line; do
+		btest=`busybox readlink $line | busybox grep "busybox"`
+		rtest=`busybox readlink $line | busybox grep "recovery"`
+		if [ "$btest" != "" ] && [ $line != "$wdir/busybox" ]; then
+			echo "rm $line"
+			rm $line > /dev/null 2>&1
+			if [ -f $btest ] && [ "$btest" != "/sbin/busybox" ]; then
+				echo "rm $btest"
+				rm $btest > /dev/null 2>&1
+			fi
+		fi
+		if [ "$rtest" != "" ] && [ $line != "$wdir/busybox" ]; then
+			echo "rm $line"
+			rm $line > /dev/null 2>&1
+		fi
+	done
+done
+echo "rm /system/bin/busybox"
+rm /system/bin/busybox > /dev/null 2>&1
+echo "rm /system/xbin/busybox"
+rm /system/xbin/busybox > /dev/null 2>&1
+
+/system/bin/toolbox mount -o remount,ro /system /system
+

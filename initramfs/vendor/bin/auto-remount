@@ -12,13 +12,13 @@ SYSTEM_RW=$(mount | grep "system" | grep "rw" -o)
 
 if [ "$ROOTFS_RW" = "" ] || [ "$SYSTEM_RW" = "" ] ; then
 	echo "Remounting rootfs as rw"
-	mount -o remount,rw /
+	busybox mount -o remount,rw /
 	echo "Remounting system as rw"
-	mount -o remount,rw /system
+	busybox mount -o remount,rw /system
 else
 	echo "Remounting rootfs as ro"
-	mount -o remount,ro /
+	busybox mount -o remount,ro /
 	echo "Remounting system as ro"
-	mount -o remount,ro /system
+	busybox mount -o remount,ro /system
 fi
 

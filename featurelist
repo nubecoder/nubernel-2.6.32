@@ -1,0 +1,27 @@
+Samsung SPH-D700 (Epic 4G) kernel by nubecoder
+
+http://www.nubecoder.com/
+
+nubernel-EC05_v0.0.0
+
+
+Feature list:
+=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]
+
+nubernel-EC05_v0.0.0, stock base, minimal modifications.
+
+Rooted kernel, su binary is included in /sbin.
+Flash tools (redbend_ua and bmlwrite) are included in /sbin.
+Custom "nubernel the kernel" bootlogo.
+Uses NOOP as the default I/O scheduler.
+Includes bootanimation.zip support.
+Includes init.d support.
+Includes RFS support.
+Includes EXT4 support.
+Includes CIFS support.
+Includes TUN support.
+Includes Netfilter TCPMSS support.
+Includes the Android logger as a (loaded) module.
+
+=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]
+

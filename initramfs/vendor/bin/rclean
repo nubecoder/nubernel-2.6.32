@@ -2,25 +2,37 @@
 # Epic Root Uninstaller by DRockstar
 # Modified for Clean Kernel script
 # assumes alternate busybox install in path
+#
+# modified by nubecoder
 
-PATH=/sbin:/bin:/system/bin:/system/xbin:/data/local/tmp
+PATH=/sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin:/data/local/tmp
 
-busybox mount -o remount,rw /dev/stl9 /system
-busybox mount -o remount,rw / /
+/system/bin/toolbox mount -o remount,rw /system /system
+/system/bin/toolbox mount -o remount,rw / /
 
-for wdir in /system/bin /system/xbin
-do
-  find $wdir -type l | while read line; do
-    btest=`readlink $line | grep "busybox"`
-    if [ "$btest" != "" ]; then
-      rm $line
-      if [ -f $btest ] && [ "$btest" != "/sbin/busybox" ]; then
-        rm $btest
-      fi
-    fi
-  done
+for wdir in /system/bin /system/xbin; do
+	find $wdir -type l | while read line; do
+		btest=`busybox readlink $line | busybox grep "busybox"`
+		rtest=`busybox readlink $line | busybox grep "recovery"`
+		if [ "$btest" != "" ] && [ $line != "$wdir/busybox" ]; then
+			echo "rm $line"
+			rm $line > /dev/null 2>&1
+			if [ -f $btest ] && [ "$btest" != "/sbin/busybox" ]; then
+				echo "rm $btest"
+				rm $btest > /dev/null 2>&1
+			fi
+		fi
+		if [ "$rtest" != "" ] && [ $line != "$wdir/busybox" ]; then
+			echo "rm $line"
+			rm $line > /dev/null 2>&1
+		fi
+	done
 done
- 
+echo "rm /system/bin/busybox"
+rm /system/bin/busybox > /dev/null 2>&1
+echo "rm /system/xbin/busybox"
+rm /system/xbin/busybox > /dev/null 2>&1
+
 # List by DRockstar, I have seen all files referenced in various scripts
 # Ordered by folder and filename
 rm /data/dalvik-cache/system@app@Superuser.apk@classes.dex > /dev/null 2>&1
@@ -30,7 +42,6 @@ rm /etc/group > /dev/null 2>&1
 rm /etc/passwd > /dev/null 2>&1
 rm /etc/resolv.conf > /dev/null 2>&1
 rm /system/app/Superuser.apk > /dev/null 2>&1
-rm /system/bin/busybox > /dev/null 2>&1
 rm /system/bin/jk-su > /dev/null 2>&1
 rm /system/bin/joeykrim-root.sh > /dev/null 2>&1
 rm /system/bin/playlogo-orig > /dev/null 2>&1
@@ -38,14 +49,12 @@ rm /system/bin/remount > /dev/null 2>&1
 rm /system/bin/resolv.conf > /dev/null 2>&1
 rm /system/bin/su > /dev/null 2>&1
 rm /system/etc/resolv.conf > /dev/null 2>&1
-rm /system/xbin/busybox > /dev/null 2>&1
 rm /system/xbin/remount > /dev/null 2>$1
 rm /system/xbin/su > /dev/null 2>&1
 
-rm /system/app/Superuser.apk > /dev/null 2>&1
 rm /system/xbin/keytimer > /dev/null 2>&1
 rm /data/local/keytimer > /dev/null 2>&1
 
-busybox mount -o remount,ro /dev/stl9 /system
-busybox mount -o remount,ro / /
+/system/bin/toolbox mount -o remount,ro /system /system
+/system/bin/toolbox mount -o remount,ro / /
 

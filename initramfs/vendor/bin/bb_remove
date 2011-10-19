@@ -1,0 +1,53 @@
+#!/system/bin/sh
+#
+# bb_remove
+#
+#
+# 2011 nubecoder
+# http://www.nubecoder.com/
+#
+
+# functions
+REMOVE_BUSYBOX()
+{
+	FILE_LIST="[ [[ arp ash awk basename bbconfig brctl bunzip2 bzcat bzip2 cal cat catv chgrp chmod chown chroot cksum clear cmp cp cpio cut date dc"
+	FILE_LIST="$FILE_LIST dd depmod devmem df diff dirname dmesg dnsd dos2unix du echo ed egrep env expr false fdisk fgrep find fold free freeramdisk"
+	FILE_LIST="$FILE_LIST fuser getopt grep gunzip gzip head hexdump id ifconfig insmod install ip kill killall killall5 length less ln losetup ls"
+	FILE_LIST="$FILE_LIST lsmod lspci lsusb lzop lzopcat md5sum mkdir mke2fs mkfifo mkfs.ext2 mknod mkswap mktemp modprobe more mount mountpoint mv nc"
+	FILE_LIST="$FILE_LIST netstat nice nohup nslookup ntpd od patch pgrep pidof ping pkill printenv printf ps pwd rdev readlink realpath renice reset"
+	FILE_LIST="$FILE_LIST rm rmdir rmmod route run-parts sed seq setsid sh sha1sum sha256sum sha512sum sleep sort split stat strings stty swapoff swapon"
+	FILE_LIST="$FILE_LIST sync sysctl tac tail tar tee telnet test tftp time top touch tr traceroute true tty tune2fs umount uname uniq unix2dos unlzop"
+	FILE_LIST="$FILE_LIST unzip uptime usleep uudecode uuencode vi watch wc wget which whoami xargs yes zcat"
+	FILE_LIST="$FILE_LIST add-shell addgroup adduser adjtimex ar arping beep blkid blockdev bootchartd chat chattr chpasswd chpst chrt chvt comm"
+	FILE_LIST="$FILE_LIST crond crontab cryptpw cttyhack deallocvt delgroup deluser dhcprelay dnsdomainname dumpkmap dumpleases eject envdir"
+	FILE_LIST="$FILE_LIST envuidgid ether-wake expand fakeidentd fbset fbsplash fdflush fdformat fgconsole findfs flock fsck fsck.minix fsync ftpd"
+	FILE_LIST="$FILE_LIST ftpget ftpput getty halt hd hdparm hostid hostname httpd hush hwclock ifdown ifenslave ifplugd ifup inetd init ionice"
+	FILE_LIST="$FILE_LIST iostat ipaddr ipcalc ipcrm ipcs iplink iproute iprule iptunnel kbd_mode klogd last linux32 linux64 linuxrc loadfont loadkmap"
+	FILE_LIST="$FILE_LIST logger login logname logread lpd lpq lpr lsattr lzcat lzma makedevs makemime man mdev mesg microcom mkdosfs mkfs.minix mkfs.vfat"
+	FILE_LIST="$FILE_LIST mkpasswd modinfo mpstat mt nameif nbd-client nmeter openvt passwd ping6 pipe_progress pivot_root pmap popmaildir poweroff powertop"
+	FILE_LIST="$FILE_LIST pscan pstree raidautorun rdate readahead readprofile reboot reformime remove-shell resize rev rpm rpm2cpio rtcwake runlevel runsv"
+	FILE_LIST="$FILE_LIST runsvdir rx script scriptreplay sendmail setarch setconsole setfont setkeycodes setlogcons setuidgid showkey slattach smemcap softlimit"
+	FILE_LIST="$FILE_LIST start-stop-daemon su sulogin sum sv svlogd switch_root syslogd tcpsvd telnetd tftpd timeout traceroute6 ttysize tunctl udhcpc udhcpd"
+	FILE_LIST="$FILE_LIST udpsvd unexpand unlzma unxz vconfig vlock volname wall watchdog who xz xzcat zcip"
+	for FILE in $FILE_LIST; do
+		echo "  Removing file: $FILE"
+		/system/bin/rm /system/xbin/$FILE
+	done
+	/system/bin/rm /sbin/busybox
+	/system/bin/rm /system/bin/busybox
+	/system/bin/rm /system/xbin/busybox
+}
+
+# main
+echo "Remounting system as rw"
+/system/bin/toolbox mount -o remount,rw /system /system
+
+echo "Removing busybox from /system/xbin/"
+REMOVE_BUSYBOX
+
+echo "Remounting system as ro"
+/system/bin/toolbox mount -o remount,ro /system /system
+
+echo "Done"
+exit
+

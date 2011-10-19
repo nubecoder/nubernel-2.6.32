@@ -1,0 +1,754 @@
+Samsung SPH-D700 (Epic 4G) kernel by nubecoder
+
+http://www.nubecoder.com/
+
+nubernel-EC05_v0.0.0
+
+
+Changelog:
+=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]
+
+10-19-2011:
+Added bb_install and bb_remove to /vendor/bin/.
+
+10-18-2011:
+Specifing busybox when remounting in some scripts.
+Moved custom scripts into /vendor/bin/.
+Changes to README (split featurelist and changelog from README).
+Changes to branchHelper.sh (don't commit when creating a feature branch).
+Overhaul to initramfs (new folder layout derived from supercurio: https://github.com/supercurio/galaxysii-initramfs-modified).
+
+10-17-2011:
+Changes to init_wrapper (ensuring proper installation of busybox).
+
+10-14-2011:
+Minor changes to init.rc files.
+
+10-11-2011:
+Added some logging to the cpufreq_stats_update function.
+Added warnings file creation to ncBuildHelper.sh.
+Changes to progress reporting in updater-script.
+Don't remount rootfs as read-only from init.rc (mount_ro handles it).
+Changes to initramfs (changes to mount args).
+
+10-04-2011:
+Changes to initramfs (fixing up broken "reboot recovery").
+
+10-01-2011:
+Moving the update folder out of the Kernel folder.
+
+09-26-2011:
+Reverting "Update superuser.apk to new version" (commit ID: f4aaae3).
+Disabling 1200MHz and 100MHz states by default.
+Switch to DEADLINE I/O scheduler by default.
+Update modules in initramfs.
+Update superuser.apk to new version.
+Some initramfs changes (move superuser.apk to /su, etc).
+Fixing up su check.
+Update su to new version.
+Removing su from /sbin while still ensuring it is installed.
+
+09-20-2011:
+Reverting, "Bluetooth: Make hci_send_acl() void" (commit ID: c1b8eb7).
+
+09-09-2011:
+Fixing the nr_iowait_cpu compile error properly by using smp_processor_id()(Peter Zijlstra: https://patchwork.kernel.org/patch/109011/).
+Making transition states update when states_enabled_table is changed.
+Disabling TVOut related items in defconfig and init.rc files.
+Fixing up some bad error checking in Kernel/drivers/cpufreq/cpufreq.c.
+Added missing return in store_states_enabled_table (oops).
+Fixing the error checking in store_states_enabled_table (should be logical not bitwise).
+
+09-08-2011:
+Added more sanity checks to Superuser app instalation (also renamed Superuser.apk to superuser.apk).
+Updated root related files (su and superuser.apk) to newer versions.
+
+09-07-2011:
+Changes to updater-script (wipe cache and dalvik, etc).
+Fixing someone's typo.
+Quieting the touchscreen driver's debugging a bit.
+
+09-06-2011:
+Disabling CONFIG_NC_DEBUG for stability testing.
+
+09-05-2011:
+Added md5 sum to tar creation in ncBuildHelper.sh (DRockstar: https://github.com/DRockstar/Clean-Kernel-EC05/commit/a1c615a54b72d2dc532e05176d84ef30b32c2e0a).
+Fixing an issue with /sbin/dir_info.
+Changed permissions of /sbin/clean_init.
+Added some additional properties to default.prop.
+Added dir_info script to initramfs.
+Moved cpu_thres_table script into initramfs.
+Moved cpufreq_info script into initramfs.
+Added auto-remount script to initramfs.
+Renamed cpu_thres_table.sh to cpu_thres_table.
+Changes to cpu_thres_table.sh (syntax, cleanup etc).
+Changes to cpufreq_info script to support new governors.
+Added some scripts to initramfs (DRockstar: https://github.com/DRockstar/Clean-Kernel-EC05/commit/cd5a9c3d93d6f7db0bd4b1096094975ba29839c5).
+
+09-01-2011:
+Switched to ro.secure=0.
+
+08-28-2011:
+Using rm -f in wiredFlashHelper and wifiFlashHelper scripts.
+Changes to initramfs to remove unneccessary files after boot.
+
+08-27-2011:
+Some minor cleanup to kernelFlash.
+Some cleanup and changes to ncBuildHelper.sh.
+
+08-26-2011:
+Added Bash to initramfs (gets installed to /system/bin/bash if it doesn't already exist).
+Actually using the "DEF_SAMPLING_FREQ_STEP" define in conservative governor.
+
+08-23-2011:
+Changes to init_wrapper and recovery_wrapper in initramfs.
+Adding a DVFS lock for interactiveX governor in an attempt to fix it's SOD problem.
+
+08-15-2011:
+Added a read only cpu_transition_states_table sysfs entry, some cleanup to the cpu_thres_table sysfs entry, and added value checking to states_enabled_table sysfs entry.
+Fixing comments for the rest of the frequencies.
+Fixing up 1200MHz frequency.
+
+08-14-2011:
+Add a #define for NUM_FREQ and other miscellaneous cleanup (gzub: https://github.com/gzub/EC05-Zub/commit/e8e3d72fa8bef44b98c93a8a4fdeaa74565cf35c).
+Fixing up 600MHz frequency (gzub: https://github.com/gzub/EC05-Zub/commit/6be25a07b497a36d8bf8e229c1685b23bae10144).
+Fixing up 1120MHz frequency (gzub: https://github.com/gzub/EC05-Zub/commit/a94a9f9c7392f7418872cd11ec3fa218613bba05).
+Fixing up the 100MHz frequency (gzub: https://github.com/gzub/EC05-Zub/commit/f96e403e1fc38d7a9c61d94af19b40037f824d66).
+Branched to 'feature-dvfs'.
+
+08-13-2011:
+Removed battery_mods init.d script (controlled by app).
+
+08-11-2011:
+Added bootsound script (needs a working stagefright binary to be of use).
+Reverting, "Bluetooth: Make hci_send_sco() void" (commit ID: fb33667).
+Bluetooth: Defer SCO setup if mode change is pending (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=f1ef8e19ffd513c9ba35865eba16354dac0dcbcc).
+Bluetooth: Reassigned copyright to Code Aurora Forum (Ron Shaffer: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=1c094829f570a8cb5a358104a3f23eacb39bf18d).
+Bluetooth: Use non-flushable pb flag by default for ACL data on capable chipsets. (Nick Pelly: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=04a41930f122968dc2b5ec4b94670e88e7abd6e9).
+Revert "Bluetooth: Introduce L2CAP_LM_FLUSHABLE to allow flushing of ACL packets." (Nick Pelly: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=047941a817402e06f2bdd3e854355c1dab625e68).
+Revert "Bluetooth: Fix rejected connection not disconnecting ACL link" (Nick Pelly: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=331c453fc49dd01c9d2bea9efa5f0cc9a7f0e124).
+Paranoid network. (Robert Love: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=528f6d17876cc6aaa0a38e120921dc7e7564d090).
+Bluetooth: Reset the security level after an authentication failure (Johan Hedberg: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=da213f41cdd445d3df468f8fe7f24fe4f4c48508).
+Bluetooth: Use strict_strtoul instead of simple_strtoul (Tomas Winkler: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=7b767cad296d17cfe071734f71a3b7b479534c8c).
+Bluetooth: Trivial clean ups to SCO (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=b9dbdbc1f4404cba2e64939c30c87d59c9796e4e).
+Bluetooth: Use single_open() for inquiry cache within debugfs (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=d4612cb86ed8db8956b6b19435f8a30de6c67ffe).
+Bluetooth: Fix out of scope variable access in hci_sock_cmsg() (Johann Felix Soden: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=f6e623a65cb301088bd04794043e82bfc996c512).
+Bluetooth: Add SCO fallback for unsupported feature error (Stephen Coe: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=705e5711b61e9622b2d88850f38c219014aa0780).
+Bluetooth: Convert inquiry cache to use debugfs instead of sysfs (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=ca325f698996c1a0770a67f41e7dc97a007d8bc2).
+Bluetooth: Keep a copy of each HID device's report descriptor (Michael Poole: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=15c697ce1c5b408c5e20dcdc6aea2968d1125b75).
+Bluetooth: Do not call rfcomm_session_put() for RFCOMM UA on closed socket (Nick Pelly: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=6c2718da59613d76013b501bf0f8bcf9d7794b2d).
+Bluetooth: Fix sleeping function in RFCOMM within invalid context (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=485f1eff73a7b932fd3abb0dfcf804e1a1f59025).
+Bluetooth: Fallback eSCO to SCO on error 0x1a (Unsupported Remote Feature) (Nick Pelly: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=1038a00b458997661bcd0e780a24dc280a8841fc).
+HID: make raw reports possible for both feature and output reports (Jiri Kosina: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=d4bfa033ed84e0ae446eff445d107ffd5ee78df3).
+Bluetooth: Use the control channel for raw HID reports (Bastien Nocera: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=6bf8268f9a91f1065c99503161ebd061492bebe3).
+proc_fops: convert drivers/isdn/ to seq_file (Alexey Dobriyan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=9a58a80a701bdb2d220cdab4914218df5b48d781).
+Bluetooth: Fix PTR_ERR return of wrong pointer in hidp_setup_hid() (Roel Kluin: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=971beb83aeb2a309175682cf5683d64fd4591841).
+tree-wide: fix some typos and punctuation in comments (Thadeu Lima de Souza Cascardo: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=94e2bd688820aed72b4f8092f88c2ccf64e003de).
+Bluetooth: Add RFCOMM option to use L2CAP ERTM mode (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=eae38eede2e5f70d65f09327297bd698b0d3ea7e).
+Bluetooth: Fix handling of BNEP setup connection requests (Vikram Kandukuri: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=cde9f807f003676862178a6f28b52c7d431511ed).
+Bluetooth: Return ENETDOWN when interface is down (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=7e21addcd0ad87696c17409399e56e874931da57).
+Bluetooth: Implement raw output support for HIDP layer (Jiri Kosina: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=2da31939a42f7a676a0bc5155d6a0a39ed8451f2).
+net: Generalize socket rx gap / receive queue overflow cmsg (Neil Horman: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=3b885787ea4112eaa80945999ea0901bf742707f).
+Bluetooth: Fix rejected connection not disconnecting ACL link (Luiz Augusto von Dentz: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=9e726b17422bade75fba94e625cd35fd1353e682).
+
+08-10-2011:
+Bluetooth: Create per controller workqueue (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=f48fd9c8cd746fdb055a97249a209c77dca0f710).
+Bluetooth: Make hci_send_sco() void (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0d861d8b8edd139a9b291cb262d08dec8dc3922d).
+Bluetooth: Add controller types for BR/EDR and 802.11 AMP (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=943da25d95c7e8fd8c39dbf09e030f5da46f5d85).
+Bluetooth: Convert controller hdev->type to hdev->bus (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=c13854cef4751000b968d4e8ac95796562d5b96f).
+Bluetooth: Unobfuscate tasklet_schedule usage (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=c78ae283145d3a8799b2fb01650166a66af3bff8).
+Bluetooth: Turn hci_recv_frame into an exported function (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=76bca88012e1d27de794f32cc551d6314d38b6d9).
+Bluetooth: Introduce L2CAP_LM_FLUSHABLE to allow flushing of ACL packets. (Nick Pelly: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=e9a65a490d2018d7e069af43f40951a4920e9227).
+Bluetooth: Check L2CAP pending status before sending connect request (Andrei Emeltchenko: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=e501d0553a7580fcc6654d7f58a5f061d31d00af).
+net: Remove unnecessary returns from void function()s (Joe Perches: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=3fa21e07e6acefa31f974d57fba2b6920a7ebd1a).
+Bluetooth: Fix issues where sk_sleep() helper is needed now (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=2b0b05ddc04b6d45e71cd36405df512075786f1e).
+Bluetooth: Fix spec error in the RemoteBusy Logic (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=844c0972427ee5f661158160aaca10b22b3dda60).
+Bluetooth: Prevents buffer overflow on l2cap_ertm_reassembly_sdu() (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=4178ba462a3e8ab5094e69606f01d9e95f2d5ea6).
+Bluetooth: Fix race condition on l2cap_ertm_send() (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=dfc909befbfe967bd7f46ef33b6969c1b7f3cf42).
+Bluetooth: Add wait_queue to wait ack of all sent packets (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=6161c0382bbab883a634d284f7367a88bbe88534).
+Bluetooth: Implement Local Busy Condition handling (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=1890d36bb556a27684ad29654a9898ab9a5f57ee).
+Bluetooth: Completes the I-frame tx_seq check logic on RECV (João Paulo Rechi Vita: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=9b53350d3cf5b330c3261d89b5e62a2dc25c5653).
+Bluetooth: Implement missing parts of the Invalid Frame Detection (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=18778a63ddc83bc89bda3b119fb02eb121512a66).
+Bluetooth: Refactor l2cap_retransmit_frame() (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=f11d676da4059c7888efca810ab300b931736a26).
+Bluetooth: Make hci_send_acl() void (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=9a9c6a34416b3743c09c00f3d6708d9df3c21629).
+Bluetooth: Fix lockdep annotation on ERTM (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=ff12fd643334071084b6145cad3793bb6c956638).
+Bluetooth: Check if we really are in WAIT_F when F bit comes (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=9b16dc6551cbde65d0ac525af3c46efab53a2c46).
+Bluetooth: Remove unneeded control vars (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=a2e12a2a312f816d5970b0c809d43b399fbfe90c).
+Bluetooth: Remove set of SrejSaveReqSeq under receipt of REJ frame (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0301ef04b5f49a95681694fc0d75af9441faa919).
+Bluetooth: Fix errors reported by checkpatch.pl (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=59203a21a56c53afeb6f45e059299e6f1437f30f).
+Bluetooth: Don't set control bits to zero first (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=44651b85cc3a076147af5d181fc4833ef8debc59).
+Bluetooth: Close L2CAP channel on invalid ReqSeq (João Paulo Rechi Vita: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=01760bdde9a92413b7fff928d08e19352bf09d82).
+Bluetooth: Fix SDU reassembly under SREJ (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=afefdbc4cf3b9d409d07e1e5264e7ff88bc48711).
+Bluetooth: Check if mode is supported on getsockopt (João Paulo Rechi Vita: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0041ecfa3025d7612fdaab12b2f07c9c3c09f42f).
+Bluetooth: Add SOCK_STREAM support to L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=bd3c9e255e76ae232d417e3914ca5d80ca3e9485).
+Bluetooth: Add Kconfig option for L2CAP Extended Features (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=84fb0a6334af0ccad3544f6972c055d90fbb9fbe).
+Bluetooth: Optimize SREJ_QUEUE append (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=3b1a9f3fa6ad842991538da2c3b2e29e047b131f).
+Fixing Bluetooth: Fix sending ReqSeq on I-frames (seems I missed a bit of this patch).
+Bluetooth: Fix drop of acked packets on ERTM (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=812e737e29a1d559e7bfbea675fdcfcbad9f5e1f).
+Bluetooth: Fix crash when monitor timeout expires (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0ee0d20855ae9271de3f6695f4cafc08ab2533bb).
+Bluetooth: Fix bug when retransmitting I-frames (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=f6e6b16823de0aff31cb8ee8c098383e3aceec58).
+Bluetooth: Enable option to configure Max Transmission value via sockopt (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=68d7f0ce911e41e463c45911be031cdf6a096fe8).
+Bluetooth: Add module parameter for txWindow size on L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=369ba30264826f38eefc61b93688100be8adbd4d).
+Bluetooth: Change acknowledgement to use the value of txWindow (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=803020c6fa63aa738cfda3329c9675b42023e9d2).
+Bluetooth: Add sockopt configuration for txWindow on L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=14b5aa71ec506f4e38ca6a1dc02ecd668ecfd902).
+Bluetooth: Send Ack after clear the SREJ list (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=855666cccc939d392316de17512e17a08b2fa05a).
+Bluetooth: Check the SDU size against the MTU value (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=052897ca5019d9157ae09e5e84eee2a9ef5dccc6).
+Bluetooth: Add le16 macro to Retransmission and Monitor Timeouts values (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=10467e9e9b89272b25b56688bb276d0830e9ab9a).
+Bluetooth: Fix configuration of the MPS value (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=1c7621596d11b9c3e19eb88a818758dee4901c95).
+Bluetooth: Read RFC conf option on a successful Conf RSP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=7b1c0049be3aabc18831ada339dbcf41ba8c81fd).
+Bluetooth: Ignore Tx Window value with Streaming mode (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=2fb862e215e53630066c677e06d7551fa38bf235).
+Bluetooth: Add timer to Acknowledge I-frames (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=c1b4f43be01c2a363be021485dd18cca33cfab8a).
+Bluetooth: Finish implementation for Rec RR (P=1) on ERTM (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=05fbd89dd4153341717b33d9e8ae8bd29db6c1c8).
+Bluetooth: Remove duplicate use of __get_reqseq() macro on L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=8abb52ee00c4b3f857269eb6b7145991bab869bf).
+Bluetooth: Group the ack of I-frames into l2cap_data_channel_rrframe() (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=6e3a59819fac19006fe4255b87928e5a12c54532).
+Bluetooth: Handle all cases of receipt of RNR-frames into L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=99b0d4b7b09edeacf4542bced5c01239375b51a9).
+Bluetooth: Split l2cap_data_channel_sframe() (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=e072745f4adb01b909bd08a0cfc8f79348f4d2c6).
+Bluetooth: Add Recv RR (P=0)(F=0) for SREJ_SENT state on ERTM (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=73edaa9933219e25d6733b78d1e2c881025705e2).
+Bluetooth: Move set of P-bit to l2cap_send_sframe() (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=f0946ccfc7da403a46b7ff7cb2e3deffac108742).
+Bluetooth: Implement SendAck() Action on ERTM (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=9e917af13d59182f95bbb5483dc0c4254dfb7944).
+Bluetooth: Check if SDU size is greater than MTU on L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=36f2fd585f43199f006a3b5ff84e95815102cd31).
+Bluetooth: Check the minimum {I,S}-frame size into L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=277ffbe362823d18a17792fbd8e507010e666299).
+Bluetooth: Support case with F bit set under WAIT_F state (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=1d8f5d16913d74e428950ee02fe9ff7e6391c120).
+Bluetooth: Implement 'Send IorRRorRNR' event (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=d5392c8f1e9faef089bb7cb66c3314da8bddd1fe).
+Bluetooth: Use a l2cap_pinfo struct instead l2cap_pi() macro (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=e8235c6bdd1c7ffbaa7eb8dcdbb46c51f1e5d72e).
+Bluetooth: Fix expected_tx_seq calculation on L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=7dffe4210233a2860c3f41477c40b3252edf2b7d).
+Bluetooth: Fix memory leak of S-frames into L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=faaebd192ec9c3febcab98149d1309199a5b886c).
+Bluetooth: Move specific Basic Mode code to the right place (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=c69163e9ed5048407cc84f439cbfecc53f6f7131).
+bluetooth: handle l2cap_create_connless_pdu() errors (Dan Carpenter: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=477fffb082920476cc26f238d65538ccb8d601e1).
+net: sk_sleep() helper (Eric Dumazet: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=aa395145165cb06a0d0885221bbe0ce4a564391d).
+net: check the length of the socket address passed to connect(2) (Changli Gao: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=6503d96168f891ffa3b70ae6c9698a1a722025a0).
+Bluetooth: Fix kernel crash on L2CAP stress tests (Andrei Emeltchenko: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=c2c77ec83bdad17fb688557b5b3fdc36661dd1c6).
+Bluetooth: Convert debug files to actually use debugfs instead of sysfs (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=aef7d97cc604309b66f6f45cce02cd734934cd4e).
+Bluetooth: Fix potential bad memory access with sysfs files (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=101545f6fef4a0a3ea8daf0b5b880df2c6a92a69).
+driver-core: Add attribute argument to class_attribute show/store (Andi Kleen: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=28812fe11a21826ba4c97c6c7971a619987cd912).
+Bluetooth: Fix memory leak in L2CAP (Andrei Emeltchenko: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=e420aba331f44de0eed6871441293a6124d566d1).
+Bluetooth: Remove double free of SKB pointer in L2CAP (Andrei Emeltchenko: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=fcafde2e6d81aa7901f9b10e6a097592f0637b79).
+Bluetooth: Fix L2CAP locking scheme regression (Andrei Emeltchenko: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=b13f5860447a98daf0358a51fbff66154ac0663a).
+Bluetooth: Ack L2CAP I-frames before retransmit missing packet (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=186ee8cf0130993dea8ab8867ff1af8a148f9ae6).
+Bluetooth: Fix unset of RemoteBusy flag for L2CAP (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=186de9a33803c7ee20d9af75c9049b50e68a3a08).
+Bluetooth: Add L2CAP option for max transmit value (Marcel Holtmann: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=5fbcd3d1a07e234583e17830e8aef47282c22141).
+Bluetooth: Fix 'SendRRorRNR' to send the ReqSeq value (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=2ab25cdd7b54473dd42dcffc9872737de2517466).
+Bluetooth: Implement RejActioned flag (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=4ec10d9720ef78cd81d8bcc30a3238665744569f).
+Bluetooth: Fix sending ReqSeq on I-frames (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=9f121a5a80b4417c6db5a35e26d2e79c29c3fc0d).
+Bluetooth: Fix unset of SrejActioned flag (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=889a3ca466018ab68363c3168993793bc2d984f1).
+Bluetooth: Initialize variables and timers for both channel's sides (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0565c1c24af94130b891f989fa608faddfadc52c).
+net: Move && and || to end of previous line (Joe Perches: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=f64f9e719261a87818dd192a3a2352e5b20fbd0f).
+net: check kern before calling security subsystem (Eric Paris: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=c84b3268da3b85c9d8a9e504e1001a14ed829e94).
+net: pass kern to net_proto_family create function (Eric Paris: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=3f378b684453f2a028eda463ce383370545d9cc9).
+net: mark net_proto_ops as const (Stephen Hemminger: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=ec1b4cf74c81bfd0fbe5bf62bafc86c45917e72f).
+Branched to 'feature-patches-bluetooth'.
+
+08-05-2011:
+Changes to ncBuildHelper.sh for inclusion of update_modules.sh.
+Changes to update_modules.sh.
+
+08-04-2011:
+Branched to 'feature-misc'.
+Reverting "Bluetooth: Make hci_send_sco() void" (commit ID: 7e2b3ff).
+Quiet warning in /scripts/kconfig/conf.c.
+Adjusting Makefile for toolchain (why not).
+Makefile fix for non-gnueabi toolchains (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/2c979fb53092957a657ff9787cb6c061ddb3e62d).
+Changes to ncBuildHelper.sh for inclusion of wiredFlashHelper.sh.
+Added wiredFlashHelper.sh (for when Wifi isn't an option).
+Changes to wifiFlashHelper.sh.
+Changes to update_modules.sh (most modules are working again).
+Changing toolchains (Sourcery G++ Lite 2011.03-41 for ARM GNU/Linux: http://www.codesourcery.com/sgpp/lite/arm/portal/release1803).
+Adjusting scripts for toolchain relocation.
+Removing toolchain from repo.
+
+08-03-2011:
+Changes to update_modules.sh to exclude bthid.ko (was causing SW KB crashes when included).
+
+08-02-2011:
+Change evaluation to logical in suspend.c and earlysuspend.c.
+Added code for more governor checks (for testing DVFS locks).
+A bit of cleanup in cpu-freq.c.
+The transitional governor is the default.
+Fixing up the transitional governor's DVFS lock related code.
+Changes to defconfig and update_modules.sh for working modules.
+Miscellaneous changes to defconfig.
+Branched to 'feature-misc'.
+Minor changes to interactiveX governor (whitespace, debugging fixup, etc).
+Changes to defconfig for conservative and transitional governors.
+Removed more CPU_S5PV210 specific code from conservative governor.
+Added transitional governor. This is Samsung's conservative governor for victory, renamed to transitional because it uses transition states for scaling.
+Allow conservative governor to scale "normally" (removed CPU_S5PV210 specific scaling).
+Moving conservative governor out of victory folder.
+Fixing up display name of InteractiveX in default governor selection.
+
+08-01-2011:
+Added some debugging to interactiveX governor.
+Added some error checking to interactiveX governor.
+Fixing a typo in interactiveX governor.
+Removing threshold related code from interactiveX governor (I don't see how this is needed).
+
+07-30-2011:
+Backport lowmemory killer from 2.6.35 samsung.git (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/cdbbec98c4e953cc90a86d7cf86c90baaf6a55dc).
+Updated BFQ-v2 to BFQ-v2-r1 (Paolo Valente via netarchy: https://github.com/netarchy/nexus-s/commit/2286f36fa687b3ef7c8e354d9385d16e75c00e15).
+Updated BFQ to v2 (thalamus via netarchy: https://github.com/netarchy/nexus-s/commit/bd88709fedb771506b72b4c0c524a53651dd5d3b).
+Branched to 'feature-patches'.
+
+07-29-2011:
+Changes to interactiveX governor for compatibility with Epic 4G.
+Changes to defconfig for interactiveX governor.
+Added interactiveX governor. This is a the interactive governor modified for suspend/wake by imoseyon. (imoseyon via dalingrin: https://github.com/dalingrin/nook_kernel/commit/f452fb192f3a3b70b4e5222cfbb5e720a72784ad).
+Branched to 'feature-governors'.
+More changes to update_modules.sh for (aparently) broken modules, maybe I'm stripping too much, will figure this out later.
+Branched to 'feature-misc'.
+Changes to update_modules.sh to exclude dpram.ko (was causing "no service" when included).
+Raising internal voltages (DVSINT1) to 1125 for OC stability at 1.4GHz.
+
+07-28-2011:
+Reverting "binder: Move debugging information from procfs to debugfs" (commit ID: 913e4e4).
+Changes to defconfig for BFQ scheduler.
+Added BFQ scheduler (Paolo Valente via Bonsai: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/779e2750f28dc8b92a3f723a60a460764ce49ca2).
+Add defines to bcm4329 Makefile (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/fa184a719ff704c7468b67f43c3599593013905d).
+Backport bcm4329 wifi driver from 2.6.35 (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/8e6691ae6a9548876eb35fff16f9df79bd47e4bb).
+Reverting "ARM: SAMSUNG: Fix build warnings because of unused codes" (commit ID: bace7f7).
+ARM: 6891/1: prevent heap corruption in OABI semtimedop (Dan Rosenberg: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=0f22072ab50cac7983f9660d33974b45184da4f9).
+ASOC: delay after turning on codec (sh21.won: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=44aec062d82fe3ca2ab8bdf1ee0c5bbd8a85e4b2).
+S5PC11X: USB: Remove unnecessary code for USB Tethering (sb223.kang: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=cffd6dc859595618113470a1cf2dbb574813f10e).
+ARM: S5PC11X: reduce waiting time of CDMA modem power-off (Thomas Ryu: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=fba9fb35d8b6cc8789ab020983457988c04d2593).
+net: wireless: bcm4329: Disable wake irq at driver stop (Dmitry Shmidt: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=6ce9cbeef4cb7074beffbd5652b0943c8aec1246).
+
+07-27-2011:
+ASOC: update CDMA specific clock settings (Thomas Ryu via Bonsai: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/b2938ff3ea380a43fc4c26953f29b1bf39e86846).
+staging: binder: Fix use of uninitialized variable (Nick Kralevich: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=4ef78fa8848b4a6fc60268431492d1502454fb5e).
+ARM: herring: Increase delay to 200 ms in wlan power on (Dmitry Shmidt: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=9e3aca5aed77290075be4ce59ff1a0feabfa2ab3).
+shmem: reduce pagefault lock contention (Shaohua Li: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=ff36b801624d02a876bb7deded6ab860ea3503f2).
+android-common: include linux/slab.h (Arve Hjønnevåg: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=eaa7ea1e2bbe79f6af8bb282288ea33ec3149535).
+android-common: Fix slab.h includes for 2.6.34-rc4 (Colin Cross: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0981b8f4d278b6d1dcf2dee7185e79c4f1e427d5).
+binder: Move debugging information from procfs to debugfs (Arve Hjønnevåg: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=194b82978b022c0b789fcabf7acad49622c7d126).
+binder: Use seq_file for debug interface (Arve Hjønnevåg: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0d03f6594a5b06d1ff4c307a294e5ec079c0167d).
+Bluetooth: Update sec_level/auth_type for already existing connections (Ville Tervo: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=045309820afe047920a50de25634dab46a1e851d).
+ARM: SAMSUNGy: fix broken timer irq base (Marek Szyprowski: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=1131379b48228afb32fa626fb27586a02246acf9).
+Bluetooth: Make hci_send_sco() void (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=0d861d8b8edd139a9b291cb262d08dec8dc3922d).
+Bluetooth: Fix ACL MTU issue (Gustavo F. Padovan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=d1daa091e8612f3aab14d28b5836375fafe155e1).
+Update plat-samsung clock code to mainline kernel (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/41da27b00ad7b38f1c7298b7f31146bc01549a9c).
+Quiet warning in samsung_mipi driver config (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/05a923aaad791c21e2425da19578352efd3d01d1).
+Clean up compile warnings (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/dbb52269d6cbd042a6ebb041c7657ad8fd01afc0).
+Quiet compiler warnings (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/f752a3101dd481601195a4d915a75c1cfa90b454).
+Fix a couple of compile errors and debug message formating (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/f2f5b3d4f524cb0b4da89250542176826ab0d5c2).
+Quiet compile warning (RandyT: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/55f8dd06d3edc6f70195227efc89fb5f11cd11cd).
+Fixing a Samsung typo in arch/arm/Kconfig.
+Fix tty low latency causing an interrupt during a spinlock (gzub via Bonsai: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/f964f1e655fb496d78ffcf0f3ffd731d4c4070b8).
+ARM: SAMSUNG: Add a workaround for get_clock() for serial driver (Marek Szyprowski: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=7cf4b482f06df0b590a9bc1561a5a81d67e0fe4c).
+ARM: S5P: Bug fix on errors of build with CONFIG_PREEMPT_NONE (SeungChull Suh: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=4341f9b38fe33aab51439ae59593e149a6f61d9f).
+ARM: SAMSUNG: Fix build warnings because of unused codes (Kukjin Kim: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=1a95036465e6abdcb639f0d7bb1ec612663caf5b).
+
+07-26-2011:
+ARM: 5939/1: ARM: Add option CMDLINE_FORCE to force usage of the in-kernel cmdline (Alexander Holler: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=92d2040d78f662f634efce7a5106bbed70b8708b).
+[HZ] if S5P_HIGH_RES_TIMER options is enable, use 256 HZ (Choi Jong-hwan: http://android.git.kernel.org/?p=kernel/samsung.git;a=commit;h=6eced90427618b7f62f076d1407fa95633f7d43f).
+ASoC: Allow reporting of NULL jacks (Mark Brown: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=3a278a0c65c924950c4744ba451a110998998044).
+ASoC: Add a notifier for jack status changes (Mark Brown: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=d5021ec9fc32edc6f512c2375923d757e9825f6a).
+ASoC: Move dereference after NULL test (Julia Lawall: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=4f066173fe8deb8874f41917e5d26ea2e0c46e3b).
+ASoC: Add jack_status_check callback function for GPIO jacks (Joonyoung Shim: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=c871a05315d1a76034ea06feeda92081e1d608bf).
+ARM: 6318/1: ftrace: fix and update dynamic ftrace (Rabin Vincent: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=3b6c223b1b97ad60bbb0f4efda57d649414ac2a2).
+ARM: 6314/1: ftrace: allow build without frame pointers on ARM (Rabin Vincent: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=09bfafac3e237415cc4b6adde49f9f28b3a42659).
+ARM: 6316/1: ftrace: add Thumb-2 support (Rabin Vincent: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=a3ba87a614992500cf2c47e6f788e74a971ce91f).
+ARM: 6315/1: ftrace: add ENDPROC annotations (Rabin Vincent: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=72fa62fa5dff0e2e06491dd99c429adb137f299b).
+ARM: 6653/1: bitops: Use BX instead of MOV PC,LR (Dave Martin: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=3ba6e69ad887f8a814267ed36fd4bfbddf8855a9).
+ARM: avoid marking decompressor .stack section as having contents (Russell King: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=b0c4d4ee4e4f13fa3f017c00319a18c1ea31b7d7).
+ARM: improve compiler's ability to optimize page tables (Russell King: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=c0ba10b512eb2e2a3888b6e6cc0e089f5e7a191b).
+ARM: 6490/1: MM: bugfix: initialize spinlock for init_mm.context (MyungJoo Ham: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=28c22d7dc99486ef4186dde41d5260e75b3076f7).
+ARM: Fix csum_partial_copy_from_user() (Russell King: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=4609a179c97ae60fef173547a9bbb214359808ce).
+ARM: 6519/1: kuser: Fix incorrect cmpxchg syscall in kuser helpers (Dave Martin: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=55afd264cdd5d5848753e90884ed596e11bce0ff).
+ARM: 6468/1: backtrace: fix calculation of thread stack base (Will Deacon: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=d33aadbf8e9ba0b844c2a4a03723969c913ab03a).
+
+07-24-2011:
+ARM: S5PV210: Fix sysdev related warning messages (gzub via Bonsai: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/6da2a347b74d8abf5e01b8fbfa8fd58ac00d132c).
+The new jhash implementation (Jozsef Kadlecsik: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=60d509c823cca21e77d537bd356785f7cfe8f0d1).
+ipv6: Prepare the tree for un-inlined jhash (Jozsef Kadlecsik: http://android.git.kernel.org/?p=kernel/linux-2.6.git;a=commit;h=82a39eb6b3829a02e235656feddb4542517fcabc).
+
+07-23-2011:
+ARM: only allow 26-bit user mode on CPUs that support it (Dima Zavin: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=049a7464f34e2d8c73646d2571f1935f19ac694c).
+USB: android gadget: mass storage: Fix format issue for Vista Host (Velempati Chiranjeevi: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=fd515513a38b53d2b961cbbc9c4fdaeedec74d44).
+USB: gadget: f_mass_storage: Defer handling interface changes until it is safe. (Mike Lockwood: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=0fc7f96b5be344f7a5499e29b30f245fb857f4a2).
+
+07-22-2011:
+USB: gadget: android: mass_storage: Use spin_lock_irqsave/spin_unlock_irqrestore (Arve Hjønnevåg: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=3274abc33ec2c170acd6fd2732c271ad9dd0b17f).
+
+07-21-2011:
+USB: gadget: f_mass_storage: Flush writes after every 4 MB. (Mike Lockwood: http://android.git.kernel.org/?p=kernel/common.git;a=commitdiff;h=5cf1b82507ed24e0ee9f4f2f3ce6dbcb82b86fa0).
+
+07-14-2011:
+Applied necessary defconfig changes for new keyboard patch.
+Applied new Column delay sysfs keyboard patch (mkasick: http://forum.xda-developers.com/showthread.php?t=975611).
+
+07-11-2011:
+Fixing a copy / paste fail.
+Forcibly setting safe booting frequencies.
+Added more credits to init_wrapper (as Ali G would say "Respect").
+Setting permissions for dbpart.sh (Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/31939b9bf5b04219f03edd37102513ef0fa4333f).
+Changes to init_wrapper related to bash as default shell.
+Added dual boot (boot from sdcard) support (Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/a5dfd9f369ae4f2c90c1e7fc7d8995f88f72bd01).
+
+07-10-2011:
+Some more debugging cleanup in smartass governor (GOV: tag).
+
+07-09-2011:
+Added Froyo RDNIS patch (mkasick via Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/eb71a0a3cd074d8dba0b401a293f5d5a275d27df).
+Enabled sched_autogroup in defconfig.
+Added sched_autogroup v4 patch (Mike Galbraith via Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/b57002b13e479984c667c673fc85be9aaeeadaad).
+Branched to 'feature-patches'.
+
+07-09-2011:
+Removed original 1.6GHz overclock comments (too messy).
+Cleaning up some comments of the original 1.6GHz overclock.
+Ensure FM is disabled for Voodoo sound in defconfig.
+Whitespace change to sync with supercurio.
+Correcting support for Voodoo sound in sound/soc/codecs/Makefile.
+Voodoo sound: driver v10 (supercurio: https://github.com/project-voodoo/linux_sph-d700/commit/544113453303e0acf1acecff7957bad6e486607b).
+Added update_modules.sh to scripts folder (copy modules to initramfs/lib/modules/).
+Added kmsg.sh to scripts folder (wifi adb /proc/kmsg logging).
+Branched to 'feature-misc'.
+Fixing up these voltages (was a major contributor to Sleep Of Death).
+Fixing some typos and doing some cleanup.
+Fixing some missing checks/code for overclocking via defconfig.
+Branched to 'feature-dvfs'.
+Fixing a bug in the s5pc11x_nearest_avail_index function.
+
+07-08-2011:
+Manual revert of a debug change in suspend.c.
+Reverting changes to earlysuspend and suspend (fixed DVFS lock).
+Reverting changes to conservative governor (commit ID: 1bb5e487).
+
+07-05-2011:
+Reverting changes to interactive governor (commit ID: 5b3153ab).
+Reverting changes to ondemand governor (commit ID's: bc8e028c, b153d55c).
+Manual removal of older changes to smartass governor (transition states, s5pc11x_nearest_freq, etc).
+Removed s5pc11x_nearest_freq function and added s5pc11x_nearest_avail_index function (global governor fix).
+
+06-30-2011:
+Additional debugging.
+
+06-28-2011:
+Lowering the fixed DVFS lock in earlysuspend and suspend to 600MHz.
+
+06-27-2011:
+More debugging fixes and clean up.
+Allow earlysuspend and suspend to set a fixed DVFS lock to 800MHz for the rest of the governors (not just conservative).
+Added an easy on / off switch related to previous load checking in smartass governor.
+Squashing a bug in smartass governor, we should always scale up if cpu load is above threshold, even if force_ramp_up isn't set.
+Added some debugging to s5pc11x_nearest_freq, changed some debugging in s5pc11x_target_frq.
+Changes to s5pc11x_nearest_freq function for better handling of freqs.
+Some aditions and cleanup for debugging DVFS (DFVS lock @ 800MHz during suspend, etc).
+Initial testing of s5pc11x_nearest_freq function in smartass governor.
+Applied changes for smartass governor to defconfig (matching default scaling rates, up min of 900MHz, and disable debugging).
+Changes to default scaling rates of smartass governor (matching Conservative and Ondemand's sample rate).
+
+06-24-2011:
+Added initial s5pc11x_nearest_freq function for testing.
+Fixing a debugging placement fail in smartass governor.
+Branched to 'feature-governors'.
+Changes to init_wrapper (more agressive su instalation).
+Branched to 'feature-initramfs'.
+
+06-23-2011:
+Major changes to cpu_thres_table.sh.
+Changes to "cpu_thres_table" sysfs entry, this can be handled via script.
+
+06-22-2011:
+Fixing a copy / paste fail.
+Fixing /sdcard mounts for DRockstar's Clockwork Mod 3.1.0.1 recovery.
+Added bash shell support in init_wrapper.
+Fixing some syntax in init_wrapper.
+Minor changes to init_wrapper.
+Added keytimer script and support (Drockstar via Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/880e45112493f3656bece0f417f1c9ec01392ffb).
+Added malware prevention patch (DroidDream) (Drockstar: https://github.com/DRockstar/Clean-Kernel-EC05/commit/19497f101712867cae24a1de6cd3f98fb88b81a4).
+Changes to init_wrapper (with proper tracking) (Drockstar: https://github.com/DRockstar/Clean-Kernel-EC05/commit/bea8fa7b503d16653fde98eb88b5a13f71d471bb#diff-8).
+Changes to init_wrapper (with proper tracking) (Tanimn: https://github.com/tanimn/Twilight_Zone_Kernel/commit/5fb5ab9ecc8e6806b91c568ae789cd08a90c8294#diff-7).
+Changes to init_wrapper in preparation of proper tracking.
+Added initial version of cpu_thres_table.sh.
+
+06-21-2011:
+Fixing a typo.
+Fixing fix_permissions' Sha-Bang for cm-recovery.
+
+06-20-2011:
+Added DRockstar's Clockwork Mod 3.1.0.1 recovery binary, added Superuser.apk, and other changes to initramfs.
+Cleaning up whitespace a bit.
+Added Clockwork Mod recovery images (purple by Drockstar: https://github.com/DRockstar/Clean-Kernel-EC05/commit/ac713f90ec2a2560bc7fb05225341a4e4772a199).
+Updating Clockwork Mod recovery binary to 3.1.0.1 (Drockstar: https://github.com/DRockstar/Clean-Kernel-EC05/commit/bdb3052cd9c439bd89ebc3d2aea8638e2b395ddd).
+Updating to Drockstar's Clockwork Mod 3.1.0.1. Using smaller recovery busybox 1.16.2 (DRockstar: https://github.com/DRockstar/Clean-Kernel-EC05/commit/ac713f90ec2a2560bc7fb05225341a4e4772a199).
+Added initial support for Clockwork Mod reboot recovery & ROM Manager support (DRockstar: https://github.com/DRockstar/Clean-Kernel-EC05/commit/ae07f3a6e1ad73fe44bf32b3b5b14ec212ed6394).
+
+06-19-2011:
+Changes to "cpu_thres_table" sysfs entry for safety and usability (min value of 20, max value of 95, corrected the error checking).
+Versioning related changes to branchHelper.sh and other files.
+Removed bash from update zip (should not be forced with kernel).
+Added audible notification to ncBuildHelper.sh (notify.wav).
+Changes to ncBuildHelper.sh (use nice to run make, always use defconfig, added total time).
+A bit of script cleanup related to wifiFlashHelper.sh.
+Added 82-nubernel_battery_mods script (init.d script to set some battery values).
+Added 81-rm_batterrystats script (init.d script to remove /data/system/batterystats.bin on boot).
+More changes to cpufreq_info script (added governor specific info).
+Enabled overclock in defconfig.
+Compilation of changes to CPU frequencies, voltages, sysfs under-volting, etc. (existz, raspdeep, Rodderik, gzub, RandyT, nemesis2all, and myself).
+
+06-15-2011:
+Fixing a possible out of bounds related to "active_states" (ssewk2x via nemesis2all: https://github.com/nemesis2all/OTB-Reloaded/commit/136dc15d6bd7ff162135aaf1494b049ddbe08988).
+
+06-14-2011:
+Fixing up transitions states in /arch/arm/mach-s5pv210/victory/cpu-freq.c.
+Enabling 1120MHz and 1200MHz states by default.
+Formatting changes for uniformity.
+New CPU frequencies and sysfs undervolting support (multiple via Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/f47551598e22409cf32f96bf1decf65b0e8d1ce9).
+
+06-13-2011:
+Branched to 'feature-clock_rates'.
+Added a bit more debugging to smartass governor.
+
+06-12-2011:
+Added extra debugging to smartass governor.
+Changed smartass governor config settings to work better with the new fixes.
+Squashing the up_min_freq bug in smartass governor.
+
+06-09-2011:
+Allowing smartass governor the ability scale more than a single step (limited to 2).
+Forcing smartass governor to use transition states when scaling.
+
+06-07-2011:
+More changes to /drivers/cpufreq/Kconfig for smartass governor.
+More changes to smartass governor.  Make debug more readable, and fix module info.
+Changes to defconfig for smartass governor Kconfig option.
+Added DEFAULT_DEBUG_MASK and Kconfig option for smartass governor.
+
+06-06-2011:
+Fixing up the debugging a bit in smartass governor.
+Added some error checking to interactive and smartass governors.
+Tweaked smartass governor config settings a bit.
+Adjusted defconfig for new smartass config settings.
+SPH-D700 specific changes to /drivers/cpufreq/Kconfig for smartass governor.
+Fixed sysfs interface and added Kconfig options in smartass governor (Ziggy471 via jdkoreclipse: https://github.com/jdkoreclipse/jdkernel/commit/29b220860a8dea5c9420f408e07d129b8ed2c553).
+
+06-05-2011:
+Changes to DEFAULT_AWAKE_MIN_FREQ in smartass governor.
+Selective changes to smartass governor (Bonsai: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/b29a06217375e137ae51762959385627ec95d0d9).
+Added "EXPORT_SYMBOL_GPL(nr_running);" to kernel/sched.c as required by smartass governor (Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/747b6ac123cb5b34a54952c9e5199c0dbfa6fcb7).
+Added (partial) fix for lock screen flickering when using smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/d8af4eefc8dcb15d490a53408f6a6de0759b419b).
+Selective changes to smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/6d62c169faa4d03205a4cc00767ec069473dfe82).
+
+06-04-2011:
+Major tweaking and bug squasing to the smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/beb6b4d71c7883800c3b5cc17631cd4ddb11ce66).
+Logic rewrite / cleanup of smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/d701a9ea0629a218ce8860d3f8481273680e68a8).
+Convert tabs to spaces in smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/9763a3b2014790f7e180f9b7a1b3dd751927f449).
+Add awake_min_freq to smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/d8ddd9d1e2254a0ec8c462e386f1d306b636c2c2).
+Add wakeup from sleep configurable parameter to smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/f7ef2f6aa83c6321100f21f6dfbd1a286161cee4).
+Changes to smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/eac5ee69928d03dc5c42ff6a46495de3c0895652).
+Added smartass governor (erasmux: https://github.com/erasmux/hero-2.6.29-flykernel/commit/41b7d84d73ae96e07f9e3be62eb09eef4b998ace).
+
+06-03-2011:
+Changes to Interactive governor so it respects the minimum scaling frequency.
+
+05-27-2011:
+Fix interactive governor potential division by zero (CyanogenMod: https://github.com/CyanogenMod/cm-kernel/commit/6d39b622ad9e9270c6ca9ab0dce00ce175ef9fab).
+Added interactive governor (Mike Chan via CyanogenMod: https://github.com/CyanogenMod/cm-kernel/commit/9e2bf2c7982cbd108461fdccb25d0ae19c46b3c9).
+Branched to 'feature-governors'.
+
+05-26-2011:
+Changes to cpufreq_info script.
+Reworked the fix a bit, I find this a bit more elegant.
+Changes to Ondemand governor so it respects the minimum scaling frequency.
+Branched to 'feature-ondemand_governor_fix'.
+
+05-25-2011:
+Addition of cpufreq_info script.
+Voodoo sound: driver v9 (supercurio: https://github.com/project-voodoo/linux_sph-d700/commit/dbd81fda1ff71e7557ea694425580074d587ebee).
+Quiet the "CONFIG_TINY_RCU not defined" warning.
+Changes to "s5pc11x_target_frq" so it respects the minimum scaling frequency.
+
+05-17-2011:
+Branched to 'feature-conservative_governor_fix'.
+
+05-15-2011:
+Stupid typo...
+
+05-14-2011:
+Added new bash binary.
+Changes to recovery install script for new bash.
+Changes to subash for new bash.
+Rename bash_profile in preparation for new custom built bash-4.1.11(2).
+Changes to bash_profile.
+
+05-11-2011:
+Added bash kit to install zip (bash as default shell, subash script for easy su access, profile installed onto /sdcard).
+
+05-10-2011:
+These are apparently not needed.
+Changes to scripts/wifiFlashHelper.sh (new phone gets a new IP from my router).
+
+05-09-2011:
+Corrected link to morfic's Samsung logo creation files.
+Fixed up the wifiFlashHelper.sh and kernelFlash scripts a bit.
+Fixing up the path change for wifiFlashHelper.
+Moved wifiFlashHelper.sh to scripts folder.
+Some fixes to branchHelper.sh.
+Branched to 'feature-scripting'.
+
+05-08-2011:
+Enabled batt_charge_mods in defconfig.
+Added battery charge control, battery charge rate, and battery fuel gauge sysfs entries.
+Added nubernel sysfs parent kset.
+Branched to 'feature-batt_charge_mods'.
+Modified BOOTCLASSPATH for CM/AOSP support (tanimn: https://github.com/tanimn/Twilight_Zone_Kernel/commit/92bb17a0265b8ee326888e4f3b247fe19b1f3b77).
+Branched to 'feature-initramfs'.
+
+05-07-2011:
+Changes to Kernel/.gitignore.
+Enabled Voodoo sound in defconfig.
+Voodoo sound: driver v8 (supercurio: https://github.com/project-voodoo/linux_sph-d700/commit/dc55b8d2b7619e68b772cd11f41a504738af292d).
+Voodoo sound: driver v7 (supercurio: https://github.com/project-voodoo/linux_sph-d700/commit/bc77527d38a53959a73e944d7946248462f9bf15).
+Voodoo sound: driver v6 (supercurio: https://github.com/project-voodoo/linux_sph-d700/commit/a7a5f908462c98a0cbebbe43780e7e4c98375e3b).
+Voodoo sound: driver v5 (supercurio: https://github.com/project-voodoo/linux_sph-d700/commit/6ef87ad029eb21f0cae62fa2ac6a4c51ab489b1b).
+Branched to 'feature-Voodoo_Sound'.
+
+05-07-2011:
+Added SECCOMP support (Nicolas Pitre: http://git390.marist.edu/cgi-bin/gitweb.cgi?p=linux-2.6.git;a=commit;h=70c70d97809c3cdb8ff04f38ee3718c5385a2a4d).
+Added "Tiny RCU", The Bloatwatch Edition (Paul E. McKenney: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=9b1d82fa1611706fa7ee1505f290160a18caf95d).
+Fix Thumb-2 kernel builds when UACCESS_WITH_MEMCPY is enabled (Catalin Marinas: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=e814d826dc1821dbce3aa1ddb7f2f739f420ffd8).
+Prevent multiple syscall restarts (Russell King: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=b2b163bb82b12bae2504a5b31399c37d099ad3cc).
+Fix really nasty sigreturn bug (Al Viro: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=653d48b22166db2d8b1515ebe6f9f0f7c95dfc86).
+Fix build error in arch/arm/kernel/process.c (Russell King: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=4260415f6a3b92c5c986398d96c314df37a4ccbf).
+Fix memory allocation size for max8998->rdev (Axel Lin: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=11fa0d1d20c7cc432c77369bc8bbfbc21030e457).
+Fix memory leak in cpufreq_add_dev (Xiaotian Feng: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=cad70a6ae5aaef4641a3efdfd536c30f13891afe).
+Prevent memory leak in cpufreq_stats on hotplug (Colin Cross: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=fa51e1a77ebb12ca61510370e78e679a314e3dda).
+Fix ASHMEM_SET_PROT_MASK (Arve Hjønnevåg: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=c98a285075f26e2b17a5baa2cb3eb6356a75597e).
+Applied lowmemorykiller patch: Don't wait more than one second for a process to die (Arve Hjønnevåg: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=d72d17229a7b9271560ea053b9e8e8f864658893).
+Applied patch series for Ext4 (tytso via Bonsai: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/e1e481169cc6dbdfa358914e8e473bdb2a088030).
+Applied lowmemorykiller patch: don't unregister notifier from atomic context (Rabin Vincent: http://android.git.kernel.org/?p=kernel/common.git;a=commit;h=5545554aac04918ece318270d63cbfcb015577a9).
+Fix compile error for idle timer (tanimn: https://github.com/tanimn/Twilight_Zone_Kernel/commit/b615fff7d3ff365e50481f3015900c2457301aa0).
+Added idle timer from 2.6.34 (nullghost via tanimn: https://github.com/tanimn/Twilight_Zone_Kernel/commit/ee501b7ceef1e4d85fe3dbefe466143200a7a2ca).
+
+05-06-2011:
+Loglevel set in defconfig for modular logging (gzub: https://github.com/gzub/EC05-Zub/commit/9411ec0ec97bbedeccaf1e86d365101f6c2c0fa1).
+Compile host OS tools with 03 (gzub: https://github.com/gzub/EC05-Zub/commit/2ffe0408f656f47fadab08c3d4d8c8bff3e45f0c).
+Optimized config flags (gzub: https://github.com/gzub/EC05-Zub/commit/68e3d8f7070a17d82db768170aef97d0dbfebd59).
+Applied keyboard delay sysfs patch (mkasick via Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/7f1de5d146bae58ee3a8d71765ed6495922a58c6).
+Set 4k read ahead in mtd_blkdevs.c (Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/98e056fb95419865a28138281b710c68989283e6).
+Changed swappiness from 60 to 10 (Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/ccc8837e761f8ee2774ac4a5a78eca9da08824f9).
+Commented out "BUG_ON(!gps_dev)" in mach-aries-gps.c (Dameon87 via nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/422fbcf9aaa86833cb0f34e8dc244769664a752d).
+Expose sysfs file for scaling_available_frequencies (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/5da806c6fafff535a31b6d4863ad1ecdf6a113d1).
+Change freq tables to help conform to standards (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/f4844be4c222be26dc0b49b308b09089dfe92cfe).
+Fix tv20 compile error (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/73113db76b1e85e8d1816097ff180737a3238df5).
+Branched to 'feature-misc_patches'.
+
+05-06-2011:
+Feature list for v0.0.0.
+Branched to 'release-v0.0.0'.
+
+05-06-2011:
+Changes to README.
+Use NOOP I/O scheduler by default.
+
+05-04-2011:
+Script cleanup (fixing automatic versioning).
+
+05-03-2011:
+Add helper script for kernel flashing.
+More script cleanup.
+Branched to 'feature-envSetup'.
+More recovery cleanup.
+Changes to .gitignore.
+Select changes to initramfs (Bonsai: https://github.com/Bonsai-Project/bonsai_android_initramfs/commit/5c2b71bc11358f01bda17deebaf883060030ed90).
+Branched to 'feature-recovery_cleanup'.
+
+05-02-2011:
+Attempting to fix getprop command for recovery.
+Fixing permissions on adbd.
+
+05-01-2011:
+File rename cleanup.
+Some file renaming.
+Added new boot logo (thanks anomaly: http://www.graphicanomaly.com/).
+Fixing up createBootLogo.sh (makelogo needs to be re-built when changing the boot_logo_gimp.h file).
+
+04-30-2011:
+More cleanup and changes to Samsung logo creation files.
+More initramfs changes.
+
+04-29-2011:
+Changes to createBootLogo.sh.
+Some additions to .gitignore.
+Cleanup and changes to Samsung logo creation files.
+Added morfic's Samsung logo creation files (morfic: https://github.com/morfic/Samsung-logo/commit/b85691856fc3ef368089e10bac33b72ef26d3ac0).
+Added custom boot logo.
+Enabled s3cfb_draw_logo function (Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/30ceb7263083ba83a7c6d6b61436a2b6fc46a236).
+Branched to 'feature-boot_logo'.
+Adding the toolchain to the repo.
+Added adbd that looks for sh in /sbin/sh (for real this time, thanks Randy @ Bonsai).
+Branched to 'feature-envSetup'.
+
+4-29-2011:
+Changes to branchHelper.sh.
+Some script fixups.
+Renamed branch4release.sh to branchHelper.sh.
+Changes to branch4release.sh.
+
+4-28-2011:
+Added branch4release helper script.
+Some script cleanup.
+Version re-branding.
+
+4-27-2011:
+Some changes to wifi_kernel_flasher.sh.
+Create bml devices so reboot recovery is fully operational (tanimn: https://github.com/tanimn/Twilight_Zone_Kernel/commit/aa05f120728fc15a35eaddb84a4a1249a238a952).
+Trying to get adb to work all the time (tanimn: https://github.com/tanimn/Twilight_Zone_Kernel/commit/3159f395065996b9bd4d420fd574aba7cd417470).
+More select changes to initramfs (Bonsai: https://github.com/Bonsai-Project/bonsai_android_initramfs/commit/572a40da29d01f10d4756493db2ebb1f86e7ccb7).
+
+4-26-2011:
+Restore redbend_ua to initramfs for the time being.
+Added verbose option to ncMultiBuild.sh.
+Add ncMultiBuild.sh (heavilly based off nullghost's modified build_kernel.sh: https://github.com/nullghost/phoenix-kernel-epic/commits/master?path[]=build_kernel.sh).
+More script cleanup.
+
+4-25-2011:
+Add bmlwrite in place of redbend_ua in initramfs.
+More script cleanup and changes.
+Added /update/zImage to .gitignore.
+Spoofing newest Nexus S release keys (from: http://new.glbenchmark.com/phonedetails.jsp?benchmark=glpro20&D=Google+Nexus+S&testgroup=system).
+Changed build script to auto detect number of cpu cores (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/f9e96145b4fe56bbc7d61552ea9a123fccd4e4f7).
+Switch to bmlwrite in the update.zip (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/9aea535827d71a0ec7f2c3da04f83e42d6a9394f).
+Update.zip related changes.
+Change cross_compile and add ability to generate update.zip (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/2ba3958f27faa3920b0b8c68f85ea2f179169a45).
+
+4-24-2011:
+Some changes to nullghost's build script.
+Added nullghost's build_kernel.sh (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/9739fd6e3e40b18beeb79a64a6cbcb0191ec922a).
+Fixing up README.
+A bit more file cleanup (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/4145246ce46ab57b4d2c1952cdb0341d26233f03).
+Select changes to initramfs (Bonsai: https://github.com/Bonsai-Project/bonsai_android_initramfs/commit/572a40da29d01f10d4756493db2ebb1f86e7ccb7).
+Minor changes to default.prop.
+Add adbd that looks for sh in /sbin/sh (koush: https://github.com/koush/Twilight_Zone_Kernel/commit/fcfa3efc40834ec36c225ead89fd6a5273a9eefd).
+More changes to initramfs for recovery (koush: https://github.com/koush/Twilight_Zone_Kernel/commit/f057d85ec8d79fe2385f9cf124e4d12802c53ed9).
+Changes to initramfs for recovery (koush: https://github.com/koush/Twilight_Zone_Kernel/commit/3739b0c1588687a05af186dc57075738e76f45e5).
+A bit of initramfs script clean up.
+
+4-23-2011:
+Changes to initramfs for recovery (koush: https://github.com/koush/Twilight_Zone_Kernel/commit/3739b0c1588687a05af186dc57075738e76f45e5).
+More clean up and modifications to build_kernel.sh.
+Exclude .git and .svn from gen_initramfs_list.sh (Bonsai: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/090c19f74706fb578dc2c479e5c6fe451393afa2).
+Added wifi_kernel_flasher.sh.
+Add toolchains folder to .gitignore.
+Disabled iqmsd service in initramfs.
+Added boot animation support to initramfs.
+Added init.d support to initramfs.
+Added ext4 support to initramfs.
+Added nubernel_kernel_defconfig.
+Some modifications to build_kernel.sh.
+Clean up build_kernel.sh.
+Added *.out to Kernel/.gitignore.
+Added Kernel/.gitignore file (gzub: https://github.com/gzub/EC05-Zub/commit/db2c694c57f4954df5b1345308f247ea1608d385).
+Add toolchains folder to .gitignore.
+Added .gitignore file (gzub: https://github.com/gzub/EC05-Zub/commit/ac3e7e09558cb71c15818f451f75101b0ff4c377).
+Configured toolchain in build_kernel.sh.
+Some file clean up (make distclean).
+
+4-22-2011:
+Added stock EC05 initramfs files.
+Added stock EC05 kernel source files.
+Added this README.
+Configured git line endings (http://help.github.com/dealing-with-lineendings/).
+
+=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]
+
