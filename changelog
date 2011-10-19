@@ -9,6 +9,7 @@ Changelog:
 =]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]
 
 10-18-2011:
+Specifing busybox when remounting in some scripts.
 Moved custom scripts into /vendor/bin/.
 Changes to README (split featurelist and changelog from README).
 Changes to branchHelper.sh (don't commit when creating a feature branch).
