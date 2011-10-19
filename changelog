@@ -9,6 +9,7 @@ Changelog:
 =]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]
 
 10-19-2011:
+Fixing up branchHelper.sh (update folder is no longer in Kernel/).
 Added bb_install and bb_remove to /vendor/bin/.
 
 10-18-2011:
