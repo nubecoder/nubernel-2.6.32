@@ -11,9 +11,17 @@
 
 //extern void s5pc110_lock_power_domain(unsigned int nToken);
 
+//#define CONFIG_NC_DEBUG
+
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+#define MAXIMUM_FREQ 1400000
+#define NUM_FREQ 11
+#else // no OC
 #define MAXIMUM_FREQ 1000000
+#define NUM_FREQ 7
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
+
 #define USE_FREQ_TABLE
-//#undef USE_DVS
 #define USE_DVS
 #define VERY_HI_RATE  800*1000*1000
 #define APLL_GEN_CLK  800*1000
@@ -31,13 +39,25 @@ enum perf_level {
 	L4,
 	L5,
 	L6,
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
 	L7,
+	L8,
+	L9,
+	L10,
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
 };
 
 enum freq_level_states {
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+	LEV_1400MHZ,
+	LEV_1300MHZ,
 	LEV_1200MHZ,
+	LEV_1120MHZ,
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
 	LEV_1000MHZ,
+	LEV_900MHZ,
 	LEV_800MHZ,
+	LEV_600MHZ,
 	LEV_400MHZ,
 	LEV_200MHZ,
 	LEV_100MHZ,
@@ -49,8 +69,15 @@ extern unsigned int S5PC11X_MAXFREQLEVEL;
 
 extern unsigned int s5pc11x_target_frq(unsigned int pred_freq, int flag);
 extern int s5pc110_pm_target(unsigned int target_freq);
-extern int is_conservative_gov(void);
+extern int is_performance_gov(void);
+extern int is_powersave_gov(void);
 extern int is_userspace_gov(void);
+extern int is_ondemand_gov(void);
+extern int is_conservative_gov(void);
+extern int is_transitional_gov(void);
+extern int is_interactive_gov(void);
+extern int is_interactivex_gov(void);
+extern int is_smartass_gov(void);
 extern void set_dvfs_target_level(enum freq_level_states freq_level);
 extern int set_voltage(enum perf_level p_lv);
 extern int set_voltage_dvs(enum perf_level p_lv);
@@ -58,7 +85,7 @@ extern int set_voltage_dvs(enum perf_level p_lv);
 extern int s5pc110_dvfs_lock_high_hclk(unsigned int dToken);
 extern int s5pc110_dvfs_unlock_high_hclk(unsigned int dToken);
 
-#define NUMBER_OF_LOCKTOKEN 9
+#define NUMBER_OF_LOCKTOKEN 7
 
 #define DVFS_LOCK_TOKEN_1	 0
 #define DVFS_LOCK_TOKEN_2	 1
@@ -67,8 +94,6 @@ extern int s5pc110_dvfs_unlock_high_hclk(unsigned int dToken);
 #define DVFS_LOCK_TOKEN_5	 4
 #define DVFS_LOCK_TOKEN_6	 5
 #define DVFS_LOCK_TOKEN_7	 6
-#define DVFS_LOCK_TOKEN_8	 7
-#define DVFS_LOCK_TOKEN_9	 8
 
 void s5pc110_lock_dvfs_high_level(unsigned int nToken, enum freq_level_states freq_level);
 void s5pc110_unlock_dvfs_high_level(unsigned int nToken);

@@ -63,7 +63,7 @@ static int bluetooth_set_power(void *data, enum rfkill_user_states state)
 		case RFKILL_USER_STATE_UNBLOCKED:
 			printk(KERN_DEBUG "[BT] Device Powering ON \n");
 			s3c_setup_uart_cfg_gpio(0);
-			if(on_off) return; //shiks_DF03 temp for AP sleep issue //just 1 time //FROYO MERGE
+			if(on_off) return ret; //shiks_DF03 temp for AP sleep issue //just 1 time //FROYO MERGE
 
 			if (gpio_is_valid(GPIO_WLAN_BT_EN))
 			{
@@ -99,7 +99,7 @@ static int bluetooth_set_power(void *data, enum rfkill_user_states state)
 			printk( "[BT] GPIO_WLAN_BT_EN = %d\n", gpio_get_value(GPIO_WLAN_BT_EN));
 			/*FIXME sleep should be enabled disabled since the device is not booting
 			 * 			if its enabled*/
-			msleep(150);  // 100msec, delay  between reg_on & rst. (bcm4329 powerup sequence)
+			msleep(200);  // 100msec, delay  between reg_on & rst. (bcm4329 powerup sequence)
 
 			/* Set GPIO_BT_nRST high */
 			s3c_gpio_setpull(GPIO_BT_nRST, S3C_GPIO_PULL_NONE);

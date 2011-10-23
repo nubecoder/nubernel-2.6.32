@@ -1,0 +1,212 @@
+#!/system/bin/sh
+#
+# cpufreq_info
+#
+#
+# 2011 nubecoder
+# http://www.nubecoder.com/
+#
+
+#defind variables
+MIN_FREQ=""
+MAX_FREQ=""
+CUR_FREQ=""
+
+#define paths
+CPUFREQ_BASE_PATH="/sys/devices/system/cpu/cpu0/cpufreq"
+
+# general info
+
+#UV_mV_table="$CPUFREQ_BASE_PATH/UV_mV_table"
+#frequency_voltage_table="$CPUFREQ_BASE_PATH/frequency_voltage_table"
+
+cpu_thres_table="$CPUFREQ_BASE_PATH/cpu_thres_table"
+cpu_transition_states_table="$CPUFREQ_BASE_PATH/cpu_transition_states_table"
+cpuinfo_cur_freq="$CPUFREQ_BASE_PATH/cpuinfo_cur_freq"
+cpuinfo_max_freq="$CPUFREQ_BASE_PATH/cpuinfo_max_freq"
+cpuinfo_min_freq="$CPUFREQ_BASE_PATH/cpuinfo_min_freq"
+cpuinfo_transition_latency="$CPUFREQ_BASE_PATH/cpuinfo_transition_latency"
+scaling_available_frequencies="$CPUFREQ_BASE_PATH/scaling_available_frequencies"
+scaling_available_governors="$CPUFREQ_BASE_PATH/scaling_available_governors"
+scaling_cur_freq="$CPUFREQ_BASE_PATH/scaling_cur_freq"
+scaling_governor="$CPUFREQ_BASE_PATH/scaling_governor"
+scaling_max_freq="$CPUFREQ_BASE_PATH/scaling_max_freq"
+scaling_min_freq="$CPUFREQ_BASE_PATH/scaling_min_freq"
+scaling_setlog="$CPUFREQ_BASE_PATH/scaling_setlog"
+scaling_setspeed="$CPUFREQ_BASE_PATH/scaling_setspeed"
+states_enabled_table="$CPUFREQ_BASE_PATH/states_enabled_table"
+time_in_state="$CPUFREQ_BASE_PATH/stats/time_in_state"
+total_trans="$CPUFREQ_BASE_PATH/stats/total_trans"
+
+# transitional info
+transitional_up_threshold="$CPUFREQ_BASE_PATH/transitional/up_threshold"
+transitional_down_threshold="$CPUFREQ_BASE_PATH/transitional/down_threshold"
+transitional_freq_step="$CPUFREQ_BASE_PATH/transitional/freq_step"
+transitional_ignore_nice_load="$CPUFREQ_BASE_PATH/transitional/ignore_nice_load"
+transitional_sampling_down_factor="$CPUFREQ_BASE_PATH/transitional/sampling_down_factor"
+transitional_sampling_rate="$CPUFREQ_BASE_PATH/transitional/sampling_rate"
+transitional_sampling_rate_max="$CPUFREQ_BASE_PATH/transitional/sampling_rate_max"
+transitional_sampling_rate_min="$CPUFREQ_BASE_PATH/transitional/sampling_rate_min"
+
+# conservative info
+conservative_up_threshold="$CPUFREQ_BASE_PATH/conservative/up_threshold"
+conservative_down_threshold="$CPUFREQ_BASE_PATH/conservative/down_threshold"
+conservative_freq_step="$CPUFREQ_BASE_PATH/conservative/freq_step"
+conservative_ignore_nice_load="$CPUFREQ_BASE_PATH/conservative/ignore_nice_load"
+conservative_sampling_down_factor="$CPUFREQ_BASE_PATH/conservative/sampling_down_factor"
+conservative_sampling_rate="$CPUFREQ_BASE_PATH/conservative/sampling_rate"
+conservative_sampling_rate_max="$CPUFREQ_BASE_PATH/conservative/sampling_rate_max"
+conservative_sampling_rate_min="$CPUFREQ_BASE_PATH/conservative/sampling_rate_min"
+
+# interactive info
+interactive_min_sample_time="/sys/devices/system/cpu/cpufreq/interactive/min_sample_time"
+
+# interactiveX info
+interactiveX_min_sample_time="/sys/devices/system/cpu/cpufreq/interactiveX/min_sample_time"
+
+# ondemand info
+ondemand_ignore_nice_load="$CPUFREQ_BASE_PATH/ondemand/ignore_nice_load"
+ondemand_powersave_bias="$CPUFREQ_BASE_PATH/ondemand/powersave_bias"
+ondemand_sampling_rate="$CPUFREQ_BASE_PATH/ondemand/sampling_rate"
+ondemand_sampling_rate_max="$CPUFREQ_BASE_PATH/ondemand/sampling_rate_max"
+ondemand_sampling_rate_min="$CPUFREQ_BASE_PATH/ondemand/sampling_rate_min"
+ondemand_up_threshold="$CPUFREQ_BASE_PATH/ondemand/up_threshold"
+
+# smartass info
+smartass_awake_min_freq="$CPUFREQ_BASE_PATH/smartass/awake_min_freq"
+smartass_debug_mask="$CPUFREQ_BASE_PATH/smartass/debug_mask"
+smartass_down_rate_us="$CPUFREQ_BASE_PATH/smartass/down_rate_us"
+smartass_max_cpu_load="$CPUFREQ_BASE_PATH/smartass/max_cpu_load"
+smartass_min_cpu_load="$CPUFREQ_BASE_PATH/smartass/min_cpu_load"
+smartass_ramp_down_step="$CPUFREQ_BASE_PATH/smartass/ramp_down_step"
+smartass_ramp_up_step="$CPUFREQ_BASE_PATH/smartass/ramp_up_step"
+smartass_sample_rate_jiffies="$CPUFREQ_BASE_PATH/smartass/sample_rate_jiffies"
+smartass_sleep_max_freq="$CPUFREQ_BASE_PATH/smartass/sleep_max_freq"
+smartass_sleep_wakeup_freq="$CPUFREQ_BASE_PATH/smartass/sleep_wakeup_freq"
+smartass_up_min_freq="$CPUFREQ_BASE_PATH/smartass/up_min_freq"
+smartass_up_rate_us="$CPUFREQ_BASE_PATH/smartass/up_rate_us"
+
+# functions
+SHOW_INFO()
+{
+	SCALING_MAX_FREQ=$(cat $scaling_max_freq)
+	SCALING_MIN_FREQ=$(cat $scaling_min_freq)
+	CPU_CUR_FREQ=$(cat $cpuinfo_cur_freq)
+	CPU_MAX_FREQ=$(cat $cpuinfo_max_freq)
+	CPU_MIN_FREQ=$(cat $cpuinfo_min_freq)
+	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+#	echo "cpuinfo_cur_freq: $(($CPU_MAX_FREQ / 1000)) MHz"
+	echo "cpuinfo_max_freq: $(($CPU_MAX_FREQ / 1000)) MHz"
+#	echo "cpuinfo_min_freq: $(($CPU_MAX_FREQ / 1000)) MHz"
+	echo "scaling_max_freq: $(($SCALING_MAX_FREQ / 1000)) MHz"
+	echo "scaling_min_freq: $(($SCALING_MIN_FREQ / 1000)) MHz"
+	SHOW_GOVERNOR_INFO
+	echo "cpuinfo_transition_latency: $(cat $cpuinfo_transition_latency)"
+	echo "scaling_setlog: $(cat $scaling_setlog)"
+	echo "scaling_available_governors:"
+	echo "  $(cat $scaling_available_governors)"
+	echo "scaling_available_frequencies:"
+	echo "  $(cat $scaling_available_frequencies)"
+	echo "states_enabled_table:"
+	echo "  $(cat $states_enabled_table)"
+	echo "time_in_state:"
+	echo "$(cat $time_in_state)"
+	echo "total_trans: $(cat $total_trans)"
+	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
+	exit 1
+}
+SHOW_GOVERNOR_INFO()
+{
+	CUR_FREQ=$(cat $scaling_cur_freq)
+	case "$(cat $scaling_governor)" in
+		transitional)
+			echo "transitional:"
+			echo "  scaling_cur_freq: $(($CUR_FREQ / 1000)) MHz"
+			echo "  up_threshold: $(cat $transitional_up_threshold)"
+			echo "  down_threshold: $(cat $transitional_down_threshold)"
+			echo "  cpu_thres_table:"
+			echo "  $(cat $cpu_thres_table)"
+			echo "  freq_step: $(cat $transitional_freq_step)"
+			echo "  ignore_nice_load: $(cat $transitional_ignore_nice_load)"
+			echo "  sampling_down_factor: $(cat $transitional_sampling_down_factor)"
+			echo "  sampling_rate: $(cat $transitional_sampling_rate)"
+			echo "  sampling_rate_min: $(cat $transitional_sampling_rate_min)"
+			echo "  sampling_rate_max: $(cat $transitional_sampling_rate_max)"
+			echo "  cpu_transition_states_table:"
+			echo "  $(cat $cpu_transition_states_table)"
+		;;
+		conservative)
+			echo "conservative:"
+			echo "  scaling_cur_freq: $(($CUR_FREQ / 1000)) MHz"
+			echo "  up_threshold: $(cat $conservative_up_threshold)"
+			echo "  down_threshold: $(cat $conservative_down_threshold)"
+			echo "  cpu_thres_table:"
+			echo "  $(cat $cpu_thres_table)"
+			echo "  freq_step: $(cat $conservative_freq_step)"
+			echo "  ignore_nice_load: $(cat $conservative_ignore_nice_load)"
+			echo "  sampling_down_factor: $(cat $conservative_sampling_down_factor)"
+			echo "  sampling_rate: $(cat $conservative_sampling_rate)"
+			echo "  sampling_rate_min: $(cat $conservative_sampling_rate_min)"
+			echo "  sampling_rate_max: $(cat $conservative_sampling_rate_max)"
+		;;
+		interactive)
+			echo "interactive:"
+			echo "  scaling_cur_freq: $(($CUR_FREQ / 1000)) MHz"
+			echo "  min_sample_time: $(cat $interactive_min_sample_time)"
+		;;
+		interactiveX)
+			echo "interactiveX:"
+			echo "  scaling_cur_freq: $(($CUR_FREQ / 1000)) MHz"
+			echo "  min_sample_time: $(cat $interactiveX_min_sample_time)"
+		;;
+		ondemand)
+			echo "ondemand:"
+			echo "  scaling_cur_freq: $(($CUR_FREQ / 1000)) MHz"
+			echo "  ignore_nice_load: $(cat $ondemand_ignore_nice_load)"
+			echo "  powersave_bias: $(cat $ondemand_powersave_bias)"
+			echo "  sampling_rate: $(cat $ondemand_sampling_rate)"
+			echo "  sampling_rate_min: $(cat $ondemand_sampling_rate_min)"
+			echo "  sampling_rate_max: $(cat $ondemand_sampling_rate_max)"
+			echo "  up_threshold: $(cat $ondemand_up_threshold)"
+# Need to check the source to see if these are used...
+#			echo "  cpu_thres_table:"
+#			echo "  $(cat $cpu_thres_table)"
+		;;
+		performance)
+			echo "performance:"
+			echo "  scaling_cur_freq: $(($CUR_FREQ / 1000)) MHz"
+			echo "  scaling_max_freq: $(($SCALING_MAX_FREQ / 1000)) MHz"
+		;;
+		powersave)
+			echo "powersave:"
+			echo "  scaling_cur_freq: $(($CUR_FREQ / 1000)) MHz"
+			echo "  scaling_min_freq: $(($SCALING_MIN_FREQ / 1000)) MHz"
+		;;
+		smartass)
+			echo "smartass:"
+			echo "  scaling_cur_freq: $(($CUR_FREQ / 1000)) MHz"
+			echo "  awake_min_freq: $(cat $smartass_awake_min_freq)"
+			echo "  debug_mask: $(cat $smartass_debug_mask)"
+			echo "  down_rate_us: $(cat $smartass_down_rate_us)"
+			echo "  max_cpu_load: $(cat $smartass_max_cpu_load)"
+			echo "  min_cpu_load: $(cat $smartass_min_cpu_load)"
+			echo "  ramp_down_step: $(cat $smartass_ramp_down_step)"
+			echo "  ramp_up_step: $(cat $smartass_ramp_up_step)"
+			echo "  sample_rate_jiffies: $(cat $smartass_sample_rate_jiffies)"
+			echo "  sleep_max_freq: $(cat $smartass_sleep_max_freq)"
+			echo "  sleep_wakeup_freq: $(cat $smartass_sleep_wakeup_freq)"
+			echo "  up_min_freq: $(cat $smartass_up_min_freq)"
+			echo "  up_rate_us: $(cat $smartass_up_rate_us)"
+		;;
+		userspace)
+			USER_FREQ=$(cat $scaling_setspeed)
+			echo "userspace:"
+			echo "  scaling_cur_freq: $(($CUR_FREQ / 1000)) MHz"
+			echo "  scaling_setspeed: $(($USER_FREQ / 1000)) MHz"
+		;;
+	esac
+}
+
+# main
+SHOW_INFO
+

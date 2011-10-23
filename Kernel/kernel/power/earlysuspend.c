@@ -138,7 +138,18 @@ static void early_suspend(struct work_struct *work)
 	if (has_audio_wake_lock()) {
 		printk("******************* Enter LP-Audio mode\n");
 #ifdef CONFIG_CPU_FREQ
-	if(is_conservative_gov()) {
+	if(is_conservative_gov() || is_transitional_gov()) {
+		/*Fix the upper transition scaling*/
+		g_dvfs_fix_lock_limit = true;
+		s5pc110_lock_dvfs_high_level(DVFS_LOCK_TOKEN_5, LEV_600MHZ);
+		gbGovernorTransition = true;
+
+		error = cpufreq_get_policy(&policy, 0);
+		if (error)
+			printk("Failed to get policy\n");
+
+		cpufreq_driver_target(&policy, 600000, CPUFREQ_RELATION_L);
+	} else if (is_interactivex_gov()) {
 		/*Fix the upper transition scaling*/
 		g_dvfs_fix_lock_limit = true;
 		s5pc110_lock_dvfs_high_level(DVFS_LOCK_TOKEN_5, LEV_800MHZ);

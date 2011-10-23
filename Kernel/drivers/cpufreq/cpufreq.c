@@ -28,9 +28,58 @@
 #include <linux/cpu.h>
 #include <linux/completion.h>
 #include <linux/mutex.h>
+#include <mach/cpu-freq-v210.h>
 
 #define dprintk(msg...) cpufreq_debug_printk(CPUFREQ_DEBUG_CORE, \
 						"cpufreq-core", msg)
+
+// default undervolts
+unsigned int exp_UV_mV[NUM_FREQ] = {
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+	0,0,0,0,	// 1400,1300,1200,1120,
+	0,0,0,0,	// 1000,900,800,600,
+	0,0,0			// 400,200,100
+#else // no OC
+	0,0,0,0,	// 1000,900,800,600,
+	0,0,0			// 400,200,100
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
+};
+// default enabled states
+int active_states[NUM_FREQ] = {
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+	0,0,0,1,	// 1400,1300,1200,1120,
+	1,1,1,1,	// 1000,900,800,600,
+	1,1,0			// 400,200,100
+#else // no OC
+	1,1,1,1,	// 1000,900,800,600,
+	1,1,1			// 400,200,100
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
+};
+
+extern unsigned char transition_state_1GHZ[NUM_FREQ][2];
+extern unsigned int s5pc110_thres_table_1GHZ[NUM_FREQ][2];
+extern unsigned int frequency_voltage_tab[NUM_FREQ][3];
+
+int exp_update_states = 1;
+
+u32 ControllerControlRegister0 = 0;
+u32 ControllerControlRegister1 = 0;
+
+u32 MemoryControlRegister0 = 0;
+u32 MemoryControlRegister1 = 0;
+u32 TimingRegister0 = 0;
+u32 TimingRegister1 = 0;
+u32 ACTimingRegisterRow0 = 0;
+u32 ACTimingRegisterRow1 = 0;
+u32 ACTimingRegisterData0 = 0;
+u32 ACTimingRegisterData1 = 0;
+
+u32 modTimingRegister0 = 0;
+u32 modTimingRegister1 = 0;
+u32 modACTimingRegisterRow0 = 0;
+u32 modACTimingRegisterRow1 = 0;
+u32 modACTimingRegisterData0 = 0;
+u32 modACTimingRegisterData1 = 0;
 
 /**
  * The "cpufreq driver" - the arch- or hardware-dependent low
@@ -558,6 +607,23 @@ static ssize_t store_set_audio_log(struct cpufreq_policy *policy,
 }
 #endif
 
+static ssize_t show_update_states(struct cpufreq_policy *policy, char *buf)
+{
+	return sprintf(buf, "%d\n", exp_update_states);
+}
+
+static ssize_t store_update_states(struct cpufreq_policy *policy,
+					const char *buf, size_t count)
+{
+	unsigned int ret = -EINVAL;
+
+	ret = sscanf(buf, "%d", &exp_update_states);
+	if (ret != 1)
+		return -EINVAL;
+	else
+		return count;
+}
+
 /**
  * show_scaling_governor - show the current policy for the specified CPU
  */
@@ -572,7 +638,6 @@ static ssize_t show_scaling_governor(struct cpufreq_policy *policy, char *buf)
 				policy->governor->name);
 	return -EINVAL;
 }
-
 
 /**
  * store_scaling_governor - store policy for the specified CPU
@@ -722,6 +787,306 @@ static ssize_t show_scaling_setspeed(struct cpufreq_policy *policy, char *buf)
 	return policy->governor->show_setspeed(policy, buf);
 }
 
+static ssize_t show_cpu_transition_states_table(struct cpufreq_policy *policy, char *buf)
+{
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+	return sprintf(buf, "%d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d\n",
+		transition_state_1GHZ[0][0], transition_state_1GHZ[0][1],
+		transition_state_1GHZ[1][0], transition_state_1GHZ[1][1],
+		transition_state_1GHZ[2][0], transition_state_1GHZ[2][1],
+		transition_state_1GHZ[3][0], transition_state_1GHZ[3][1],
+		transition_state_1GHZ[4][0], transition_state_1GHZ[4][1],
+		transition_state_1GHZ[5][0], transition_state_1GHZ[5][1],
+		transition_state_1GHZ[6][0], transition_state_1GHZ[6][1],
+		transition_state_1GHZ[7][0], transition_state_1GHZ[7][1],
+		transition_state_1GHZ[8][0], transition_state_1GHZ[8][1],
+		transition_state_1GHZ[9][0], transition_state_1GHZ[9][1],
+		transition_state_1GHZ[10][0], transition_state_1GHZ[10][1]);
+#else // no OC
+	return sprintf(buf, "%d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d\n",
+		transition_state_1GHZ[0][0], transition_state_1GHZ[0][1],
+		transition_state_1GHZ[1][0], transition_state_1GHZ[1][1],
+		transition_state_1GHZ[2][0], transition_state_1GHZ[2][1],
+		transition_state_1GHZ[3][0], transition_state_1GHZ[3][1],
+		transition_state_1GHZ[4][0], transition_state_1GHZ[4][1],
+		transition_state_1GHZ[5][0], transition_state_1GHZ[5][1],
+		transition_state_1GHZ[6][0], transition_state_1GHZ[6][1]);
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
+}
+
+
+static ssize_t show_cpu_thres_table(struct cpufreq_policy *policy, char *buf)
+{
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+	return sprintf(buf, "%d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d\n",
+		s5pc110_thres_table_1GHZ[0][0], s5pc110_thres_table_1GHZ[0][1],
+		s5pc110_thres_table_1GHZ[1][0], s5pc110_thres_table_1GHZ[1][1],
+		s5pc110_thres_table_1GHZ[2][0], s5pc110_thres_table_1GHZ[2][1],
+		s5pc110_thres_table_1GHZ[3][0], s5pc110_thres_table_1GHZ[3][1],
+		s5pc110_thres_table_1GHZ[4][0], s5pc110_thres_table_1GHZ[4][1],
+		s5pc110_thres_table_1GHZ[5][0], s5pc110_thres_table_1GHZ[5][1],
+		s5pc110_thres_table_1GHZ[6][0], s5pc110_thres_table_1GHZ[6][1],
+		s5pc110_thres_table_1GHZ[7][0], s5pc110_thres_table_1GHZ[7][1],
+		s5pc110_thres_table_1GHZ[8][0], s5pc110_thres_table_1GHZ[8][1],
+		s5pc110_thres_table_1GHZ[9][0], s5pc110_thres_table_1GHZ[9][1],
+		s5pc110_thres_table_1GHZ[10][0], s5pc110_thres_table_1GHZ[10][1]);
+#else // no OC
+	return sprintf(buf, "%d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d\n",
+		s5pc110_thres_table_1GHZ[0][0], s5pc110_thres_table_1GHZ[0][1],
+		s5pc110_thres_table_1GHZ[1][0], s5pc110_thres_table_1GHZ[1][1],
+		s5pc110_thres_table_1GHZ[2][0], s5pc110_thres_table_1GHZ[2][1],
+		s5pc110_thres_table_1GHZ[3][0], s5pc110_thres_table_1GHZ[3][1],
+		s5pc110_thres_table_1GHZ[4][0], s5pc110_thres_table_1GHZ[4][1],
+		s5pc110_thres_table_1GHZ[5][0], s5pc110_thres_table_1GHZ[5][1],
+		s5pc110_thres_table_1GHZ[6][0], s5pc110_thres_table_1GHZ[6][1]);
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
+}
+
+static ssize_t store_cpu_thres_table(struct cpufreq_policy *policy,
+					const char *buf, size_t count)
+{
+	unsigned int ret = -EINVAL;
+	unsigned int cpu_thres_min = 20;
+	unsigned int cpu_thres_max = 95;
+	unsigned int i = 0;
+	unsigned int temp_storage_table[NUM_FREQ][2];
+
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+	ret = sscanf(buf, "%d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d\n",
+		&temp_storage_table[0][0], &temp_storage_table[0][1],
+		&temp_storage_table[1][0], &temp_storage_table[1][1],
+		&temp_storage_table[2][0], &temp_storage_table[2][1],
+		&temp_storage_table[3][0], &temp_storage_table[3][1],
+		&temp_storage_table[4][0], &temp_storage_table[4][1],
+		&temp_storage_table[5][0], &temp_storage_table[5][1],
+		&temp_storage_table[6][0], &temp_storage_table[6][1],
+		&temp_storage_table[7][0], &temp_storage_table[7][1],
+		&temp_storage_table[8][0], &temp_storage_table[8][1],
+		&temp_storage_table[9][0], &temp_storage_table[9][1],
+		&temp_storage_table[10][0], &temp_storage_table[10][1]);
+#else // no OC
+	ret = sscanf(buf, "%d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d\n",
+		&temp_storage_table[0][0], &temp_storage_table[0][1],
+		&temp_storage_table[1][0], &temp_storage_table[1][1],
+		&temp_storage_table[2][0], &temp_storage_table[2][1],
+		&temp_storage_table[3][0], &temp_storage_table[3][1],
+		&temp_storage_table[4][0], &temp_storage_table[4][1],
+		&temp_storage_table[5][0], &temp_storage_table[5][1],
+		&temp_storage_table[6][0], &temp_storage_table[6][1]);
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
+	if (ret != (NUM_FREQ * 2)) {
+		return -EINVAL;
+	}
+	else {
+		for (i = 0; i < NUM_FREQ; i++) {
+			if ((temp_storage_table[i][0] > cpu_thres_max) || (temp_storage_table[i][0] < cpu_thres_min)) {
+				return -EINVAL;
+			} else if ((temp_storage_table[i][1] > cpu_thres_max) || (temp_storage_table[i][1] < cpu_thres_min)) {
+				return -EINVAL;
+			}
+		}
+		for (i = 0; i < NUM_FREQ; i++) {
+			s5pc110_thres_table_1GHZ[i][0] = temp_storage_table[i][0];
+			s5pc110_thres_table_1GHZ[i][1] = temp_storage_table[i][1];
+		}
+		return count;
+	}
+}
+
+static ssize_t show_UV_mV_table(struct cpufreq_policy *policy, char *buf)
+{
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+	return sprintf(buf, "%d %d %d %d %d %d %d %d %d %d %d\n",
+		exp_UV_mV[0], exp_UV_mV[1], exp_UV_mV[2], exp_UV_mV[3],
+		exp_UV_mV[4], exp_UV_mV[5], exp_UV_mV[6], exp_UV_mV[7],
+		exp_UV_mV[8], exp_UV_mV[9], exp_UV_mV[10]);
+#else // no OC
+	return sprintf(buf, "%d %d %d %d %d %d %d\n",
+		exp_UV_mV[0], exp_UV_mV[1], exp_UV_mV[2], exp_UV_mV[3],
+		exp_UV_mV[4], exp_UV_mV[5], exp_UV_mV[6]);
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
+	// return -EINVAL;
+}
+
+static ssize_t store_UV_mV_table(struct cpufreq_policy *policy,
+					const char *buf, size_t count)
+{
+	unsigned int ret = -EINVAL;
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+	ret = sscanf(buf, "%u %u %u %u %u %u %u %u %u %u %u",
+		&exp_UV_mV[0], &exp_UV_mV[1], &exp_UV_mV[2], &exp_UV_mV[3],
+		&exp_UV_mV[4], &exp_UV_mV[5], &exp_UV_mV[6], &exp_UV_mV[7],
+		&exp_UV_mV[8], &exp_UV_mV[9], &exp_UV_mV[10]);
+#else // no OC
+	ret = sscanf(buf, "%u %u %u %u %u %u %u",
+		&exp_UV_mV[0], &exp_UV_mV[1], &exp_UV_mV[2], &exp_UV_mV[3],
+		&exp_UV_mV[4], &exp_UV_mV[5], &exp_UV_mV[6]);
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
+	if (ret != NUM_FREQ)
+		return -EINVAL;
+	else
+		return count;
+}
+
+static ssize_t show_controller_control_registers(struct cpufreq_policy *policy, char *buf)
+{
+	return sprintf(buf, "%d %d\n", ControllerControlRegister0,ControllerControlRegister1);
+	// return -EINVAL;
+}
+
+static ssize_t show_memory_control_registers(struct cpufreq_policy *policy, char *buf)
+{
+	return sprintf(buf, "%d %d\n", MemoryControlRegister0,MemoryControlRegister1);
+	// return -EINVAL;
+}
+
+static ssize_t show_AC_timing_registers_row(struct cpufreq_policy *policy, char *buf)
+{
+	return sprintf(buf, "%d %d\n", ACTimingRegisterRow0,ACTimingRegisterRow1);
+	// return -EINVAL;
+}
+
+static ssize_t show_AC_timing_registers_data(struct cpufreq_policy *policy, char *buf)
+{
+	return sprintf(buf, "%d %d\n", ACTimingRegisterData0,ACTimingRegisterData1);
+	// return -EINVAL;
+}
+
+static ssize_t show_timing_registers(struct cpufreq_policy *policy, char *buf)
+{
+	return sprintf(buf, "%d %d\n", TimingRegister0,TimingRegister1);
+	// return -EINVAL;
+}
+#if 0 // this isn't used
+static ssize_t store_memory_control_registers(struct cpufreq_policy *policy,
+					const char *buf, size_t count)
+{
+	unsigned int ret = -EINVAL;
+	ret = sscanf(buf, "%d %d", &MemoryControlRegister0,&MemoryControlRegister1);
+	modMemoryControlRegister0 = MemoryControlRegister0;
+	modMemoryControlRegister1 = MemoryControlRegister1;
+	if (ret != 1)
+		return -EINVAL;
+	else
+		return count;
+}
+#endif
+
+static ssize_t store_AC_timing_registers_row(struct cpufreq_policy *policy,
+					const char *buf, size_t count)
+{
+	unsigned int ret = -EINVAL;
+	ret = sscanf(buf, "%d %d", &ACTimingRegisterRow0,&ACTimingRegisterRow1);
+	modACTimingRegisterRow0 = ACTimingRegisterRow0;
+	modACTimingRegisterRow1 = ACTimingRegisterRow1;
+	if (ret != 2)
+		return -EINVAL;
+	else
+		return count;
+}
+
+static ssize_t store_AC_timing_registers_data(struct cpufreq_policy *policy,
+					const char *buf, size_t count)
+{
+	unsigned int ret = -EINVAL;
+	ret = sscanf(buf, "%d %d", &ACTimingRegisterData0,&ACTimingRegisterData1);
+	modACTimingRegisterData0 = ACTimingRegisterData0;
+	modACTimingRegisterData1 = ACTimingRegisterData1;
+	if (ret != 2)
+		return -EINVAL;
+	else
+		return count;
+}
+
+static ssize_t store_timing_registers(struct cpufreq_policy *policy,
+					const char *buf, size_t count)
+{
+	unsigned int ret = -EINVAL;
+	ret = sscanf(buf, "%d %d", &TimingRegister0,&TimingRegister1);
+	modTimingRegister0 = TimingRegister0;
+	modTimingRegister1 = TimingRegister1;
+	if (ret != 2)
+		return -EINVAL;
+	else
+		return count;
+}
+
+static ssize_t show_frequency_voltage_table(struct cpufreq_policy *policy, char *buf)
+{
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+	return sprintf(buf, "%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n",
+		frequency_voltage_tab[0][0], frequency_voltage_tab[0][1], frequency_voltage_tab[0][2],
+		frequency_voltage_tab[1][0], frequency_voltage_tab[1][1], frequency_voltage_tab[1][2],
+		frequency_voltage_tab[2][0], frequency_voltage_tab[2][1], frequency_voltage_tab[2][2],
+		frequency_voltage_tab[3][0], frequency_voltage_tab[3][1], frequency_voltage_tab[3][2],
+		frequency_voltage_tab[4][0], frequency_voltage_tab[4][1], frequency_voltage_tab[4][2],
+		frequency_voltage_tab[5][0], frequency_voltage_tab[5][1], frequency_voltage_tab[5][2],
+		frequency_voltage_tab[6][0], frequency_voltage_tab[6][1], frequency_voltage_tab[6][2],
+		frequency_voltage_tab[7][0], frequency_voltage_tab[7][1], frequency_voltage_tab[7][2],
+		frequency_voltage_tab[8][0], frequency_voltage_tab[8][1], frequency_voltage_tab[8][2],
+		frequency_voltage_tab[9][0], frequency_voltage_tab[9][1], frequency_voltage_tab[9][2],
+		frequency_voltage_tab[10][0], frequency_voltage_tab[10][1], frequency_voltage_tab[10][2]);
+#else // no OC
+	return sprintf(buf, "%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n",
+		frequency_voltage_tab[0][0], frequency_voltage_tab[0][1], frequency_voltage_tab[0][2],
+		frequency_voltage_tab[1][0], frequency_voltage_tab[1][1], frequency_voltage_tab[1][2],
+		frequency_voltage_tab[2][0], frequency_voltage_tab[2][1], frequency_voltage_tab[2][2],
+		frequency_voltage_tab[3][0], frequency_voltage_tab[3][1], frequency_voltage_tab[3][2],
+		frequency_voltage_tab[4][0], frequency_voltage_tab[4][1], frequency_voltage_tab[4][2],
+		frequency_voltage_tab[5][0], frequency_voltage_tab[5][1], frequency_voltage_tab[5][2],
+		frequency_voltage_tab[6][0], frequency_voltage_tab[6][1], frequency_voltage_tab[6][2]);
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
+}
+
+static ssize_t show_states_enabled_table(struct cpufreq_policy *policy, char *buf)
+{
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+	return sprintf(buf, "%d %d %d %d %d %d %d %d %d %d %d\n",
+		active_states[0], active_states[1], active_states[2], active_states[3],
+		active_states[4], active_states[5], active_states[6], active_states[7],
+		active_states[8], active_states[9], active_states[10]);
+#else // no OC
+	return sprintf(buf, "%d %d %d %d %d %d %d\n",
+		active_states[0], active_states[1], active_states[2], active_states[3],
+		active_states[4], active_states[5], active_states[6]);
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
+	// return -EINVAL;
+}
+
+static ssize_t store_states_enabled_table(struct cpufreq_policy *policy,
+					const char *buf, size_t count)
+{
+	unsigned int ret = -EINVAL;
+	unsigned int i = 0;
+	unsigned int temp_storage_table[NUM_FREQ];
+
+#ifdef CONFIG_MACH_S5PC110_ARIES_OC
+	ret = sscanf(buf, "%d %d %d %d %d %d %d %d %d %d %d",
+		&temp_storage_table[0], &temp_storage_table[1], &temp_storage_table[2], &temp_storage_table[3],
+		&temp_storage_table[4], &temp_storage_table[5], &temp_storage_table[6], &temp_storage_table[7],
+		&temp_storage_table[8], &temp_storage_table[9], &temp_storage_table[10]);
+#else // no OC
+	ret = sscanf(buf, "%d %d %d %d %d %d %d",
+		&temp_storage_table[0], &temp_storage_table[1], &temp_storage_table[2], &temp_storage_table[3],
+		&temp_storage_table[4], &temp_storage_table[5], &temp_storage_table[6]);
+#endif // end CONFIG_MACH_S5PC110_ARIES_OC
+	if (ret != NUM_FREQ)
+		return -EINVAL;
+	else
+	{
+		for (i = 0; i < NUM_FREQ; i++) {
+			if ((temp_storage_table[i] != 1) && (temp_storage_table[i] != 0)) {
+				return -EINVAL;
+			}
+		}
+		for (i = 0; i < NUM_FREQ; i++) {
+			active_states[i] = temp_storage_table[i];
+		}
+		exp_update_states = 1;
+		return count;
+	}
+}
+
 #define define_one_ro(_name) \
 static struct freq_attr _name = \
 __ATTR(_name, 0444, show_##_name, NULL)
@@ -743,9 +1108,24 @@ define_one_ro(scaling_driver);
 define_one_ro(scaling_cur_freq);
 define_one_ro(related_cpus);
 define_one_ro(affected_cpus);
+define_one_ro(controller_control_registers);
+define_one_ro(memory_control_registers);
 define_one_rw(scaling_min_freq);
 define_one_rw(scaling_max_freq);
 define_one_rw(scaling_governor);
+define_one_rw(UV_mV_table);
+define_one_ro(cpu_transition_states_table);
+define_one_rw(cpu_thres_table);
+define_one_rw(states_enabled_table);
+define_one_rw(update_states);
+define_one_rw(timing_registers);
+define_one_rw(AC_timing_registers_row);
+define_one_rw(AC_timing_registers_data);
+define_one_ro(frequency_voltage_table);
+/*
+define_one_rw(ControllerControlRegister0);
+define_one_rw(ControllerControlRegister1);
+*/
 define_one_rw(scaling_setspeed);
 define_one_rw(scaling_setlog);
 #if defined SET_AUDIO_LOG
@@ -761,6 +1141,17 @@ static struct attribute *default_attrs[] = {
 	&affected_cpus.attr,
 	&related_cpus.attr,
 	&scaling_governor.attr,
+	&UV_mV_table.attr,
+	&cpu_transition_states_table.attr,
+	&cpu_thres_table.attr,
+	&states_enabled_table.attr,
+	&update_states.attr,
+	&frequency_voltage_table.attr,
+	&controller_control_registers.attr,
+	&timing_registers.attr,
+	&AC_timing_registers_row.attr,
+	&memory_control_registers.attr,
+	&AC_timing_registers_data.attr,
 	&scaling_driver.attr,
 	&scaling_available_governors.attr,
 	&scaling_setspeed.attr,
@@ -1148,6 +1539,7 @@ err_out_unregister:
 
 err_unlock_policy:
 	unlock_policy_rwsem_write(cpu);
+	free_cpumask_var(policy->related_cpus);
 err_free_cpumask:
 	free_cpumask_var(policy->cpus);
 err_free_policy:
@@ -1938,7 +2330,7 @@ int cpufreq_update_policy(unsigned int cpu)
 	if (cpufreq_driver->get) {
 		policy.cur = cpufreq_driver->get(cpu);
 		if (!data->cur) {
-			dprintk("Driver did not initialize current freq");
+			dprintk("Driver did not initialize current freq\n");
 			data->cur = policy.cur;
 		} else {
 			if (data->cur != policy.cur)

@@ -12,6 +12,7 @@
 #include <linux/types.h>
 #include <linux/init.h>
 #include <linux/serial_core.h>
+#include <linux/sysdev.h>
 #include <linux/gpio.h>
 #include <linux/videodev2.h>
 #include <linux/i2c.h>

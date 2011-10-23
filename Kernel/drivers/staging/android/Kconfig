@@ -89,21 +89,6 @@ config ANDROID_LOW_MEMORY_KILLER
 	default N
 	---help---
 	  Register processes to be killed when memory is low
-if ANDROID_LOW_MEMORY_KILLER
-
-config ANDROID_LOW_MEMORY_KILLER_ATLAS
-        bool "Atlas Android Low Memory Killer"
-        default N
-        ---help---
-         Atlas Register processes to be killed when memory is low
-config ANDROID_LOW_MEMORY_KILLER_VICTORY
-        bool "Victory Android Low Memory Killer"
-        default N
-        ---help---
-         Victory Register processes to be killed when memory is low
-
-endif
-
 
 endif # if ANDROID
 

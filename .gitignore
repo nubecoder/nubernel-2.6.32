@@ -1,4 +1,6 @@
 
 bootlogo/boot_logo.h
 bootlogo/makelogo
+nubernel-*.md5
+update/zImage
 

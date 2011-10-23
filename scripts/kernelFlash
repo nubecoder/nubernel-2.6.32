@@ -1,11 +1,7 @@
-#!/bin/bash
+#!/system/bin/sh
 #
 # kernelFlash
-# For use with adb wireless.
-#
-#	Usage:
-#		Change the IP variable below to match the IP given in adb wireless.
-#		Run the script.
+# For use with wifiFlashHelper.sh
 #
 #
 # 2011 nubecoder
@@ -13,15 +9,16 @@
 #
 
 #define defaults
-USE_BMLWRITE=n
-DO_KERNEL=n
-DO_RECOVERY=n
+USE_BMLWRITE="n"
+DO_KERNEL="n"
+DO_RECOVERY="n"
 
 #define paths
 TMP_PATH="/data/local/tmp"
 BLOCK_PATH="/dev/block"
 
 ZIMAGE="$TMP_PATH/zImage"
+RECOVERY_ZIMAGE="$TMP_PATH/zImage_recovery"
 
 KERNEL_PARTITION="$BLOCK_PATH/bml7"
 RECOVERY_PARTITION="$BLOCK_PATH/bml8"
@@ -31,12 +28,11 @@ BMLWRITE="$TMP_PATH/bmlwrite"
 
 
 #define cmds
-GET_ROOT="su"
 REDBEND_DO_KERNEL="$REDBEND restore $ZIMAGE $KERNEL_PARTITION"
-REDBEND_DO_RECOVERY="$REDBEND restore $ZIMAGE $RECOVERY_PARTITION"
+REDBEND_DO_RECOVERY="$REDBEND restore $RECOVERY_ZIMAGE $RECOVERY_PARTITION"
 
 BMLWRITE_DO_KERNEL="$BMLWRITE $ZIMAGE $KERNEL_PARTITION"
-BMLWRITE_DO_RECOVERY="$BMLWRITE $ZIMAGE $RECOVERY_PARTITION"
+BMLWRITE_DO_RECOVERY="$BMLWRITE $RECOVERY_ZIMAGE $RECOVERY_PARTITION"
 
 # functions
 SHOW_HELP()
@@ -53,11 +49,10 @@ SHOW_HELP()
 SHOW_SETTINGS()
 {
 	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
-	if [ "$USE_BMLWRITE" = "y" ]
-	then
-		echo "Flash with     == bmlwrite."
+	if [ "$USE_BMLWRITE" = "y" ] ; then
+		echo "Flash with       == bmlwrite."
 	else
-		echo "Flash with     == redbend_ua."
+		echo "Flash with       == redbend_ua."
 	fi
 	echo "Flash a kernel   == $DO_KERNEL"
 	echo "Flash a recovery == $DO_RECOVERY"
@@ -83,15 +78,12 @@ FLASH_TO_BML7()
 {
 	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
 	local T1=$(date +%s)
-	if [ "$USE_BMLWRITE" = "y" ]
-	then
+	if [ "$USE_BMLWRITE" = "y" ] ; then
 		echo "Begin kernel flash with bmlwrite..." && echo ""
-		$GET_ROOT
-		$BMLWRITE_DO_KERNEL
+		$BMLWRITE_DO_KERNEL > /dev/null
 	else
 		echo "Begin kernel flash with redbend_ua..." && echo ""
-		$GET_ROOT
-		$REDBEND_DO_KERNEL
+		$REDBEND_DO_KERNEL > /dev/null
 	fi
 	local T2=$(date +%s)
 	echo "" && echo "Kernel flash took $(($T2 - $T1)) seconds."
@@ -102,15 +94,12 @@ FLASH_TO_BML8()
 {
 	echo "=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]"
 	local T1=$(date +%s)
-	if [ "$USE_BMLWRITE" = "y" ]
-	then
+	if [ "$USE_BMLWRITE" = "y" ] ; then
 		echo "Begin recovery flash with bmlwrite..." && echo ""
-		$GET_ROOT
-		$BMLWRITE_DO_RECOVERY
+		$BMLWRITE_DO_RECOVERY > /dev/null
 	else
 		echo "Begin recovery flash with redbend_ua..." && echo ""
-		$GET_ROOT
-		$REDBEND_DO_RECOVERY
+		$REDBEND_DO_RECOVERY > /dev/null
 	fi
 	local T2=$(date +%s)
 	echo "" && echo "Recovery flash took $(($T2 - $T1)) seconds."
@@ -123,16 +112,16 @@ while getopts  ":bhkr" flag
 do
 	case "$flag" in
 	b)
-		USE_BMLWRITE=y
+		USE_BMLWRITE="y"
 		;;
 	h)
 		SHOW_HELP
 		;;
 	k)
-		DO_KERNEL=y
+		DO_KERNEL="y"
 		;;
 	r)
-		DO_RECOVERY=y
+		DO_RECOVERY="y"
 		;;
 	*)
 		ERROR_MSG="Error:: problem with option '$OPTARG'"
@@ -145,18 +134,19 @@ done
 # show current settings
 SHOW_SETTINGS
 
-if [ "$DO_KERNEL" = "y" ]
-then
-	FLASH_TO_BML7
+if [ "$DO_KERNEL" = "y" ] ; then
+	if [ -f $ZIMAGE ] ; then
+		FLASH_TO_BML7
+	fi
 fi
 
-if [ "$DO_RECOVERY" = "y" ]
-then
-	FLASH_TO_BML8
+if [ "$DO_RECOVERY" = "y" ] ; then
+	if [ -f $ZIMAGE ] ; then
+		FLASH_TO_BML8
+	fi
 fi
 
-if [ "$DO_KERNEL" = "n" -a "$DO_RECOVERY" = "n" ]
-then
+if [ "$DO_KERNEL" = "n" -a "$DO_RECOVERY" = "n" ] ; then
 	SHOW_HELP
 fi
 

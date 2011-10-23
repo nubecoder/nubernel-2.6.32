@@ -8,8 +8,8 @@
 #
 
 #define version string
-CURRENT_VERSION="nubernel-EC05_v0.0.0"
-VERSION_STRING="nubernel-EC05_v"
+CURRENT_VERSION="nubernel-2.6.32_v1.0.0"
+VERSION_STRING="nubernel-2.6.32_v"
 
 # defaults
 RELEASE="n"
@@ -87,33 +87,46 @@ BRANCH_RELEASE()
 	local REPLACEMENT="${VERSION_STRING}$NEW_VERSION"
 	if [ "$VERBOSE" = "y" ]
 	then
-		sed -i "s/$PATTERN/$REPLACEMENT/g" ncMultiBuild.sh
+		sed -i "s/$PATTERN/$REPLACEMENT/g" build_kernel.sh
 		sed -i "s/$PATTERN/$REPLACEMENT/g" initramfs/default.prop
+		sed -i "s/$PATTERN/$REPLACEMENT/g" update/META-INF/com/google/android/updater-script
+		sed -i "s/$PATTERN/$REPLACEMENT/g" update/META-INF/com/android/metadata
+		sed -i "s/$PATTERN/$REPLACEMENT/g" ncBuildHelper.sh
+		sed -i "s/$PATTERN/$REPLACEMENT/g" featurelist
+		sed -i "s/$PATTERN/$REPLACEMENT/g" changelog
 		sed -i "s/$PATTERN/$REPLACEMENT/g" README
 		sed -i "s/$PATTERN/$REPLACEMENT/g" $0
 	else
-		sed -i "s/$PATTERN/$REPLACEMENT/g" ncMultiBuild.sh >/dev/null 2>&1
+		sed -i "s/$PATTERN/$REPLACEMENT/g" build_kernel.sh
 		sed -i "s/$PATTERN/$REPLACEMENT/g" initramfs/default.prop >/dev/null 2>&1
+		sed -i "s/$PATTERN/$REPLACEMENT/g" update/META-INF/com/google/android/updater-script >/dev/null 2>&1
+		sed -i "s/$PATTERN/$REPLACEMENT/g" update/META-INF/com/android/metadata >/dev/null 2>&1
+		sed -i "s/$PATTERN/$REPLACEMENT/g" ncBuildHelper.sh >/dev/null 2>&1
+		sed -i "s/$PATTERN/$REPLACEMENT/g" featurelist >/dev/null 2>&1
+		sed -i "s/$PATTERN/$REPLACEMENT/g" changelog >/dev/null 2>&1
 		sed -i "s/$PATTERN/$REPLACEMENT/g" README >/dev/null 2>&1
 		sed -i "s/$PATTERN/$REPLACEMENT/g" $0 >/dev/null 2>&1
-	fi
-	local BRANCH_MSG="Branched to 'release-v${NEW_VERSION}'."
-	local PATTERN="Changelog:"
-	local REPLACEMENT="Changelog:\n\n"$(date +%m-%d-%Y)":\n$BRANCH_MSG"
-	if [ "$VERBOSE" = "y" ]
-	then
-		sed -i "s/$PATTERN/$REPLACEMENT/g" README
-	else
-		sed -i "s/$PATTERN/$REPLACEMENT/g" README >/dev/null 2>&1
 	fi
 	# git add changes
 	if [ "$VERBOSE" = "y" ]
 	then
-		git add ncMultiBuild.sh
+		git add build_kernel.sh
+		git add initramfs/default.prop
+		git add update/META-INF/com/google/android/updater-script
+		git add update/META-INF/com/android/metadata
+		git add ncBuildHelper.sh
+		git add featurelist
+		git add changelog
 		git add README
 		git add $0
 	else
-		git add ncMultiBuild.sh >/dev/null 2>&1
+		git add build_kernel.sh >/dev/null 2>&1
+		git add initramfs/default.prop >/dev/null 2>&1
+		git add update/META-INF/com/google/android/updater-script >/dev/null 2>&1
+		git add update/META-INF/com/android/metadata >/dev/null 2>&1
+		git add ncBuildHelper.sh >/dev/null 2>&1
+		git add featurelist >/dev/null 2>&1
+		git add changelog >/dev/null 2>&1
 		git add README >/dev/null 2>&1
 		git add $0 >/dev/null 2>&1
 	fi
@@ -123,8 +136,10 @@ BRANCH_RELEASE()
 	echo "git branch:"
 	git branch
 	# git commit
+	local BRANCH_MSG="Branched to 'release-v${NEW_VERSION}'."
 	echo "Commit:"
-	git commit -m "\"$BRANCH_MSG\""
+	git commit -m "$BRANCH_MSG"
+	echo "$BRANCH_MSG"
 	# end time
 	local T2=$(date +%s)
 	echo "" && echo "Release branch took $(($T2 - $T1)) seconds."
@@ -147,35 +162,12 @@ BRANCH_FEATURE()
 		SHOW_ERROR
 		SHOW_COMPLETED
 	fi
-	# update files
-	local BRANCH_MSG="Branched to 'feature-${FEATURE_NAME}'."
-	local PATTERN="Changelog:"
-	local REPLACEMENT="Changelog:\n\n"$(date +%m-%d-%Y)":\n$BRANCH_MSG"
-	if [ "$VERBOSE" = "y" ]
-	then
-		sed -i "s/$PATTERN/$REPLACEMENT/g" README
-	else
-		sed -i "s/$PATTERN/$REPLACEMENT/g" README >/dev/null 2>&1
-	fi
-	# git add changes
-	if [ "$VERBOSE" = "y" ]
-	then
-		git add ncMultiBuild.sh
-		git add README
-		git add $0
-	else
-		git add ncMultiBuild.sh >/dev/null 2>&1
-		git add README >/dev/null 2>&1
-		git add $0 >/dev/null 2>&1
-	fi
 	# show some info
 	echo "git status -s:"
 	git status -s
 	echo "git branch:"
 	git branch
-	# git commit
-	echo "Commit:"
-	git commit -m "\"$BRANCH_MSG\""
+	echo "Branched to 'feature-${FEATURE_NAME}'."
 	# end time
 	local T2=$(date +%s)
 	echo "" && echo "Feature branch took $(($T2 - $T1)) seconds."

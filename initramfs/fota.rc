@@ -1,74 +1,81 @@
 on init
 
-	export PATH /sbin:/system/xbin:/system/bin
+# setup the global environment
+	export PATH /sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin
 	export ANDROID_ROOT /system
 	export ANDROID_DATA /data
 	export EXTERNAL_STORAGE /sdcard
 
-# create mountpoints
-	mkdir /data 0771 system system
-	mkdir /cache 0770 system cache
-	mkdir /system 0775 system system
-	mkdir /tmp 1777 root root
-	mkdir /mnt 0775 root system
-	mkdir /mnt/sdcard 0775 system system
-	mkdir /mnt/sd-ext 0775 system system
+# Create BML devices
+	mknod /dev/block/bml7 b 137 7
+	mknod /dev/block/bml8 b 137 8
 
-	symlink /res/etc /etc
-	symlink /mnt/sdcard /sdcard
-	symlink /mnt/sd-ext /sd-ext
-
-	mount tmpfs tmpfs /tmp size=4m
-
+# Insert loadable modules
 	insmod /lib/modules/logger.ko
 	insmod /lib/modules/fsr.ko
 	insmod /lib/modules/fsr_stl.ko
 	insmod /lib/modules/rfs_glue.ko
 	insmod /lib/modules/rfs_fat.ko
 	insmod /lib/modules/j4fs.ko
-	insmod /lib/modules/dpram_recovery.ko
 	insmod /lib/modules/param.ko
+	insmod /lib/modules/dpram_recovery.ko
+
+# create mount points
+	mkdir /data 0771 system system
+	mkdir /efs 0771 system system
+	mkdir /cache 0770 system cache
+	mkdir /system 0775 system system
+	mkdir /mnt 0775 root system
+	#mkdir /mnt/sdcard 0775 system system
+	mkdir /sdcard 0775 system system
+	#mkdir /mnt/sd-ext 0775 system system
+	mkdir /sd-ext 0775 system system
+	mkdir /tmp 1777 root root
+
+	#symlink /res/etc /etc
+	#symlink /mnt/sdcard /sdcard
+	#symlink /mnt/sd-ext /sd-ext
+
+	mount tmpfs nodev /tmp
 
 ###################################################################
-# mount mtd partitions begin
+# mount partitions begin
 
 # /.lfs
 	mkdir /mnt/.lfs 0755 root root
 	mount j4fs /dev/block/stl6 /mnt/.lfs
 
 # /system
-	mkdir /system 0775 system system
-	mount ext4 /dev/block/stl9 /system noatime nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
-	mount rfs /dev/block/stl9 /system nosuid nodev check=no
+	mount rfs /dev/block/stl9 /system rw noatime nodiratime check=none
+	mount ext4 /dev/block/stl9 /system rw noatime nodiratime check=none errors=continue data=writeback nobh nobarrier noauto_da_alloc discard
 	chown root system /system
 	chmod 0775 /system
 
 # /data
-	mkdir /data 0771 system system
-	mount ext4 /dev/block/stl10 /data nosuid nodev noatime nodiratime errors=continue nobh data=writeback barrier=0 discard noauto_da_alloc
-	mount rfs /dev/block/stl10 /data nosuid nodev check=no
+	mount rfs /dev/block/stl10 /data rw noatime nodiratime nodev nosuid check=none
+	mount ext4 /dev/block/stl10 /data rw noatime nodiratime nodev nosuid check=none errors=continue data=writeback nobh nobarrier noauto_da_alloc discard
 	chown system system /data
 	chmod 0771 /data
 
 # /cache
-	mount ext4 /dev/block/stl11 /cache nosuid nodev noatime nodiratime check=n errors=continue nobh discard data=writeback barrier=0 noauto_da_alloc
-	mount rfs /dev/block/stl11 /cache nosuid nodev check=no
-	chown system system /cache/recovery
+	mount rfs /dev/block/stl11 /cache rw noatime nodiratime nodev nosuid check=none
+	mount ext4 /dev/block/stl11 /cache rw noatime nodiratime nodev nosuid check=none errors=continue data=writeback nobh nobarrier noauto_da_alloc discard
+	chown system cache /cache
+	chmod 0770 /cache
+	chown system cache /cache/recovery
 	chmod 0770 /cache/recovery
 
 # /efs
-	mkdir /efs 0771
-	mount rfs /dev/block/stl3 /efs nosuid nodev check=no
+	mount rfs /dev/block/stl3 /efs nodev nosuid check=none
 	chown radio radio /efs
 	chmod 0771 /efs
 
-	#This recovery_fota_mode
+# This recovery_fota_mode
 	#mkdir /cache/recovery_fota_mode
 	#chmod 0770 /cache/recovery_fota_mode
 
-# mount mtd partitions complete
+# mount partitions complete
 ###################################################################
-
 
 on boot
 	#write /sys/class/sec/switch/uart_sel PDA
@@ -79,18 +86,23 @@ on boot
 	domainname localdomain
 	class_start default
 
-service init_local /sbin/init_wrapper
+##
+## Daemon processes to be run by init.
+##
+#service console /system/bin/sh
+#	console
+
+#service recovery /sbin/recovery
+service init_scripts /vendor/scripts/run_init_scripts.sh recovery
 	user root
 	oneshot
 
-## Daemon processes to be run by init
-
-on property:persist.service.adb.enable=1
-	start adbd
-
-on property:persist.service.adb.enable=0
-	stop adbd
-
-service recovery /sbin/recovery
-
 service adbd /sbin/adbd recovery
+	disabled
+
+#on property:persist.service.adb.enable=1
+#	start adbd
+
+#on property:persist.service.adb.enable=0
+#	stop adbd
+

@@ -37,6 +37,59 @@
 
 #include "s5pc110_battery.h"
 
+#ifdef CONFIG_NUBERNEL_SYSFS
+#include <linux/nubernel/nc_kset.h>
+#else
+#define BATT_RECHARGE_COUNT_DEFAULT						20
+#define FULL_CHARGE_COND_VOLTAGE_DEFAULT			4000
+#define RECHARGE_COND_VOLTAGE_DEFAULT					4110
+#define RECHARGE_COND_VOLTAGE_BACKUP_DEFAULT	4000
+#define CURRENT_OF_FULL_CHG_DEFAULT						91
+#define CHG_CURRENT_COUNT_DEFAULT							20
+#endif
+
+#ifdef CONFIG_NUBERNEL_CHARGE_CONTROL_SYSFS
+
+#ifdef __ADJUST_RECHARGE_ADC__
+#define BATT_RECHARGE_COUNT		charge_recharge_count
+unsigned long charge_recharge_count =	BATT_RECHARGE_COUNT_DEFAULT;
+#endif /* __ADJUST_RECHARGE_ADC__ */
+
+#ifdef __FUEL_GAUGES_IC__
+#define FULL_CHARGE_COND_VOLTAGE		charge_full_voltage
+unsigned long charge_full_voltage =	FULL_CHARGE_COND_VOLTAGE_DEFAULT;
+#define RECHARGE_COND_VOLTAGE		charge_recharge_voltage
+unsigned long charge_recharge_voltage =	RECHARGE_COND_VOLTAGE_DEFAULT;
+#define RECHARGE_COND_VOLTAGE_BACKUP		charge_backup_voltage
+unsigned long charge_backup_voltage =	RECHARGE_COND_VOLTAGE_BACKUP_DEFAULT;
+#endif /* __FUEL_GAUGES_IC__ */
+
+#ifdef __CHECK_CHG_CURRENT__
+#define CURRENT_OF_FULL_CHG		charge_full_current
+unsigned long charge_full_current =	CURRENT_OF_FULL_CHG_DEFAULT;
+#define CHG_CURRENT_COUNT		charge_full_count
+unsigned long charge_full_count =	CHG_CURRENT_COUNT_DEFAULT;
+#endif /* __CHECK_CHG_CURRENT__ */
+
+#else
+
+#ifdef __ADJUST_RECHARGE_ADC__
+#define BATT_RECHARGE_COUNT		BATT_RECHARGE_COUNT_DEFAULT
+#endif /* __ADJUST_RECHARGE_ADC__ */
+
+#ifdef __FUEL_GAUGES_IC__
+#define FULL_CHARGE_COND_VOLTAGE		FULL_CHARGE_COND_VOLTAGE_DEFAULT
+#define RECHARGE_COND_VOLTAGE		RECHARGE_COND_VOLTAGE_DEFAULT
+#define RECHARGE_COND_VOLTAGE_BACKUP		RECHARGE_COND_VOLTAGE_BACKUP_DEFAULT
+#endif /* __FUEL_GAUGES_IC__ */
+
+#ifdef __CHECK_CHG_CURRENT__
+#define CURRENT_OF_FULL_CHG		CURRENT_OF_FULL_CHG_DEFAULT
+#define CHG_CURRENT_COUNT		CHG_CURRENT_COUNT_DEFAULT
+#endif /* __CHECK_CHG_CURRENT__ */
+
+#endif /* CONFIG_NUBERNEL_CHARGE_CONTROL_SYSFS */
+
 static struct wake_lock vbus_wake_lock;
 static struct wake_lock low_batt_wake_lock;	// lobat pwroff
 
@@ -430,6 +483,16 @@ static void check_chg_current(struct power_supply *bat_ps)
 		else	// non-test mode (interval 2 sec)
 #endif
 			cnt += 2;
+		// nubecoder battery over-charge protection
+		if (s3c_bat_info.bat_info.batt_vol >= OVER_CHARGE_COND_VOLTAGE) {
+			// nubecoder debug output
+			printk(KERN_INFO "[BATT] nubernel: :%s: OVER_CHARGE_COND_VOLTAGE hit (bat_vol = %d) (bat_current = %d) \n", __func__, 
+				s3c_bat_info.bat_info.batt_vol, s3c_bat_info.bat_info.batt_current);
+			//
+			s3c_set_chg_en(0);//Set charge off
+			s3c_bat_info.bat_info.batt_is_full = 1;
+			force_update = 1;
+		}
 
 		if (cnt >= CHG_CURRENT_COUNT)
 		{
@@ -440,6 +503,17 @@ static void check_chg_current(struct power_supply *bat_ps)
 			cnt = 0;
 		}
 	} else {
+		// nubecoder battery over-charge protection
+		if (s3c_bat_info.bat_info.batt_vol >= OVER_CHARGE_COND_VOLTAGE) {
+			// nubecoder debug output
+			printk(KERN_INFO "[BATT] nubernel: :%s: OVER_CHARGE_COND_VOLTAGE hit (bat_vol = %d) (bat_current = %d) \n", __func__, 
+				s3c_bat_info.bat_info.batt_vol, s3c_bat_info.bat_info.batt_current);
+			//
+			s3c_set_chg_en(0);//Set charge off
+			s3c_bat_info.bat_info.batt_is_full = 1;
+			force_update = 1;
+		}
+		//
 		cnt = 0;
 	}
 }
@@ -452,7 +526,7 @@ static void check_recharging_bat(int bat_vol)
 	static int cnt_backup = 0;
 
 	if (s3c_bat_info.bat_info.batt_is_full)
-		dev_info(dev, "check recharge : bat_vol = %d \n", __func__, bat_vol);
+		dev_info(dev, "%s: check recharge : bat_vol = %d \n", __func__, bat_vol);
 
 	if (s3c_bat_info.bat_info.batt_is_full && 
 		!s3c_bat_info.bat_info.charging_enabled &&
@@ -1881,8 +1955,179 @@ static struct platform_driver s3c_bat_driver = {
 	.resume		= s3c_bat_resume,
 };
 
+#ifdef CONFIG_NUBERNEL_CHARGE_CONTROL_SYSFS
+
+#ifdef __ADJUST_RECHARGE_ADC__
+static ssize_t charge_recharge_count_show(struct nubernel_obj *nubernel_obj, struct nubernel_attribute *attr, char *buf)
+{
+	unsigned long var;
+	var = charge_recharge_count;
+	return snprintf(buf, PAGE_SIZE, "%lu\n", var);
+}
+static ssize_t charge_recharge_count_store(struct nubernel_obj *nubernel_obj, struct nubernel_attribute *attr, const char *buf, size_t count)
+{
+	unsigned long var;
+	int res;
+
+	if ((res = strict_strtoul(buf, 10, &var)) < 0)
+		return res;
+
+	if (var < BATT_RECHARGE_COUNT_MIN || var > BATT_RECHARGE_COUNT_DEFAULT)
+		return -EINVAL;
+
+	charge_recharge_count = var;
+	return count;
+}
+static struct nubernel_attribute charge_recharge_count_attribute =
+	__ATTR(charge_recharge_count, 0666, charge_recharge_count_show, charge_recharge_count_store);
+#endif /* __ADJUST_RECHARGE_ADC__ */
+
+#ifdef __FUEL_GAUGES_IC__
+static ssize_t charge_full_voltage_show(struct nubernel_obj *nubernel_obj, struct nubernel_attribute *attr, char *buf)
+{
+	unsigned long var;
+	var = charge_full_voltage;
+	return snprintf(buf, PAGE_SIZE, "%lu\n", var);
+}
+static ssize_t charge_full_voltage_store(struct nubernel_obj *nubernel_obj, struct nubernel_attribute *attr, const char *buf, size_t count)
+{
+	unsigned long var;
+	int res;
+
+	if ((res = strict_strtoul(buf, 10, &var)) < 0)
+		return res;
+
+	if (var < FULL_CHARGE_COND_VOLTAGE_DEFAULT || var > FULL_CHARGE_COND_VOLTAGE_MAX)
+		return -EINVAL;
+
+	charge_full_voltage = var;
+	return count;
+}
+static struct nubernel_attribute charge_full_voltage_attribute =
+	__ATTR(charge_full_voltage, 0666, charge_full_voltage_show, charge_full_voltage_store);
+static ssize_t charge_recharge_voltage_show(struct nubernel_obj *nubernel_obj, struct nubernel_attribute *attr, char *buf)
+{
+	unsigned long var;
+	var = charge_recharge_voltage;
+	return snprintf(buf, PAGE_SIZE, "%lu\n", var);
+}
+static ssize_t charge_recharge_voltage_store(struct nubernel_obj *nubernel_obj, struct nubernel_attribute *attr, const char *buf, size_t count)
+{
+	unsigned long var;
+	int res;
+
+	if ((res = strict_strtoul(buf, 10, &var)) < 0)
+		return res;
+
+	if (var < RECHARGE_COND_VOLTAGE_DEFAULT || var > RECHARGE_COND_VOLTAGE_MAX)
+		return -EINVAL;
+
+	charge_recharge_voltage = var;
+	return count;
+}
+static struct nubernel_attribute charge_recharge_voltage_attribute =
+	__ATTR(charge_recharge_voltage, 0666, charge_recharge_voltage_show, charge_recharge_voltage_store);
+static ssize_t charge_backup_voltage_show(struct nubernel_obj *nubernel_obj, struct nubernel_attribute *attr, char *buf)
+{
+	unsigned long var;
+	var = charge_backup_voltage;
+	return snprintf(buf, PAGE_SIZE, "%lu\n", var);
+}
+static ssize_t charge_backup_voltage_store(struct nubernel_obj *nubernel_obj, struct nubernel_attribute *attr, const char *buf, size_t count)
+{
+	unsigned long var;
+	int res;
+
+	if ((res = strict_strtoul(buf, 10, &var)) < 0)
+		return res;
+
+	if (var < RECHARGE_COND_VOLTAGE_BACKUP_DEFAULT || var > RECHARGE_COND_VOLTAGE_BACKUP_MAX)
+		return -EINVAL;
+
+	charge_backup_voltage = var;
+	return count;
+}
+static struct nubernel_attribute charge_backup_voltage_attribute =
+	__ATTR(charge_backup_voltage, 0666, charge_backup_voltage_show, charge_backup_voltage_store);
+#endif /* __FUEL_GAUGES_IC__ */
+
+#ifdef __CHECK_CHG_CURRENT__
+static ssize_t charge_full_current_show(struct nubernel_obj *nubernel_obj, struct nubernel_attribute *attr, char *buf)
+{
+	unsigned long var;
+	var = charge_full_current;
+	return snprintf(buf, PAGE_SIZE, "%lu\n", var);
+}
+static ssize_t charge_full_current_store(struct nubernel_obj *nubernel_obj, struct nubernel_attribute *attr, const char *buf, size_t count)
+{
+	unsigned long var;
+	int res;
+
+	if ((res = strict_strtoul(buf, 10, &var)) < 0)
+		return res;
+
+	if (var > CURRENT_OF_FULL_CHG_DEFAULT || var < CURRENT_OF_FULL_CHG_MIN)
+		return -EINVAL;
+
+	charge_full_current = var;
+	return count;
+}
+static struct nubernel_attribute charge_full_current_attribute =
+	__ATTR(charge_full_current, 0666, charge_full_current_show, charge_full_current_store);
+static ssize_t charge_full_count_show(struct nubernel_obj *nubernel_obj, struct nubernel_attribute *attr, char *buf)
+{
+	unsigned long var;
+	var = charge_full_count;
+	return snprintf(buf, PAGE_SIZE, "%lu\n", var);
+}
+static ssize_t charge_full_count_store(struct nubernel_obj *nubernel_obj, struct nubernel_attribute *attr, const char *buf, size_t count)
+{
+	unsigned long var;
+	int res;
+
+	if ((res = strict_strtoul(buf, 10, &var)) < 0)
+		return res;
+
+	if (var < CHG_CURRENT_COUNT_MIN || var > CHG_CURRENT_COUNT_DEFAULT)
+		return -EINVAL;
+
+	charge_full_count = var;
+	return count;
+}
+static struct nubernel_attribute charge_full_count_attribute =
+	__ATTR(charge_full_count, 0666, charge_full_count_show, charge_full_count_store);
+#endif /* __CHECK_CHG_CURRENT__ */
+
+static struct attribute * charge_control_attrs[] = {
+#ifdef __ADJUST_RECHARGE_ADC__
+	&charge_recharge_count_attribute.attr,
+#endif /* __ADJUST_RECHARGE_ADC__ */
+
+#ifdef __FUEL_GAUGES_IC__
+	&charge_full_voltage_attribute.attr,
+	&charge_recharge_voltage_attribute.attr,
+	&charge_backup_voltage_attribute.attr,
+#endif /* __FUEL_GAUGES_IC__ */
+
+#ifdef __CHECK_CHG_CURRENT__
+	&charge_full_current_attribute.attr,
+	&charge_full_count_attribute.attr,
+#endif /* __CHECK_CHG_CURRENT__ */
+	NULL // null terminated
+};
+static struct attribute_group charge_control_group = {
+	.attrs = charge_control_attrs,
+};
+struct nubernel_obj *charge_control_obj;
+
+#endif /* CONFIG_NUBERNEL_CHARGE_CONTROL_SYSFS */
+
 static int __init s3c_bat_init(void)
 {
+#ifdef CONFIG_NUBERNEL_CHARGE_CONTROL_SYSFS
+	int error;
+#endif /* CONFIG_NUBERNEL_CHARGE_CONTROL_SYSFS */
+
 	pr_info("%s\n", __func__);
 
 	wake_lock_init(&vbus_wake_lock, WAKE_LOCK_SUSPEND, "vbus_present");
@@ -1891,6 +2136,66 @@ static int __init s3c_bat_init(void)
 #ifdef __FUEL_GAUGES_IC__
 	fg_init();
 #endif /* __FUEL_GAUGES_IC__ */
+
+#ifdef CONFIG_NUBERNEL_CHARGE_CONTROL_SYSFS
+	error = nc_kset_init();
+	if (error)
+	{
+		return error;
+	}
+	charge_control_obj = create_nubernel_obj("chargecontrol");
+	if (!charge_control_obj)
+	{
+		return -ENOMEM;
+	}
+
+#ifdef __ADJUST_RECHARGE_ADC__
+	error = nubernel_sysfs_create_file(charge_control_obj, &charge_recharge_count_attribute);
+	if (error)
+	{
+		destroy_nubernel_obj(charge_control_obj);
+		return error;
+	}
+#endif /* __ADJUST_RECHARGE_ADC__ */
+
+#ifdef __FUEL_GAUGES_IC__
+	error = nubernel_sysfs_create_file(charge_control_obj, &charge_full_voltage_attribute);
+	if (error)
+	{
+		destroy_nubernel_obj(charge_control_obj);
+		return error;
+	}
+	error = nubernel_sysfs_create_file(charge_control_obj, &charge_recharge_voltage_attribute);
+	if (error)
+	{
+		destroy_nubernel_obj(charge_control_obj);
+		return error;
+	}
+	error = nubernel_sysfs_create_file(charge_control_obj, &charge_backup_voltage_attribute);
+	if (error)
+	{
+		destroy_nubernel_obj(charge_control_obj);
+		return error;
+	}
+#endif /* __FUEL_GAUGES_IC__ */
+
+#ifdef __CHECK_CHG_CURRENT__
+	error = nubernel_sysfs_create_file(charge_control_obj, &charge_full_current_attribute);
+	if (error)
+	{
+		destroy_nubernel_obj(charge_control_obj);
+		return error;
+	}
+	error = nubernel_sysfs_create_file(charge_control_obj, &charge_full_count_attribute);
+	if (error)
+	{
+		destroy_nubernel_obj(charge_control_obj);
+		return error;
+	}
+#endif /* __CHECK_CHG_CURRENT__ */
+
+#endif /* CONFIG_NUBERNEL_CHARGE_CONTROL_SYSFS */
+
 	return platform_driver_register(&s3c_bat_driver);
 }
 
@@ -1900,6 +2205,27 @@ static void __exit s3c_bat_exit(void)
 #ifdef __FUEL_GAUGES_IC__
 	fg_exit();
 #endif /* __FUEL_GAUGES_IC__ */
+
+#ifdef CONFIG_NUBERNEL_CHARGE_CONTROL_SYSFS
+#ifdef __ADJUST_RECHARGE_ADC__
+	nubernel_sysfs_remove_file(charge_control_obj, &charge_recharge_count_attribute);
+#endif /* __ADJUST_RECHARGE_ADC__ */
+
+#ifdef __FUEL_GAUGES_IC__
+	nubernel_sysfs_remove_file(charge_control_obj, &charge_full_voltage_attribute);
+	nubernel_sysfs_remove_file(charge_control_obj, &charge_recharge_voltage_attribute);
+	nubernel_sysfs_remove_file(charge_control_obj, &charge_backup_voltage_attribute);
+#endif /* __FUEL_GAUGES_IC__ */
+
+#ifdef __CHECK_CHG_CURRENT__
+	nubernel_sysfs_remove_file(charge_control_obj, &charge_full_current_attribute);
+	nubernel_sysfs_remove_file(charge_control_obj, &charge_full_count_attribute);
+#endif /* __CHECK_CHG_CURRENT__ */
+
+	destroy_nubernel_obj(charge_control_obj);
+	nc_kset_exit();
+#endif /* CONFIG_NUBERNEL_CHARGE_CONTROL_SYSFS */
+
 	platform_driver_unregister(&s3c_bat_driver);
 }
 

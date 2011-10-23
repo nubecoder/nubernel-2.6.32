@@ -21,6 +21,9 @@
 #include <mach/gpio.h>
 #include "wm8994.h"
 #include <mach/sec_jack.h>
+#ifdef CONFIG_SND_VOODOO
+#include "wm8994_voodoo.h"
+#endif
 //------------------------------------------------
 //		Debug Feature
 //------------------------------------------------
@@ -1159,6 +1162,10 @@ void wm8994_record_main_mic(struct snd_soc_codec *codec)
 					wm8994_write(codec, 0x0029, WM8994_IN1L_TO_MIXINL);	  // Input Mixer 3
 					wm8994_write(codec, 0x0400, (WM8994_AIF1ADC1_VU | TUNING_RECORD_MAIN_AIF1ADCL_VOL));	// AIF1 ADC1 Left Volume
 					wm8994_write(codec, 0x0401, (WM8994_AIF1ADC1_VU | TUNING_RECORD_MAIN_AIF1ADCR_VOL));	// AIF1 ADC1 Right Volume
+
+#ifdef CONFIG_SND_VOODOO_RECORD_PRESETS
+					voodoo_hook_record_main_mic();
+#endif
 		        }
 			}
 
@@ -2087,6 +2094,9 @@ void wm8994_set_voicecall_common_setting(struct snd_soc_codec *codec)
 {
 	int val;
 
+	wm8994_write(codec, WM8994_ANTIPOP_2, 0x0068);
+	wm8994_write(codec, WM8994_POWER_MANAGEMENT_1, 0x0003);
+	msleep(50);
 	/*GPIO Configuration*/
 	wm8994_write(codec, WM8994_GPIO_1, 0xA101);
 	wm8994_write(codec, WM8994_GPIO_2, 0x8100);
@@ -2199,6 +2209,7 @@ void wm8994_set_voicecall_receiver(struct snd_soc_codec *codec)
 
     wm8994_write(codec, 0x0039, 0x0068);    // Anti Pop2
     wm8994_write(codec, 0x0001, 0x0003);    // Power Management 1
+	msleep(50);
     wm8994_write(codec, 0x0015, 0x0040);
     wm8994_write(codec, 0x0702, 0x8100);    // GPIO 3. Speech PCM Clock
     wm8994_write(codec, 0x0703, 0x8100);    // GPIO 4. Speech PCM Sync
@@ -2208,34 +2219,31 @@ void wm8994_set_voicecall_receiver(struct snd_soc_codec *codec)
     wm8994_write(codec, 0x0241, 0x2F00);    // FLL2 Control 2
     wm8994_write(codec, 0x0243, 0x0600);    // FLL2 Control 4
     wm8994_write(codec, 0x0240, 0x0001);    // FLL2 Control 1
+	msleep(3);
+
+	/* AIF2 Clocking 1. Clock Source Select */
+	wm8994_write(codec, 0x0204, 0x0008);
     wm8994_write(codec, 0x0208, 0x000F);    // Clocking 1. '0x000A' is added for a playback. (original = 0x0007)
 
-    wm8994_write(codec, 0x0204, 0x0009);    // AIF2 Clocking 1
+	wm8994_write(codec, 0x0620, 0x0000);    /* Oversampling */
     wm8994_write(codec, 0x0211, 0x0003);    // AIF2 Rate
     wm8994_write(codec, 0x0310, 0x4118);    // AIF2 Control 1
     wm8994_write(codec, 0x0311, 0x0000);    // AIF2 Control 2 pcm format is changed ulaw to linear
     wm8994_write(codec, 0x0520, 0x0000);    // AIF2 DAC Filter 1
+	/* AIF2 Clocking 1. AIF2 Clock Enable */
+	wm8994_write(codec, 0x0204, 0x0009);
     wm8994_write(codec, 0x0601, 0x0005);    // DAC1 Left Mixer Routing
     wm8994_write(codec, 0x0602, 0x0001);    //  DAC1 Right Mixer Routing(Playback)
     wm8994_write(codec, 0x0603, 0x018C);    // DAC2 Mixer Volumes
     wm8994_write(codec, 0x0604, 0x0030);    // DAC2 Left Mixer Routing
     wm8994_write(codec, 0x0605, 0x0010);    // DAC2 Right Mixer Routing
     wm8994_write(codec, 0x0621, 0x01C0);    // Sidetone
-    wm8994_write(codec, 0x0620, 0x0000);    // Oversampling
-    //sub mic
     wm8994_write(codec, 0x0002, 0x6240);    // Power Management 2
-    //sub mic
-    wm8994_write(codec, 0x0028, 0x0030);    // Input Mixer 2 30 -> 00
 
     if(!wm8994->testmode_config_flag)
     {
-        /* Left Line Input 1&2 Volume */
-        val = wm8994_read(codec, 0x0018);
-        val &= ~(WM8994_IN1L_MUTE_MASK | WM8994_IN1L_VOL_MASK);
-        val |= (0x0100 | TUNING_CALL_RCV_INPUTMIX_VOL);
-		//sub mic
-	   wm8994_write(codec, 0x0018, 0x010A);
-
+		wm8994_write(codec, 0x0028, 0x0030);    /* Input Mixer 2 */
+		wm8994_write(codec, 0x0018, 0x010A);
 
         /* Output Mixer 5 */
         val = wm8994_read(codec, 0x0031);

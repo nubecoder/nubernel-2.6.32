@@ -22,7 +22,7 @@ static void __init gps_gpio_init(void)
 	gpio_export(GPIO_GPS_nRST, 1);
 	gpio_export(GPIO_GPS_PWR_EN, 1);
 
-	BUG_ON(!gps_dev);
+//	BUG_ON(!gps_dev);
 	gpio_export_link(gps_dev, "GPS_nRST", GPIO_GPS_nRST);
 	gpio_export_link(gps_dev, "GPS_PWR_EN", GPIO_GPS_PWR_EN);
 }

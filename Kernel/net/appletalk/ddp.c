@@ -1021,7 +1021,8 @@ static struct proto ddp_proto = {
  * Create a socket. Initialise the socket, blank the addresses
  * set the state.
  */
-static int atalk_create(struct net *net, struct socket *sock, int protocol)
+static int atalk_create(struct net *net, struct socket *sock, int protocol,
+			int kern)
 {
 	struct sock *sk;
 	int rc = -ESOCKTNOSUPPORT;
@@ -1821,7 +1822,7 @@ static int atalk_compat_ioctl(struct socket *sock, unsigned int cmd, unsigned lo
 #endif
 
 
-static struct net_proto_family atalk_family_ops = {
+static const struct net_proto_family atalk_family_ops = {
 	.family		= PF_APPLETALK,
 	.create		= atalk_create,
 	.owner		= THIS_MODULE,

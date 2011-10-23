@@ -13,6 +13,33 @@ config FB_S3C
 	---help---
 	  This enables support for Samsung Display Controller (FIMD)
 
+choice
+	bool
+	prompt "S3C Driver Type"
+	depends on FB_S3C
+	default FB_S3C_LTE480WV
+
+config FB_S3C_LTE480WV
+	depends on MACH_SMDKC100 || MACH_SMDK6442
+	---help---
+	  This enables support for Samsung LTE480WV 4.8\" WVGA LCD panel
+
+config FB_S3C_MIPI_LCD
+	bool
+	prompt "S3C_MIPI_LCD"
+	depends on (MACH_SMDKC110 || MACH_S5PC110_ARIES)
+	---help---
+	  This enables support for Samsung MIPI LCD
+
+config FB_S3C_LVDS
+	bool
+	prompt "S3C_LVDS"
+	depends on FB_S3C && (ARCH_S5PV210)
+	---help---
+	  This enables support for Samsung LVDS LCD panel
+
+endchoice
+
 config VIDEO_SAMSUNG_MEMSIZE_FIMD
 	int "Memory size in kbytes for FIMD"
 	depends on FB_S3C
@@ -49,26 +76,3 @@ config FB_S3C_YPANSTEP
 	  This indicates the number of vertical steps for pan display, 0 means no pan display and
 	  1 means the double size of video buffer will be allocated for default window
 
-choice
-depends on FB_S3C
-prompt "Select LCD Type"
-default FB_S3C_LTE480WV
-config FB_S3C_LTE480WV
-	bool "LTE480WV"
-	depends on MACH_SMDKC100 || MACH_SMDK6442
-	---help---
-	  This enables support for Samsung LTE480WV 4.8\" WVGA LCD panel
-
-config FB_S3C_MIPI_LCD
-	bool "MIPI LCD"
-	depends on (MACH_SMDKC110 || MACH_S5PC110_ARIES)
-	---help---
-	  This enables support for Samsung MIPI LCD
-
-config FB_S3C_LVDS
-	bool "LVDS"
-	depends on FB_S3C && (ARCH_S5PV210)
-	---help---
-	  This enables support for Samsung LVDS LCD panel
-
-endchoice	

@@ -3067,7 +3067,7 @@ void  get_message(struct work_struct * p)
 			y = y | ((quantum_msg[4] & 0x0C)  >> 2);
 
 			size = quantum_msg[5];
-			printk("******** Touch Finger********* x=%d y=%d\n", x,y );	
+//			printk("******** Touch Finger********* x=%d y=%d\n", x,y );
 #if 0
 			if( size > 20 ) {
 				print_msg();
@@ -3103,7 +3103,7 @@ void  get_message(struct work_struct * p)
 				fingerInfo[id].size_id= (id<<8)|size;
 				fingerInfo[id].pressure= 0;
 				bChangeUpDn= 1;
-				printk(KERN_DEBUG "[TSP]### Finger[%d] Up (%d,%d) - touch num is (%d)  status=0x%02x\n", id, fingerInfo[id].x, fingerInfo[id].y , --qt_touch_num_state[id], quantum_msg[1]);
+//				printk(KERN_DEBUG "[TSP]### Finger[%d] Up (%d,%d) - touch num is (%d)  status=0x%02x\n", id, fingerInfo[id].x, fingerInfo[id].y , --qt_touch_num_state[id], quantum_msg[1]);
 			}
 			else if ( (quantum_msg[1] & 0x80) && (quantum_msg[1] & 0x40) )	// Detect & Press
 			{
@@ -3126,7 +3126,7 @@ void  get_message(struct work_struct * p)
 				fingerInfo[id].x= (int16_t)x;
 				fingerInfo[id].y= (int16_t)y;
 				bChangeUpDn= 1;
-				printk(KERN_DEBUG "[TSP]### Finger[%d] Down (%d,%d) - touch num is (%d)   status=0x%02x\n", id, fingerInfo[id].x, fingerInfo[id].y , ++qt_touch_num_state[id], quantum_msg[1] );
+//				printk(KERN_DEBUG "[TSP]### Finger[%d] Down (%d,%d) - touch num is (%d)   status=0x%02x\n", id, fingerInfo[id].x, fingerInfo[id].y , ++qt_touch_num_state[id], quantum_msg[1] );
 			}
 			else if ( (quantum_msg[1] & 0x80) && (quantum_msg[1] & 0x10) )	// Detect & Move
 			{

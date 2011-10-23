@@ -47,11 +47,11 @@ fi
 
 TARGET_LOCALE="vzw"
 
-export KBUILD_BUILD_VERSION="nubernel-EC05_v0.0.0"
+export KBUILD_BUILD_VERSION="nubernel-2.6.32_v1.0.0"
 DEFCONFIG_STRING=nubernel_defconfig
 
-TOOLCHAIN=`pwd`/toolchains/android-toolchain-4.4.3/bin
-TOOLCHAIN_PREFIX=arm-linux-androideabi-
+TOOLCHAIN="/home/nubecoder/android/kernel_dev/toolchains/arm-2011.03-41/bin"
+TOOLCHAIN_PREFIX="arm-none-linux-gnueabi-"
 
 KERNEL_BUILD_DIR=`pwd`/Kernel
 ANDROID_OUT_DIR=`pwd`/Android/out/target/product/SPH-D700

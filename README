@@ -2,146 +2,15 @@ Samsung SPH-D700 (Epic 4G) kernel by nubecoder
 
 http://www.nubecoder.com/
 
-nubernel-EC05_v0.0.0
+nubernel-2.6.32_v1.0.0
 
 
-Feature list:
+Project info:
 =]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]
 
-nubernel-EC05_v0.0.0, stock base, minimal modifications.
+Check the feature list to see an overview of features.
 
-Rooted kernel, su binary is included in /sbin.
-Flash tools (redbend_ua and bmlwrite) are included in /sbin.
-Custom "nubernel the kernel" bootlogo.
-Uses NOOP as the default I/O scheduler.
-Includes bootanimation.zip support.
-Includes init.d support.
-Includes RFS support.
-Includes EXT4 support.
-Includes CIFS support.
-Includes TUN support.
-Includes Netfilter TCPMSS support.
-Includes the Android logger as a (loaded) module.
+Check the change log to see a detailed history log.
 
 =]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]
-
-
-Changelog:
-
-05-06-2011:
-Feature list for v0.0.0.
-Branched to 'release-v0.0.0'.
-
-05-06-2011:
-Changes to README.
-Use NOOP I/O scheduler by default.
-
-05-04-2011:
-Script cleanup (fixing automatic versioning).
-
-05-03-2011:
-Add helper script for kernel flashing.
-More script cleanup.
-Branched to 'feature-envSetup'.
-More recovery cleanup.
-Changes to .gitignore.
-Select changes to initramfs (Bonsai: https://github.com/Bonsai-Project/bonsai_android_initramfs/commit/5c2b71bc11358f01bda17deebaf883060030ed90).
-Branched to 'feature-recovery_cleanup'.
-
-05-02-2011:
-Attempting to fix getprop command for recovery.
-Fixing permissions on adbd.
-
-05-01-2011:
-File rename cleanup.
-Some file renaming.
-Added new boot logo (thanks anomaly: http://www.graphicanomaly.com/).
-Fixing up createBootLogo.sh (makelogo needs to be re-built when changing the boot_logo_gimp.h file).
-
-04-30-2011:
-More cleanup and changes to Samsung logo creation files.
-More initramfs changes.
-
-04-29-2011:
-Changes to createBootLogo.sh.
-Some additions to .gitignore.
-Cleanup and changes to Samsung logo creation files.
-Added morfic's Samsung logo creation files (morfic: https://github.com/morfic/Samsung-logo/tarball/b85691856fc3ef368089e10bac33b72ef26d3ac0).
-Added custom boot logo.
-Enabled s3cfb_draw_logo function (Rodderik: https://github.com/Rodderik/Genocide-Kernel/commit/30ceb7263083ba83a7c6d6b61436a2b6fc46a236).
-Branched to 'feature-boot_logo'.
-Adding the toolchain to the repo.
-Added adbd that looks for sh in /sbin/sh (for real this time, thanks Randy @ Bonsai).
-Branched to 'feature-envSetup'.
-
-4-29-2011:
-Changes to branchHelper.sh.
-Some script fixups.
-Renamed branch4release.sh to branchHelper.sh.
-Changes to branch4release.sh.
-
-4-28-2011:
-Added branch4release helper script.
-Some script cleanup.
-Version re-branding.
-
-4-27-2011:
-Some changes to wifi_kernel_flasher.sh.
-Create bml devices so reboot recovery is fully operational (tanimn: https://github.com/tanimn/Twilight_Zone_Kernel/commit/aa05f120728fc15a35eaddb84a4a1249a238a952).
-Trying to get adb to work all the time (tanimn: https://github.com/tanimn/Twilight_Zone_Kernel/commit/3159f395065996b9bd4d420fd574aba7cd417470).
-More select changes to initramfs (Bonsai: https://github.com/Bonsai-Project/bonsai_android_initramfs/commit/572a40da29d01f10d4756493db2ebb1f86e7ccb7).
-
-4-26-2011:
-Restore redbend_ua to initramfs for the time being.
-Added verbose option to ncMultiBuild.sh.
-Add ncMultiBuild.sh (heavilly based off nullghost's modified build_kernel.sh: https://github.com/nullghost/phoenix-kernel-epic/commits/master?path[]=build_kernel.sh).
-More script cleanup.
-
-4-25-2011:
-Add bmlwrite in place of redbend_ua in initramfs.
-More script cleanup and changes.
-Added /update/zImage to .gitignore.
-Spoofing newest Nexus S release keys (from: http://new.glbenchmark.com/phonedetails.jsp?benchmark=glpro20&D=Google+Nexus+S&testgroup=system).
-Changed build script to auto detect number of cpu cores (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/f9e96145b4fe56bbc7d61552ea9a123fccd4e4f7).
-Switch to bmlwrite in the update.zip (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/9aea535827d71a0ec7f2c3da04f83e42d6a9394f).
-Update.zip related changes.
-Change cross_compile and add ability to generate update.zip (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/2ba3958f27faa3920b0b8c68f85ea2f179169a45).
-
-4-24-2011:
-Some changes to nullghost's build script.
-Added nullghost's build_kernel.sh (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/9739fd6e3e40b18beeb79a64a6cbcb0191ec922a).
-Fixing up README.
-A bit more file cleanup (nullghost: https://github.com/nullghost/phoenix-kernel-epic/commit/4145246ce46ab57b4d2c1952cdb0341d26233f03).
-Select changes to initramfs (Bonsai: https://github.com/Bonsai-Project/bonsai_android_initramfs/commit/572a40da29d01f10d4756493db2ebb1f86e7ccb7).
-Minor changes to default.prop.
-Add adbd that looks for sh in /sbin/sh (koush: https://github.com/koush/Twilight_Zone_Kernel/commit/fcfa3efc40834ec36c225ead89fd6a5273a9eefd).
-More changes to initramfs for recovery (koush: https://github.com/koush/Twilight_Zone_Kernel/commit/f057d85ec8d79fe2385f9cf124e4d12802c53ed9).
-Changes to initramfs for recovery (koush: https://github.com/koush/Twilight_Zone_Kernel/commit/3739b0c1588687a05af186dc57075738e76f45e5).
-A bit of initramfs script clean up.
-
-4-23-2011:
-Changes to initramfs for recovery (koush: https://github.com/koush/Twilight_Zone_Kernel/commit/3739b0c1588687a05af186dc57075738e76f45e5).
-More clean up and modifications to build_kernel.sh.
-Exclude .git and .svn from gen_initramfs_list.sh (Bonsai: https://github.com/Bonsai-Project/bonsai_android_kernel/commit/090c19f74706fb578dc2c479e5c6fe451393afa2).
-Added wifi_kernel_flasher.sh.
-Add toolchains folder to .gitignore.
-Disabled iqmsd service in initramfs.
-Added boot animation support to initramfs.
-Added init.d support to initramfs.
-Added ext4 support to initramfs.
-Added nubernel_kernel_defconfig.
-Some modifications to build_kernel.sh.
-Clean up build_kernel.sh.
-Added *.out to Kernel/.gitignore.
-Added Kernel/.gitignore file (gzub: https://github.com/gzub/EC05-Zub/commit/db2c694c57f4954df5b1345308f247ea1608d385).
-Add toolchains folder to .gitignore.
-Added .gitignore file (gzub: https://github.com/gzub/EC05-Zub/commit/ac3e7e09558cb71c15818f451f75101b0ff4c377).
-Configured toolchain in build_kernel.sh.
-Some file clean up (make distclean).
-
-4-22-2011:
-Added stock EC05 initramfs files.
-Added stock EC05 kernel source files.
-Added this README.
-Configured git line endings (http://help.github.com/dealing-with-lineendings/).
 

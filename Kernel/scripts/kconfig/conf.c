@@ -77,6 +77,7 @@ static void check_stdin(void)
 
 static int conf_askvalue(struct symbol *sym, const char *def)
 {
+	char *quiet_warning;
 	enum symbol_type type = sym_get_type(sym);
 
 	if (!sym_has_value(sym))
@@ -102,7 +103,7 @@ static int conf_askvalue(struct symbol *sym, const char *def)
 		check_stdin();
 	case ask_all:
 		fflush(stdout);
-		fgets(line, 128, stdin);
+		quiet_warning = fgets(line, 128, stdin);
 		return 1;
 	default:
 		break;
@@ -226,6 +227,7 @@ help:
 
 static int conf_choice(struct menu *menu)
 {
+	char *quiet_warning;
 	struct symbol *sym, *def_sym;
 	struct menu *child;
 	int type;
@@ -304,7 +306,7 @@ static int conf_choice(struct menu *menu)
 			check_stdin();
 		case ask_all:
 			fflush(stdout);
-			fgets(line, 128, stdin);
+			quiet_warning = fgets(line, 128, stdin);
 			strip(line);
 			if (line[0] == '?') {
 				print_help(menu);
