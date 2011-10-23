@@ -9,7 +9,7 @@
 
 # define envvars
 TARGET="nubernel"
-KBUILD_BUILD_VERSION="nubernel-EC05_v0.0.0"
+KBUILD_BUILD_VERSION="nubernel-2.6.32_v0.0.0"
 CROSS_COMPILE="/home/nubecoder/android/kernel_dev/toolchains/arm-2011.03-41/bin/arm-none-linux-gnueabi-"
 
 # define defaults

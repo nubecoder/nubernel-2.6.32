@@ -8,8 +8,8 @@
 #
 
 #define version string
-CURRENT_VERSION="nubernel-EC05_v0.0.0"
-VERSION_STRING="nubernel-EC05_v"
+CURRENT_VERSION="nubernel-2.6.32_v0.0.0"
+VERSION_STRING="nubernel-2.6.32_v"
 
 # defaults
 RELEASE="n"
