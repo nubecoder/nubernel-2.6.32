@@ -47,7 +47,7 @@ fi
 
 TARGET_LOCALE="vzw"
 
-export KBUILD_BUILD_VERSION="nubernel-2.6.32_v0.0.0"
+export KBUILD_BUILD_VERSION="nubernel-2.6.32_v1.0.0"
 DEFCONFIG_STRING=nubernel_defconfig
 
 TOOLCHAIN="/home/nubecoder/android/kernel_dev/toolchains/arm-2011.03-41/bin"

@@ -2,13 +2,13 @@ Samsung SPH-D700 (Epic 4G) kernel by nubecoder
 
 http://www.nubecoder.com/
 
-nubernel-2.6.32_v0.0.0
+nubernel-2.6.32_v1.0.0
 
 
 Feature list:
 =]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]
 
-nubernel-2.6.32_v0.0.0, stock base, minimal modifications.
+nubernel-2.6.32_v1.0.0, stock base, minimal modifications.
 
 Rooted kernel, su binary is included in /sbin.
 Flash tools (redbend_ua and bmlwrite) are included in /sbin.
