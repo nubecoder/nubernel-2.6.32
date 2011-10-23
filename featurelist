@@ -2,26 +2,59 @@ Samsung SPH-D700 (Epic 4G) kernel by nubecoder
 
 http://www.nubecoder.com/
 
-nubernel-2.6.32_v0.0.0
+nubernel-2.6.32_v1.0.0
 
 
 Feature list:
 =]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]
 
-nubernel-2.6.32_v0.0.0, stock base, minimal modifications.
+nubernel-2.6.32_v1.0.0.
 
-Rooted kernel, su binary is included in /sbin.
-Flash tools (redbend_ua and bmlwrite) are included in /sbin.
-Custom "nubernel the kernel" bootlogo.
-Uses NOOP as the default I/O scheduler.
-Includes bootanimation.zip support.
-Includes init.d support.
-Includes RFS support.
-Includes EXT4 support.
-Includes CIFS support.
-Includes TUN support.
-Includes Netfilter TCPMSS support.
-Includes the Android logger as a (loaded) module.
+Includes a custom "Nubernel the kernel" bootlogo.
+Allows for battery charging values to be tweaked via the "Nubernel Battery Tweaker" app (available in the market).
+Ensures su is installed properly.
+Ensures superuser is installed properly.
+Ensures busybox is installed properly.
+Installs bash into /system/bin/ (if it is not found).
+Includes flash tools (redbend_ua and bmlwrite) in /sbin.
+Includes custom scripts in /vendor/bin.
+Supports the following:
+  bootanimation.zip, init.d scripts, RFS, EXT4, CIFS, TUN, Netfilter TCPMSS.
+Fully supports VoltageControl and SetCPU.
+Uses deadline as the default I/O scheduler.
+Includes the following I/O schedulers:
+  noop, anticipatory, deadline, cfq, bfq.
+Includes the following CPU frequencies:
+  100MHz, 200MHz, 400MHz, 600MHz, 800MHz, 900MHz, 1000MHz, 1120MHz, 1200MHz, 1300MHz, 1400MHz.
+Disables the following CPU frequencies by default (use an app or sysfs to enable them):
+  100MHz, 1200MHz, 1300MHz, 1400MHz.
+Includes the following CPU governors (see notes below):
+  smartass, interactiveX, interactive, conservative, ondemand, userspace, powersave, transitional, performance.
+  CPU governor notes:
+    The included conservative governor is the original version of the conservative governor (not Samsung's modified version you have been used to).
+    The interactiveX governor is a varient of the interactive governor that includes sleep profiling.
+    The transitional governor is Samsung's modified version of the conservative governor, renamed.
+    The transitional governor is the default and recommended governor.
+Uses transitional as the default CPU governor.
+Includes a custom written cpu frequency selector function, an attempt to fix some of the problems with the various available governors.
+Loads the Android logger as a module.
+Includes patches and code, etc from the following people:
+  Voodoo Sound - supercurio
+  Kernel bootlogo creation binary - morfic.
+  BFQ patches - via netarchy.
+  Keyboard patches, RDNIS patch - mkasick.
+  Various patches, scripting, etc - tanimn.
+  interactiveX governor - imoseyon via dalingrin.
+  ClockworkMod recovery, initramfs, scripting, etc - DRockstar.
+  Compiler tweaks, compiler warnings, CPU frequencies, etc - gzub.
+  Various patches, scripting, initial help getting my kernel compiled, etc - RandyT / Bonsai.
+  Idle timer backport, scaling_available_frequencies sysfs, compile errors, scripting, etc - nullghost.
+  CPU overclocking, Boot from sdcard (Dual Boot), Re-enabled kernel bootlogo, various patches - Rodderik.
+  CPU overclicking / voltages / frequencies - existz, raspdeep, Rodderik, gzub, RandyT, nemesis2all.
+  Multiple various patches - All the developers submitting code that makes it into android.git.kernel.org.
+Includes multiple patches and changes done by myself (e.g. battery charge mods, nearest frequency function, etc).
+
+See the full Changelog below for details.
 
 =]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]
 
