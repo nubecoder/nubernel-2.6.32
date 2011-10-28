@@ -35,7 +35,7 @@ ui_print("");ui_print("");ui_print("");ui_print("");ui_print("");
 ui_print("");ui_print("");sleep(1);
 
 ui_print("=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]");
-ui_print("=]           nubernel-2.6.32_v1.0.0           =]");
+ui_print("=]           nubernel-2.6.32_v1.0.1           =]");
 ui_print("=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]=]");
 ui_print("");sleep(2);
 show_progress(1.335, 0);
