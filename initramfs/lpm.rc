@@ -22,13 +22,17 @@ on init
 # mount partitions begin
 
 # /system
-	mount rfs /dev/block/stl9 /system rw noatime nodiratime check=none
-	mount ext4 /dev/block/stl9 /system rw noatime nodiratime check=none errors=continue data=writeback nobh nobarrier noauto_da_alloc discard
+	mount rfs /dev/block/stl9 /system rw check=no
+	#mount rfs /dev/block/stl9 /system rw noatime nodiratime check=no
+	mount ext4 /dev/block/stl9 /system rw noatime nodiratime nodelalloc check=none errors=continue data=writeback nobh nobarrier noauto_da_alloc discard
 
 # /data
-	#mount rfs /dev/block/mmcblk0p2 /data nosuid nodev check=none
-	mount rfs /dev/block/stl10 /data rw noatime nodiratime nodev nosuid check=none
-	mount ext4 /dev/block/stl10 /data rw noatime nodiratime nodev nosuid check=none errors=continue data=writeback nobh nobarrier noauto_da_alloc discard
+	#mount rfs /dev/block/mmcblk0p2 /data nosuid nodev check=no
+	mount rfs /dev/block/stl10 /data rw nodev nosuid check=no
+	#mount rfs /dev/block/stl10 /data rw noatime nodiratime nodev nosuid check=no
+	#mount ext4 /dev/block/stl10 /data rw noatime nodiratime nodev nosuid check=none errors=continue data=writeback nobh nobarrier noauto_da_alloc discard
+	mount ext4 /dev/block/stl10 /data rw noatime nodiratime nodelalloc nodev nosuid data=ordered nobarrier noauto_da_alloc
+
 
 # mount partitions complete
 ###################################################################
